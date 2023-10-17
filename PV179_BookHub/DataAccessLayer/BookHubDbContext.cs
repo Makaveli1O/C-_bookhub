@@ -6,7 +6,6 @@ public class BookHubDbContext : DbContext
 {
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)
     {
-
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -15,7 +14,6 @@ public class BookHubDbContext : DbContext
         {
             relationship.DeleteBehavior = DeleteBehavior.SetNull;
         }
-
 
         base.OnModelCreating(modelBuilder);
     }
