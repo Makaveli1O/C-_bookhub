@@ -16,12 +16,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DAL.SQLite.Migrations\DAL.SQLite.Migrations.csproj" />
-  </ItemGroup>
-
 </Project>
