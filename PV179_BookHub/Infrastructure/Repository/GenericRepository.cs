@@ -1,0 +1,44 @@
+﻿using DataAccessLayer;
+using Microsoft.EntityFrameworkCore;
+
+namespace Infrastructure.Repository;
+
+public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+{
+    private readonly BookHubDbContext _dbContext;
+
+    protected GenericRepository(BookHubDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public async Task Add(TEntity entity)
+    {
+        await _dbContext.Set<TEntity>().AddAsync(entity);
+    }
+
+    public void Delete(TEntity entity)
+    {
+        _dbContext.Set<TEntity>().Remove(entity);
+    }
+
+    public void Update(TEntity entity)
+    {
+        _dbContext.Set<TEntity>().Update(entity);
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAll()
+    {
+        return await _dbContext.Set<TEntity>().ToListAsync();
+    }
+
+    public async Task<TEntity?> GetById(long id)
+    {
+        return await _dbContext.Set<TEntity>().FindAsync(id);
+    }
+
+    public void SaveChanges()
+    {
+        _dbContext.SaveChanges();
+    }
+}
