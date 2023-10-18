@@ -1,4 +1,5 @@
 using DataAccessLayer;
+using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,8 @@ builder.Services.AddDbContextFactory<BookHubDbContext>(options =>
             )
         .UseLazyLoadingProxies();
 });
+builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

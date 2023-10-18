@@ -2,7 +2,7 @@
 
 namespace Infrastructure.UnitOfWork;
 
-public interface IUnitOfWork
+public interface IUnitOfWork : IDisposable
 {
     void Commit();
     void Rollback();
