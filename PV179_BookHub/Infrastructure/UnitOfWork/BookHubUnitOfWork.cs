@@ -1,10 +1,15 @@
-﻿using DataAccessLayer;
+﻿using DataAccessLayer.Data;
+using DataAccessLayer.Models;
+using Infrastructure.Repository;
 
 namespace Infrastructure.UnitOfWork;
 
 public class BookHubUnitOfWork : IUnitOfWork
 {
     private readonly BookHubDbContext _dbContext;
+    private BookRepository? _bookRepository;
+
+    public IGenericRepository<Book> BookRepository => _bookRepository ??= new BookRepository(_dbContext);
 
     public BookHubUnitOfWork(BookHubDbContext dbContext)
     {

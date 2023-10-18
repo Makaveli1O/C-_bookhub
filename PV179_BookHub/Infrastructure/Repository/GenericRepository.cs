@@ -1,4 +1,4 @@
-﻿using DataAccessLayer;
+﻿using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
