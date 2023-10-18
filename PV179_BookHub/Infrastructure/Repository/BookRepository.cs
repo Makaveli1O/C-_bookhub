@@ -4,7 +4,7 @@ using DataAccessLayer.Models;
 
 namespace Infrastructure.Repository;
 
-public class BookRepository : GenericRepository<Book>, IGenericRepository<Book>
+public class BookRepository : GenericRepository<Book>
 {
     public BookRepository(BookHubDbContext dbContext) : base(dbContext)
     {

@@ -6,6 +6,7 @@ namespace DataAccessLayer.Data;
 public class BookHubDbContext : DbContext
 {
     public DbSet<Book> Books { get; set; }
+
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)
     {
     }
