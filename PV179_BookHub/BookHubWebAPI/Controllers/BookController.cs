@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookHubWebAPI.Api.Create;
 using BookHubWebAPI.Api.View;
+﻿using BookHubWebAPI.Api.Create;
 using DataAccessLayer.Models;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,7 @@ public class BookController : ControllerBase
     public async Task<IActionResult> FetchAll()
     {
         var books = await _unitOfWork.BookRepository.GetAll();
+
         return Ok(
             _mapper.Map<List<GeneralBookViewDto>>(books)
             );
@@ -66,6 +68,7 @@ public class BookController : ControllerBase
     public async Task<IActionResult> FetchSingle(long id)
     {
         var book = await _unitOfWork.BookRepository.GetById(id);
+
         return Ok(
             _mapper.Map<DetailedBookViewDto>(book)
             );
