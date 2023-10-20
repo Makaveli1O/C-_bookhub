@@ -18,6 +18,7 @@ builder.Services.AddDbContextFactory<BookHubDbContext>(options =>
         .UseLazyLoadingProxies();
 });
 builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 builder.Services.AddControllers();

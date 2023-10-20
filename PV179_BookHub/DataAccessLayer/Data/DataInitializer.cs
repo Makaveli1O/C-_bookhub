@@ -17,12 +17,6 @@ public static class DataInitializer
     {
         return new List<Book>()
         {
-            new Book
-            {
-                Id = 1,
-                Description = "BlaBla",
-                Title = "Title",
-            },
         };
     }
 }
