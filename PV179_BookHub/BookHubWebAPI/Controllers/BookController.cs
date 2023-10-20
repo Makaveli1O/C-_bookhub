@@ -31,6 +31,8 @@ public class BookController : ControllerBase
         };
 
         await _unitOfWork.BookRepository.Add(book);
+        _unitOfWork.Commit();
+
         return Ok(book);            // Should return created
     }
 
@@ -47,6 +49,9 @@ public class BookController : ControllerBase
             book.Description = createBookDto.Description ?? book.Description;
             book.BookGenre = createBookDto.BookGenre;
             book.Price = createBookDto.Price;
+
+            _unitOfWork.BookRepository.Update(book);
+            _unitOfWork.Commit();
         }
 
         return Ok(book);
@@ -75,6 +80,7 @@ public class BookController : ControllerBase
         if (book != null)
         {
             _unitOfWork.BookRepository.Delete(book);
+            _unitOfWork.Commit();
         }
         return NoContent();
     }
