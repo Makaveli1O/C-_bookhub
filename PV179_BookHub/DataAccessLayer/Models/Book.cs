@@ -1,6 +1,6 @@
 ﻿using DataAccessLayer.Models.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Models;
 
@@ -14,8 +14,6 @@ public class Book : BaseEntity
     [MaxLength(50)]
     public string? Publisher { get; set; }
     [Required]
-    [MaxLength(30)]
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public BookGenre BookGenre { get; set; }
     [MaxLength(500)]
     public string? Description { get; set; }
