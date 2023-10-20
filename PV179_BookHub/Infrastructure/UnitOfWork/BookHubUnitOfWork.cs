@@ -21,6 +21,11 @@ public class BookHubUnitOfWork : IUnitOfWork
         _dbContext.SaveChanges();
     }
 
+    public async Task CommitAsync()
+    {
+        await _dbContext.SaveChangesAsync();
+    }
+
     public void Rollback()
     {
     }

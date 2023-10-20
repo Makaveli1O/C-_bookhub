@@ -25,8 +25,8 @@ public class BookController : ControllerBase
     {
         var book = _mapper.Map<Book>(createBookDto);
 
-        await _unitOfWork.BookRepository.Add(book);
-        _unitOfWork.Commit();
+        await _unitOfWork.BookRepository.AddAsync(book);
+        await _unitOfWork.CommitAsync();
 
         return Ok(_mapper.Map<DetailedBookViewDto>(book));            // Should return created
     }
@@ -35,7 +35,7 @@ public class BookController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> UpdateBook(long id, CreateBookDto createBookDto)
     {
-        var book = await _unitOfWork.BookRepository.GetById(id);
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
         if (book != null)
         {
             book.Title = createBookDto.Title ?? book.Title;
@@ -46,7 +46,7 @@ public class BookController : ControllerBase
             book.Price = createBookDto.Price;
 
             _unitOfWork.BookRepository.Update(book);
-            _unitOfWork.Commit();
+            await _unitOfWork.CommitAsync();
         }
 
         return Ok(book);
@@ -55,7 +55,7 @@ public class BookController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> FetchAll()
     {
-        var books = await _unitOfWork.BookRepository.GetAll();
+        var books = await _unitOfWork.BookRepository.GetAllAsync();
 
         return Ok(
             _mapper.Map<List<GeneralBookViewDto>>(books)
@@ -66,7 +66,7 @@ public class BookController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> FetchSingle(long id)
     {
-        var book = await _unitOfWork.BookRepository.GetById(id);
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
 
         return Ok(
             _mapper.Map<DetailedBookViewDto>(book)
@@ -77,11 +77,11 @@ public class BookController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> DeleteById(long id)
     {
-        var book = await _unitOfWork.BookRepository.GetById(id);
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
         if (book != null)
         {
             _unitOfWork.BookRepository.Delete(book);
-            _unitOfWork.Commit();
+            await _unitOfWork.CommitAsync();
         }
         return NoContent();
     }
