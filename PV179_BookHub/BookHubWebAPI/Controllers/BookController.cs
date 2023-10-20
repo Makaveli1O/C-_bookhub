@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models;
+﻿using BookHubWebAPI.Api.Create;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,26 +16,36 @@ public class BookController : ControllerBase
     }
 
     [HttpPost]
-    [Route("create/{id}")]
-    public async Task<IActionResult> Create(int id)
+    public async Task<IActionResult> CreateBook(CreateBookDto createBookDto)
     {
-        Book book = new Book()
-        {
-            Title = $"Test {id}",
-            Description = $"Test {id}"
-        };
 
-        await _unitOfWork.BookRepository.Add(book);
-        _unitOfWork.Commit();
-
-        return Ok(book);
+        return Ok();
     }
 
     [HttpGet]
-    [Route("list")]
-    public async Task<IActionResult> ListAll()
+    public async Task<IActionResult> FetchAll()
     {
         var books = await _unitOfWork.BookRepository.GetAll();
-        return Ok(books.Select(book => new { Id = book.Id, Title = book.Title, Desc = book.Description }));
+        return Ok(books);
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> FetchSingle(long id)
+    {
+        var book = await _unitOfWork.BookRepository.GetById(id);
+        return Ok(book);
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    public async Task<IActionResult> DeleteById(long id)
+    {
+        var book = await _unitOfWork.BookRepository.GetById(id);
+        if (book != null)
+        {
+            _unitOfWork.BookRepository.Delete(book);
+        }
+        return NoContent();
     }
 }
