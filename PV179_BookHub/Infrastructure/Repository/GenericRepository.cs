@@ -12,7 +12,12 @@ public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> w
         _dbContext = dbContext;
     }
 
-    public async Task Add(TEntity entity)
+    public void Add(TEntity entity)
+    {
+        _dbContext.Add(entity);
+    }
+
+    public async Task AddAsync(TEntity entity)
     {
         await _dbContext.Set<TEntity>().AddAsync(entity);
     }
@@ -27,12 +32,22 @@ public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> w
         _dbContext.Set<TEntity>().Update(entity);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAll()
+    public IEnumerable<TEntity> GetAll()
+    {
+        return _dbContext.Set<TEntity>().ToList();
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         return await _dbContext.Set<TEntity>().ToListAsync();
     }
 
-    public async Task<TEntity?> GetById(long id)
+    public TEntity? GetById(long id)
+    {
+        return _dbContext.Set<TEntity>().Find(id);
+    }
+
+    public async Task<TEntity?> GetByIdAsync(long id)
     {
         return await _dbContext.Set<TEntity>().FindAsync(id);
     }
@@ -40,5 +55,10 @@ public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> w
     public void SaveChanges()
     {
         _dbContext.SaveChanges();
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _dbContext.SaveChangesAsync();
     }
 }
