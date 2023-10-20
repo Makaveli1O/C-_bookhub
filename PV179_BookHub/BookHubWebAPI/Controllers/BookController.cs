@@ -28,7 +28,10 @@ public class BookController : ControllerBase
         await _unitOfWork.BookRepository.AddAsync(book);
         await _unitOfWork.CommitAsync();
 
-        return Ok(_mapper.Map<DetailedBookViewDto>(book));            // Should return created
+        return Created(
+            new Uri($"{Request.Path}/{book.Id}", UriKind.Relative),
+            _mapper.Map<DetailedBookViewDto>(book)
+            );
     }
 
     [HttpPut]
@@ -49,7 +52,9 @@ public class BookController : ControllerBase
             await _unitOfWork.CommitAsync();
         }
 
-        return Ok(book);
+        return Ok(
+            _mapper.Map<DetailedBookViewDto>(book)
+            );
     }
 
     [HttpGet]
