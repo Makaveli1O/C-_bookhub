@@ -17,7 +17,10 @@ public class BookHubDbContext : DbContext
         {
             relationship.DeleteBehavior = DeleteBehavior.SetNull;
         }
+        
+        /* here added relationships */
 
+        modelBuilder.Seed();
         base.OnModelCreating(modelBuilder);
     }
 }
