@@ -9,7 +9,7 @@ public class Book : BaseEntity
     [MaxLength(100)]
     public string Title { get; set; }
     [MaxLength(50)]
-    public string Author { get; set; }
+    public string? Author { get; set; }
     [MaxLength(50)]
     public string Publisher { get; set; }
     [Required]

@@ -47,7 +47,7 @@ public class BookController : ControllerBase
             book.Author = createBookDto.Author ?? book.Author;
             book.Publisher = createBookDto.Publisher ?? book.Publisher;
             book.Description = createBookDto.Description ?? book.Description;
-            book.BookGenre = createBookDto.BookGenre;
+            book.BookGenre =  createBookDto.BookGenre;
             book.Price = createBookDto.Price;
 
             _unitOfWork.BookRepository.Update(book);
