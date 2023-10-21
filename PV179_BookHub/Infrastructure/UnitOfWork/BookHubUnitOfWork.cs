@@ -10,10 +10,14 @@ public class BookHubUnitOfWork : IUnitOfWork
     private BookRepository? _bookRepository;
     private WishListRepository? _wishListRepository;
     private WishListItemRepository? _wishListItemRepository;
+    private OrderRepository? _orderRepository;
+    private OrderItemRepository? _orderItemRepository;
 
     public IGenericRepository<Book> BookRepository => _bookRepository ??= new BookRepository(_dbContext);
     public IGenericRepository<WishList> WishListRepository => _wishListRepository ??= new WishListRepository(_dbContext);
     public IGenericRepository<WishListItem> WishListItemRepository => _wishListItemRepository ??= new WishListItemRepository(_dbContext);
+    public IGenericRepository<Order> OrderRepository => _orderRepository ??= new OrderRepository(_dbContext);
+    public IGenericRepository<OrderItem> OrderItemRepository => _orderItemRepository ??= new OrderItemRepository(_dbContext);
 
     public BookHubUnitOfWork(BookHubDbContext dbContext)
     {

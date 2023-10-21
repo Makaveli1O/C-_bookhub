@@ -1,5 +1,4 @@
-﻿
-using DataAccessLayer.Data;
+﻿using DataAccessLayer.Data;
 using DataAccessLayer.Models;
 
 namespace Infrastructure.Repository;
