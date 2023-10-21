@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.Models.Enums;
-using System.Text.Json.Serialization;
 
 namespace BookHubWebAPI.Api.Create;
 

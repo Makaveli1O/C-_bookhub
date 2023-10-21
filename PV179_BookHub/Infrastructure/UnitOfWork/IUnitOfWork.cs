@@ -6,6 +6,8 @@ namespace Infrastructure.UnitOfWork;
 public interface IUnitOfWork : IDisposable
 {
     IGenericRepository<Book> BookRepository { get; }
+    IGenericRepository<WishList> WishListRepository { get; }
+    IGenericRepository<WishListItem> WishListItemRepository { get; }
     void Commit();
     Task CommitAsync();
     void Rollback();
