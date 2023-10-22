@@ -10,5 +10,5 @@ public class WishListItem : BaseEntity
     public long BookId { get; set; }
     [ForeignKey(nameof(BookId))]
     public virtual Book? Book { get; set; }
-    public int PreferencePriorty { get; set; }
+    public uint PreferencePriorty { get; set; }
 }

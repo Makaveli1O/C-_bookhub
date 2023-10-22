@@ -19,8 +19,14 @@ public class BookHubDbContext : DbContext
         {
             relationship.DeleteBehavior = DeleteBehavior.SetNull;
         }
-        
+
         /* here added relationships */
+
+        modelBuilder.Entity<WishListItem>()
+            .HasOne(item => item.WishList)
+            .WithMany(wishList => wishList.WishListItems)
+            .HasForeignKey(item => item.WishListId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Seed();
         base.OnModelCreating(modelBuilder);
