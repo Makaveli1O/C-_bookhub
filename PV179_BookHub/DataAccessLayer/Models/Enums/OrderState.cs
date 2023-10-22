@@ -7,5 +7,5 @@ public enum OrderState
     Created,
     Paid,
     Refunded,
-    Stashed
+    Cancelled
 }
