@@ -12,12 +12,15 @@ public class BookHubUnitOfWork : IUnitOfWork
     private WishListItemRepository? _wishListItemRepository;
     private OrderRepository? _orderRepository;
     private OrderItemRepository? _orderItemRepository;
-
+    private UserRepository? _userRepository;
+    
     public IGenericRepository<Book> BookRepository => _bookRepository ??= new BookRepository(_dbContext);
     public IGenericRepository<WishList> WishListRepository => _wishListRepository ??= new WishListRepository(_dbContext);
     public IGenericRepository<WishListItem> WishListItemRepository => _wishListItemRepository ??= new WishListItemRepository(_dbContext);
     public IGenericRepository<Order> OrderRepository => _orderRepository ??= new OrderRepository(_dbContext);
     public IGenericRepository<OrderItem> OrderItemRepository => _orderItemRepository ??= new OrderItemRepository(_dbContext);
+    public IGenericRepository<Book> BookRepository => _bookRepository ??= new BookRepository(_dbContext);
+    public IGenericRepository<User> UserRepository => _userRepository ??= new UserRepository(_dbContext);
 
     public BookHubUnitOfWork(BookHubDbContext dbContext)
     {
