@@ -12,9 +12,15 @@ public static class DataInitializer
         var bowishListItems = PrepairWishListItemModels();
         var orders = PrepairOrderModels();
         var orderItems = PrepairOrderItemModels();
+        var users = PrepairUserModels();
+        var bookReviews = PrepairBookReviews();
 
+        modelBuilder.Entity<User>()
+            .HasData(users);
         modelBuilder.Entity<Book>()
             .HasData(books);
+        modelBuilder.Entity<BookReview>()
+            .HasData(bookReviews);
         modelBuilder.Entity<WishList>()
             .HasData(wishLists);
         modelBuilder.Entity<WishListItem>()
@@ -23,6 +29,21 @@ public static class DataInitializer
             .HasData(orders);
         modelBuilder.Entity<OrderItem>()
             .HasData(orderItems);
+
+    }
+
+    private static List<BookReview> PrepairBookReviews()
+    {
+        return new List<BookReview>
+        {
+        };
+    }
+
+    private static List<User> PrepairUserModels()
+    {
+        return new List<User>
+        {
+        };
     }
 
     private static List<Book> PrepairBookModels()
