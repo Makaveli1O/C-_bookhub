@@ -10,6 +10,8 @@ public class BookHubDbContext : DbContext
     public DbSet<WishListItem> WishListItem { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<BookReview> BookReviews { get; set; }
 
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)
     {
@@ -34,6 +36,13 @@ public class BookHubDbContext : DbContext
             .WithMany(wishList => wishList.WishListItems)
             .HasForeignKey(item => item.WishListId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<BookReview>()
+            .HasOne(bookReview => bookReview.Reviewer)
+            .WithMany(user => user.BookReviews)
+            .HasForeignKey(bookReview => bookReview.ReviewerId)
+            .OnDelete(DeleteBehavior.Cascade)
+            ;
 
         modelBuilder.Seed();
         base.OnModelCreating(modelBuilder);
