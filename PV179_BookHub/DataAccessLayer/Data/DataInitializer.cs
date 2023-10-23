@@ -10,6 +10,8 @@ public static class DataInitializer
         var books = PrepairBookModels();
         var wishLists = PrepairWishListModels();
         var bowishListItems = PrepairWishListItemModels();
+        var orders = PrepairOrderModels();
+        var orderItems = PrepairOrderItemModels();
 
         modelBuilder.Entity<Book>()
             .HasData(books);
@@ -17,6 +19,10 @@ public static class DataInitializer
             .HasData(wishLists);
         modelBuilder.Entity<WishListItem>()
             .HasData(bowishListItems);
+        modelBuilder.Entity<Order>()
+            .HasData(orders);
+        modelBuilder.Entity<OrderItem>()
+            .HasData(orderItems);
     }
 
     private static List<Book> PrepairBookModels()
@@ -25,7 +31,6 @@ public static class DataInitializer
         {
         };
     }
-
     private static List<WishList> PrepairWishListModels() 
     {
         return new List<WishList>()
@@ -36,6 +41,20 @@ public static class DataInitializer
     private static List<WishListItem> PrepairWishListItemModels()
     {
         return new List<WishListItem>()
+        {
+        };
+    }
+
+    private static List<Order> PrepairOrderModels()
+    {
+        return new List<Order>()
+        {
+        };
+    }
+
+    private static List<OrderItem> PrepairOrderItemModels()
+    {
+        return new List<OrderItem>()
         {
         };
     }
