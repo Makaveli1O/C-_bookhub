@@ -8,8 +8,12 @@ public class BookHubUnitOfWork : IUnitOfWork
 {
     private readonly BookHubDbContext _dbContext;
     private BookRepository? _bookRepository;
+    private WishListRepository? _wishListRepository;
+    private WishListItemRepository? _wishListItemRepository;
 
     public IGenericRepository<Book> BookRepository => _bookRepository ??= new BookRepository(_dbContext);
+    public IGenericRepository<WishList> WishListRepository => _wishListRepository ??= new WishListRepository(_dbContext);
+    public IGenericRepository<WishListItem> WishListItemRepository => _wishListItemRepository ??= new WishListItemRepository(_dbContext);
 
     public BookHubUnitOfWork(BookHubDbContext dbContext)
     {

@@ -6,6 +6,8 @@ namespace DataAccessLayer.Data;
 public class BookHubDbContext : DbContext
 {
     public DbSet<Book> Books { get; set; }
+    public DbSet<WishList> WishList { get; set; }
+    public DbSet<WishListItem> WishListItem { get; set; }
 
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)
     {
@@ -17,8 +19,14 @@ public class BookHubDbContext : DbContext
         {
             relationship.DeleteBehavior = DeleteBehavior.SetNull;
         }
-        
+
         /* here added relationships */
+
+        modelBuilder.Entity<WishListItem>()
+            .HasOne(item => item.WishList)
+            .WithMany(wishList => wishList.WishListItems)
+            .HasForeignKey(item => item.WishListId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Seed();
         base.OnModelCreating(modelBuilder);
