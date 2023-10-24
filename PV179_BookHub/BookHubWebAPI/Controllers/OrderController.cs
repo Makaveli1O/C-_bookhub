@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookHubWebAPI.Api.Create;
 using BookHubWebAPI.Api.View;
 using DataAccessLayer.Models;
 using Infrastructure.UnitOfWork;
@@ -38,11 +39,36 @@ public class OrderController : ControllerBase
             );
     }
 
+    [HttpGet]
+    [Route("/{userId}")]
+    public async Task<IActionResult> FetchOrdersByUserId(long userId)
+    {
+        var orders = await _unitOfWork.OrderRepository.GetAllAsync();
+        orders = orders.Where(order => order.UserId == userId).ToList();    //TODO
+
+        return Ok(_mapper.Map<List<GeneralOrderViewDto>>(orders));
+    }
+
+    [HttpGet]
+    [Route("/detail/{id}")]
+    public async Task<IActionResult> FetchOrderById(long id)
+    {
+        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
+        if (order != null)
+        {
+            return Ok(_mapper.Map<DetailedOrderViewDto>(order));
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+
     [HttpDelete]
     [Route("/{id}")]
     public async Task<IActionResult> DeleteOrder(long id)
     {
-        var order = _unitOfWork.OrderRepository.GetById(id);
+        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
         if (order != null)
         {
             _unitOfWork.OrderRepository.Delete(order);
@@ -56,10 +82,11 @@ public class OrderController : ControllerBase
     [Route("/pay/{id}")]
     public async Task<IActionResult> PayForOrder(long id)
     {
-        var order = _unitOfWork.OrderRepository.GetById(id);
+        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
         if (order != null && order.State == DataAccessLayer.Models.Enums.OrderState.Created)
         {
             order.State = DataAccessLayer.Models.Enums.OrderState.Paid;
+            _unitOfWork.OrderRepository.Update(order);
             await _unitOfWork.CommitAsync();
         }
 
@@ -70,10 +97,11 @@ public class OrderController : ControllerBase
     [Route("/cancel/{id}")]
     public async Task<IActionResult> CancellOrder(long id)
     {
-        var order = _unitOfWork.OrderRepository.GetById(id);
+        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
         if (order != null && order.State == DataAccessLayer.Models.Enums.OrderState.Created)
         {
             order.State = DataAccessLayer.Models.Enums.OrderState.Cancelled;
+            _unitOfWork.OrderRepository.Update(order);
             await _unitOfWork.CommitAsync();
         }
 
@@ -84,13 +112,65 @@ public class OrderController : ControllerBase
     [Route("/refund/{id}")]
     public async Task<IActionResult> RefundOrder(long id)
     {
-        var order = _unitOfWork.OrderRepository.GetById(id);
+        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
         if (order != null && order.State == DataAccessLayer.Models.Enums.OrderState.Paid)
         {
             order.State = DataAccessLayer.Models.Enums.OrderState.Refunded;
+            _unitOfWork.OrderRepository.Update(order);
             await _unitOfWork.CommitAsync();
         }
 
         return Ok(_mapper.Map<DetailedOrderViewDto>(order));
+    }
+
+    [HttpPost]
+    [Route("/item/{orderId}")]
+    public async Task<IActionResult> CreateOrderItem(long orderId, CreateOrderItemDto createOrderItemDto)
+    {
+        var order = await _unitOfWork.OrderRepository.GetByIdAsync(orderId);
+        if (order == null)
+        {
+            return NotFound();
+        }
+        var orderItem = _mapper.Map<OrderItem>(createOrderItemDto);
+        orderItem.OrderId = orderId;
+
+        order.TotalPrice += orderItem.Price * orderItem.Quantity;
+        _unitOfWork.OrderRepository.Update(order);
+        await _unitOfWork.OrderItemRepository.AddAsync(orderItem);
+        await _unitOfWork.CommitAsync();
+
+        return Created(
+            new Uri($"{Request.Path}/item/{orderItem.Id}", UriKind.Relative),
+            _mapper.Map<DetailedOrderItemViewDto>(orderItem)
+            );
+    }
+
+    [HttpGet]
+    [Route("/item/{id}")]
+    public async Task<IActionResult> FetchSingleItem(long id)
+    {
+        var orderItem = await _unitOfWork.OrderItemRepository.GetByIdAsync(id);
+        if ( orderItem != null )
+        {
+            return Ok(_mapper.Map<DetailedOrderItemViewDto>(orderItem));
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpDelete]
+    [Route("/item/{id}")]
+    public async Task<IActionResult> DeleteOrderItem(long id)
+    {
+        var order = await _unitOfWork.OrderItemRepository.GetByIdAsync(id);
+        if (order != null)
+        {
+            _unitOfWork.OrderItemRepository.Delete(order);
+            await _unitOfWork.CommitAsync();
+        }
+        return NoContent();
     }
 }
