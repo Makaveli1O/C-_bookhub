@@ -10,7 +10,8 @@ public interface IUnitOfWork : IDisposable
     IGenericRepository<WishListItem> WishListItemRepository { get; }
     IGenericRepository<Order> OrderRepository { get; }
     IGenericRepository<OrderItem> OrderItemRepository { get; }
-    IGenericRepository<User> UserRepository { get; }    
+    IGenericRepository<User> UserRepository { get; }  
+    IGenericRepository<BookReview> BookReviewRepository { get; }
     void Commit();
     Task CommitAsync();
     void Rollback();
