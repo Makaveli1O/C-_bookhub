@@ -52,11 +52,14 @@ namespace BookHubWebAPI.Controllers
         [Route("/BookReview/Book/{bookId}")]
         public async Task<IActionResult> FetchBookReviews(long bookId)
         {
-            var bookReviews = await _unitOfWork.BookReviewRepository.GetByIdAsync(bookId);
+            var bookReviews = await _unitOfWork.BookReviewRepository.GetAllFilteredAsync(
+                review => review.BookId == bookId
+                );
            
 
             return Ok(
-                _mapper.Map<IEnumerable<GeneralBookReviewViewDto>>(bookReviews));
+                _mapper.Map<IEnumerable<GeneralBookReviewViewDto>>(bookReviews)
+                );
         }
 
 
@@ -65,7 +68,10 @@ namespace BookHubWebAPI.Controllers
         [Route("/BookReview/User/{userId}")]
         public async Task<IActionResult> FetchUserReviews(long userId)
         {
-            var bookReviews = await _unitOfWork.BookReviewRepository.GetUserReviewsAsync(userId);
+            var bookReviews = 
+                await _unitOfWork.BookReviewRepository.GetAllFilteredAsync(
+                    user => user.Reviewer.Id == userId
+                    );
 
             return Ok(
                 _mapper.Map<IEnumerable<GeneralBookReviewViewDto>>(bookReviews));
