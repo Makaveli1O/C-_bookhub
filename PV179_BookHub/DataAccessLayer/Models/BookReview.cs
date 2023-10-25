@@ -8,10 +8,10 @@ namespace DataAccessLayer.Models
     {
         public long BookId { get; set; }
         [ForeignKey(nameof(BookId))]
-        public virtual Book? Book { get; set; }
+        public virtual required Book Book { get; set; }
         public long ReviewerId { get; set; }
         [ForeignKey(nameof(ReviewerId))]
-        public virtual User? Reviewer { get; set; }
+        public virtual required User Reviewer { get; set; }
         [MaxLength(5000)]
         public string? Description { get; set; }
         public Rating Rating { get; set; }
