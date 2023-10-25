@@ -37,13 +37,6 @@ public class BookHubDbContext : DbContext
             .HasForeignKey(item => item.WishListId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<BookReview>()
-            .HasOne(bookReview => bookReview.Reviewer)
-            .WithMany(user => user.BookReviews)
-            .HasForeignKey(bookReview => bookReview.ReviewerId)
-            .OnDelete(DeleteBehavior.Cascade)
-            ;
-
         modelBuilder.Seed();
         base.OnModelCreating(modelBuilder);
     }

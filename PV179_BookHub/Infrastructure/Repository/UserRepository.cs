@@ -1,13 +1,12 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Models;
 
-namespace Infrastructure.Repository
+namespace Infrastructure.Repository;
+
+public class UserRepository : GenericRepository<User>
 {
-    public class UserRepository : GenericRepository<User>
+    public UserRepository(BookHubDbContext dbContext) : base(dbContext)
     {
-        public UserRepository(BookHubDbContext dbContext) : base(dbContext)
-        {
-            
-        }
+        
     }
 }
