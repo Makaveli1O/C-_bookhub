@@ -14,7 +14,8 @@ public class BookHubUnitOfWork : IUnitOfWork
     private OrderItemRepository? _orderItemRepository;
     private UserRepository? _userRepository;
     private BookReviewRepository? _bookReviewRepository;
-    
+    private AddressRepository? _addressRepository;
+
     public IGenericRepository<Book> BookRepository => _bookRepository ??= new BookRepository(_dbContext);
     public IGenericRepository<WishList> WishListRepository => _wishListRepository ??= new WishListRepository(_dbContext);
     public IGenericRepository<WishListItem> WishListItemRepository => _wishListItemRepository ??= new WishListItemRepository(_dbContext);
@@ -22,7 +23,8 @@ public class BookHubUnitOfWork : IUnitOfWork
     public IGenericRepository<OrderItem> OrderItemRepository => _orderItemRepository ??= new OrderItemRepository(_dbContext);
     public IGenericRepository<BookReview> BookReviewRepository => _bookReviewRepository ??= new BookReviewRepository(_dbContext);
     public IGenericRepository<User> UserRepository => _userRepository ??= new UserRepository(_dbContext);
-
+    public IGenericRepository<Address> AddressRepository => _addressRepository ??= new AddressRepository(_dbContext);
+    
     public BookHubUnitOfWork(BookHubDbContext dbContext)
     {
         _dbContext = dbContext;
