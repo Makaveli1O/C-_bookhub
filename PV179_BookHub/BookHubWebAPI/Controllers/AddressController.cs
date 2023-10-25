@@ -18,7 +18,7 @@ public class AddressController : Controller
     }
 
     [HttpPost]
-    [Route("address/create")]
+    [Route("address")]
     public async Task<IActionResult> CreateAddress(CreateAddressDto createAddressDto)
     {
         var address = _mapper.Map<Address>(createAddressDto);
@@ -33,7 +33,7 @@ public class AddressController : Controller
     }
 
     [HttpPut]
-    [Route("address/update/{id}")]
+    [Route("address/{id}")]
     public async Task<IActionResult> UpdateAddress(long id, CreateAddressDto createAddressDto)
     {
         var address = await _unitOfWork.AddressRepository.GetByIdAsync(id);
@@ -55,7 +55,7 @@ public class AddressController : Controller
     }
 
     [HttpGet]
-    [Route("address/view/{id}")]
+    [Route("address/{id}")]
     public async Task<IActionResult> FetchSingle(long id)
     {
         var address = await _unitOfWork.AddressRepository.GetByIdAsync(id);
@@ -66,7 +66,7 @@ public class AddressController : Controller
     }
 
     [HttpDelete]
-    [Route("address/delete/{id}")]
+    [Route("address/{id}")]
     public async Task<IActionResult> DeleteAddress(long id)
     {
         var address = await _unitOfWork.AddressRepository.GetByIdAsync(id);

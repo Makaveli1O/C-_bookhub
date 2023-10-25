@@ -1,6 +1,6 @@
 ﻿namespace BookHubWebAPI.Api.View;
 
-public class GeneralAddressView
+public class DetailedAddressView
 {
     public long Id { get; set; }
     public required string City { get; set; }
