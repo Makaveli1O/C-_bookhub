@@ -2,6 +2,7 @@
 
 public class GeneralAddressView
 {
+    public long Id { get; set; }
     public required string City { get; set; }
     public string? Street { get; set; }
     public string? StreetNumber { get; set; }

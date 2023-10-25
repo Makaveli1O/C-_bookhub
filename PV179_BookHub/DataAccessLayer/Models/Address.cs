@@ -4,14 +4,14 @@ namespace DataAccessLayer.Models;
 
 public class Address : BaseEntity
 {
-    [MaxLength(100)]
-    public string? Street;
-    [MaxLength(25)]
-    public string? StreetNumber;
     [MaxLength(85)]
-    public required string City;
+    public required string City { get; set; }
+    [MaxLength(100)]
+    public string? Street { get; set; }
+    [MaxLength(25)]
+    public string? StreetNumber { get; set; }
     [MaxLength(20)]
-    public required string State;
+    public required string State { get; set; }
     [MaxLength(10)]
-    public required string PostalCode;
+    public required string PostalCode { get; set; }
 }
