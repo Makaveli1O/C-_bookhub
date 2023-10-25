@@ -12,7 +12,7 @@ namespace DataAccessLayer.Models
         public long ReviewerId { get; set; }
         [ForeignKey(nameof(ReviewerId))]
         public virtual required User Reviewer { get; set; }
-        [MaxLength(5000)]
+        [MaxLength(500)]
         public string? Description { get; set; }
         public Rating Rating { get; set; }
     }
