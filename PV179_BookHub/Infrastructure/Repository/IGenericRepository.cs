@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Repository;
+﻿using System.Linq.Expressions;
+
+namespace Infrastructure.Repository;
 
 public interface IGenericRepository<TEntity> where TEntity : class
 {
@@ -12,4 +14,5 @@ public interface IGenericRepository<TEntity> where TEntity : class
     Task<IEnumerable<TEntity>> GetAllAsync();
     void SaveChanges();
     Task SaveChangesAsync();
+    Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>>? filter);
 }
