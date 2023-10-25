@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repository;
 
@@ -60,5 +61,15 @@ public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> w
     public async Task SaveChangesAsync()
     {
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>>? filter = null)
+    {
+        var query = _dbContext.Set<TEntity>().AsQueryable();
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+        return await query.ToListAsync();
     }
 }
