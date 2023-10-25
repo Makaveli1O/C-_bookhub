@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class AddressController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -18,7 +20,6 @@ public class AddressController : Controller
     }
 
     [HttpPost]
-    [Route("address")]
     public async Task<IActionResult> CreateAddress(CreateAddressDto createAddressDto)
     {
         var address = _mapper.Map<Address>(createAddressDto);
@@ -28,12 +29,12 @@ public class AddressController : Controller
 
         return Created(
             new Uri($"{Request.Path}/{address.Id}", UriKind.Relative),
-            _mapper.Map<GeneralAddressView>(address)
+            _mapper.Map<DetailedAddressView>(address)
             );
     }
 
     [HttpPut]
-    [Route("address/{id}")]
+    [Route("{id}")]
     public async Task<IActionResult> UpdateAddress(long id, CreateAddressDto createAddressDto)
     {
         var address = await _unitOfWork.AddressRepository.GetByIdAsync(id);
@@ -50,23 +51,23 @@ public class AddressController : Controller
             await _unitOfWork.CommitAsync();
         }
         return Ok(
-            _mapper.Map<GeneralAddressView>(address)
+            _mapper.Map<DetailedAddressView>(address)
             );
     }
 
     [HttpGet]
-    [Route("address/{id}")]
+    [Route("{id}")]
     public async Task<IActionResult> FetchSingle(long id)
     {
         var address = await _unitOfWork.AddressRepository.GetByIdAsync(id);
 
         return Ok(
-            _mapper.Map<GeneralAddressView>(address)
+            _mapper.Map<DetailedAddressView>(address)
             );
     }
 
     [HttpDelete]
-    [Route("address/{id}")]
+    [Route("{id}")]
     public async Task<IActionResult> DeleteAddress(long id)
     {
         var address = await _unitOfWork.AddressRepository.GetByIdAsync(id);
