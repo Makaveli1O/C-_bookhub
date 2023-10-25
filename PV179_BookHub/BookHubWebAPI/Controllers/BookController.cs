@@ -2,6 +2,7 @@
 using BookHubWebAPI.Api.Create;
 using BookHubWebAPI.Api.View;
 using DataAccessLayer.Models;
+using DataAccessLayer.Models.Enums;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
@@ -75,6 +76,68 @@ public class BookController : ControllerBase
 
         return Ok(
             _mapper.Map<DetailedBookViewDto>(book)
+            );
+    }
+
+    [HttpGet]
+    [Route("Books/ByTitle/{title}")]
+    public async Task<IActionResult> FetchBooksByTitle(string title)
+    {
+        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
+                                   book => book.Title == title
+                                   );
+        return Ok(
+            _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
+            );
+    }
+
+
+    [HttpGet]
+    [Route("Books/ByDescription/{description}")]
+    public async Task<IActionResult> FetchBooksByDescription(string description)
+    {
+        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
+                                   book => book.Description == description
+                                   );
+        return Ok(
+            _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
+            );
+    }
+
+
+    [HttpGet]
+    [Route("Books/ByBookGenre/{bookGenre}")]
+    public async Task<IActionResult> FetchBooksByCategory(BookGenre bookGenre)
+    {
+        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
+                                   book => book.BookGenre == bookGenre
+                                   );
+        return Ok(
+            _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
+            );
+    }
+
+    [HttpGet]
+    [Route("Books/ByPrice/{price}")]
+    public async Task<IActionResult> FetchBooksByPrice(double price)
+    {
+        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
+                                   book => book.Price == price
+                                   );
+        return Ok(
+            _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
+            );
+    }
+
+    [HttpGet]
+    [Route("Books/ByPublisher/{publisher}")]
+    public async Task<IActionResult> FetchBooksByPublisher(string publisher)
+    {
+        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
+                                   book => book.Publisher == publisher
+                                   );
+        return Ok(
+            _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
             );
     }
 

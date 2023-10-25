@@ -10,5 +10,5 @@ public class Order : BaseEntity
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public double TotalPrice { get; set; }
     public OrderState State { get; set; }
-    public IEnumerable<OrderItem>? Items { get; set; }
+    public virtual IEnumerable<OrderItem>? Items { get; set; }
 }

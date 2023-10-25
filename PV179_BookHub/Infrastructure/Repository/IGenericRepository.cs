@@ -15,4 +15,5 @@ public interface IGenericRepository<TEntity> where TEntity : class
     void SaveChanges();
     Task SaveChangesAsync();
     Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>>? filter);
+    Task<TEntity?> GetSingleFilteredAsync(Expression<Func<TEntity, bool>>? filter);
 }
