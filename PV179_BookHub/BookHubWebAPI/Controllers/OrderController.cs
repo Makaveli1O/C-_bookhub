@@ -22,7 +22,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
-    [Route("/{userId}")]
+    [Route("{userId}")]
     public async Task<IActionResult> CreateOrder(long userId)
     {
         var order = new Order()
@@ -40,7 +40,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet]
-    [Route("/{userId}")]
+    [Route("{userId}")]
     public async Task<IActionResult> FetchOrdersByUserId(long userId)
     {
         var orders = await _unitOfWork.OrderRepository
@@ -50,7 +50,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet]
-    [Route("/detail/{id}")]
+    [Route("detail/{id}")]
     public async Task<IActionResult> FetchOrderById(long id)
     {
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
@@ -65,7 +65,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("/{id}")]
+    [Route("{id}")]
     public async Task<IActionResult> DeleteOrder(long id)
     {
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
@@ -79,7 +79,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("/pay/{id}")]
+    [Route("pay/{id}")]
     public async Task<IActionResult> PayForOrder(long id)
     {
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
@@ -94,7 +94,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("/cancel/{id}")]
+    [Route("cancel/{id}")]
     public async Task<IActionResult> CancellOrder(long id)
     {
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
@@ -109,7 +109,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("/refund/{id}")]
+    [Route("refund/{id}")]
     public async Task<IActionResult> RefundOrder(long id)
     {
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
@@ -124,7 +124,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
-    [Route("/item/{orderId}")]
+    [Route("item/{orderId}")]
     public async Task<IActionResult> CreateOrderItem(long orderId, CreateOrderItemDto createOrderItemDto)
     {
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(orderId);
@@ -147,7 +147,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet]
-    [Route("/item/{id}")]
+    [Route("item/{id}")]
     public async Task<IActionResult> FetchSingleItem(long id)
     {
         var orderItem = await _unitOfWork.OrderItemRepository.GetByIdAsync(id);
@@ -162,7 +162,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("/item/{id}")]
+    [Route("item/{id}")]
     public async Task<IActionResult> DeleteOrderItem(long id)
     {
         var order = await _unitOfWork.OrderItemRepository.GetByIdAsync(id);
