@@ -8,6 +8,5 @@ public class DetailedOrderViewDto
     public DateTime CreatedAt { get; set; }
     public double TotalPrice { get; set; }
     public OrderState State { get; set; }
-
     public IEnumerable<GeneralOrderItemViewDto> Items { get; set; }
 }

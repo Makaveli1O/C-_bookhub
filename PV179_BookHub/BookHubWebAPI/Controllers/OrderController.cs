@@ -43,8 +43,8 @@ public class OrderController : ControllerBase
     [Route("/{userId}")]
     public async Task<IActionResult> FetchOrdersByUserId(long userId)
     {
-        var orders = await _unitOfWork.OrderRepository.GetAllAsync();
-        orders = orders.Where(order => order.UserId == userId).ToList();    //TODO
+        var orders = await _unitOfWork.OrderRepository
+            .GetAllFilteredAsync(ord => ord.UserId == userId);
 
         return Ok(_mapper.Map<List<GeneralOrderViewDto>>(orders));
     }
