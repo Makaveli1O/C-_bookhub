@@ -1,4 +1,6 @@
-﻿namespace BookHubWebAPI.Middleware;
+﻿using System.Diagnostics;
+
+namespace BookHubWebAPI.Middleware;
 
 public class RequestLoggingMiddleware
 {
@@ -14,6 +16,11 @@ public class RequestLoggingMiddleware
     public async Task Invoke(HttpContext context)
     {
         _logger.LogInformation($"Received request: {context.Request.Method} {context.Request.Path}");
+
+        var watch = Stopwatch.StartNew();
         await _next(context);
+        watch.Stop();
+
+        _logger.LogInformation($"Response status code: {context.Response.StatusCode} and processing time: {watch.ElapsedMilliseconds} ms");
     }
 }
