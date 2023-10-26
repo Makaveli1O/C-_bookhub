@@ -72,4 +72,15 @@ public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> w
         }
         return await query.ToListAsync();
     }
+    public async Task<TEntity?> GetSingleFilteredAsync(Expression<Func<TEntity, bool>>? filter = null)
+    {
+        var query = _dbContext.Set<TEntity>().AsQueryable();
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+
+        return await query.FirstOrDefaultAsync();
+    }
+
 }

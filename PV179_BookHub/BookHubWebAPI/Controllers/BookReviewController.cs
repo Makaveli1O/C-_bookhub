@@ -64,8 +64,6 @@ public class BookReviewController : Controller
             );
     }
 
-
-
     [HttpGet]
     [Route("/User/{userId}")]
     public async Task<IActionResult> FetchUserReviews(long userId)
