@@ -14,6 +14,7 @@ public static class DataInitializer
         var orderItems = PrepairOrderItemModels();
         var users = PrepairUserModels();
         var bookReviews = PrepairBookReviews();
+        var addresses = PrepairAddressModels();
 
         modelBuilder.Entity<User>()
             .HasData(users);
@@ -29,6 +30,8 @@ public static class DataInitializer
             .HasData(orders);
         modelBuilder.Entity<OrderItem>()
             .HasData(orderItems);
+        modelBuilder.Entity<Address>()
+            .HasData(addresses);
 
     }
 
@@ -76,6 +79,13 @@ public static class DataInitializer
     private static List<OrderItem> PrepairOrderItemModels()
     {
         return new List<OrderItem>()
+        {
+        };
+    }
+
+    private static List<Address> PrepairAddressModels()
+    {
+        return new List<Address>()
         {
         };
     }

@@ -12,6 +12,7 @@ public class BookHubDbContext : DbContext
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<BookReview> BookReviews { get; set; }
+    public DbSet<Address> Addresses { get; set; }
 
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)
     {
