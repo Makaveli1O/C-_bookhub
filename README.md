@@ -1,6 +1,23 @@
 # PV179 - Bookhub
 
-The project is a web application that fulfills several key requirements, showcasing a data access layer, infrastructure, correct acces to the data dependency injection and various well-known designs and follows a MVC architecture patter. The application is a bookhub implementation and features an API with multiple endpoints.
+- **Name**: Bookhub
+- **Techstack**
+   - **Backend**
+      - C# (ASP.NET Core for the API)
+      - Entity Framework Core for data access and migrations
+      - SQLite Database
+      - Swagger for API documentation
+   - **Frontend** _(TODO)_
+   - **Development tools**
+      - Package Manager : NuGet
+      - Version Control : Git
+- **Developers**
+  - Oliver Sintaj
+  - Pavol Baran
+  - Jozef Mihale
+  - Samuel Líška
+- **Assignment :** Develop a digital platform for the company called "BookHub", a company that sells books of various genres. The platform should facilitate easy browsing and purchase of books, letting customers sort and filter by authors, publishers, and genres. After customers create accounts, they should be able to review their purchase history, rate books, and make wishlists. Administrators should have privileges to update book details, manage user accounts, and regulate book prices.
+
 
 ## Table of Contents
 
@@ -21,7 +38,7 @@ The project is a web application that fulfills several key requirements, showcas
    In Visual Studio, make sure to select the following workloads using the Visual Studio Installer:
      - "ASP .Net and web development."
 
-4. **Docker:**
+4. **Docker: (Not yet implemented)**
   Install Docker to support containerized development and deployment.
 
 ## Installation
