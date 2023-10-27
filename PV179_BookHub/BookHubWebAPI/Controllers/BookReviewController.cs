@@ -19,7 +19,7 @@ public class BookReviewController : Controller
         _mapper = mapper;
     }
 
-    [HttpPost("/Create")]
+    [HttpPost("Create")]
     public async Task<IActionResult> CreateBookReview(CreateBookReviewDto createBookReviewDto)
     {
         var bookReview = _mapper.Map<BookReview>(createBookReviewDto);
@@ -33,7 +33,7 @@ public class BookReviewController : Controller
     }
 
     [HttpPut]
-    [Route("/Update/{bookReviewId}")]
+    [Route("Update/{bookReviewId}")]
     public async Task<IActionResult> UpdateBookReview(long bookReviewId, string? bookReviewDescription)
     {
         var bookReview = await _unitOfWork.BookReviewRepository.GetByIdAsync(bookReviewId);
@@ -51,7 +51,7 @@ public class BookReviewController : Controller
     }
 
     [HttpGet]
-    [Route("/Book/{bookId}")]
+    [Route("Book/{bookId}")]
     public async Task<IActionResult> FetchBookReviews(long bookId)
     {
         var bookReviews = await _unitOfWork.BookReviewRepository.GetAllFilteredAsync(
@@ -65,7 +65,7 @@ public class BookReviewController : Controller
     }
 
     [HttpGet]
-    [Route("/User/{userId}")]
+    [Route("User/{userId}")]
     public async Task<IActionResult> FetchUserReviews(long userId)
     {
         var bookReviews = 
