@@ -1,92 +1,100 @@
-# PV 179 - BookHub
+# PV179 - Bookhub
 
+The project is a web application that fulfills several key requirements, showcasing a data access layer, infrastructure, correct acces to the data dependency injection and various well-known designs and follows a MVC architecture patter. The application is a bookhub implementation and features an API with multiple endpoints.
 
+## Table of Contents
 
-## Getting started
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Folder Structure](#folder-structure)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Prerequisites
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+1. **.NET 7.0 Runtime:**
+   Ensure that you have the .NET 7.0 Runtime installed on your development machine. You can download it from the official [.NET website](https://dotnet.microsoft.com/download).
 
-## Add your files
+2. **Integrated Development Environment (IDE):**
+   You will need an Integrated Development Environment (IDE) for .NET development. We recommend using Visual Studio as it provides a comprehensive set of tools for .NET development.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+3. **Visual Studio Installer Workloads:**
+   In Visual Studio, make sure to select the following workloads using the Visual Studio Installer:
+     - "ASP .Net and web development."
 
-```
-cd existing_repo
-git remote add origin https://gitlab.fi.muni.cz/xbaran4/bookhub.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.fi.muni.cz/xbaran4/bookhub/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+4. **Docker:**
+   Docker is recommended for containerization and running applications in isolated environments. Install Docker to support containerized development and deployment.
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+### Step 1: Install .NET 7.0 Runtime
+
+1. Visit the official [.NET website](https://dotnet.microsoft.com/download).
+
+2. Download the .NET 7.0 Runtime for your operating system (Windows, macOS, or Linux).
+
+3. Follow the installation instructions to install the .NET Runtime on your machine.
+
+### Step 2: Install an Integrated Development Environment (reccomended IDE is Visual Studio)
+
+1. Download and install Visual Studio from the official website: [Visual Studio](https://visualstudio.microsoft.com/).
+
+2. During installation, make sure to select the appropriate workloads, such as "ASP .Net and web development," using the Visual Studio Installer.
+
+### Step 3: Install Docker
+
+1. Download Docker from the official website based on your operating system:
+   - [Docker for Windows](https://docs.docker.com/desktop/install/windows-install/)
+   - [Docker for macOS](https://docs.docker.com/desktop/install/mac-install/)
+   - [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/)
+
+2. Follow the installation instructions for your specific operating system to install Docker.
+
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Follow these steps to use the project effectively:
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### Clone the Repository
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```shell
+git clone https://gitlab.fi.muni.cz/xbaran4/bookhub.git
+```
+### Run the project
+```shell
+# Navigate to the project directory
+cd <project_directory>
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+# Install project dependencies
+dotnet restore
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+# Build the application
+dotnet build
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+# Run the application
+dotnet run
+```
+This will start your project. Access the application using a web browser at http://localhost:5000 (or the appropriate address).
 
-## License
-For open source projects, say how it is licensed.
+## Folder Structure
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## Project Folder Structure
+
+The project is organized into several key folders to maintain a clean and organized codebase. Here's an overview of the main folders:
+
+### BookhubWeAPI
+
+- The presentation layer where API endpoints, controllers, mappers, and middleware are located.
+
+### DataAccessLayer
+
+- Handles database access, models, and related data operations.
+
+### Infrastructure
+
+- Contains repositories and follows the Unit of Work pattern for managing data operations.
+
+### DAL.SQLite.Migrations
+
+- A dedicated project for database migrations to manage changes to the database schema.
+
+
