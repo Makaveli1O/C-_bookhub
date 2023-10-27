@@ -22,7 +22,7 @@ The project is a web application that fulfills several key requirements, showcas
      - "ASP .Net and web development."
 
 4. **Docker:**
-   Docker is recommended for containerization and running applications in isolated environments. Install Docker to support containerized development and deployment.
+  Install Docker to support containerized development and deployment.
 
 ## Installation
 
