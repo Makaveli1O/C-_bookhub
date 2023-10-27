@@ -77,8 +77,6 @@ This will start your project. Access the application using a web browser at http
 
 ## Folder Structure
 
-## Project Folder Structure
-
 The project is organized into several key folders to maintain a clean and organized codebase. Here's an overview of the main folders:
 
 ### BookhubWeAPI
