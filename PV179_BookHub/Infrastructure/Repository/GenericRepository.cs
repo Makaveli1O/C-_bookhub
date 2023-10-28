@@ -6,7 +6,7 @@ namespace Infrastructure.Repository;
 
 public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
-    private readonly BookHubDbContext _dbContext;
+    protected readonly BookHubDbContext _dbContext;
 
     protected GenericRepository(BookHubDbContext dbContext)
     {

@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Models;
 
-namespace Infrastructure.Repository;
+namespace Infrastructure.Repository.EntityRepositories;
 
 public class WishListRepository : GenericRepository<WishList>
 {

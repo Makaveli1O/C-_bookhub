@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Models;
 using Infrastructure.Repository;
+using Infrastructure.Repository.EntityRepositories;
 
 namespace Infrastructure.UnitOfWork;
 
