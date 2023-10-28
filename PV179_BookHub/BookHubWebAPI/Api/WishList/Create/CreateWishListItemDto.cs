@@ -1,4 +1,4 @@
-﻿namespace BookHubWebAPI.Api.Create;
+﻿namespace BookHubWebAPI.Api.WishList.Create;
 
 public class CreateWishListItemDto
 {

@@ -1,6 +1,6 @@
 ﻿using DataAccessLayer.Models.Enums;
 
-namespace BookHubWebAPI.Api.View;
+namespace BookHubWebAPI.Api.BookReview.View;
 
 public class GeneralBookReviewViewDto
 {

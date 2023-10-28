@@ -1,5 +1,6 @@
-﻿
-namespace BookHubWebAPI.Api.View;
+﻿using BookHubWebAPI.Api.Book.View;
+
+namespace BookHubWebAPI.Api.Order.View;
 
 public class DetailedOrderItemViewDto
 {

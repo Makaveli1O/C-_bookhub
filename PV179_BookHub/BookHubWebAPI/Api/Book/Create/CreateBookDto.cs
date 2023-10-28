@@ -1,6 +1,6 @@
 ﻿using DataAccessLayer.Models.Enums;
 
-namespace BookHubWebAPI.Api.Create;
+namespace BookHubWebAPI.Api.Book.Create;
 
 public class CreateBookDto
 {

@@ -1,5 +1,4 @@
-﻿
-namespace BookHubWebAPI.Api.Create;
+﻿namespace BookHubWebAPI.Api.Order.Create;
 
 public class CreateOrderItemDto
 {

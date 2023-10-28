@@ -1,4 +1,4 @@
-﻿namespace BookHubWebAPI.Api.View;
+﻿namespace BookHubWebAPI.Api.Address.View;
 
 public class DetailedAddressView
 {

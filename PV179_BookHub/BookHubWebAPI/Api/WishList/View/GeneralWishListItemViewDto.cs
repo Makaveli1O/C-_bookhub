@@ -1,4 +1,4 @@
-﻿namespace BookHubWebAPI.Api.View;
+﻿namespace BookHubWebAPI.Api.WishList.View;
 
 public class GeneralWishListItemViewDto
 {

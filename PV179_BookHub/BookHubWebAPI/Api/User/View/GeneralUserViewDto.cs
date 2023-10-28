@@ -2,7 +2,7 @@
 using DataAccessLayer.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace BookHubWebAPI.Api.View;
+namespace BookHubWebAPI.Api.User.View;
 
 public class GeneralUserViewDto
 {
