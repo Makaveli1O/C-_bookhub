@@ -332,7 +332,7 @@ public static class DataInitializer
                 "And as the horrifying origin of the Clown Prince of Crime is finally revealed, will the thin line that separates Batman's nobility and the " +
                 "Joker's insanity snap once and for all?",
                 Price = 11.19
-            },
+            }
         };
     }
     private static List<WishList> PrepairWishListModels()

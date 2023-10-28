@@ -20,4 +20,5 @@ public class Book : BaseEntity
     [MaxLength(700)]
     public string? Description { get; set; }
     public double Price { get; set; }
+    public virtual IEnumerable<BookReview>? Reviews { get; set; }
 }
