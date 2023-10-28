@@ -13,57 +13,57 @@ public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> w
         _dbContext = dbContext;
     }
 
-    public void Add(TEntity entity)
+    public virtual void Add(TEntity entity)
     {
         _dbContext.Add(entity);
     }
 
-    public async Task AddAsync(TEntity entity)
+    public virtual async Task AddAsync(TEntity entity)
     {
         await _dbContext.Set<TEntity>().AddAsync(entity);
     }
 
-    public void Delete(TEntity entity)
+    public virtual void Delete(TEntity entity)
     {
         _dbContext.Set<TEntity>().Remove(entity);
     }
 
-    public void Update(TEntity entity)
+    public virtual void Update(TEntity entity)
     {
         _dbContext.Set<TEntity>().Update(entity);
     }
 
-    public IEnumerable<TEntity> GetAll()
+    public virtual IEnumerable<TEntity> GetAll()
     {
         return _dbContext.Set<TEntity>().ToList();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         return await _dbContext.Set<TEntity>().ToListAsync();
     }
 
-    public TEntity? GetById(long id)
+    public virtual TEntity? GetById(long id)
     {
         return _dbContext.Set<TEntity>().Find(id);
     }
 
-    public async Task<TEntity?> GetByIdAsync(long id)
+    public virtual async Task<TEntity?> GetByIdAsync(long id)
     {
         return await _dbContext.Set<TEntity>().FindAsync(id);
     }
 
-    public void SaveChanges()
+    public virtual void SaveChanges()
     {
         _dbContext.SaveChanges();
     }
 
-    public async Task SaveChangesAsync()
+    public virtual async Task SaveChangesAsync()
     {
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>>? filter = null)
+    public virtual async Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>>? filter = null)
     {
         var query = _dbContext.Set<TEntity>().AsQueryable();
         if (filter != null)
@@ -72,7 +72,7 @@ public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> w
         }
         return await query.ToListAsync();
     }
-    public async Task<TEntity?> GetSingleFilteredAsync(Expression<Func<TEntity, bool>>? filter = null)
+    public virtual async Task<TEntity?> GetSingleFilteredAsync(Expression<Func<TEntity, bool>>? filter = null)
     {
         var query = _dbContext.Set<TEntity>().AsQueryable();
         if (filter != null)
