@@ -1,0 +1,122 @@
+@startuml
+' visual settings
+!theme cerulean-outline
+hide circle
+skinparam linetype ortho
+skinparam backgroundColor white
+
+
+
+entity "User" {
+  *id : number <<generated>>
+  --
+  *username : text
+  *password_hash : text
+  *salt : text
+  *role: enum
+}
+
+entity "Wishlist" {
+  *id : number <<generated>>
+  --
+  *user_id : number <<FK>>
+  *created_at : datetime
+  *description : text
+}
+
+entity "WishlistItem" {
+  *id : number <<generated>>
+  --
+  *wishlist_id : number <<FK>>
+  *book_id : number <<FK>>
+  *priority : enum
+}
+
+entity "Order" {
+  *id : number <<generated>>
+  --
+  *user_id : number <<FK>>
+  *created_at : datetime
+  *total_price : number
+  *state : enum
+}
+
+entity "OrderItem" {
+  *id : number <<generated>>
+  --
+  *order_id : number <<FK>>
+  *book_id : number <<FK>>
+  *bookstore_id : number <<FK>>
+  *purchase_price : number
+  *quantity : number
+}
+
+entity "Book" {
+  *id : number <<generated>>
+  --
+  *title : text
+  *author : text
+  *isbn : text
+  *publisher : text
+  *genre : enum
+  *description : text
+  *price: number
+}
+
+entity "BookReview" {
+  *id : number <<generated>>
+  --
+  *book_id : number <<FK>>
+  *user_id : number <<FK>>
+  *description : text
+  *rating : enum
+}
+
+entity "BookStore" {
+  *id : number <<generated>>
+  --
+  *address_id : number <<FK>>
+  *manager_id : number <<FK>>
+  *name : text
+  *phone_number : text
+  *email : text
+}
+
+entity "Address" {
+  *id : number <<generated>>
+  --
+  *street : text
+  *street_number : text
+  *city : text
+  *state : text
+  *postal_code : text
+}
+
+entity "InventoryItem" {
+  *id : number <<generated>>
+  --
+  *book_id : number <<FK>>
+  *bookstore_id : number <<FK>>
+  *in_stock : number
+  *last_restock: datetime
+}
+
+User ||..o{ Wishlist
+User ||..o{ Order
+User ||..o{ BookReview
+User ||..o| BookStore
+
+Wishlist ||..o{ WishlistItem
+Order ||..o{ OrderItem
+
+Book ||..o{ BookReview
+Book ||..o{ WishlistItem
+Book ||..o{ OrderItem
+
+BookStore |o..|| Address
+BookStore ||..o{ OrderItem
+
+InventoryItem }o..|| BookStore
+InventoryItem }o..|| Book
+
+@enduml
