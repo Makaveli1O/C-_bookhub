@@ -8,38 +8,38 @@ public static class DataInitializer
 {
     public static void Seed(this ModelBuilder modelBuilder)
     {
+        var books = PrepairBookModels();
+        var users = PrepairUserModels();
+        var addresses = PrepairAddressModels();
+        var bookReviews = PrepairBookReviews();
         var bookStores = PrepairBookStoreModels();
         var inventoryItems = PrepairInventoryItemModels();
-        var books = PrepairBookModels();
         var wishLists = PrepairWishListModels();
-        var bowishListItems = PrepairWishListItemModels();
+        var wishListItems = PrepairWishListItemModels();
         var orders = PrepairOrderModels();
         var orderItems = PrepairOrderItemModels();
-        var users = PrepairUserModels();
-        var bookReviews = PrepairBookReviews();
-        var addresses = PrepairAddressModels();
 
+
+        modelBuilder.Entity<Book>()
+            .HasData(books);
+        modelBuilder.Entity<User>()
+            .HasData(users);
+        modelBuilder.Entity<Address>()
+            .HasData(addresses);
+        modelBuilder.Entity<BookReview>()
+            .HasData(bookReviews);
         modelBuilder.Entity<BookStore>()
             .HasData(bookStores);
         modelBuilder.Entity<InventoryItem>()
             .HasData(inventoryItems);
-        modelBuilder.Entity<User>()
-            .HasData(users);
-        modelBuilder.Entity<Book>()
-            .HasData(books);
-        modelBuilder.Entity<BookReview>()
-            .HasData(bookReviews);
         modelBuilder.Entity<WishList>()
             .HasData(wishLists);
         modelBuilder.Entity<WishListItem>()
-            .HasData(bowishListItems);
+            .HasData(wishListItems);
         modelBuilder.Entity<Order>()
             .HasData(orders);
         modelBuilder.Entity<OrderItem>()
             .HasData(orderItems);
-        modelBuilder.Entity<Address>()
-            .HasData(addresses);
-
     }
 
     private static List<BookReview> PrepairBookReviews()
@@ -217,7 +217,7 @@ public static class DataInitializer
         new BookReview
         {
             Id = 28,
-            BookId =-9,
+            BookId = 9,
             ReviewerId = 9,
             Description = "A thrilling conclusion to the Harry Potter series. It answers many questions and provides a satisfying end to the story. Highly recommended.",
             Rating = Rating.Fair
