@@ -8,6 +8,8 @@ public static class DataInitializer
 {
     public static void Seed(this ModelBuilder modelBuilder)
     {
+        var bookStores = PrepairBookStoreModels();
+        var inventoryItems = PrepairInventoryItemModels();
         var books = PrepairBookModels();
         var wishLists = PrepairWishListModels();
         var bowishListItems = PrepairWishListItemModels();
@@ -17,6 +19,10 @@ public static class DataInitializer
         var bookReviews = PrepairBookReviews();
         var addresses = PrepairAddressModels();
 
+        modelBuilder.Entity<BookStore>()
+            .HasData(bookStores);
+        modelBuilder.Entity<InventoryItem>()
+            .HasData(inventoryItems);
         modelBuilder.Entity<User>()
             .HasData(users);
         modelBuilder.Entity<Book>()
@@ -805,6 +811,190 @@ public static class DataInitializer
     {
         return new List<Address>()
         {
+        };
+    }
+
+    private static List<BookStore> PrepairBookStoreModels()
+    {
+        return new List<BookStore>()
+        {
+            new BookStore
+            {
+                Id = 1,
+                AddressId = 1,
+                ManagerId = 1,
+                Name = "Brno Michelle Bookstore",
+                PhoneNumber = "+421 918 365 172",
+                Email = "bestBookstore@gmail.com",
+            },
+            new BookStore
+            {
+                Id = 2,
+                AddressId = 3,
+                ManagerId = 2,
+                Name = "City Reads",
+                PhoneNumber = "+123 456 7890",
+                Email = "cityreads@example.com",
+            },
+            new BookStore
+            {
+                Id = 3,
+                AddressId = 4,
+                ManagerId = 3,
+                Name = "Book Haven",
+                PhoneNumber = "+987 654 3210",
+                Email = "bookhaven@store.net",
+            },
+            new BookStore
+            {
+                Id = 4,
+                AddressId = 5,
+                ManagerId = 4,
+                Name = "Reading Nook",
+                PhoneNumber = "+555 123 4567",
+                Email = "nook.reads@bookshop.org",
+            },
+            new BookStore
+            {
+                Id = 5,
+                AddressId = 6,
+                ManagerId = 5,
+                Name = "Literary Lighthouse",
+                PhoneNumber = "+777 999 8888",
+                Email = "litlighthouse@mail.com",
+            },
+            new BookStore
+            {
+                Id = 6,
+                AddressId = 7,
+                ManagerId = 6,
+                Name = "Page Turner Books",
+                PhoneNumber = "+333 555 7777",
+                Email = "pageturner@store.info",
+            },
+            new BookStore
+            {
+                Id = 7,
+                AddressId = 8,
+                ManagerId = 7,
+                Name = "Classic Reads",
+                PhoneNumber = "+999 111 2222",
+                Email = "classicreads@example.com",
+            },
+            new BookStore
+            {
+                Id = 8,
+                AddressId = 9,
+                ManagerId = 8,
+                Name = "Book Emporium",
+                PhoneNumber = "+123 987 6543",
+                Email = "emporium@bookstore.net",
+            },
+            new BookStore
+            {
+                Id = 9,
+                AddressId = 10,
+                ManagerId = 9,
+                Name = "Novel Nook",
+                PhoneNumber = "+555 777 3333",
+                Email = "novelnook@books.biz",
+            },
+            new BookStore
+            {
+                Id = 10,
+                AddressId = 11,
+                ManagerId = 10,
+                Name = "PageMaster Books",
+                PhoneNumber = "+666 888 2222",
+                Email = "pagemaster@example.com",
+            }
+        };
+    }
+
+    private static List<InventoryItem> PrepairInventoryItemModels()
+    {
+        return new List<InventoryItem>()
+        {
+            new InventoryItem
+            {
+                Id = 1,
+                BookId = 1,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 2,
+                BookId = 2,
+                BookStoreId = 2,
+                InStock = 10,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 3,
+                BookId = 3,
+                BookStoreId = 3,
+                InStock = 8,
+                LastRestock = new DateTime(2023, 8, 14)
+            },
+            new InventoryItem
+            {
+                Id = 4,
+                BookId = 4,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 8, 12)
+            },
+            new InventoryItem
+            {
+                Id = 5,
+                BookId = 5,
+                BookStoreId = 5,
+                InStock = 12,
+                LastRestock = new DateTime(2023, 8, 17)
+            },
+            new InventoryItem
+            {
+                Id = 6,
+                BookId = 6,
+                BookStoreId = 6,
+                InStock = 15,
+                LastRestock = new DateTime(2023, 8, 16)
+            },
+            new InventoryItem
+            {
+                Id = 7,
+                BookId = 7,
+                BookStoreId = 7,
+                InStock = 4,
+                LastRestock = new DateTime(2023, 8, 11)
+            },
+            new InventoryItem
+            {
+                Id = 8,
+                BookId = 8,
+                BookStoreId = 8,
+                InStock = 9,
+                LastRestock = new DateTime(2023, 8, 19)
+            },
+            new InventoryItem
+            {
+                Id = 9,
+                BookId = 9,
+                BookStoreId = 9,
+                InStock = 6,
+                LastRestock = new DateTime(2023, 8, 18)
+            },
+            new InventoryItem
+            {
+                Id = 10,
+                BookId = 10,
+                BookStoreId = 10,
+                InStock = 11,
+                LastRestock = new DateTime(2023, 8, 10)
+            }
         };
     }
 }
