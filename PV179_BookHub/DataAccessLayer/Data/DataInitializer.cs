@@ -1130,8 +1130,109 @@ public static class DataInitializer
     {
         return new List<Address>()
         {
+            new Address
+            {
+                Id = 1,
+                Street = "Palackého třída",
+                StreetNumber = "191/241",
+                City = "Brno",
+                State = "Česká republika",
+                PostalCode = "602 00"
+            },
+            new Address
+            {
+                Id = 2,
+                Street = "456 Elm St",
+                StreetNumber = "Unit 7",
+                City = "Sampletown",
+                State = "NY",
+                PostalCode = "67890"
+            },
+            new Address
+            {
+                Id = 3,
+                Street = "789 Oak Ave",
+                StreetNumber = "Suite 2C",
+                City = "Testville",
+                State = "TX",
+                PostalCode = "45678"
+            },
+            new Address
+            {
+                Id = 4,
+                Street = "101 Pine Rd",
+                StreetNumber = "Apt 6D",
+                City = "Mockington",
+                State = "FL",
+                PostalCode = "90123"
+            },
+            new Address
+            {
+                Id = 5,
+                Street = "222 Cedar Ln",
+                StreetNumber = "Unit 5A",
+                City = "Trialsville",
+                State = "IL",
+                PostalCode = "34567"
+            },
+            new Address
+            {
+                Id = 6,
+                Street = "333 Birch St",
+                StreetNumber = "Suite 3B",
+                City = "Sample Springs",
+                State = "AZ",
+                PostalCode = "78901"
+            },
+            new Address
+            {
+                Id = 7,
+                Street = "444 Redwood Ave",
+                StreetNumber = "Apt 2F",
+                City = "Illustration City",
+                State = "WA",
+                PostalCode = "23456"
+            },
+            new Address
+            {
+                Id = 8,
+                Street = "555 Sycamore Rd",
+                StreetNumber = "Unit 4E",
+                City = "Instanceville",
+                State = "OR",
+                PostalCode = "56789"
+            },
+            new Address
+            {
+                Id = 9,
+                Street = "666 Elm St",
+                StreetNumber = "Suite 1A",
+                City = "Demo Town",
+                State = "NM",
+                PostalCode = "12345"
+            },
+            new Address
+            {
+                Id = 10,
+                Street = "777 Oak Ave",
+                StreetNumber = "Apt 5B",
+                City = "Example Springs",
+                State = "NV",
+                PostalCode = "67890"
+            },
+            new Address
+            {
+                Id = 11,
+                Street = "888 Maple Ln",
+                StreetNumber = "Unit 3C",
+                City = "Testington",
+                State = "UT",
+                PostalCode = "45678"
+            }
         };
     }
+
+
 
     private static List<BookStore> PrepairBookStoreModels()
     {
