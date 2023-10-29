@@ -1232,8 +1232,6 @@ public static class DataInitializer
         };
     }
 
-
-
     private static List<BookStore> PrepairBookStoreModels()
     {
         return new List<BookStore>()
