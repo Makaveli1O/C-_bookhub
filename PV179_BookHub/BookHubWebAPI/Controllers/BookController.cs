@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
-using BookHubWebAPI.Api.Create;
-using BookHubWebAPI.Api.View;
+using BookHubWebAPI.Api.Book.Create;
+using BookHubWebAPI.Api.Book.Filter;
+using BookHubWebAPI.Api.Book.View;
 using DataAccessLayer.Models;
 using DataAccessLayer.Models.Enums;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace BookHubWebAPI.Controllers;
 
@@ -43,6 +45,7 @@ public class BookController : ControllerBase
         if (book != null)
         {
             book.Title = createBookDto.Title ?? book.Title;
+            book.ISBN = createBookDto.ISBN ?? book.ISBN;
             book.Author = createBookDto.Author ?? book.Author;
             book.Publisher = createBookDto.Publisher ?? book.Publisher;
             book.Description = createBookDto.Description ?? book.Description;
@@ -80,62 +83,12 @@ public class BookController : ControllerBase
     }
 
     [HttpGet]
-    [Route("Books/ByTitle/{title}")]
-    public async Task<IActionResult> FetchBooksByTitle(string title)
+    [Route("filter")]
+    public async Task<IActionResult> FetchBooksByFilters([FromQuery] IDictionary<string, string> query)
     {
-        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
-                                   book => book.Title == title
-                                   );
-        return Ok(
-            _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
-            );
-    }
+        var filter = new BookFilter(query);
+        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(filter.CreateEqualExpression());
 
-
-    [HttpGet]
-    [Route("Books/ByDescription/{description}")]
-    public async Task<IActionResult> FetchBooksByDescription(string description)
-    {
-        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
-                                   book => book.Description == description
-                                   );
-        return Ok(
-            _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
-            );
-    }
-
-
-    [HttpGet]
-    [Route("Books/ByBookGenre/{bookGenre}")]
-    public async Task<IActionResult> FetchBooksByCategory(BookGenre bookGenre)
-    {
-        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
-                                   book => book.BookGenre == bookGenre
-                                   );
-        return Ok(
-            _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
-            );
-    }
-
-    [HttpGet]
-    [Route("Books/ByPrice/{price}")]
-    public async Task<IActionResult> FetchBooksByPrice(double price)
-    {
-        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
-                                   book => book.Price == price
-                                   );
-        return Ok(
-            _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
-            );
-    }
-
-    [HttpGet]
-    [Route("Books/ByPublisher/{publisher}")]
-    public async Task<IActionResult> FetchBooksByPublisher(string publisher)
-    {
-        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(
-                                   book => book.Publisher == publisher
-                                   );
         return Ok(
             _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
             );

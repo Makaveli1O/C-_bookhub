@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BookHubWebAPI.Api.Create;
-using BookHubWebAPI.Api.View;
+using BookHubWebAPI.Api.WishList.Create;
+using BookHubWebAPI.Api.WishList.View;
 using DataAccessLayer.Models;
 
 namespace BookHubWebAPI.Mappers;
