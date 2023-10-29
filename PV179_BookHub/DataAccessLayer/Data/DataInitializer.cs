@@ -1246,73 +1246,793 @@ public static class DataInitializer
             {
                 Id = 2,
                 BookId = 2,
-                BookStoreId = 2,
-                InStock = 10,
-                LastRestock = new DateTime(2023, 8, 15)
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
             },
             new InventoryItem
             {
                 Id = 3,
                 BookId = 3,
-                BookStoreId = 3,
-                InStock = 8,
-                LastRestock = new DateTime(2023, 8, 14)
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
             },
             new InventoryItem
             {
                 Id = 4,
                 BookId = 4,
-                BookStoreId = 4,
-                InStock = 7,
-                LastRestock = new DateTime(2023, 8, 12)
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
             },
             new InventoryItem
             {
                 Id = 5,
                 BookId = 5,
-                BookStoreId = 5,
-                InStock = 12,
-                LastRestock = new DateTime(2023, 8, 17)
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
             },
             new InventoryItem
             {
                 Id = 6,
                 BookId = 6,
-                BookStoreId = 6,
-                InStock = 15,
-                LastRestock = new DateTime(2023, 8, 16)
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
             },
             new InventoryItem
             {
                 Id = 7,
                 BookId = 7,
-                BookStoreId = 7,
-                InStock = 4,
-                LastRestock = new DateTime(2023, 8, 11)
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
             },
             new InventoryItem
             {
                 Id = 8,
                 BookId = 8,
-                BookStoreId = 8,
-                InStock = 9,
-                LastRestock = new DateTime(2023, 8, 19)
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
             },
             new InventoryItem
             {
                 Id = 9,
                 BookId = 9,
-                BookStoreId = 9,
-                InStock = 6,
-                LastRestock = new DateTime(2023, 8, 18)
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
             },
             new InventoryItem
             {
                 Id = 10,
                 BookId = 10,
-                BookStoreId = 10,
-                InStock = 11,
-                LastRestock = new DateTime(2023, 8, 10)
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 11,
+                BookId = 11,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 12,
+                BookId = 12,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 13,
+                BookId = 13,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 14,
+                BookId = 14,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 15,
+                BookId = 15,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 16,
+                BookId = 16,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 17,
+                BookId = 17,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 18,
+                BookId = 18,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 19,
+                BookId = 19,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 20,
+                BookId = 20,
+                BookStoreId = 1,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 13)
+            },
+            new InventoryItem
+            {
+                Id = 21,
+                BookId = 1,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 22,
+                BookId = 2,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 23,
+                BookId = 3,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 24,
+                BookId = 4,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 25,
+                BookId = 5,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 26,
+                BookId = 6,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 27,
+                BookId = 7,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 28,
+                BookId = 8,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 29,
+                BookId = 9,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 30,
+                BookId = 10,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 31,
+                BookId = 11,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 32,
+                BookId = 12,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 33,
+                BookId = 13,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 34,
+                BookId = 14,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 35,
+                BookId = 15,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 36,
+                BookId = 16,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 37,
+                BookId = 17,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 38,
+                BookId = 18,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 39,
+                BookId = 19,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 40,
+                BookId = 20,
+                BookStoreId = 2,
+                InStock = 5,
+                LastRestock = new DateTime(2023, 8, 15)
+            },
+            new InventoryItem
+            {
+                Id = 41,
+                BookId = 1,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 42,
+                BookId = 2,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 43,
+                BookId = 3,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 44,
+                BookId = 4,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 45,
+                BookId = 5,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 46,
+                BookId = 6,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 47,
+                BookId = 7,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 48,
+                BookId = 8,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 49,
+                BookId = 9,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 50,
+                BookId = 10,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 51,
+                BookId = 11,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 52,
+                BookId = 12,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 53,
+                BookId = 13,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 54,
+                BookId = 14,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 55,
+                BookId = 15,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 56,
+                BookId = 16,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 57,
+                BookId = 17,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 58,
+                BookId = 18,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 59,
+                BookId = 19,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 60,
+                BookId = 20,
+                BookStoreId = 3,
+                InStock = 2,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 61,
+                BookId = 1,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 62,
+                BookId = 2,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 63,
+                BookId = 3,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 64,
+                BookId = 4,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 65,
+                BookId = 5,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 66,
+                BookId = 6,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 67,
+                BookId = 7,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 68,
+                BookId = 8,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 69,
+                BookId = 9,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 70,
+                BookId = 10,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 71,
+                BookId = 11,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 72,
+                BookId = 12,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 73,
+                BookId = 13,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 74,
+                BookId = 14,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 75,
+                BookId = 15,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 76,
+                BookId = 16,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 77,
+                BookId = 17,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 78,
+                BookId = 18,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 79,
+                BookId = 19,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 80,
+                BookId = 20,
+                BookStoreId = 4,
+                InStock = 7,
+                LastRestock = new DateTime(2023, 7, 23)
+            },
+            new InventoryItem
+            {
+                Id = 81,
+                BookId = 1,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 82,
+                BookId = 2,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 83,
+                BookId = 3,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 84,
+                BookId = 4,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 85,
+                BookId = 5,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 86,
+                BookId = 6,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 87,
+                BookId = 7,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 88,
+                BookId = 8,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 89,
+                BookId = 9,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 90,
+                BookId = 10,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 91,
+                BookId = 11,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 92,
+                BookId = 12,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 93,
+                BookId = 13,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 94,
+                BookId = 14,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 95,
+                BookId = 15,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 96,
+                BookId = 16,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 97,
+                BookId = 17,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 98,
+                BookId = 18,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 99,
+                BookId = 19,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
+            },
+            new InventoryItem
+            {
+                Id = 100,
+                BookId = 20,
+                BookStoreId = 5,
+                InStock = 10,
+                LastRestock = new DateTime(2022, 2, 2)
             }
         };
     }
