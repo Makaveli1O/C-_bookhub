@@ -42,6 +42,40 @@
 4. **Docker: (Not yet implemented)**
   Install Docker to support containerized development and deployment.
 
+## Project Tasks
+
+### Milestone 1
+
+1. **Design & Documentation**:
+   - Make a use-case diagram and data model for the application.
+   - Create a documentation Technical Overview (can be part of the readme) with the diagrams and information about the application.
+
+2. **API & Backend**:
+   - Create a REST web API capable of fetching products based on their 'name', 'description', 'price', 'Category', and 'Manufacturer'.
+   - Setup the database and introduce a DAL (Data Access Layer) to your project.
+   - Seed the database with real-looking data. Avoid using placeholders like 'AAAA', 'test', etc.
+   - Create an Authentication Middleware (a simple middleware using only a hard-coded access token is acceptable).
+   - Implement a Logging middleware that logs all incoming requests.
+
+3. **Version Control & Collaboration**:
+   - Set up a GitLab repository and set its visibility to Internal (not Private).
+   - Divide the work between the Team Lead and Team members.
+   - Each team member must contribute equally. Every member should:
+     - Create a database entity.
+     - Seed the created entity.
+     - Create CRUD operations (Web API Endpoints) for the created entity.
+   - All changes should be committed to separate branches and merged via merge requests.
+     - At least one approval from a team member is required for merge requests.
+     - The team member who approves a merge request is also responsible for the changes. This rule starts from the 2nd milestone.
+   - All merge requests for milestone 1 should be merged into a branch named 'Milestone 1'. Once done with the milestone, initiate a merge request from 'Milestone 1' to 'master'. This allows reviewers to see all changes in one place. The 'Milestone 1' branch can be merged only after teacher approval.
+
+4. **Documentation & Onboarding**:
+   - Create a README that provides basic information about how to run the application, its components, etc.
+
+### Milestone 2
+
+### Milestone 3
+
 ## Installation
 
 ### Step 1: Install .NET 7.0 Runtime
@@ -113,4 +147,23 @@ The project is organized into several key folders to maintain a clean and organi
 
 - A dedicated project for database migrations to manage changes to the database schema.
 
+## Technical overview
 
+### Dependencies
+
+- **[.NET 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)**
+   - [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-7.0)
+   - [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
+   - [Swashbuckle](https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-7.0&tabs=visual-studio)
+
+- **[SQLite](https://www.sqlite.org/index.html)**
+   - [Microsoft.EntityFrameworkCore.Sqlite](https://learn.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli)
+
+
+### Use-Case Diagram
+
+![My UML Diagram](http://cdn-0.plantuml.com/plantuml/png/TLBTRXDD3BsVf_3Nctv8JNW1X5gAK96ea0A56wJ8cN5thSnFDFOage1tPtPcexqWxCNAnpuU-zY-5SMi9NXp3KUMWXw4L3aEOlxJaGA1fLmyOLobefuZcP5TzNAsdepiEHumOu0TslsGKudkFlcKuJIoaZ6UdXKqGUPXL72SoIgdQ0nQhQmx5pW22g0Bi-iH8mwK9sSOyknyakufaesfFtZpQxLgyJ1qq5wetrG0u-09tgMqVoWx-6bYKeAh3oc3S3XujgmlDt0TMgLhi1XXHs1J57QKoS6FrfCeHeVPWP12UeRxpTDxI0VAE4cGzTL4YZerH1Q5uFzFQG2EhrFHLqrKqN49Dc6zBVYYAPCqqkDM9l0Nxu455YvyZ4UArNgPapWUBwRSMPjAr9c5rbvaVSwEyhb-okuYwJlBw5dqp3jLl12_CPrQWpsysUwg_MyL6snNrRceT9c-lFVO2R_DlBsl8ytNmWBeVJgH0qtG4y-ovQRkhgkh9gbTJujBEbA_ePeQNSzfGE14tlTDeWlRgPQf1gpN2su7jrgzdVVPGH_kWleKErfcrU0ocmuN-QrKJ-X7iE0U3qDFwVk-fUXAy7y0)
+
+### ERD Diagram
+
+![My UML Diagram](http://cdn-0.plantuml.com/plantuml/png/jPNFQXin4CRlUWerbq8XVe0GGjf28VHGQ2azBkFLu1NMIkxCoAx9vjqhUUEDDjw53QMvvVlcpy_ZqVYU1KXYwzHxlRSSmMb64UithDv9Wotg6Yaw17yTeZZhKJNM9DLIxL3nrleT4BGwMtBSeGuaJIYCDTJR3ONepUVW0kb3OmLL-aClLexwwYSZNUb7fVK7Q_IDzh5T8-dRsmrw910qTtV9lBxE4P6HFBIOuWJ_I9Psm7m8PAe6k2bq1YV5lnGStcXCrTNJI_DVbXjdMTu4K8t3ldnDVh9gmXnSGMvhG51iYzamo3NPdTZWpq0J20-2xMACmtFI3CewXEsCjICRA3U-7COtCaZ_TH8I15oL46eSyhBE0e9pH6yQJCWPowTIMYo1S6vgaUe662VOVqVeQGUn-02VKjt5x2d5bPiDKPf0XM1vxSlDZsjdkS4o9DMbOPBJkzSlGOrplDznR_6mc7f-gdChCiz5a6zFkGW5rmy9X8knm1X2vfdsBNZOpCAzlZ1Dy5ZrKOMCBLWtyQ0_zfqNax8GeXI5U-6oOPtBbs4W8yoG55VLmU04rOFVevT0nyNFwH-VZFLLikljwB4uOAa8JqPn6X9d_XdGNRTQXKTzFeaZyNGBHihBiXPofuTTKUfSw7NXF0EL2uwhdsILyoTQb79PfpJACWE6xi9grNNwUIyAup9fz2tffpvnI9YtrJrw4rlt5m00)
