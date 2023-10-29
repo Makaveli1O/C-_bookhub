@@ -691,13 +691,99 @@ public static class DataInitializer
     {
         return new List<WishList>()
         { 
-        };
+            new WishList
+            {
+                Id = 1,
+                UserId = 1,
+                Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#."
+            },
+            new WishList
+            {
+                Id = 2,
+                UserId = 2,
+                Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently."
+            },
+            new WishList
+            {
+                Id = 3,
+                UserId = 3,
+                Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!"
+            },
+            new WishList
+            {
+                Id = 4,
+                UserId = 4,
+                Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!"
+            },
+            new WishList
+            {
+                Id = 5,
+                UserId = 5,
+                Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection."
+            }
+       };
     }
 
     private static List<WishListItem> PrepairWishListItemModels()
     {
         return new List<WishListItem>()
         {
+            new WishListItem 
+            {
+                Id = 1,
+                WishListId = 1,
+                BookId = 1,
+                PreferencePriorty = 1,
+            },
+            new WishListItem
+            {
+                Id = 2,
+                WishListId = 2,
+                BookId = 2,
+                PreferencePriorty = 1,
+            },
+            new WishListItem
+            {
+                Id = 3,
+                WishListId = 2,
+                BookId = 18,
+                PreferencePriorty = 2,
+            },
+            new WishListItem
+            {
+                Id = 4,
+                WishListId = 3,
+                BookId = 3,
+                PreferencePriorty = 1,
+            },
+            new WishListItem
+            {
+                Id = 5,
+                WishListId = 3,
+                BookId = 4,
+                PreferencePriorty = 2,
+            },
+            new WishListItem
+            {
+                Id = 6,
+                WishListId = 3,
+                BookId = 5,
+                PreferencePriorty = 0,
+            },
+            new WishListItem
+            {
+                Id = 7,
+                WishListId = 4,
+                BookId = 6,
+                PreferencePriorty = 1,
+            },
+            new WishListItem
+            {
+                Id = 8,
+                WishListId = 5,
+                BookId = 7,
+                PreferencePriorty = 1,
+            }
         };
     }
 
