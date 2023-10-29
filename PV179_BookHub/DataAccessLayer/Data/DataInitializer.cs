@@ -797,6 +797,118 @@ public static class DataInitializer
     {
         return new List<Order>()
         {
+            new Order
+            {
+                Id = 1,
+                UserId = 4,
+                State = OrderState.Cancelled,
+                TotalPrice = 0
+            },
+            new Order
+            {
+                Id = 2,
+                UserId = 4,
+                State = OrderState.Created,
+                TotalPrice = 6.80
+            },
+            new Order
+            {
+                Id = 3,
+                UserId = 5,
+                State = OrderState.Created,
+                TotalPrice = 13.10
+            },
+            new Order
+            {
+                Id = 4,
+                UserId = 5,
+                State = OrderState.Refunded,
+                TotalPrice = 11.99
+            },
+            new Order
+            {
+                Id = 5,
+                UserId = 6,
+                State = OrderState.Paid,
+                TotalPrice = 111.90
+            },
+            new Order
+            {
+                Id = 6,
+                UserId = 7,
+                State = OrderState.Paid,
+                TotalPrice = 60.8
+            },
+            new Order
+            {
+                Id = 7,
+                UserId = 7,
+                State = OrderState.Cancelled,
+                TotalPrice = 0
+            },
+            new Order
+            {
+                Id = 8,
+                UserId = 7,
+                State = OrderState.Cancelled,
+                TotalPrice = 0
+            },
+            new Order
+            {
+                Id = 9,
+                UserId = 7,
+                State = OrderState.Created,
+                TotalPrice = 0
+            },
+            new Order
+            {
+                Id = 10,
+                UserId = 8,
+                State = OrderState.Paid,
+                TotalPrice = 747.6
+            },
+            new Order
+            {
+                Id = 11,
+                UserId = 8,
+                State = OrderState.Paid,
+                TotalPrice = 80.02
+            },
+            new Order
+            {
+                Id = 12,
+                UserId = 8,
+                State = OrderState.Created,
+                TotalPrice = 45.99
+            },
+            new Order
+            {
+                Id = 13,
+                UserId = 8,
+                State = OrderState.Created,
+                TotalPrice = 0
+            },
+            new Order
+            {
+                Id = 14,
+                UserId = 8,
+                State = OrderState.Cancelled,
+                TotalPrice = 240.09
+            },
+            new Order
+            {
+                Id = 15,
+                UserId = 15,
+                State = OrderState.Paid,
+                TotalPrice = 0.50
+            },
+            new Order
+            {
+                Id = 16,
+                UserId = 15,
+                State = OrderState.Paid,
+                TotalPrice = 24.99
+            }
         };
     }
 
@@ -804,6 +916,213 @@ public static class DataInitializer
     {
         return new List<OrderItem>()
         {
+            new OrderItem
+            {
+                Id = 1,
+                BookId = 3,
+                BookStoreId = 2,
+                OrderId = 2,
+                Price = 6.80,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 2,
+                BookId = 3,
+                BookStoreId = 1,
+                OrderId = 3,
+                Price = 6.80,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 3,
+                BookId = 4,
+                BookStoreId = 1,
+                OrderId = 3,
+                Price = 6.30,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 4,
+                BookId = 6,
+                BookStoreId = 1,
+                OrderId = 4,
+                Price = 11.99,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 5,
+                BookId = 20,
+                BookStoreId = 3,
+                OrderId = 5,
+                Price = 111.90,
+                Quantity = 10
+            },
+            new OrderItem
+            {
+                Id = 6,
+                BookId = 3,
+                BookStoreId = 1,
+                OrderId = 6,
+                Price = 6.80,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 7,
+                BookId = 4,
+                BookStoreId = 1,
+                OrderId = 6,
+                Price = 6.30,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 8,
+                BookId = 5,
+                BookStoreId = 1,
+                OrderId = 6,
+                Price = 8.20,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 9,
+                BookId = 6,
+                BookStoreId = 1,
+                OrderId = 6,
+                Price = 11.90,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 10,
+                BookId = 7,
+                BookStoreId = 1,
+                OrderId = 6,
+                Price = 9.30,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 11,
+                BookId = 8,
+                BookStoreId = 1,
+                OrderId = 6,
+                Price = 9.35,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 12,
+                BookId = 9,
+                BookStoreId = 1,
+                OrderId = 6,
+                Price = 8.95,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 13,
+                BookId = 1,
+                BookStoreId = 2,
+                OrderId = 10,
+                Price = 105.8,
+                Quantity = 10
+            },
+            new OrderItem
+            {
+                Id = 14,
+                BookId = 2,
+                BookStoreId = 2,
+                OrderId = 10,
+                Price = 350.9,
+                Quantity = 10
+            },
+            new OrderItem
+            {
+                Id = 15,
+                BookId = 18,
+                BookStoreId = 2,
+                OrderId = 10,
+                Price = 290.9,
+                Quantity = 10
+            },
+            new OrderItem
+            {
+                Id = 16,
+                BookId = 19,
+                BookStoreId = 3,
+                OrderId = 11,
+                Price = 46.45,
+                Quantity = 5
+            },
+            new OrderItem
+            {
+                Id = 17,
+                BookId = 20,
+                BookStoreId = 3,
+                OrderId = 11,
+                Price = 33.57,
+                Quantity = 3
+            },
+            new OrderItem
+            {
+                Id = 18,
+                BookId = 12,
+                BookStoreId = 3,
+                OrderId = 12,
+                Price = 30.99,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 19,
+                BookId = 13,
+                BookStoreId = 3,
+                OrderId = 12,
+                Price = 15,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 20,
+                BookId = 10,
+                BookStoreId = 1,
+                OrderId = 14,
+                Price = 120.10,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 21,
+                BookId = 11,
+                BookStoreId = 1,
+                OrderId = 14,
+                Price = 119.99,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 22,
+                BookId = 14,
+                BookStoreId = 1,
+                OrderId = 15,
+                Price = 0.50,
+                Quantity = 1
+            },
+            new OrderItem
+            {
+                Id = 23,
+                BookId = 16,
+                BookStoreId = 2,
+                OrderId = 16,
+                Price = 24.99,
+                Quantity = 1
+            },
         };
     }
 
