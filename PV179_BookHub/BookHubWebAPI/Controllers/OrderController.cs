@@ -132,11 +132,41 @@ public class OrderController : ControllerBase
         {
             return NotFound();
         }
+
+        var inventoryItems = await _unitOfWork.InventoryItemRepository
+            .GetAllFilteredAsync(
+            item => 
+            item.BookStoreId == createOrderItemDto.BookStoreId
+            && item.BookId == createOrderItemDto.BookId
+            );
+
+        if (inventoryItems == null)
+        {
+            return NotFound();
+        }
+
+        if (inventoryItems.Count() != 1)
+        {
+            // return error
+        }
+
+        var singleItem = inventoryItems.FirstOrDefault();
+
+        if (singleItem.InStock < createOrderItemDto.Quantity)
+        {
+            // throw error, not enough stock
+        }
+
+        singleItem.InStock -= createOrderItemDto.Quantity;
+
+
         var orderItem = _mapper.Map<OrderItem>(createOrderItemDto);
         orderItem.OrderId = orderId;
 
         order.TotalPrice += orderItem.Price * orderItem.Quantity;
+
         _unitOfWork.OrderRepository.Update(order);
+        _unitOfWork.InventoryItemRepository.Update(singleItem);
         await _unitOfWork.OrderItemRepository.AddAsync(orderItem);
         await _unitOfWork.CommitAsync();
 
@@ -165,12 +195,37 @@ public class OrderController : ControllerBase
     [Route("item/{id}")]
     public async Task<IActionResult> DeleteOrderItem(long id)
     {
-        var order = await _unitOfWork.OrderItemRepository.GetByIdAsync(id);
-        if (order != null)
+        var orderItem = await _unitOfWork.OrderItemRepository.GetByIdAsync(id);
+        if (orderItem == null)
         {
-            _unitOfWork.OrderItemRepository.Delete(order);
-            await _unitOfWork.CommitAsync();
+            return NotFound();
         }
+
+        var inventoryItems = await _unitOfWork.InventoryItemRepository
+            .GetAllFilteredAsync(
+            item =>
+            item.BookStoreId == orderItem.BookStoreId
+            && item.BookId == orderItem.BookId
+            );
+
+        if (inventoryItems == null)
+        {
+            return NotFound();
+        }
+
+        if (inventoryItems.Count() != 1)
+        {
+            // return error
+        }
+
+        var singleItem = inventoryItems.FirstOrDefault();
+
+        singleItem.InStock += orderItem.Quantity;
+
+        _unitOfWork.InventoryItemRepository.Update(singleItem);
+        _unitOfWork.OrderItemRepository.Delete(orderItem);
+        await _unitOfWork.CommitAsync();
+
         return NoContent();
     }
 }
