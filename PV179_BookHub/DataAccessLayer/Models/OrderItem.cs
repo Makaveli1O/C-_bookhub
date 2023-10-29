@@ -8,8 +8,8 @@ public class OrderItem : BaseEntity
     public long OrderId { get; set; }
     [ForeignKey(nameof(OrderId))]
     public virtual Order? Order { get; set; }
-    public long BookId { get; set; }
     [Required]
+    public long BookId { get; set; } 
     public virtual Book? Book { get; set; }
     [Required]
     public long BookStoreId { get; set; }
