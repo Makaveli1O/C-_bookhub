@@ -11,8 +11,9 @@
    - **Development tools**
       - Package Manager : NuGet
       - Version Control : Git
+- **Team Leader**
+   - Oliver Šintaj
 - **Developers**
-  - Oliver Sintaj
   - Pavol Baran
   - Jozef Mihale
   - Samuel Líška
