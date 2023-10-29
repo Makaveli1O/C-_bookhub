@@ -18,5 +18,6 @@ namespace DataAccessLayer.Models
         [MaxLength(50)]
         public required string Email { get; set; }
         public virtual IEnumerable<InventoryItem>? InventoryItems { get; set; }
+        public virtual IEnumerable<OrderItem>? OrderItems { get; set; }
     }
 }

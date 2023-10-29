@@ -10,7 +10,8 @@ public class User : BaseEntity
     public string PasswordHash { get; set; }
     public string Salt { get; set; }
     public UserRole Role { get; set; } = UserRole.User;
-    //public virtual IEnumerable<BookReview>? BookReviews { get; set; }
-    //public virtual IEnumerable<WishList>? WishLists { get; set; }
-    //public virtual IEnumerable<Order>? Orders { get; set; }
+    public virtual IEnumerable<BookReview>? BookReviews { get; set; }
+    public virtual IEnumerable<WishList>? WishLists { get; set; }
+    public virtual IEnumerable<Order>? Orders { get; set; }
+    public virtual BookStore? BookStore { get; set; }
 }

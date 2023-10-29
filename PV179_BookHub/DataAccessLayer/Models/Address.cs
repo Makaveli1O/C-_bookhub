@@ -14,4 +14,5 @@ public class Address : BaseEntity
     public required string State { get; set; }
     [MaxLength(10)]
     public required string PostalCode { get; set; }
+    public virtual BookStore? BookStore { get; set; }
 }
