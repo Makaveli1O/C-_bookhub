@@ -8,6 +8,8 @@ namespace Infrastructure.UnitOfWork;
 public class BookHubUnitOfWork : IUnitOfWork
 {
     private readonly BookHubDbContext _dbContext;
+    private BookStoreRepository? _bookStoreRepository;
+    private InventoryItemRepository? _inventoryItemRepository;
     private BookRepository? _bookRepository;
     private WishListRepository? _wishListRepository;
     private WishListItemRepository? _wishListItemRepository;
@@ -17,6 +19,8 @@ public class BookHubUnitOfWork : IUnitOfWork
     private BookReviewRepository? _bookReviewRepository;
     private AddressRepository? _addressRepository;
 
+    public IGenericRepository<BookStore> BookStoreRepository => _bookStoreRepository ??= new BookStoreRepository(_dbContext);
+    public IGenericRepository<InventoryItem> InventoryItemRepository => _inventoryItemRepository ??= new InventoryItemRepository(_dbContext);
     public IGenericRepository<Book> BookRepository => _bookRepository ??= new BookRepository(_dbContext);
     public IGenericRepository<WishList> WishListRepository => _wishListRepository ??= new WishListRepository(_dbContext);
     public IGenericRepository<WishListItem> WishListItemRepository => _wishListItemRepository ??= new WishListItemRepository(_dbContext);
