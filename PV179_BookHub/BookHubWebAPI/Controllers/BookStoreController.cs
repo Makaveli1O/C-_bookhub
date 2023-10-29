@@ -20,6 +20,21 @@ public class BookStoreController : ControllerBase
         _mapper = mapper;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAllBookStores()
+    {
+        var bookStore = await _unitOfWork.BookStoreRepository.GetAllAsync();
+        return Ok(_mapper.Map<List<DetailedBookStoreViewDto>>(bookStore));
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> GetBookStore(long id)
+    {
+        var bookStore = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
+        return Ok(_mapper.Map<DetailedBookStoreViewDto>(bookStore));
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateBookStore(CreateBookStoreDto createBookStoreDto)
     {
@@ -30,29 +45,7 @@ public class BookStoreController : ControllerBase
 
         return Created(
             new Uri($"{Request.Path}/{bookStore.Id}", UriKind.Relative),
-            _mapper.Map<DetailedBookStoreViewDto>(bookStore)
-            );
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> GetAllBookStores()
-    {
-        var books = await _unitOfWork.BookStoreRepository.GetAllAsync();
-
-        return Ok(
-            _mapper.Map<List<DetailedBookStoreViewDto>>(books)
-            );
-    }
-
-    [HttpGet]
-    [Route("{id}")]
-    public async Task<IActionResult> GetBookStore(long id)
-    {
-        var book = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
-
-        return Ok(
-            _mapper.Map<DetailedBookStoreViewDto>(book)
-            );
+            _mapper.Map<DetailedBookStoreViewDto>(bookStore));
     }
 
     [HttpPut]
@@ -62,20 +55,16 @@ public class BookStoreController : ControllerBase
         var bookStore = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
         if (bookStore != null)
         {
-            // bookStore.Title = createBookDto.Title ?? bookStore.Title;
-            // bookStore.Author = createBookDto.Author ?? bookStore.Author;
-            // bookStore.Publisher = createBookDto.Publisher ?? bookStore.Publisher;
-            // bookStore.Description = createBookDto.Description ?? bookStore.Description;
-            // bookStore.BookGenre = createBookDto.BookGenre;
-            // bookStore.Price = createBookDto.Price;
+            bookStore.AddressId = createBookStoreDto.AddressId;
+            bookStore.ManagerId = createBookStoreDto.ManagerId;
+            bookStore.Name = createBookStoreDto.Name;
+            bookStore.PhoneNumber = createBookStoreDto.PhoneNumber;
+            bookStore.Email = createBookStoreDto.Email;
 
             _unitOfWork.BookStoreRepository.Update(bookStore);
             await _unitOfWork.CommitAsync();
         }
-
-        return Ok(
-            _mapper.Map<DetailedBookStoreViewDto>(bookStore)
-            );
+        return Ok(_mapper.Map<DetailedBookStoreViewDto>(bookStore));
     }
 
 
@@ -83,10 +72,10 @@ public class BookStoreController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> DeleteBookStore(long id)
     {
-        var book = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
-        if (book != null)
+        var bookStore = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
+        if (bookStore != null)
         {
-            _unitOfWork.BookStoreRepository.Delete(book);
+            _unitOfWork.BookStoreRepository.Delete(bookStore);
             await _unitOfWork.CommitAsync();
         }
         return NoContent();
@@ -98,10 +87,7 @@ public class BookStoreController : ControllerBase
     public async Task<IActionResult> GetAllInventoryItems()
     {
         var inventoryItems = await _unitOfWork.InventoryItemRepository.GetAllAsync();
-
-        return Ok(
-            _mapper.Map<List<DetailedInventoryItemViewDto>>(inventoryItems)
-            );
+        return Ok(_mapper.Map<List<DetailedInventoryItemViewDto>>(inventoryItems));
     }
 
     [HttpGet]
@@ -109,10 +95,7 @@ public class BookStoreController : ControllerBase
     public async Task<IActionResult> GetInventoryItem(long id)
     {
         var inventoryItems = await _unitOfWork.InventoryItemRepository.GetByIdAsync(id);
-
-        return Ok(
-            _mapper.Map<DetailedInventoryItemViewDto>(inventoryItems)
-            );
+        return Ok(_mapper.Map<DetailedInventoryItemViewDto>(inventoryItems));
     }
 
     [HttpPost]
@@ -126,8 +109,7 @@ public class BookStoreController : ControllerBase
 
         return Created(
             new Uri($"{Request.Path}/{inventoryItem.Id}", UriKind.Relative),
-            _mapper.Map<DetailedInventoryItemViewDto>(inventoryItem)
-            );
+            _mapper.Map<DetailedInventoryItemViewDto>(inventoryItem));
     }
 
     [HttpPut]
@@ -137,20 +119,15 @@ public class BookStoreController : ControllerBase
         var inventoryItem = await _unitOfWork.InventoryItemRepository.GetByIdAsync(id);
         if (inventoryItem != null)
         {
-            // bookStore.Title = createBookDto.Title ?? bookStore.Title;
-            // bookStore.Author = createBookDto.Author ?? bookStore.Author;
-            // bookStore.Publisher = createBookDto.Publisher ?? bookStore.Publisher;
-            // bookStore.Description = createBookDto.Description ?? bookStore.Description;
-            // bookStore.BookGenre = createBookDto.BookGenre;
-            // bookStore.Price = createBookDto.Price;
+            inventoryItem.InStock = createInventoryItemDto.InStock;
+            inventoryItem.LastRestock = createInventoryItemDto.LastRestock;
+            inventoryItem.BookStoreId = createInventoryItemDto.BookStoreId;
+            inventoryItem.BookId = createInventoryItemDto.BookId;
 
             _unitOfWork.InventoryItemRepository.Update(inventoryItem);
             await _unitOfWork.CommitAsync();
         }
-
-        return Ok(
-            _mapper.Map<DetailedInventoryItemViewDto>(inventoryItem)
-            );
+        return Ok(_mapper.Map<DetailedInventoryItemViewDto>(inventoryItem));
     }
 
     [HttpDelete]

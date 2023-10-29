@@ -17,6 +17,6 @@ namespace DataAccessLayer.Models
         public required string PhoneNumber { get; set; }
         [MaxLength(50)]
         public required string Email { get; set; }
-        public IEnumerable<InventoryItem> InventoryItems { get; set; }
+        public virtual IEnumerable<InventoryItem>? InventoryItems { get; set; }
     }
 }

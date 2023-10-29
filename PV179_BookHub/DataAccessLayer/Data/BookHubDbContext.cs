@@ -5,6 +5,8 @@ namespace DataAccessLayer.Data;
 
 public class BookHubDbContext : DbContext
 {
+    public DbSet<BookStore> BookStores { get; set; }
+    public DbSet<InventoryItem> InventoryItems { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<WishList> WishList { get; set; }
     public DbSet<WishListItem> WishListItem { get; set; }
@@ -16,6 +18,7 @@ public class BookHubDbContext : DbContext
 
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)
     {
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,6 +29,12 @@ public class BookHubDbContext : DbContext
         }
 
         /* here added relationships */
+        modelBuilder.Entity<InventoryItem>()
+            .HasOne(item => item.BookStore)
+            .WithMany(bookStore => bookStore.InventoryItems)
+            .HasForeignKey(item => item.BookStoreId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         modelBuilder.Entity<OrderItem>()
             .HasOne(item => item.Order)
             .WithMany(order => order.Items)
