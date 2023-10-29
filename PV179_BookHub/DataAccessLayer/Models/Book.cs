@@ -21,4 +21,7 @@ public class Book : BaseEntity
     public string? Description { get; set; }
     public double Price { get; set; }
     public virtual IEnumerable<BookReview>? Reviews { get; set; }
+    public virtual IEnumerable<InventoryItem>? InventoryItems { get; set; }
+    public virtual IEnumerable<OrderItem>? OrderItems { get; set; }
+    public virtual IEnumerable<WishListItem>? WishListItems { get; set; }
 }
