@@ -1136,7 +1136,7 @@ public static class DataInitializer
                 Street = "Palackého třída",
                 StreetNumber = "191/241",
                 City = "Brno",
-                State = "Česká republika",
+                State = "Czech Republic",
                 PostalCode = "602 00"
             },
             new Address
