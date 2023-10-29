@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models;
+using DataAccessLayer.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
@@ -39,13 +40,366 @@ public static class DataInitializer
     {
         return new List<BookReview>
         {
-        };
+        new BookReview
+        {
+            Id = 1,
+            BookId = 1,
+            ReviewerId = 3,
+            Description = "A great book to start learning C#. It covers all the fundamentals and provides clear explanations. Highly recommended for beginners.",
+            Rating = Rating.Excellent
+        },
+        new BookReview
+        {
+            Id = 2,
+            BookId = 2,
+            ReviewerId = 5,
+            Description = "This book on modern CMake is a game-changer. It's well-structured and makes complex concepts easy to understand. A must-read for C++ developers.",
+            Rating = Rating.Excellent
+        },
+        new BookReview
+        {
+            Id = 3,
+            BookId = 3,
+            ReviewerId = 4,
+            Description = "Harry Potter is a classic, and this book is where the magical journey begins. It's a must-read for fantasy lovers of all ages.",
+            Rating = Rating.Good
+        },
+        new BookReview
+        {
+            Id = 4,
+            BookId = 4,
+            ReviewerId = 7,
+            Description = "The second book in the Harry Potter series continues to captivate readers with its magic and mystery. A great follow-up to the first book.",
+            Rating = Rating.Good
+        },
+        new BookReview
+        {
+            Id = 5,
+            BookId = 5,
+            ReviewerId = 6,
+            Description = "The third book in the Harry Potter series introduces new elements to the story, making it even more exciting. J.K. Rowling's writing is exceptional.",
+            Rating = Rating.Excellent
+        },
+        new BookReview
+        {
+            Id = 6,
+            BookId = 6,
+            ReviewerId = 3,
+            Description = "Another fantastic addition to the Harry Potter series. The Goblet of Fire is full of surprises and keeps you engaged throughout.",
+            Rating = Rating.Excellent
+        },
+        new BookReview
+        {
+            Id = 7,
+            BookId = 7,
+            ReviewerId = 4,
+            Description = "The Order of the Phoenix takes the series to a darker place. It's a compelling read with intense moments and character development.",
+            Rating = Rating.Good
+        },
+        new BookReview
+        {
+            Id = 8,
+            BookId = 8,
+            ReviewerId = 6,
+            Description = "The Half-Blood Prince is a pivotal book in the Harry Potter series. It reveals crucial information and sets the stage for the final showdown.",
+            Rating = Rating.Excellent
+        },
+        new BookReview
+        {
+            Id = 9,
+            BookId = 9,
+            ReviewerId = 7,
+            Description = "A thrilling conclusion to the Harry Potter saga. All loose ends are tied up, and it's an emotional journey for readers.",
+            Rating = Rating.Excellent
+        },
+        new BookReview
+        {
+            Id = 10,
+            BookId = 10,
+            ReviewerId = 5,
+            Description = "A mysterious door leads to an intriguing plot. 'Behind the Real Door' is a gripping mystery novel that keeps you guessing until the end.",
+            Rating = Rating.Good
+        },
+         new BookReview
+        {
+            Id = 11,
+            BookId = 11,
+            ReviewerId = 3,
+            Description = "I didn't enjoy this book at all. The plot was confusing, and the characters were unrelatable. Would not recommend.",
+            Rating = Rating.Terrible
+        },
+        new BookReview
+        {
+            Id = 12,
+            BookId = 12,
+            ReviewerId = 4,
+            Description = "I found 'Culinary Delights' to be underwhelming. The recipes were basic, and I was expecting more innovative dishes.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 13,
+            BookId = 13,
+            ReviewerId = 5,
+            Description = "This book was a disappointment. The writing style was dry, and the characters lacked depth. Not recommended.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 14,
+            BookId = 14,
+            ReviewerId = 6,
+            Description = "I couldn't finish 'How to teach kids to share.' It felt like a poorly written joke. Save your money and time.",
+            Rating = Rating.Terrible
+        },
+        new BookReview
+        {
+            Id = 15,
+            BookId = 15,
+            ReviewerId = 7,
+            Description = "I expected 'Elemental' to be an exciting exploration of meteorology, but it was overly technical and lacked engaging content.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 16,
+            BookId = 16,
+            ReviewerId = 3,
+            Description = "Despite its title, 'Eternal Skies' failed to deliver a captivating narrative about meteorology. It felt dull and uninspiring.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 17,
+            BookId = 17,
+            ReviewerId = 4,
+            Description = "I had high hopes for 'Secrets of the Lost Scroll,' but the plot was convoluted, and the characters were forgettable.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 18,
+            BookId = 18,
+            ReviewerId = 5,
+            Description = "I expected 'Tour of C++' to be a comprehensive guide, but it felt disjointed and lacked clear explanations. Disappointing.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 19,
+            BookId = 19,
+            ReviewerId = 6,
+            Description = "Batman: Year One was not as engaging as I hoped. The storyline was uninspiring, and the artwork didn't impress me.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 20,
+            BookId = 20,
+            ReviewerId = 7,
+            Description = "I found 'Batman the Killing Joke' to be too violent and disturbing for my taste. It didn't live up to the hype.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 27,
+            BookId = 8,
+            ReviewerId = 8,
+            Description = "I had high expectations for 'Harry Potter and the Half-Blood Prince,' but I found it lacking in depth compared to the previous books in the series.",
+            Rating = Rating.Fair
+        },
+        new BookReview
+        {
+            Id = 28,
+            BookId =-9,
+            ReviewerId = 9,
+            Description = "A thrilling conclusion to the Harry Potter series. It answers many questions and provides a satisfying end to the story. Highly recommended.",
+            Rating = Rating.Fair
+        },
+        new BookReview
+        {
+            Id = 29,
+            BookId = 10,
+            ReviewerId = 10,
+            Description = "I thoroughly enjoyed 'Behind the Real Door.' The plot was intriguing, and it kept me guessing until the end. A must-read mystery novel.",
+            Rating = Rating.Good
+        },
+        new BookReview
+        {
+            Id = 30,
+            BookId = 18,
+            ReviewerId = 11,
+            Description = "As a C++ developer, I expected more from 'Tour of C++.' It felt incomplete and lacked the depth I needed for advanced programming.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 31,
+            BookId = 14,
+            ReviewerId = 12,
+            Description = "I didn't find 'How to teach kids to share' engaging or informative. It failed to deliver practical advice for teaching children about sharing.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 32,
+            BookId = 15,
+            ReviewerId = 13,
+            Description = "I was disappointed with 'Elemental.' It promised to simplify chemistry but ended up being overly technical. Not a recommended read.",
+            Rating = Rating.Poor
+        },
+        new BookReview
+        {
+            Id = 33,
+            BookId = 11,
+            ReviewerId = 14,
+            Description = "I found 'Whispers in the Shadows' to be a captivating mystery novel. It kept me hooked with its eerie atmosphere and intriguing plot.",
+            Rating = Rating.Good
+        }
+    };
     }
+
 
     private static List<User> PrepairUserModels()
     {
         return new List<User>
         {
+            new User
+            {
+                Id = 1,
+                UserName = "Housemaster111",
+                PasswordHash = "954b39223c4cfd375e5b41ef79cdbe5cacaf9176",
+                Salt = "8y4z6E",
+                Role = UserRole.Admin
+            },
+            new User
+            {
+                Id = 2,
+                UserName = "olivia.johnson@gmail.com",
+                PasswordHash = "b5d66e00c0673d769f25c9919756341d34162cef",
+                Salt = "3M9r1N",
+                Role = UserRole.Manager
+            },
+            new User
+            {
+                Id = 3,
+                UserName = "liamthereaded",
+                PasswordHash = "fd3a0c6a60faa4f9e487f04e153f17919219bcbc",
+                Salt = "ab7x9D",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 4,
+                UserName = "emily_j",
+                PasswordHash = "319f1f56edd200d17f693ee08180db1a8367be87",
+                Salt = "aA8f9B",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 5,
+                UserName = "booklover88",
+                PasswordHash = "3b0e9558746f94f4fc36e307e5d78e86a37c6cca",
+                Salt = "7K6p2h",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 6,
+                UserName = "maplewoodhighschool@edu.com",
+                PasswordHash = "67df5688eeff6daee952323aac4626a3c80f15c6",
+                Salt = "1F5a3G",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 7,
+                UserName = "Ethan Parker",
+                PasswordHash = "34b18f3e9b6795760e5246ce3fe534c53c9ecc6a",
+                Salt = "fffA34",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 8,
+                UserName = "codingWizard42",
+                PasswordHash = "2c4e2bcbb76a1125e3ed5a075ad850b8317f8dca",
+                Salt = "9W2u1T",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 9,
+                UserName = "bookworm",
+                PasswordHash = "71a3b4d4e831e1a365ef1924ac2d05c8b64f7ad4",
+                Salt = "7D1x4C",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 10,
+                UserName = "22avidReader22",
+                PasswordHash = "3e08d29af755dd663110b04c7c4136a98b4309a6",
+                Salt = "2M3v8N",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 11,
+                UserName = "programmingGuru",
+                PasswordHash = "9b6039d84c9e6a08f7e7c810161c4b9aa2e6b1a3",
+                Salt = "5P1t8R",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 12,
+                UserName = "mysteryFanatic",
+                PasswordHash = "9ef6ec5ec7f6101e0e37d680d41cb6c1a8b15a39",
+                Salt = "0G8j6L",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 13,
+                UserName = "techEnthusiast",
+                PasswordHash = "6a0b488fdb654fca6f366126b2a7c3a3ce2b93ff",
+                Salt = "2R1n3T",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 14,
+                UserName = "foodLover88",
+                PasswordHash = "524bfcf1ff68e8d6f7684819469329c2723e7d91",
+                Salt = "4K6q8p",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 15,
+                UserName = "John the Ripper",
+                PasswordHash = "319ffa6d3266e2e2c6306348b91289d1a838b2ea",
+                Salt = "3D6g3B",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 16,
+                UserName = "Samuel Johnson",
+                PasswordHash = "6f8625099e98e6e0c810ba0979db55c36961f7a2",
+                Salt = "1E5v3H",
+                Role = UserRole.User
+            },
+            new User
+            {
+                Id = 17,
+                UserName = "joe11@yahoo.com",
+                PasswordHash = "53dcbf0fb77f0d16fa8f682d30a0f5c18c5f5db0",
+                Salt = "2P5n4H",
+                Role = UserRole.User
+            },
         };
     }
 
