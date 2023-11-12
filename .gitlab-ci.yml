@@ -5,7 +5,7 @@ variables:
     DOTNET_CLI_TELEMETRY_OPTOUT: "true"
 
 before_script:
-    - dotnet restore ./PV179_BookHub/PV179_BookHub.sln 
+    - dotnet restore
 
 stages:
     - build
@@ -16,11 +16,11 @@ build:
     tags:
         - shared-fi
     script:
-        - dotnet build --configuration Release ./PV179_BookHub/PV179_BookHub.sln 
+        - dotnet build --configuration Release ./PV179_BookHub
 
 test:
     stage: test
     tags:
         - shared-fi
     script:
-        - dotnet test --configuration Release ./PV179_BookHub/PV179_BookHub.sln 
+        - dotnet test --configuration Release ./PV179_BookHub
