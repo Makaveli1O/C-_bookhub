@@ -16,11 +16,11 @@ build:
     tags:
         - shared-fi
     script:
-        - dotnet build --configuration Release ./PV179_BookHub
+        - dotnet build --configuration Release
 
 test:
     stage: test
     tags:
         - shared-fi
     script:
-        - dotnet test --configuration Release ./PV179_BookHub
+        - dotnet test --configuration Release
