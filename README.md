@@ -111,17 +111,6 @@ Follow these steps to use the project effectively:
 ```shell
 git clone https://gitlab.fi.muni.cz/xbaran4/bookhub.git
 ```
-### Update Databse based on migration
-Before running the program itself, use the DAL.SQLite.Migrations project to update the databse.  
-When running with Visual Studio, open PMC (`Tools -> Nuget Package Manager -> Package Manager Console`).
-```shell
-# update databse based on existing snapshot(s)
-Update-Database -project  DAL.SQLite.Migrations
-
-# or make changes to entities and create a new migration
-Add-Migration <migration_name> -project DAL.SQLite.Migrations
-# when using the newly created migration, do not forget to update the databse
-```
 ### Run the project
 ```shell
 # Navigate to the project directory
@@ -156,7 +145,7 @@ The project is organized into several key folders to maintain a clean and organi
 
 ### DAL.SQLite.Migrations
 
-- A dedicated project for SQLite database migrations to manage changes to the database schema.
+- A dedicated project for database migrations to manage changes to the database schema.
 
 ## Technical overview
 
