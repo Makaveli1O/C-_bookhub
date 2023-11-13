@@ -1,92 +1,180 @@
-# PV 179 - BookHub
+# PV179 - Bookhub
+
+- **Name**: Bookhub
+- **Techstack**
+   - **Backend**
+      - C# (ASP.NET Core for the API)
+      - Entity Framework Core for data access and migrations
+      - SQLite Database
+      - Swagger for API documentation
+   - **Frontend** _(TODO)_
+   - **Development tools**
+      - Package Manager : NuGet
+      - Version Control : Git
+- **Team Leader**
+   - Oliver Šintaj
+- **Developers**
+  - Pavol Baran
+  - Jozef Mihale
+  - Samuel Líška
+- **Assignment :** Develop a digital platform for the company called "BookHub", a company that sells books of various genres. The platform should facilitate easy browsing and purchase of books, letting customers sort and filter by authors, publishers, and genres. After customers create accounts, they should be able to review their purchase history, rate books, and make wishlists. Administrators should have privileges to update book details, manage user accounts, and regulate book prices.
 
 
+## Table of Contents
 
-## Getting started
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Folder Structure](#folder-structure)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Prerequisites
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+1. **.NET 7.0 Runtime:**
+   Ensure that you have the .NET 7.0 Runtime installed on your development machine. You can download it from the official [.NET website](https://dotnet.microsoft.com/download).
 
-## Add your files
+2. **Integrated Development Environment (IDE):**
+   You will need an Integrated Development Environment (IDE) for .NET development. We recommend using Visual Studio as it provides a comprehensive set of tools for .NET development.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+3. **Visual Studio Installer Workloads:**
+   In Visual Studio, make sure to select the following workloads using the Visual Studio Installer:
+     - "ASP .Net and web development."
 
-```
-cd existing_repo
-git remote add origin https://gitlab.fi.muni.cz/xbaran4/bookhub.git
-git branch -M main
-git push -uf origin main
-```
+4. **Docker: (Not yet implemented)**
+  Install Docker to support containerized development and deployment.
 
-## Integrate with your tools
+## Project Tasks
 
-- [ ] [Set up project integrations](https://gitlab.fi.muni.cz/xbaran4/bookhub/-/settings/integrations)
+### Milestone 1
 
-## Collaborate with your team
+1. **Design & Documentation**:
+   - Make a use-case diagram and data model for the application.
+   - Create a documentation Technical Overview (can be part of the readme) with the diagrams and information about the application.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+2. **API & Backend**:
+   - Create a REST web API capable of fetching products based on their 'name', 'description', 'price', 'Category', and 'Manufacturer'.
+   - Setup the database and introduce a DAL (Data Access Layer) to your project.
+   - Seed the database with real-looking data. Avoid using placeholders like 'AAAA', 'test', etc.
+   - Create an Authentication Middleware (a simple middleware using only a hard-coded access token is acceptable).
+   - Implement a Logging middleware that logs all incoming requests.
 
-## Test and Deploy
+3. **Version Control & Collaboration**:
+   - Set up a GitLab repository and set its visibility to Internal (not Private).
+   - Divide the work between the Team Lead and Team members.
+   - Each team member must contribute equally. Every member should:
+     - Create a database entity.
+     - Seed the created entity.
+     - Create CRUD operations (Web API Endpoints) for the created entity.
+   - All changes should be committed to separate branches and merged via merge requests.
+     - At least one approval from a team member is required for merge requests.
+     - The team member who approves a merge request is also responsible for the changes. This rule starts from the 2nd milestone.
+   - All merge requests for milestone 1 should be merged into a branch named 'Milestone 1'. Once done with the milestone, initiate a merge request from 'Milestone 1' to 'master'. This allows reviewers to see all changes in one place. The 'Milestone 1' branch can be merged only after teacher approval.
 
-Use the built-in continuous integration in GitLab.
+4. **Documentation & Onboarding**:
+   - Create a README that provides basic information about how to run the application, its components, etc.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### Milestone 2
 
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### Milestone 3
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+### Step 1: Install .NET 7.0 Runtime
+
+1. Visit the official [.NET website](https://dotnet.microsoft.com/download).
+
+2. Download the .NET 7.0 Runtime for your operating system (Windows, macOS, or Linux).
+
+3. Follow the installation instructions to install the .NET Runtime on your machine.
+
+### Step 2: Install an Integrated Development Environment (reccomended IDE is Visual Studio)
+
+1. Download and install Visual Studio from the official website: [Visual Studio](https://visualstudio.microsoft.com/).
+
+2. During installation, make sure to select the appropriate workloads, such as "ASP .Net and web development," using the Visual Studio Installer.
+
+### Step 3: Install Docker
+
+1. Download Docker from the official website based on your operating system:
+   - [Docker for Windows](https://docs.docker.com/desktop/install/windows-install/)
+   - [Docker for macOS](https://docs.docker.com/desktop/install/mac-install/)
+   - [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/)
+
+2. Follow the installation instructions for your specific operating system to install Docker.
+
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Follow these steps to use the project effectively:
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### Clone the Repository
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```shell
+git clone https://gitlab.fi.muni.cz/xbaran4/bookhub.git
+```
+### Update Databse based on migration
+Before running the program itself, use the DAL.SQLite.Migrations project to update the databse.  
+When running with Visual Studio, open PMC (`Tools -> Nuget Package Manager -> Package Manager Console`).
+```shell
+# update databse based on existing snapshot(s)
+Update-Database -project  DAL.SQLite.Migrations
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+# or make changes to entities and create a new migration
+Add-Migration <migration_name> -project DAL.SQLite.Migrations
+# when using the newly created migration, do not forget to update the databse
+```
+### Run the project
+```shell
+# Navigate to the project directory
+cd <project_directory>
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+# Install project dependencies
+dotnet restore
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+# Build the application
+dotnet build
 
-## License
-For open source projects, say how it is licensed.
+# Run the application
+dotnet run
+```
+This will start your project. Access the application using a web browser at http://localhost:5000 (or the appropriate address).
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## Folder Structure
+
+The project is organized into several key folders to maintain a clean and organized codebase. Here's an overview of the main folders:
+
+### BookhubWeAPI
+
+- The presentation layer where API endpoints, controllers, mappers, and middleware are located.
+
+### DataAccessLayer
+
+- Handles database access, models, and related data operations.
+
+### Infrastructure
+
+- Contains repositories and follows the Unit of Work pattern for managing data operations.
+
+### DAL.SQLite.Migrations
+
+- A dedicated project for SQLite database migrations to manage changes to the database schema.
+
+## Technical overview
+
+### Dependencies
+
+- **[.NET 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)**
+   - [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/?view=aspnetcore-7.0)
+   - [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
+   - [Swashbuckle](https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-7.0&tabs=visual-studio)
+
+- **[SQLite](https://www.sqlite.org/index.html)**
+   - [Microsoft.EntityFrameworkCore.Sqlite](https://learn.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli)
+
+
+### Use-Case Diagram
+
+![My UML Diagram](http://cdn-0.plantuml.com/plantuml/png/TLBTRXDD3BsVf_3Nctv8JNW1X5gAK96ea0A56wJ8cN5thSnFDFOage1tPtPcexqWxCNAnpuU-zY-5SMi9NXp3KUMWXw4L3aEOlxJaGA1fLmyOLobefuZcP5TzNAsdepiEHumOu0TslsGKudkFlcKuJIoaZ6UdXKqGUPXL72SoIgdQ0nQhQmx5pW22g0Bi-iH8mwK9sSOyknyakufaesfFtZpQxLgyJ1qq5wetrG0u-09tgMqVoWx-6bYKeAh3oc3S3XujgmlDt0TMgLhi1XXHs1J57QKoS6FrfCeHeVPWP12UeRxpTDxI0VAE4cGzTL4YZerH1Q5uFzFQG2EhrFHLqrKqN49Dc6zBVYYAPCqqkDM9l0Nxu455YvyZ4UArNgPapWUBwRSMPjAr9c5rbvaVSwEyhb-okuYwJlBw5dqp3jLl12_CPrQWpsysUwg_MyL6snNrRceT9c-lFVO2R_DlBsl8ytNmWBeVJgH0qtG4y-ovQRkhgkh9gbTJujBEbA_ePeQNSzfGE14tlTDeWlRgPQf1gpN2su7jrgzdVVPGH_kWleKErfcrU0ocmuN-QrKJ-X7iE0U3qDFwVk-fUXAy7y0)
+
+### ERD Diagram
+
+![My UML Diagram](http://cdn-0.plantuml.com/plantuml/png/jPNFQXin4CRlUWerbq8XVe0GGjf28VHGQ2azBkFLu1NMIkxCoAx9vjqhUUEDDjw53QMvvVlcpy_ZqVYU1KXYwzHxlRSSmMb64UithDv9Wotg6Yaw17yTeZZhKJNM9DLIxL3nrleT4BGwMtBSeGuaJIYCDTJR3ONepUVW0kb3OmLL-aClLexwwYSZNUb7fVK7Q_IDzh5T8-dRsmrw910qTtV9lBxE4P6HFBIOuWJ_I9Psm7m8PAe6k2bq1YV5lnGStcXCrTNJI_DVbXjdMTu4K8t3ldnDVh9gmXnSGMvhG51iYzamo3NPdTZWpq0J20-2xMACmtFI3CewXEsCjICRA3U-7COtCaZ_TH8I15oL46eSyhBE0e9pH6yQJCWPowTIMYo1S6vgaUe662VOVqVeQGUn-02VKjt5x2d5bPiDKPf0XM1vxSlDZsjdkS4o9DMbOPBJkzSlGOrplDznR_6mc7f-gdChCiz5a6zFkGW5rmy9X8knm1X2vfdsBNZOpCAzlZ1Dy5ZrKOMCBLWtyQ0_zfqNax8GeXI5U-6oOPtBbs4W8yoG55VLmU04rOFVevT0nyNFwH-VZFLLikljwB4uOAa8JqPn6X9d_XdGNRTQXKTzFeaZyNGBHihBiXPofuTTKUfSw7NXF0EL2uwhdsILyoTQb79PfpJACWE6xi9grNNwUIyAup9fz2tffpvnI9YtrJrw4rlt5m00)
