@@ -1,5 +1,9 @@
-﻿using DataAccessLayer.Models;
+﻿using DataAccessLayer.Models.Account;
 using DataAccessLayer.Models.Enums;
+using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Preferences;
+using DataAccessLayer.Models.Publication;
+using DataAccessLayer.Models.Purchasing;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
@@ -8,41 +12,326 @@ public static class DataInitializer
 {
     public static void Seed(this ModelBuilder modelBuilder)
     {
-        var books = PrepairBookModels();
-        var users = PrepairUserModels();
-        var addresses = PrepairAddressModels();
-        var bookReviews = PrepairBookReviews();
-        var bookStores = PrepairBookStoreModels();
-        var inventoryItems = PrepairInventoryItemModels();
-        var wishLists = PrepairWishListModels();
-        var wishListItems = PrepairWishListItemModels();
-        var orders = PrepairOrderModels();
-        var orderItems = PrepairOrderItemModels();
+        var authors = PrepareAuthorModels();
+        var publishers = PreparePublisherModels();
+        var books = PrepareBookModels();
+        var authorBooksAssociations = PrepareAuthorBooksAssociationsModels();
+        
+        var users = PrepareUserModels();
+        var bookReviews = PrepareBookReviews();
 
 
+        var addresses = PrepareAddressModels();
+        var bookStores = PrepareBookStoreModels();
+        var inventoryItems = PrepareInventoryItemModels();
+
+        var wishLists = PrepareWishListModels();
+        var wishListItems = PrepareWishListItemModels();
+
+        var orders = PrepareOrderModels();
+        var orderItems = PrepareOrderItemModels();
+
+
+        modelBuilder.Entity<Author>()
+            .HasData(authors);
+        modelBuilder.Entity<Publisher>()
+            .HasData(publishers);
         modelBuilder.Entity<Book>()
             .HasData(books);
+        modelBuilder.Entity<AuthorBookAssociation>()
+            .HasData(authorBooksAssociations);
+        
+
         modelBuilder.Entity<User>()
             .HasData(users);
-        modelBuilder.Entity<Address>()
-            .HasData(addresses);
         modelBuilder.Entity<BookReview>()
             .HasData(bookReviews);
+
+        modelBuilder.Entity<Address>()
+            .HasData(addresses);
         modelBuilder.Entity<BookStore>()
             .HasData(bookStores);
         modelBuilder.Entity<InventoryItem>()
             .HasData(inventoryItems);
+
         modelBuilder.Entity<WishList>()
             .HasData(wishLists);
         modelBuilder.Entity<WishListItem>()
             .HasData(wishListItems);
+
         modelBuilder.Entity<Order>()
             .HasData(orders);
         modelBuilder.Entity<OrderItem>()
             .HasData(orderItems);
     }
 
-    private static List<BookReview> PrepairBookReviews()
+    private static List<Publisher> PreparePublisherModels()
+    {
+        return new List<Publisher>()
+        {
+            new Publisher()
+            {
+                Id = 1,
+                Name = "CreateSpace Independent Publishing Platform"
+            },
+            new Publisher()
+            {
+                Id = 2,
+                Name = "Packt Publishing"
+            },
+            new Publisher()
+            {
+                Id = 3,
+                Name = "Scholastic"
+            },
+            new Publisher()
+            {
+                Id = 4,
+                Name = "Next door Publishing"
+            },
+            new Publisher()
+            {
+                Id = 5,
+                Name = "Matej K."
+            },
+            new Publisher()
+            {
+                Id = 6,
+                Name = "World Wide Publishing"
+            },
+            new Publisher()
+            {
+                Id = 7,
+                Name = "Facebook Publishing Company"
+            },
+            new Publisher()
+            {
+                Id = 8,
+                Name = "Hachette UK"
+            },
+            new Publisher()
+            {
+                Id = 9,
+                Name = "Horizon Publications"
+            },
+            new Publisher()
+            {
+                Id = 10,
+                Name = "Enigma Press"
+            },
+            new Publisher()
+            {
+                Id = 11,
+                Name = "Addison-Wesley Professional"
+            },
+            new Publisher()
+            {
+                Id = 12,
+                Name = "DC Comics"
+            }
+        };
+    }
+
+    private static List<Author> PrepareAuthorModels()
+    {
+        return new List<Author>()
+        {
+            new Author()
+            {
+                Id = 1,
+                Name = "Jamie Chan"
+            },
+            new Author()
+            {
+                Id = 2,
+                Name = "Jackie Chan"
+            },
+            new Author()
+            {
+                Id = 3,
+                Name = "Rafal Swidzinski"
+            },
+            new Author()
+            {
+                Id = 4,
+                Name = "J.K. Rowling"
+            },
+            new Author()
+            {
+                Id = 5,
+                Name = "Jack Sparknotes"
+            },
+            new Author()
+            {
+                Id = 6,
+                Name = "Matej K."
+            },
+            new Author()
+            {
+                Id = 7,
+                Name = "K. Racer"
+            },
+            new Author()
+            {
+                Id = 8,
+                Name = "Mark Zuckerberg"
+            },
+            new Author()
+            {
+                Id = 9,
+                Name = "Heisenberg"
+            },
+            new Author()
+            {
+                Id = 10,
+                Name = "James R. Anderson"
+            },
+            new Author()
+            {
+                Id = 11,
+                Name = "Bjarne Stroustrup"
+            },
+            new Author()
+            {
+                Id = 12,
+                Name = "Frank Miller"
+            },
+            new Author()
+            {
+                Id = 13,
+                Name = "Alan Moore"
+            }
+        };
+    }
+
+    private static List<AuthorBookAssociation> PrepareAuthorBooksAssociationsModels()
+    {
+        return new List<AuthorBookAssociation>()
+        {
+            new AuthorBookAssociation()
+            {
+                Id = 1,
+                AuthorId = 1,
+                BookId = 1
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 2,
+                AuthorId = 2,
+                BookId = 1
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 3,
+                AuthorId = 3,
+                BookId = 2
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 4,
+                AuthorId = 4,
+                BookId = 3
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 5,
+                AuthorId = 4,
+                BookId = 4
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 6,
+                AuthorId = 4,
+                BookId = 5
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 7,
+                AuthorId = 4,
+                BookId = 6
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 8,
+                AuthorId = 4,
+                BookId = 7
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 9,
+                AuthorId = 4,
+                BookId = 8
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 10,
+                AuthorId = 4,
+                BookId = 9
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 11,
+                AuthorId = 5,
+                BookId = 10
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 12,
+                AuthorId = 5,
+                BookId = 11
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 13,
+                AuthorId = 6,
+                BookId = 12
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 14,
+                AuthorId = 7,
+                BookId = 13
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 15,
+                AuthorId = 8,
+                BookId = 14
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 16,
+                AuthorId = 9,
+                BookId = 15
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 17,
+                AuthorId = 10,
+                BookId = 17
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 18,
+                AuthorId = 11,
+                BookId = 18
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 19,
+                AuthorId = 12,
+                BookId = 19
+            },
+            new AuthorBookAssociation()
+            {
+                Id = 20,
+                AuthorId = 13,
+                BookId = 20
+            },
+        };
+    }
+
+    private static List<BookReview> PrepareBookReviews()
     {
         return new List<BookReview>
         {
@@ -265,8 +554,7 @@ public static class DataInitializer
     };
     }
 
-
-    private static List<User> PrepairUserModels()
+    private static List<User> PrepareUserModels()
     {
         return new List<User>
         {
@@ -409,7 +697,7 @@ public static class DataInitializer
         };
     }
 
-    private static List<Book> PrepairBookModels()
+    private static List<Book> PrepareBookModels()
     {
         return new List<Book>()
         {
@@ -417,9 +705,8 @@ public static class DataInitializer
             {
                 Id = 1,
                 Title = "Learn C# in One Day and Learn It Well",
-                Author = "Jamie Chan",
                 ISBN = "978-1518800276",
-                Publisher = "CreateSpace Independent Publishing Platform",
+                PublisherId = 1,
                 BookGenre = Models.Enums.BookGenre.Programming,
                 Description = "Have you always wanted to learn computer programming but are afraid it'll be too difficult for you? " +
                 "Or perhaps you know other programming languages but are interested in learning the C# language fast? This book is for " +
@@ -431,9 +718,8 @@ public static class DataInitializer
             {
                 Id = 2,
                 Title = "Modern CMake for C++: Discover a better approach to building, testing, and packaging your software",
-                Author = "Rafal Swidzinski",
                 ISBN = "978-1801070058",
-                Publisher = "Packt Publishing",
+                PublisherId = 2,
                 BookGenre = Models.Enums.BookGenre.Programming,
                 Description = "Creating top-notch software is an extremely difficult undertaking. Developers researching the subject have " +
                 "difficulty determining which advice is up to date and which approaches have already been replaced by easier, better practices. " +
@@ -444,9 +730,8 @@ public static class DataInitializer
             {
                 Id = 3,
                 Title = "Harry Potter and the Sorcerer's Stone",
-                Author = "J.K. Rowling",
                 ISBN = "978-1338878929",
-                Publisher = "Scholastic",
+                PublisherId = 3,
                 BookGenre = Models.Enums.BookGenre.Fantasy,
                 Description = "Harry Potter has no idea how famous he is. That's because he's being raised by his miserable aunt and uncle who" +
                 " are terrified Harry will learn that he's really a wizard, just as his parents were. But everything changes when Harry is summoned " +
@@ -459,9 +744,8 @@ public static class DataInitializer
             {
                 Id = 4,
                 Title = "Harry Potter and the Chamber of Secrets",
-                Author = "J.K. Rowling",
                 ISBN = "978-1338878936",
-                Publisher = "Scholastic",
+                PublisherId = 3,
                 BookGenre = Models.Enums.BookGenre.Fantasy,
                 Description = "The Dursleys were so mean and hideous that summer that all Harry Potter wanted was to get back to the " +
                 "Hogwarts School for Witchcraft and Wizardry. But just as he's packing his bags, Harry receives a warning from a " +
@@ -475,9 +759,8 @@ public static class DataInitializer
             {
                 Id = 5,
                 Title = "Harry Potter and the Prisoner of Azkaban",
-                Author = "J.K. Rowling",
                 ISBN = "978-1338299168",
-                Publisher = "Scholastic",
+                PublisherId = 3,
                 BookGenre = Models.Enums.BookGenre.Fantasy,
                 Description = "For twelve long years, the dread fortress of Azkaban held an infamous prisoner named Sirius Black. " +
                 "Convicted of killing thirteen people with a single curse, he was said to be the heir apparent to the Dark Lord, " +
@@ -491,9 +774,8 @@ public static class DataInitializer
             {
                 Id = 6,
                 Title = "Harry Potter and the Goblet of Fire",
-                Author = "J.K. Rowling",
                 ISBN = "978-1338878950",
-                Publisher = "Scholastic",
+                PublisherId = 3,
                 BookGenre = Models.Enums.BookGenre.Fantasy,
                 Description = "Harry wants to get away from the pernicious Dursleys and go to the International Quidditch Cup with " +
                 "Hermione, Ron, and the Weasleys. He wants to dream about Cho Chang, his crush (and maybe do more than dream). " +
@@ -506,9 +788,8 @@ public static class DataInitializer
             {
                 Id = 7,
                 Title = "Harry Potter and the Order of the Phoenix",
-                Author = "J.K. Rowling",
                 ISBN = "978-1338299182",
-                Publisher = "Scholastic",
+                PublisherId = 3,
                 BookGenre = Models.Enums.BookGenre.Fantasy,
                 Description = "There is a door at the end of a silent corridor. And it's haunting Harry Potter's dreams. Why else would " +
                 "he be waking in the middle of the night, screaming in terror?It's not just the upcoming O.W.L. exams; a new teacher with " +
@@ -522,9 +803,8 @@ public static class DataInitializer
             {
                 Id = 8,
                 Title = "Harry Potter and the Half-Blood Prince",
-                Author = "J.K. Rowling",
                 ISBN = "978-1338878974",
-                Publisher = "Scholastic",
+                PublisherId = 3,
                 BookGenre = Models.Enums.BookGenre.Fantasy,
                 Description = "The war against Voldemort is not going well; even Muggle governments are noticing. Ron scans the obituary " +
                 "pages of the Daily Prophet, looking for familiar names. Dumbledore is absent from Hogwarts for long stretches of time, and " +
@@ -537,9 +817,8 @@ public static class DataInitializer
             {
                 Id = 9,
                 Title = "Harry Potter and the Deathly Hallows",
-                Author = "J.K. Rowling",
+                PublisherId = 3,
                 ISBN = "978-1408855713",
-                Publisher = "Scholastic",
                 BookGenre = Models.Enums.BookGenre.Fantasy,
                 Description = "Will Harry die in the final battle against the mighty Voldemort? Maybe. Just read the book and you will find out.",
                 Price = 8.95
@@ -548,9 +827,8 @@ public static class DataInitializer
             {
                 Id = 10,
                 Title = "Behind the real door",
-                Author = "Jack Sparknotes",
+                PublisherId = 4,
                 ISBN = "121-1409055700",
-                Publisher = "Next door Publishing",
                 BookGenre = Models.Enums.BookGenre.Mystery,
                 Description = "Gripping mystery novel that delves into a world of secrets, where a seemingly ordinary door conceals a " +
                 "web of intrigue, unsolved crimes, and dark truths. As the detective Mike unravels the mysteries lurking \"behind the real " +
@@ -561,9 +839,8 @@ public static class DataInitializer
             {
                 Id = 11,
                 Title = "Whispers in the Shadows",
-                Author = "Jack Sparknotes",
                 ISBN = "121-1409055701",
-                Publisher = "Next door Publishing",
+                PublisherId = 4,
                 BookGenre = Models.Enums.BookGenre.Mystery,
                 Description = "In 'Whispers in the Shadows,' a small, enigmatic town hides dark secrets. As a series of eerie whispers and " +
                 "unexplained phenomena plague its residents, a determined investigator Mike must unearth the truth, facing a tangled web of " +
@@ -575,9 +852,8 @@ public static class DataInitializer
             {
                 Id = 12,
                 Title = "Memoirs of the Matej K., the great one",
-                Author = "Matej K.",
                 ISBN = "420-4204204200",
-                Publisher = "Matej K.",
+                PublisherId = 5,
                 BookGenre = Models.Enums.BookGenre.Memoir,
                 Description = "Matej K., one of the greatest programmers and mathematicians of all time is sharing some of his knowledge " +
                 "with the readers. In his endles list of successes he helped Elon Musk build the ship to Mars, ended the world hunger and " +
@@ -589,9 +865,8 @@ public static class DataInitializer
             {
                 Id = 13,
                 Title = "Culinary Delights",
-                Author = "K. Racer",
                 ISBN = "321-7503791824",
-                Publisher = "World Wide Publishing",
+                PublisherId = 6,
                 BookGenre = Models.Enums.BookGenre.Cooking,
                 Description = "Discover a world of gastronomic pleasures in 'Culinary Delights.' This recipe book takes you on a mouthwatering " +
                 "journey through diverse cuisines, offering a delightful array of dishes from appetizers to desserts. Whether you're a novice " +
@@ -603,9 +878,8 @@ public static class DataInitializer
             {
                 Id = 14,
                 Title = "How to teach kids to share",
-                Author = "Mark Zuckerberg",
                 ISBN = "816-0815794691",
-                Publisher = "Facebook Publishing Company",
+                PublisherId = 7,
                 BookGenre = Models.Enums.BookGenre.Parenting,
                 Description = "Hi, my name is Mark, the CEO of Meta. Eons ago I created a funny app for sharing called facebook. In this book I " +
                 "will present to you, my audience (or simply my subjects), how we, the lizzardmen, are sharing data. This guide is mainly for children.",
@@ -615,9 +889,8 @@ public static class DataInitializer
             {
                 Id = 15,
                 Title = "Elemental: How the Periodic Table Can Now Explain (Nearly) Everything",
-                Author = "Heisenberg",
                 ISBN = "936-7213567800",
-                Publisher = "Hachette UK",
+                PublisherId = 8,
                 BookGenre = Models.Enums.BookGenre.Science,
                 Description = "From the periodic table to chemical reactions, this book demystifies the complexities of chemistry. Engaging explanations " +
                 "and real-world applications make it a captivating journey through the science that shapes our daily lives, from the laboratory " +
@@ -628,9 +901,8 @@ public static class DataInitializer
             {
                 Id = 16,
                 Title = "Eternal Skies",
-                Author = "Samantha Mitchell",
                 ISBN = "978-1234567890",
-                Publisher = "Horizon Publications",
+                PublisherId = 9,
                 BookGenre = Models.Enums.BookGenre.Science,
                 Description = "Join Sarah on a breathtaking adventure to unravel the mysteries of the skies. \"Eternal Skies\" explores meteorology and " +
                 "the wonders of the atmosphere, revealing the secrets hidden in every cloud and the magic of the ever-changing weather. A perfect guide " +
@@ -641,9 +913,8 @@ public static class DataInitializer
             {
                 Id = 17,
                 Title = "Secrets of the Lost Scroll",
-                Author = "James R. Anderson",
                 ISBN = "111-2850195739",
-                Publisher = "Enigma Press",
+                PublisherId = 10,
                 BookGenre = Models.Enums.BookGenre.Science,
                 Description = "Dr. Amelia Stanton embarks on a thrilling archaeological quest to decode an ancient scroll. Uncover lost civilizations, " +
                 "hidden treasures, and cryptic messages as you follow her journey through time and space in \"Secrets of the Lost Scroll.\"",
@@ -653,9 +924,8 @@ public static class DataInitializer
             {
                 Id = 18,
                 Title = "Tour of C++",
-                Author = "Bjarne Stroustrup",
                 ISBN = "978-0136816485",
-                Publisher = "Addison-Wesley Professional",
+                PublisherId = 11,
                 BookGenre = Models.Enums.BookGenre.Programming,
                 Description = "Bjarne Stroustrup provides an overview of ISO C++, C++20, that aims to give experienced programmers a clear understanding " +
                 "of what constitutes modern C++. Featuring carefully crafted examples and practical help in getting started, this revised and updated " +
@@ -666,9 +936,8 @@ public static class DataInitializer
             {
                 Id = 19,
                 Title = "Batman: Year One",
-                Author = "Frank Miller",
                 ISBN = "978-0290204890",
-                Publisher = "DC Comics",
+                PublisherId = 12,
                 BookGenre = Models.Enums.BookGenre.Comics,
                 Description = "In 1986, Frank Miller and David Mazzucchelli produced this groundbreaking reinterpretation of the origin of Batman—who he is, " +
                 "and how he came to be. Sometimes careless and naive, this Dark Knight is far from the flawless vigilante he is today.In his first year on " +
@@ -681,9 +950,8 @@ public static class DataInitializer
             {
                 Id = 20,
                 Title = "Batman the Killing Joke: The Deluxe Edition",
-                Author = "Alan Moore",
                 ISBN = "978-1401294052",
-                Publisher = "DC Comics",
+                PublisherId = 12,
                 BookGenre = Models.Enums.BookGenre.Comics,
                 Description = "Now Batman must race to stop his archnemesis before his reign of terror claims two of the Dark Knight's closest friends. " +
                 "Can he finally put an end to the cycle of bloodlust and lunacy that links these two iconic foes before it leads to its fatal conclusion? " +
@@ -693,7 +961,8 @@ public static class DataInitializer
             }
         };
     }
-    private static List<WishList> PrepairWishListModels()
+    
+    private static List<WishList> PrepareWishListModels()
     {
         return new List<WishList>()
         { 
@@ -730,7 +999,7 @@ public static class DataInitializer
        };
     }
 
-    private static List<WishListItem> PrepairWishListItemModels()
+    private static List<WishListItem> PrepareWishListItemModels()
     {
         return new List<WishListItem>()
         {
@@ -793,7 +1062,7 @@ public static class DataInitializer
         };
     }
 
-    private static List<Order> PrepairOrderModels()
+    private static List<Order> PrepareOrderModels()
     {
         return new List<Order>()
         {
@@ -912,7 +1181,7 @@ public static class DataInitializer
         };
     }
 
-    private static List<OrderItem> PrepairOrderItemModels()
+    private static List<OrderItem> PrepareOrderItemModels()
     {
         return new List<OrderItem>()
         {
@@ -1126,7 +1395,7 @@ public static class DataInitializer
         };
     }
 
-    private static List<Address> PrepairAddressModels()
+    private static List<Address> PrepareAddressModels()
     {
         return new List<Address>()
         {
@@ -1232,7 +1501,7 @@ public static class DataInitializer
         };
     }
 
-    private static List<BookStore> PrepairBookStoreModels()
+    private static List<BookStore> PrepareBookStoreModels()
     {
         return new List<BookStore>()
         {
@@ -1329,7 +1598,7 @@ public static class DataInitializer
         };
     }
 
-    private static List<InventoryItem> PrepairInventoryItemModels()
+    private static List<InventoryItem> PrepareInventoryItemModels()
     {
         return new List<InventoryItem>()
         {

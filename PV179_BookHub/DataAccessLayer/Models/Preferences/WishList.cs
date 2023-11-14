@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DataAccessLayer.Models.Account;
 
-namespace DataAccessLayer.Models;
+namespace DataAccessLayer.Models.Preferences;
 
 public class WishList : BaseEntity
 {
@@ -10,6 +11,6 @@ public class WishList : BaseEntity
     public virtual User? Creator { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     [MaxLength(500)]
-    public string? Description {  get; set; }
+    public string? Description { get; set; }
     public virtual IEnumerable<WishListItem>? WishListItems { get; set; }
 }

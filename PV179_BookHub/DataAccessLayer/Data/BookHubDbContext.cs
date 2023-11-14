@@ -1,4 +1,8 @@
-﻿using DataAccessLayer.Models;
+﻿using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Preferences;
+using DataAccessLayer.Models.Publication;
+using DataAccessLayer.Models.Purchasing;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
@@ -15,6 +19,9 @@ public class BookHubDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<BookReview> BookReviews { get; set; }
     public DbSet<Address> Addresses { get; set; }
+    public DbSet<Publisher> Publishers { get; set; }
+    public DbSet<Author> Authors { get; set; }
+    public DbSet<AuthorBookAssociation> AuthorBookAssociations { get; set; }
 
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)
     {
@@ -110,6 +117,29 @@ public class BookHubDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
     }
 
+    private static void AddRelationshipsForBook(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Book>()
+            .HasOne(book => book.Publisher)
+            .WithMany(publisher => publisher.Books)
+            .HasForeignKey(book => book.PublisherId);
+    }
+
+    private static void AddRelationshipsForAuthorBookAssociation(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AuthorBookAssociation>()
+            .HasOne(assoc => assoc.Author)
+            .WithMany(author => author.Associations)
+            .HasForeignKey(assoc => assoc.AuthorId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<AuthorBookAssociation>()
+            .HasOne(assoc => assoc.Book)
+            .WithMany(book => book.Associations)
+            .HasForeignKey(assoc => assoc.BookId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
@@ -118,6 +148,8 @@ public class BookHubDbContext : DbContext
         }
 
         /* here added relationships */
+        AddRelationshipsForBook(modelBuilder);
+        AddRelationshipsForAuthorBookAssociation(modelBuilder);
         AddRelationshipsForInventoryItem(modelBuilder);
         AddRelationshipsForOrder(modelBuilder);
         AddRelationshipsForWishList(modelBuilder);

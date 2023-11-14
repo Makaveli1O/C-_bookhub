@@ -2,8 +2,8 @@
 using BookHubWebAPI.Api.Book.Create;
 using BookHubWebAPI.Api.Book.Filter;
 using BookHubWebAPI.Api.Book.View;
-using DataAccessLayer.Models;
 using DataAccessLayer.Models.Enums;
+using DataAccessLayer.Models.Publication;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;

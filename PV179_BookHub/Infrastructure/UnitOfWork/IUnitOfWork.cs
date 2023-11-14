@@ -1,4 +1,8 @@
-﻿using DataAccessLayer.Models;
+﻿using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Preferences;
+using DataAccessLayer.Models.Publication;
+using DataAccessLayer.Models.Purchasing;
 using Infrastructure.Repository;
 
 namespace Infrastructure.UnitOfWork;

@@ -1,7 +1,8 @@
-﻿using DataAccessLayer.Models.Enums;
+﻿using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataAccessLayer.Models;
+namespace DataAccessLayer.Models.Purchasing;
 
 public class Order : BaseEntity
 {

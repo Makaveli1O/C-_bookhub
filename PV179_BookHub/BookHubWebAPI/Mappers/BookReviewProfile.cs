@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BookHubWebAPI.Api.BookReview.Create;
 using BookHubWebAPI.Api.BookReview.View;
-using DataAccessLayer.Models;
+using DataAccessLayer.Models.Account;
 
 namespace BookHubWebAPI.Mappers
 {

@@ -1,8 +1,9 @@
 ﻿using DataAccessLayer.Models.Enums;
+using DataAccessLayer.Models.Publication;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataAccessLayer.Models 
+namespace DataAccessLayer.Models.Account
 {
     public class BookReview : BaseEntity
     {

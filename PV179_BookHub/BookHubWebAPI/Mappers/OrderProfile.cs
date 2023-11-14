@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BookHubWebAPI.Api.Order.Create;
 using BookHubWebAPI.Api.Order.View;
-using DataAccessLayer.Models;
+using DataAccessLayer.Models.Purchasing;
 
 namespace BookHubWebAPI.Mappers;
 

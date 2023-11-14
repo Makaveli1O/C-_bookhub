@@ -1,7 +1,10 @@
 ﻿using DataAccessLayer.Models.Enums;
+using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Preferences;
+using DataAccessLayer.Models.Purchasing;
 using System.ComponentModel.DataAnnotations;
 
-namespace DataAccessLayer.Models;
+namespace DataAccessLayer.Models.Account;
 
 public class User : BaseEntity
 {

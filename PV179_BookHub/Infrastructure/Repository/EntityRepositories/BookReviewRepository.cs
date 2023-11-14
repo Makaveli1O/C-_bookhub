@@ -1,6 +1,5 @@
 ﻿using DataAccessLayer.Data;
-using DataAccessLayer.Models;
-
+using DataAccessLayer.Models.Account;
 
 namespace Infrastructure.Repository.EntityRepositories;
 

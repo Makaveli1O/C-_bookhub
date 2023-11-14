@@ -40,9 +40,9 @@ public class BookFilter
 
 
     // source: https://code-maze.com/dynamic-queries-expression-trees-csharp/
-    public Expression<Func<DataAccessLayer.Models.Book, bool>> CreateEqualExpression()
+    public Expression<Func<DataAccessLayer.Models.Publication.Book, bool>> CreateEqualExpression()
     {
-        var param = Expression.Parameter(typeof(DataAccessLayer.Models.Book), "book");
+        var param = Expression.Parameter(typeof(DataAccessLayer.Models.Publication.Book), "book");
         Expression? body = null;
         foreach (var item in GetType().GetProperties())
         {
@@ -55,6 +55,6 @@ public class BookFilter
             var expression = Expression.Equal(member, constant);
             body = body == null ? expression : Expression.AndAlso(body, expression);
         }
-        return Expression.Lambda<Func<DataAccessLayer.Models.Book, bool>>(body, param);
+        return Expression.Lambda<Func<DataAccessLayer.Models.Publication.Book, bool>>(body, param);
     }
 }

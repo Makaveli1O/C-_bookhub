@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAccessLayer.Models;
+namespace DataAccessLayer.Models.Logistics;
 
 public class Address : BaseEntity
 {

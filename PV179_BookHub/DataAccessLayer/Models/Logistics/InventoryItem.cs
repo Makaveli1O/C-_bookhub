@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using DataAccessLayer.Models.Publication;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.Models.Logistics
 {
     public class InventoryItem : BaseEntity
     {

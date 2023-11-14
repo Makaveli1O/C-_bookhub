@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BookHubWebAPI.Api.BookStore.Create;
 using BookHubWebAPI.Api.BookStore.View;
-using DataAccessLayer.Models;
+using DataAccessLayer.Models.Logistics;
 
 namespace BookHubWebAPI.Mappers;
 public class BookStoreProfile : Profile
