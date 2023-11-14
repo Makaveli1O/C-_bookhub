@@ -35,6 +35,31 @@ public class BookController : ControllerBase
             );
     }
 
+    [HttpPatch]
+    [Route("{bookId}/{authorId}")]
+    public async Task<IActionResult> AssignAuthorToBook(long bookId, long authorId)
+    {
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(bookId);
+        var author = await _unitOfWork.AuthorRepository.GetByIdAsync(authorId);
+
+        if (book == null || author == null) 
+        {
+            return NotFound();
+        }
+
+        var authorBookAssociation = new AuthorBookAssociation()
+        {
+            AuthorId = authorId,
+            BookId = bookId
+        };
+
+        await _unitOfWork.AuthorBookAssociationRepository.AddAsync(authorBookAssociation);
+
+        return Ok(
+            _mapper.Map<DetailedBookViewDto>(book)
+            );
+    }
+
     [HttpPut]
     [Route("{id}")]
     public async Task<IActionResult> UpdateBook(long id, CreateBookDto createBookDto)
