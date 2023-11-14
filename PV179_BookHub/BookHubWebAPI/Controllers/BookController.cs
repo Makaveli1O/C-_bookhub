@@ -2,11 +2,9 @@
 using BookHubWebAPI.Api.Book.Create;
 using BookHubWebAPI.Api.Book.Filter;
 using BookHubWebAPI.Api.Book.View;
-using DataAccessLayer.Models.Enums;
 using DataAccessLayer.Models.Publication;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Expressions;
 
 namespace BookHubWebAPI.Controllers;
 
@@ -46,8 +44,8 @@ public class BookController : ControllerBase
         {
             book.Title = createBookDto.Title ?? book.Title;
             book.ISBN = createBookDto.ISBN ?? book.ISBN;
-            book.Author = createBookDto.Author ?? book.Author;
-            book.Publisher = createBookDto.Publisher ?? book.Publisher;
+            //book.Author = createBookDto.Author ?? book.Author;
+            //book.Publisher = createBookDto.Publisher ?? book.Publisher;
             book.Description = createBookDto.Description ?? book.Description;
             book.BookGenre = createBookDto.BookGenre;
             book.Price = createBookDto.Price;
