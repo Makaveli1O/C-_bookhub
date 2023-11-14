@@ -4,11 +4,11 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repository;
 
-public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
     protected readonly BookHubDbContext _dbContext;
 
-    protected GenericRepository(BookHubDbContext dbContext)
+    public GenericRepository(BookHubDbContext dbContext)
     {
         _dbContext = dbContext;
     }

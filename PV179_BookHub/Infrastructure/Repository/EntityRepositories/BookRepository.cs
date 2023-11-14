@@ -14,6 +14,18 @@ public class BookRepository : GenericRepository<Book>
     {
         return await _dbContext.Books
             .Include(book => book.Reviews)
-            .FirstAsync(book => book.Id == id);
+            .Include(book => book.Associations)
+                .ThenInclude(assoc => assoc.Author)
+            .Include(book => book.Publisher)
+            .FirstOrDefaultAsync(book => book.Id == id);
+    }
+
+    public override async Task<IEnumerable<Book>> GetAllAsync()
+    {
+        return await _dbContext.Books
+            .Include(book => book.Associations)
+                .ThenInclude(assoc => assoc.Author)
+            .Include(book => book.Publisher)
+            .ToListAsync();
     }
 }

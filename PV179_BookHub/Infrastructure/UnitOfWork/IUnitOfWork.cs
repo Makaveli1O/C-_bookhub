@@ -9,7 +9,10 @@ namespace Infrastructure.UnitOfWork;
 
 public interface IUnitOfWork : IDisposable
 {
+    IGenericRepository<Author> AuthorRepository { get; }
+    IGenericRepository<Publisher> PublisherRepository { get; }
     IGenericRepository<Book> BookRepository { get; }
+    IGenericRepository<AuthorBookAssociation> AuthorBookAssociationRepository { get; }
     IGenericRepository<BookStore> BookStoreRepository { get; }
     IGenericRepository<InventoryItem> InventoryItemRepository { get; }
     IGenericRepository<WishList> WishListRepository { get; }
