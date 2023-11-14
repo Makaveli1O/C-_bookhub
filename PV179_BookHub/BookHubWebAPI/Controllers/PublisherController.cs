@@ -35,7 +35,7 @@ public class PublisherController : Controller
     }
 
     [HttpPut]
-    [Route("{id")]
+    [Route("{id}")]
     public async Task<IActionResult> UpdatePublisher(long id, CreatePublisherDto createPublisherDto)
     {
         var publisher = await _unitOfWork.PublisherRepository.GetByIdAsync(id);

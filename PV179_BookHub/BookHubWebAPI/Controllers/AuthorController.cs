@@ -35,7 +35,7 @@ public class AuthorController : Controller
     }
 
     [HttpPut]
-    [Route("{id")]
+    [Route("{id}")]
     public async Task<IActionResult> UpdateAuthor(long id, CreateAuthorDto createAuthorDto)
     {
         var author = await _unitOfWork.AuthorRepository.GetByIdAsync(id);
