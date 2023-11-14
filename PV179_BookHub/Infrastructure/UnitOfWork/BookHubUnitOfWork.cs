@@ -13,7 +13,7 @@ public class BookHubUnitOfWork : IUnitOfWork
 {
     private readonly BookHubDbContext _dbContext;
 
-    private GenericRepository<Author>? _authorRepository;
+    private AuthorRepository? _authorRepository;
     private GenericRepository<Publisher>? _publisherRepository;
     private BookStoreRepository? _bookStoreRepository;
     private GenericRepository<AuthorBookAssociation>? _authorBookAssociationRepository;
@@ -27,7 +27,7 @@ public class BookHubUnitOfWork : IUnitOfWork
     private BookReviewRepository? _bookReviewRepository;
     private AddressRepository? _addressRepository;
 
-    public IGenericRepository<Author> AuthorRepository => _authorRepository ??= new GenericRepository<Author>(_dbContext);
+    public IGenericRepository<Author> AuthorRepository => _authorRepository ??= new AuthorRepository(_dbContext);
     public IGenericRepository<Publisher> PublisherRepository => _publisherRepository ??= new GenericRepository<Publisher>(_dbContext);
     public IGenericRepository<BookStore> BookStoreRepository => _bookStoreRepository ??= new BookStoreRepository(_dbContext);
     public IGenericRepository<AuthorBookAssociation> AuthorBookAssociationRepository => _authorBookAssociationRepository ??= new GenericRepository<AuthorBookAssociation>(_dbContext);
