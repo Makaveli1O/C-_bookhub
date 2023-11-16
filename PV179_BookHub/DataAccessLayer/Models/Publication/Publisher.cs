@@ -7,6 +7,11 @@ public class Publisher : BaseEntity
     [Required]
     [MaxLength(70)]
     public string? Name { get; set; }
+    [MaxLength(30)]
+    public string? City { get; set; }
+    [MaxLength(30)]
+    public string? Country { get; set; }
+    public int YearFounded { get; set; }
 
     public virtual IEnumerable<Book>? Books { get; set; }
 }

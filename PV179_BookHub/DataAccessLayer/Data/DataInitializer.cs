@@ -72,62 +72,95 @@ public static class DataInitializer
             new Publisher()
             {
                 Id = 1,
-                Name = "CreateSpace Independent Publishing Platform"
+                Name = "CreateSpace Independent Publishing Platform",
+                City = "London",
+                Country = "United Kingdom",
+                YearFounded = 2008
             },
             new Publisher()
             {
                 Id = 2,
-                Name = "Packt Publishing"
+                Name = "Packt Publishing",
+                City = "London",
+                Country = "United Kingdom",
+                YearFounded = 2003
+
             },
             new Publisher()
             {
                 Id = 3,
-                Name = "Scholastic"
+                Name = "Scholastic",
+                City = "New York",
+                Country = "United States",
+                YearFounded = 1995
             },
             new Publisher()
             {
                 Id = 4,
-                Name = "Next door Publishing"
+                Name = "Next door Publishing",
+                Country = "France",
+                YearFounded = 2022
             },
             new Publisher()
             {
                 Id = 5,
-                Name = "Matej K."
+                Name = "Matej K.",
+                City = "Nove Zamky",
+                Country = "Slovakia",
+                YearFounded = 2020
             },
             new Publisher()
             {
                 Id = 6,
-                Name = "World Wide Publishing"
+                Name = "World Wide Publishing",
+                City = "Los Angeles",
+                Country = "United States",
+                YearFounded = 2005
             },
             new Publisher()
             {
                 Id = 7,
-                Name = "Facebook Publishing Company"
+                Name = "Facebook Publishing Company",
+                City = "Mark",
+                Country = "Zuckerbergland",
+                YearFounded = 890
             },
             new Publisher()
             {
                 Id = 8,
-                Name = "Hachette UK"
+                Name = "Hachette UK",
+                YearFounded = 1989
             },
             new Publisher()
             {
                 Id = 9,
-                Name = "Horizon Publications"
+                Name = "Horizon Publications",
+                City = "Tokyo",
+                Country = "Japan",
+                YearFounded = 2013
             },
             new Publisher()
             {
                 Id = 10,
-                Name = "Enigma Press"
+                Name = "Enigma Press",
+                City = "Berlin",
+                Country = "Germany",
+                YearFounded = 1942
             },
             new Publisher()
             {
                 Id = 11,
-                Name = "Addison-Wesley Professional"
+                Name = "Addison-Wesley Professional",
+                Country = "Ireland",
+                YearFounded = 2018
             },
             new Publisher()
             {
                 Id = 12,
-                Name = "DC Comics"
+                Name = "DC Comics",
+                City = "Las Vegas",
+                Country = "United States",
+                YearFounded = 2010
             }
         };
     }
@@ -139,57 +172,68 @@ public static class DataInitializer
             new Author()
             {
                 Id = 1,
-                Name = "Jamie Chan"
+                Name = "Jamie Chan",
+                Biography = "Get to know me, pal"
             },
             new Author()
             {
                 Id = 2,
-                Name = "Jackie Chan"
+                Name = "Jackie Chan",
+                Biography = "Kung-fu movie legend from China"
             },
             new Author()
             {
                 Id = 3,
-                Name = "Rafal Swidzinski"
+                Name = "Rafal Swidzinski",
+                Biography = "Once upon a time I was dreaming of being a book author"
             },
             new Author()
             {
                 Id = 4,
-                Name = "J.K. Rowling"
+                Name = "J.K. Rowling",
+                Biography = "Enchanting readers with magical worlds in Harry Potter series, a testament to creativity and resilience"
             },
             new Author()
             {
                 Id = 5,
-                Name = "Jack Sparknotes"
+                Name = "Jack Sparknotes",
+                Biography = "Pioneer of science fiction, exploring robotics and future societies through visionary storytelling"
             },
             new Author()
             {
                 Id = 6,
-                Name = "Matej K."
+                Name = "Matej K.",
+                Biography = "The great one"
             },
             new Author()
             {
                 Id = 7,
-                Name = "K. Racer"
+                Name = "K. Racer",
+                Biography = "Poetic voice of resilience and hope, inspiring through eloquence and empowerment"
             },
             new Author()
             {
                 Id = 8,
-                Name = "Mark Zuckerberg"
+                Name = "Mark Zuckerberg",
+                Biography = "Born as a man that fights with lizzard powers"
             },
             new Author()
             {
                 Id = 9,
-                Name = "Heisenberg"
+                Name = "Heisenberg",
+                Biography = "Say my name!"
             },
             new Author()
             {
                 Id = 10,
-                Name = "James R. Anderson"
+                Name = "James R. Anderson",
+                Biography = "Himsical wordsmith, sparking imagination with playful rhymes and unforgettable characters"
             },
             new Author()
             {
                 Id = 11,
-                Name = "Bjarne Stroustrup"
+                Name = "Bjarne Stroustrup",
+                Biography = "Master of horror, crafting chilling tales that delve into the human psyche and fears"
             },
             new Author()
             {
