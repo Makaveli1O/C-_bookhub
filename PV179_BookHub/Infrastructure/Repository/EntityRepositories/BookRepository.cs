@@ -10,13 +10,6 @@ public class BookRepository : GenericRepository<Book>
     {
     }
 
-    public override Book? GetById(long id)
-    {
-        return _dbContext.Books
-            .Include(book => book.Reviews)
-            .First(book => book.Id == id);
-    }
-
     public override async Task<Book?> GetByIdAsync(long id)
     {
         return await _dbContext.Books
