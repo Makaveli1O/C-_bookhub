@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using BookHubWebAPI.Api.BookStore.Create;
-using BookHubWebAPI.Api.BookStore.View;
+using BusinessLayer.DTOs.BookStore.Create;
+using BusinessLayer.DTOs.BookStore.View;
+using DataAccessLayer.Models;
 using DataAccessLayer.Models.Logistics;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;

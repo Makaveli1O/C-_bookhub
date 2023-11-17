@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using BookHubWebAPI.Api.BookReview.Create;
-using BookHubWebAPI.Api.BookReview.View;
+using BusinessLayer.DTOs.BookReview.Create;
+using BusinessLayer.DTOs.BookReview.View;
+using DataAccessLayer.Models;
 using DataAccessLayer.Models.Account;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;

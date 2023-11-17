@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
-using BookHubWebAPI.Api.Book.Create;
-using BookHubWebAPI.Api.Book.View;
+using BusinessLayer.DTOs.Book.Create;
+using BusinessLayer.DTOs.Book.Filter;
+using BusinessLayer.DTOs.Book.View;
+using DataAccessLayer.Models;
+using DataAccessLayer.Models.Enums;
 using DataAccessLayer.Models.Publication;
 using Infrastructure.NaiveQuery;
 using Infrastructure.UnitOfWork;
