@@ -4,5 +4,5 @@ namespace Infrastructure.NaiveQuery.Filters;
 
 public interface IFilter<TEntity> where TEntity : class
 {
-    Expression<Func<TEntity, bool>> CreateExpression();
+    Expression<Func<TEntity, bool>>? CreateExpression();
 }

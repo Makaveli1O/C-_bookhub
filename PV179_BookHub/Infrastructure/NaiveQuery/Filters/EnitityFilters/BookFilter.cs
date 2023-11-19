@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer.Models.Enums;
 using DataAccessLayer.Models.Publication;
 
-namespace Infrastructure.NaiveQuery.Filters;
+namespace Infrastructure.NaiveQuery.Filters.EntityFilters;
 
 public class BookFilter : FilterBase<Book>
 {

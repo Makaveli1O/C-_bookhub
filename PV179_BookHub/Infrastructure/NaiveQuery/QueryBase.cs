@@ -1,7 +1,6 @@
 ﻿using Infrastructure.NaiveQuery.Filters;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 using System.Linq.Expressions;
 
 namespace Infrastructure.NaiveQuery;
