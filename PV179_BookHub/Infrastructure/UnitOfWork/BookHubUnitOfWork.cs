@@ -13,7 +13,7 @@ public class BookHubUnitOfWork : IUnitOfWork
 {
     private readonly BookHubDbContext _dbContext;
 
-    private AuthorRepository? _authorRepository;
+    private GenericRepository<Author>? _authorRepository;
     private GenericRepository<Publisher>? _publisherRepository;
     private BookStoreRepository? _bookStoreRepository;
     private GenericRepository<AuthorBookAssociation>? _authorBookAssociationRepository;
@@ -27,7 +27,7 @@ public class BookHubUnitOfWork : IUnitOfWork
     private BookReviewRepository? _bookReviewRepository;
     private AddressRepository? _addressRepository;
 
-    public IGenericRepository<Author> AuthorRepository => _authorRepository ??= new AuthorRepository(_dbContext);
+    public IGenericRepository<Author> AuthorRepository => _authorRepository ??= new GenericRepository<Author>(_dbContext);
     public IGenericRepository<Publisher> PublisherRepository => _publisherRepository ??= new GenericRepository<Publisher>(_dbContext);
     public IGenericRepository<BookStore> BookStoreRepository => _bookStoreRepository ??= new BookStoreRepository(_dbContext);
     public IGenericRepository<AuthorBookAssociation> AuthorBookAssociationRepository => _authorBookAssociationRepository ??= new GenericRepository<AuthorBookAssociation>(_dbContext);
@@ -44,6 +44,23 @@ public class BookHubUnitOfWork : IUnitOfWork
     public BookHubUnitOfWork(BookHubDbContext dbContext)
     {
         _dbContext = dbContext;
+    }
+
+    public IGenericRepository<TEntity> GetRepositoryByEntity<TEntity>() where TEntity : class
+    {
+        var repository = GetType()
+            .GetProperties()
+            .Where(x => x.PropertyType == typeof(IGenericRepository<TEntity>))
+            .FirstOrDefault()?
+            .GetValue(this);
+        if (repository == null)
+        {
+            throw new NotImplementedException();
+        }
+        else
+        {
+            return (IGenericRepository<TEntity>) repository;
+        }
     }
 
     public void Commit()

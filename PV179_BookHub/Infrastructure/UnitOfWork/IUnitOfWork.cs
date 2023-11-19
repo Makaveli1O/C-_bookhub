@@ -22,6 +22,8 @@ public interface IUnitOfWork : IDisposable
     IGenericRepository<User> UserRepository { get; }  
     IGenericRepository<BookReview> BookReviewRepository { get; }
     IGenericRepository<Address> AddressRepository { get; }
+
+    IGenericRepository<TEntity> GetRepositoryByEntity<TEntity>() where TEntity : class;
     void Commit();
     Task CommitAsync();
     void Rollback();

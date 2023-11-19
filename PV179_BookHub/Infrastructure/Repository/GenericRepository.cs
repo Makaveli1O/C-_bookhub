@@ -13,6 +13,10 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         _dbContext = dbContext;
     }
 
+    public virtual IQueryable<TEntity> AsQueryable()
+    {
+        return _dbContext.Set<TEntity>().AsQueryable();
+    }
     public virtual async Task AddAsync(TEntity entity)
     {
         await _dbContext.Set<TEntity>().AddAsync(entity);
@@ -62,5 +66,4 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
         return await query.FirstOrDefaultAsync();
     }
-
 }
