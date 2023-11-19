@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using BookHubWebAPI.Api.Book.Create;
-using BookHubWebAPI.Api.Book.Filter;
 using BookHubWebAPI.Api.Book.View;
 using DataAccessLayer.Models.Publication;
+using Infrastructure.NaiveQuery;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
@@ -109,8 +109,22 @@ public class BookController : ControllerBase
     [Route("filter")]
     public async Task<IActionResult> FetchBooksByFilters([FromQuery] IDictionary<string, string> query)
     {
-        var filter = new BookFilter(query);
-        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(filter.CreateEqualExpression());
+        var filter = new Infrastructure.NaiveQuery.Filters.BookFilter(query);
+        IQuery<Book> query1 = new QueryBase<Book>(_unitOfWork)
+        {
+            CurrentPage = 1,
+            Filter = filter,
+            SortAccordingTo = "Price",
+            UseAscendingOrder = false
+        };
+
+        query1.Include(x => x.Authors, x => x.Reviews);
+        query1.Where(filter.CreateExpression());
+        query1.Page(1, 20);
+        query1.SortBy("Price", false);
+
+        var res = await query1.ExecuteAsync();
+        var books = res.Items;
 
         return Ok(
             _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
