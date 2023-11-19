@@ -11,7 +11,7 @@ public class Publisher : BaseEntity
     public string? City { get; set; }
     [MaxLength(30)]
     public string? Country { get; set; }
-    public int YearFounded { get; set; }
+    public ushort YearFounded { get; set; }
 
     public virtual IEnumerable<Book>? Books { get; set; }
 }
