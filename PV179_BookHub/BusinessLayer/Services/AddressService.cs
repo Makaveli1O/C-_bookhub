@@ -8,13 +8,8 @@ namespace BusinessLayer.Services;
 
 public class AddressService : BaseService, IAddressService
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
     public AddressService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
     }
 
     public async Task<DetailedAddressView?> FindAddressByIdAsync(long id)
