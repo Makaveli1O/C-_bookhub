@@ -1,4 +1,8 @@
-﻿using DataAccessLayer.Models;
+﻿using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Preferences;
+using DataAccessLayer.Models.Publication;
+using DataAccessLayer.Models.Purchasing;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
@@ -15,6 +19,9 @@ public class BookHubDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<BookReview> BookReviews { get; set; }
     public DbSet<Address> Addresses { get; set; }
+    public DbSet<Publisher> Publishers { get; set; }
+    public DbSet<Author> Authors { get; set; }
+    public DbSet<AuthorBookAssociation> AuthorBookAssociations { get; set; }
 
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)
     {
@@ -110,6 +117,19 @@ public class BookHubDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
     }
 
+    private static void AddRelationshipsForBook(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Book>()
+            .HasOne(book => book.Publisher)
+            .WithMany(publisher => publisher.Books)
+            .HasForeignKey(book => book.PublisherId);
+
+        modelBuilder.Entity<Book>()
+            .HasMany(book => book.Authors)
+            .WithMany(author => author.Books)
+            .UsingEntity<AuthorBookAssociation>();
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
@@ -118,6 +138,7 @@ public class BookHubDbContext : DbContext
         }
 
         /* here added relationships */
+        AddRelationshipsForBook(modelBuilder);
         AddRelationshipsForInventoryItem(modelBuilder);
         AddRelationshipsForOrder(modelBuilder);
         AddRelationshipsForWishList(modelBuilder);

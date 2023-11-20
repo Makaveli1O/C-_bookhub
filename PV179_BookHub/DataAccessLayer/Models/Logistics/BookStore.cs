@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace DataAccessLayer.Models
+using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Purchasing;
+
+namespace DataAccessLayer.Models.Logistics
 {
     public class BookStore : BaseEntity
     {

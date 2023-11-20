@@ -4,15 +4,19 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repository;
 
-public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
     protected readonly BookHubDbContext _dbContext;
 
-    protected GenericRepository(BookHubDbContext dbContext)
+    public GenericRepository(BookHubDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
+    public virtual IQueryable<TEntity> AsQueryable()
+    {
+        return _dbContext.Set<TEntity>().AsQueryable();
+    }
     public virtual async Task AddAsync(TEntity entity)
     {
         await _dbContext.Set<TEntity>().AddAsync(entity);
@@ -62,5 +66,4 @@ public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> w
 
         return await query.FirstOrDefaultAsync();
     }
-
 }

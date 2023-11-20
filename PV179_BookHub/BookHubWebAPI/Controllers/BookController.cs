@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using BookHubWebAPI.Api.Book.Create;
-using BookHubWebAPI.Api.Book.Filter;
 using BookHubWebAPI.Api.Book.View;
-using DataAccessLayer.Models;
-using DataAccessLayer.Models.Enums;
+using DataAccessLayer.Models.Publication;
+using Infrastructure.NaiveQuery;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Expressions;
 
 namespace BookHubWebAPI.Controllers;
 
@@ -37,6 +35,31 @@ public class BookController : ControllerBase
             );
     }
 
+    [HttpPatch]
+    [Route("{bookId}/{authorId}")]
+    public async Task<IActionResult> AssignAuthorToBook(long bookId, long authorId)
+    {
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(bookId);
+        var author = await _unitOfWork.AuthorRepository.GetByIdAsync(authorId);
+
+        if (book == null || author == null) 
+        {
+            return NotFound();
+        }
+
+        var authorBookAssociation = new AuthorBookAssociation()
+        {
+            AuthorId = authorId,
+            BookId = bookId
+        };
+
+        await _unitOfWork.AuthorBookAssociationRepository.AddAsync(authorBookAssociation);
+
+        return Ok(
+            _mapper.Map<DetailedBookViewDto>(book)
+            );
+    }
+
     [HttpPut]
     [Route("{id}")]
     public async Task<IActionResult> UpdateBook(long id, CreateBookDto createBookDto)
@@ -46,8 +69,8 @@ public class BookController : ControllerBase
         {
             book.Title = createBookDto.Title ?? book.Title;
             book.ISBN = createBookDto.ISBN ?? book.ISBN;
-            book.Author = createBookDto.Author ?? book.Author;
-            book.Publisher = createBookDto.Publisher ?? book.Publisher;
+            //book.Author = createBookDto.Author ?? book.Author;
+            //book.Publisher = createBookDto.Publisher ?? book.Publisher;
             book.Description = createBookDto.Description ?? book.Description;
             book.BookGenre = createBookDto.BookGenre;
             book.Price = createBookDto.Price;
@@ -86,8 +109,22 @@ public class BookController : ControllerBase
     [Route("filter")]
     public async Task<IActionResult> FetchBooksByFilters([FromQuery] IDictionary<string, string> query)
     {
-        var filter = new BookFilter(query);
-        var books = await _unitOfWork.BookRepository.GetAllFilteredAsync(filter.CreateEqualExpression());
+        var filter = new Infrastructure.NaiveQuery.Filters.BookFilter(query);
+        IQuery<Book> query1 = new QueryBase<Book>(_unitOfWork)
+        {
+            CurrentPage = 1,
+            Filter = filter,
+            SortAccordingTo = "Price",
+            UseAscendingOrder = false
+        };
+
+        query1.Include(x => x.Authors, x => x.Reviews);
+        query1.Where(filter.CreateExpression());
+        query1.Page(1, 20);
+        query1.SortBy("Price", false);
+
+        var res = await query1.ExecuteAsync();
+        var books = res.Items;
 
         return Ok(
             _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)

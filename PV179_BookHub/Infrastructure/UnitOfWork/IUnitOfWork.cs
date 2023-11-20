@@ -1,11 +1,18 @@
-﻿using DataAccessLayer.Models;
+﻿using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Preferences;
+using DataAccessLayer.Models.Publication;
+using DataAccessLayer.Models.Purchasing;
 using Infrastructure.Repository;
 
 namespace Infrastructure.UnitOfWork;
 
 public interface IUnitOfWork : IDisposable
 {
+    IGenericRepository<Author> AuthorRepository { get; }
+    IGenericRepository<Publisher> PublisherRepository { get; }
     IGenericRepository<Book> BookRepository { get; }
+    IGenericRepository<AuthorBookAssociation> AuthorBookAssociationRepository { get; }
     IGenericRepository<BookStore> BookStoreRepository { get; }
     IGenericRepository<InventoryItem> InventoryItemRepository { get; }
     IGenericRepository<WishList> WishListRepository { get; }
@@ -15,6 +22,8 @@ public interface IUnitOfWork : IDisposable
     IGenericRepository<User> UserRepository { get; }  
     IGenericRepository<BookReview> BookReviewRepository { get; }
     IGenericRepository<Address> AddressRepository { get; }
+
+    IGenericRepository<TEntity> GetRepositoryByEntity<TEntity>() where TEntity : class;
     void Commit();
     Task CommitAsync();
     void Rollback();

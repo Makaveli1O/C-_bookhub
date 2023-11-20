@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BookHubWebAPI.Api.Address.Create;
 using BookHubWebAPI.Api.Address.View;
-using DataAccessLayer.Models;
+using DataAccessLayer.Models.Logistics;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
