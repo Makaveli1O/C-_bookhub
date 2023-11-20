@@ -1,12 +1,15 @@
 ﻿using DataAccessLayer.Data;
+using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repository;
 
-public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : class
 {
     protected readonly BookHubDbContext _dbContext;
+    public string KeyName { get; } = "id";
 
     public GenericRepository(BookHubDbContext dbContext)
     {
@@ -32,38 +35,50 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         _dbContext.Set<TEntity>().Update(entity);
     }
 
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
+        Expression<Func<TEntity, bool>>? filter = null,
+        params Expression<Func<TEntity, object>>[] includes
+        )
     {
-        return await _dbContext.Set<TEntity>().ToListAsync();
+        return await _dbContext
+            .Set<TEntity>()
+            .AsQueryable()
+            .IncludeMultipleCheck(includes)
+            .WhereCheck(filter)
+            .ToListAsync();
     }
 
-    public virtual async Task<TEntity?> GetByIdAsync(long id)
+    public virtual async Task<TEntity?> GetSingleAsync(
+        Expression<Func<TEntity, bool>>? filter = null,
+        params Expression<Func<TEntity, object>>[] includes
+        )
     {
-        return await _dbContext.Set<TEntity>().FindAsync(id);
+        return await _dbContext
+            .Set<TEntity>()
+            .AsQueryable()
+            .IncludeMultipleCheck(includes)
+            .WhereCheck(filter)
+            .FirstOrDefaultAsync();
+    }
+
+    public virtual async Task<TEntity?> GetByIdAsync(
+        TKey id,
+        params Expression<Func<TEntity, object>>[] includes
+        )
+    {
+        var param = Expression.Parameter(typeof(TEntity), "source");
+        var constant = Expression.Constant(id);
+        MemberExpression member = Expression.Property(param, KeyName);
+
+        return await _dbContext
+            .Set<TEntity>()
+            .AsQueryable()
+            .IncludeMultipleCheck(includes)
+            .FirstOrDefaultAsync(Expression.Lambda<Func<TEntity, bool>>(Expression.Equal(member, constant), param));
     }
 
     public virtual async Task SaveChangesAsync()
     {
         await _dbContext.SaveChangesAsync();
-    }
-
-    public virtual async Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>>? filter = null)
-    {
-        var query = _dbContext.Set<TEntity>().AsQueryable();
-        if (filter != null)
-        {
-            query = query.Where(filter);
-        }
-        return await query.ToListAsync();
-    }
-    public virtual async Task<TEntity?> GetSingleFilteredAsync(Expression<Func<TEntity, bool>>? filter = null)
-    {
-        var query = _dbContext.Set<TEntity>().AsQueryable();
-        if (filter != null)
-        {
-            query = query.Where(filter);
-        }
-
-        return await query.FirstOrDefaultAsync();
-    }
+    } 
 }
