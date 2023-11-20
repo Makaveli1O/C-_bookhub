@@ -1,8 +1,5 @@
 ﻿using BusinessLayer.DTOs.Address.Create;
-using BusinessLayer.Services;
-using AutoMapper;
-using DataAccessLayer.Models.Logistics;
-using Infrastructure.UnitOfWork;
+using BusinessLayer.Facades;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
@@ -11,16 +8,16 @@ namespace BookHubWebAPI.Controllers;
 [Route("[controller]")]
 public class AddressController : Controller
 {
-    private readonly IAddressService _addressService;
-    public AddressController(IAddressService addressService)
+    private readonly IAddressFacade _addressFacade;
+    public AddressController(IAddressFacade addressFacade)
     {
-        _addressService = addressService;
+        _addressFacade = addressFacade;
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateAddress(CreateAddressDto createAddressDto)
     {
-        var address = await _addressService.CreateAddressAsync(createAddressDto);
+        var address = await _addressFacade.CreateAddressAsync(createAddressDto);
 
         if (address == null)
         {
@@ -37,7 +34,7 @@ public class AddressController : Controller
     [Route("{id}")]
     public async Task<IActionResult> UpdateAddress(long id, CreateAddressDto createAddressDto)
     {
-        var address = await _addressService.UpdateAddressAsync(id, createAddressDto);
+        var address = await _addressFacade.UpdateAddressAsync(id, createAddressDto);
 
         if (address == null)
         {
@@ -51,7 +48,7 @@ public class AddressController : Controller
     [Route("{id}")]
     public async Task<IActionResult> FetchSingle(long id)
     {
-        var address = await _addressService.FindAddressByIdAsync(id);
+        var address = await _addressFacade.FindAddressByIdAsync(id);
 
         if (address == null)
         {
@@ -65,7 +62,7 @@ public class AddressController : Controller
     [Route("{id}")]
     public async Task<IActionResult> DeleteAddress(long id)
     {
-        bool wasDeleted = await _addressService.DeleteAddressByIdAsync(id);
+        bool wasDeleted = await _addressFacade.DeleteAddressByIdAsync(id);
 
         if (wasDeleted)
         {

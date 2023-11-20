@@ -1,4 +1,5 @@
 using BookHubWebAPI.Middleware;
+using BusinessLayer.Facades;
 using BusinessLayer.Mappers;
 using BusinessLayer.Services;
 using DataAccessLayer.Data;
@@ -23,6 +24,7 @@ builder.Services.AddDbContextFactory<BookHubDbContext>(options =>
 });
 builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
 builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IAddressFacade, AddressFacade>();
 
 builder.Services.AddAutoMapper(typeof(AddressProfile));
 builder.Services.AddAutoMapper(typeof(BookProfile));
@@ -80,7 +82,7 @@ app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseHttpsRedirection();
 
 
-app.UseMiddleware<TokenAuthenticationMiddleware>();
+//app.UseMiddleware<TokenAuthenticationMiddleware>();
 
 app.UseAuthorization();
 
