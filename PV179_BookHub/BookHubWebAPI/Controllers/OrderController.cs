@@ -44,7 +44,7 @@ public class OrderController : ControllerBase
     public async Task<IActionResult> FetchOrdersByUserId(long userId)
     {
         var orders = await _unitOfWork.OrderRepository
-            .GetAllFilteredAsync(ord => ord.UserId == userId);
+            .GetAllAsync(ord => ord.UserId == userId);
 
         return Ok(_mapper.Map<List<GeneralOrderViewDto>>(orders));
     }
@@ -134,7 +134,7 @@ public class OrderController : ControllerBase
         }
 
         var inventoryItems = await _unitOfWork.InventoryItemRepository
-            .GetAllFilteredAsync(
+            .GetAllAsync(
             item => 
             item.BookStoreId == createOrderItemDto.BookStoreId
             && item.BookId == createOrderItemDto.BookId
@@ -202,7 +202,7 @@ public class OrderController : ControllerBase
         }
 
         var inventoryItems = await _unitOfWork.InventoryItemRepository
-            .GetAllFilteredAsync(
+            .GetAllAsync(
             item =>
             item.BookStoreId == orderItem.BookStoreId
             && item.BookId == orderItem.BookId
