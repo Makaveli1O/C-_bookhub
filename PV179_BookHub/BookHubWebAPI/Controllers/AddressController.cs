@@ -20,7 +20,7 @@ public class AddressController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateAddress(CreateAddressDto createAddressDto)
     {
-        var address = await _addressService.CreateAddressAync(createAddressDto);
+        var address = await _addressService.CreateAddressAsync(createAddressDto);
 
         if (address == null)
         {

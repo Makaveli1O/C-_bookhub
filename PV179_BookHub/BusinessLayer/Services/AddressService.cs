@@ -39,7 +39,7 @@ public class AddressService : BaseService, IAddressService
         return false;
     }
 
-    public async Task<DetailedAddressView?> CreateAddressAync(CreateAddressDto createAddressDto)
+    public async Task<DetailedAddressView?> CreateAddressAsync(CreateAddressDto createAddressDto)
     {
         var address = _mapper.Map<Address>(createAddressDto);
 
