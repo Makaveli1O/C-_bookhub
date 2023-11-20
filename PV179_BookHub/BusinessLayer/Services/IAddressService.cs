@@ -5,9 +5,8 @@ namespace BusinessLayer.Services;
 
 public interface IAddressService : IBaseService
 {
-    public Task<bool> DeleteAddressByIdAsync(long id);
-    public Task<DetailedAddressView?> FindAddressByIdAsync(long id);
-    public Task<DetailedAddressView?> CreateAddressAync(CreateAddressDto createAddressDto);
-    public Task<DetailedAddressView?> UpdateAddressAsync(long id, CreateAddressDto createAddressDto);
-
+    Task<bool> DeleteAddressByIdAsync(long id);
+    Task<DetailedAddressView?> FindAddressByIdAsync(long id);
+    Task<DetailedAddressView?> CreateAddressAync(CreateAddressDto createAddressDto);
+    Task<DetailedAddressView?> UpdateAddressAsync(long id, CreateAddressDto createAddressDto);
 }
