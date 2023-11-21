@@ -98,7 +98,7 @@ public class BookController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> FetchSingle(long id)
     {
-        var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+        var book = await _unitOfWork.BookRepository.GetByIdAsync(id, x => x.Authors, x => x.Reviews, x => x.Publisher);
 
         return Ok(
             _mapper.Map<DetailedBookViewDto>(book)
@@ -110,7 +110,7 @@ public class BookController : ControllerBase
     public async Task<IActionResult> FetchBooksByFilters([FromQuery] IDictionary<string, string> query)
     {
         var filter = new Infrastructure.NaiveQuery.Filters.BookFilter(query);
-        IQuery<Book> query1 = new QueryBase<Book>(_unitOfWork)
+        IQuery<Book> query1 = new QueryBase<Book, long>(_unitOfWork)
         {
             CurrentPage = 1,
             Filter = filter,

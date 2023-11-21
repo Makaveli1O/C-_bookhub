@@ -54,7 +54,7 @@ public class BookReviewController : Controller
     [Route("Book/{bookId}")]
     public async Task<IActionResult> FetchBookReviews(long bookId)
     {
-        var bookReviews = await _unitOfWork.BookReviewRepository.GetAllFilteredAsync(
+        var bookReviews = await _unitOfWork.BookReviewRepository.GetAllAsync(
             review => review.BookId == bookId
             );
        
@@ -69,7 +69,7 @@ public class BookReviewController : Controller
     public async Task<IActionResult> FetchUserReviews(long userId)
     {
         var bookReviews = 
-            await _unitOfWork.BookReviewRepository.GetAllFilteredAsync(
+            await _unitOfWork.BookReviewRepository.GetAllAsync(
                 user => user.Reviewer.Id == userId
                 );
 

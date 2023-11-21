@@ -1,11 +1,12 @@
-﻿using Infrastructure.NaiveQuery.Filters;
+﻿using DataAccessLayer.Models;
+using Infrastructure.NaiveQuery.Filters;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Infrastructure.NaiveQuery;
 
-public class QueryBase<TEntity> : IQuery<TEntity> where TEntity : class
+public class QueryBase<TEntity, TKey> : IQuery<TEntity> where TEntity : class
 {
     private IQueryable<TEntity> _query;
 
@@ -21,7 +22,7 @@ public class QueryBase<TEntity> : IQuery<TEntity> where TEntity : class
     {
         UnitOfWork = unitOfWork;
         _query = unitOfWork
-            .GetRepositoryByEntity<TEntity>()
+            .GetRepositoryByEntity<TEntity, TKey>()
             .AsQueryable();
     }
 
