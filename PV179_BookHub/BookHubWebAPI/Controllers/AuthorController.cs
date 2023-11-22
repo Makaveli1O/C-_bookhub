@@ -30,7 +30,7 @@ public class AuthorController : Controller
 
         return Created(
             new Uri($"{Request.Path}/{author.Id}", UriKind.Relative),
-            _mapper.Map<ViewAuthorDto>(author)
+            _mapper.Map<DetailedAuthorViewDto>(author)
             );
     }
 
@@ -50,7 +50,7 @@ public class AuthorController : Controller
         await _unitOfWork.CommitAsync();
 
         return Ok(
-            _mapper.Map<ViewAuthorDto>(author)
+            _mapper.Map<DetailedAuthorViewDto>(author)
             );
     }
 
@@ -60,7 +60,7 @@ public class AuthorController : Controller
         var authors = await _unitOfWork.AuthorRepository.GetAllAsync();
 
         return Ok(
-            _mapper.Map<List<ViewAuthorDto>>(authors)
+            _mapper.Map<List<DetailedAuthorViewDto>>(authors)
             );
     }
 
@@ -75,7 +75,7 @@ public class AuthorController : Controller
         }
 
         return Ok(
-            _mapper.Map<ViewAuthorDto>(author)
+            _mapper.Map<DetailedAuthorViewDto>(author)
             );
     }
 

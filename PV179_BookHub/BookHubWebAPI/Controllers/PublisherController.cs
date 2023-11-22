@@ -30,7 +30,7 @@ public class PublisherController : Controller
 
         return Created(
             new Uri($"{Request.Path}/{publisher.Id}", UriKind.Relative),
-            _mapper.Map<ViewPublisherDto>(publisher)
+            _mapper.Map<GeneralPublisherViewDto>(publisher)
             );
     }
 
@@ -50,7 +50,7 @@ public class PublisherController : Controller
         await _unitOfWork.CommitAsync();
 
         return Ok(
-            _mapper.Map<ViewPublisherDto>(publisher)
+            _mapper.Map<GeneralPublisherViewDto>(publisher)
             );
     }
 
@@ -60,7 +60,7 @@ public class PublisherController : Controller
         var publishers = await _unitOfWork.PublisherRepository.GetAllAsync();
 
         return Ok(
-            _mapper.Map<List<ViewPublisherDto>>(publishers)
+            _mapper.Map<List<GeneralPublisherViewDto>>(publishers)
             );
     }
 
@@ -75,7 +75,7 @@ public class PublisherController : Controller
         }
 
         return Ok(
-            _mapper.Map<ViewPublisherDto>(publisher)
+            _mapper.Map<GeneralPublisherViewDto>(publisher)
             );
     }
 

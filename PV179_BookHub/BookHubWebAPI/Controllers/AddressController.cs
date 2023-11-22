@@ -1,5 +1,5 @@
 ﻿using BusinessLayer.DTOs.Address.Create;
-using BusinessLayer.Facades;
+using BusinessLayer.Facades.Address;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
