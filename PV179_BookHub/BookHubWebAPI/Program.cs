@@ -1,4 +1,7 @@
 using BookHubWebAPI.Middleware;
+using BusinessLayer.Facades;
+using BusinessLayer.Mappers;
+using BusinessLayer.Services;
 using DataAccessLayer.Data;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +23,17 @@ builder.Services.AddDbContextFactory<BookHubDbContext>(options =>
         .UseLazyLoadingProxies();
 });
 builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IAddressFacade, AddressFacade>();
+
+builder.Services.AddAutoMapper(typeof(AddressProfile));
+builder.Services.AddAutoMapper(typeof(BookProfile));
+builder.Services.AddAutoMapper(typeof(BookReviewProfile));
+builder.Services.AddAutoMapper(typeof(BookStoreProfile));
+builder.Services.AddAutoMapper(typeof(OrderProfile));
+builder.Services.AddAutoMapper(typeof(UserProfile));
+builder.Services.AddAutoMapper(typeof(WishListItemProfile));
+builder.Services.AddAutoMapper(typeof(WishListProfile));
 
 
 builder.Services.AddControllers();

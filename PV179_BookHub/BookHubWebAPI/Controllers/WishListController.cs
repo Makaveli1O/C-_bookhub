@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using BookHubWebAPI.Api.WishList.Create;
-using BookHubWebAPI.Api.WishList.View;
+using BusinessLayer.DTOs.WishList.Create;
+using BusinessLayer.DTOs.WishList.View;
+using DataAccessLayer.Models;
 using DataAccessLayer.Models.Preferences;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
