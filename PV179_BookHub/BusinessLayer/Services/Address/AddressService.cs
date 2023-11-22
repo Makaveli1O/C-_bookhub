@@ -4,7 +4,7 @@ using BusinessLayer.DTOs.Address.View;
 using DataAccessLayer.Models.Logistics;
 using Infrastructure.UnitOfWork;
 
-namespace BusinessLayer.Services;
+namespace BusinessLayer.Services.Address;
 
 public class AddressService : BaseService, IAddressService
 {
@@ -36,7 +36,7 @@ public class AddressService : BaseService, IAddressService
 
     public async Task<DetailedAddressView?> CreateAddressAsync(CreateAddressDto createAddressDto)
     {
-        var address = _mapper.Map<Address>(createAddressDto);
+        var address = _mapper.Map<DataAccessLayer.Models.Logistics.Address>(createAddressDto);
 
         await _unitOfWork.AddressRepository.AddAsync(address);
         await _unitOfWork.CommitAsync();

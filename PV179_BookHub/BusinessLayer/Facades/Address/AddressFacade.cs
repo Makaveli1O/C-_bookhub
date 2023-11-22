@@ -1,8 +1,8 @@
 ﻿using BusinessLayer.DTOs.Address.Create;
 using BusinessLayer.DTOs.Address.View;
-using BusinessLayer.Services;
+using BusinessLayer.Services.Address;
 
-namespace BusinessLayer.Facades;
+namespace BusinessLayer.Facades.Address;
 
 public class AddressFacade : IAddressFacade
 {

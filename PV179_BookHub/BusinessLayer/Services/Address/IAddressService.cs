@@ -1,7 +1,7 @@
 ﻿using BusinessLayer.DTOs.Address.Create;
 using BusinessLayer.DTOs.Address.View;
 
-namespace BusinessLayer.Services;
+namespace BusinessLayer.Services.Address;
 
 public interface IAddressService : IBaseService
 {

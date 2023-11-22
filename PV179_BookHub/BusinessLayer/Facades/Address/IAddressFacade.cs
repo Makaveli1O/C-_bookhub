@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.DTOs.Address.Create;
 using BusinessLayer.DTOs.Address.View;
-namespace BusinessLayer.Facades;
+
+namespace BusinessLayer.Facades.Address;
 
 public interface IAddressFacade
 {
