@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.Address.Create;
 using BusinessLayer.DTOs.Address.View;
-using DataAccessLayer.Models;
+using DataAccessLayer.Models.Logistics;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services;

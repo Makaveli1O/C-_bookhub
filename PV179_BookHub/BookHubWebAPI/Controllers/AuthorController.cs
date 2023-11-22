@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BookHubWebAPI.Api.Author.Create;
-using BookHubWebAPI.Api.Author.View;
+using BusinessLayer.DTOs.Author.Create;
+using BusinessLayer.DTOs.Author.View;
 using DataAccessLayer.Models.Publication;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
