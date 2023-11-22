@@ -3,6 +3,7 @@ using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.View;
 using DataAccessLayer.Models.Publication;
 using Infrastructure.NaiveQuery;
+using Infrastructure.NaiveQuery.Filters.EntityFilters;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
@@ -109,7 +110,7 @@ public class BookController : ControllerBase
     [Route("filter")]
     public async Task<IActionResult> FetchBooksByFilters([FromQuery] IDictionary<string, string> query)
     {
-        var filter = new Infrastructure.NaiveQuery.Filters.BookFilter(query);
+        var filter = new BookFilter(query);
         IQuery<Book> query1 = new QueryBase<Book, long>(_unitOfWork)
         {
             CurrentPage = 1,

@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.Data;
-using DataAccessLayer.Models;
 using DataAccessLayer.Models.Account;
 using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
@@ -82,7 +81,6 @@ public class BookHubUnitOfWork : IUnitOfWork
     public void Dispose()
     {
         Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     protected virtual void Dispose(bool disposing)
