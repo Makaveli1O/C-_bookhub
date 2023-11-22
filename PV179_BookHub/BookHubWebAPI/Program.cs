@@ -82,7 +82,7 @@ app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseHttpsRedirection();
 
 
-//app.UseMiddleware<TokenAuthenticationMiddleware>();
+app.UseMiddleware<TokenAuthenticationMiddleware>();
 
 app.UseAuthorization();
 
