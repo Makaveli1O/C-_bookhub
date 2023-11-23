@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using BusinessLayer.DTOs;
 using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.Filter;
 using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
-using DataAccessLayer.Models.Publication;
 using Infrastructure.NaiveQuery.Filters.EntityFilters;
 
 namespace BusinessLayer.Facades.Book;
@@ -15,9 +13,10 @@ public class BookFacade : BaseFacade, IBookFacade
 {
     private readonly IBookService _bookService;
     private readonly IAuthorService _authorService;
-    private readonly IGenericService<Publisher, long> _publisherService;
+    private readonly IGenericService<DataAccessLayer.Models.Publication.Publisher, long> _publisherService;
 
-    public BookFacade(IMapper mapper, IBookService bookService, IAuthorService authorService, IGenericService<Publisher, long> publisherService)
+    public BookFacade(IMapper mapper, IBookService bookService, IAuthorService authorService, 
+        IGenericService<DataAccessLayer.Models.Publication.Publisher, long> publisherService)
         : base(mapper)
     {
         _bookService = bookService;
@@ -66,7 +65,7 @@ public class BookFacade : BaseFacade, IBookFacade
         var book = await _bookService.FindByIdAsync(id);
         var newAuthor = await _authorService.FindByIdAsync(authorId);
 
-        var authors = book.Authors?.ToList() ?? new List<Author>();
+        var authors = book.Authors?.ToList() ?? new List<DataAccessLayer.Models.Publication.Author>();
         authors.Add(newAuthor);
         book.Authors = authors;
         await _bookService.UpdateEntityAsync(book);
