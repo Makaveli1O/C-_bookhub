@@ -1,15 +1,17 @@
 using BookHubWebAPI.Middleware;
-<<<<<<< HEAD
 using BookHubWebAPI.Swagger;
-using BusinessLayer.Facades;
-=======
 using BusinessLayer.Facades.Address;
+using BusinessLayer.Facades.Author;
 using BusinessLayer.Facades.Book;
->>>>>>> cddc749 (Changes in WEBAPI layer)
+using BusinessLayer.Facades.Publisher;
 using BusinessLayer.Mappers;
-using BusinessLayer.Services.Address;
+using BusinessLayer.Services;
+using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
+using BusinessLayer.Services.Publisher;
 using DataAccessLayer.Data;
+using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Publication;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -32,8 +34,14 @@ builder.Services.AddDbContextFactory<BookHubDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
 
-builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IGenericService<Address, long>, GenericService<Address, long>>();
 builder.Services.AddScoped<IAddressFacade, AddressFacade>();
+
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<IAuthorFacade, AuthorFacade>();
+
+builder.Services.AddScoped<IGenericService<Publisher, long>, PublisherService>();
+builder.Services.AddScoped<IPublisherFacade, PublisherFacade>();
 
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookFacade, BookFacade>();
@@ -46,6 +54,7 @@ builder.Services.AddAutoMapper(typeof(OrderProfile));
 builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddAutoMapper(typeof(WishListItemProfile));
 builder.Services.AddAutoMapper(typeof(WishListProfile));
+builder.Services.AddAutoMapper(typeof(AuthorBookAssociationProfile));
 
 
 builder.Services.AddControllers();

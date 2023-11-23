@@ -1,5 +1,7 @@
 ﻿using BusinessLayer.DTOs.Book.Create;
+using BusinessLayer.DTOs.Book.Filter;
 using BusinessLayer.Facades.Book;
+using DataAccessLayer.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
@@ -29,26 +31,20 @@ public class BookController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> UpdateBook(long id, CreateBookDto updateBookDto)
     {
-        return Ok(
-            await _bookFacade.UpdateBookAsync(id, updateBookDto)
-            );
+        return Ok(await _bookFacade.UpdateBookAsync(id, updateBookDto));
     }
 
     [HttpGet]
     public async Task<IActionResult> FetchAll()
     {
-        return Ok(
-            await _bookFacade.FetchAllBooksAsync()
-            );
+        return Ok(await _bookFacade.FetchAllBooksAsync());
     }
 
     [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> FetchSingle(long id)
     {
-        return Ok(
-            await _bookFacade.FindBookByIdAsync(id)
-            );
+        return Ok(await _bookFacade.FindBookByIdAsync(id));
     }
 
     [HttpDelete]
@@ -59,71 +55,21 @@ public class BookController : ControllerBase
         return NoContent();
     }
 
+    [HttpPatch]
+    [Route("{bookId}/{authorId}")]
+    public async Task<IActionResult> AssignAuthorToBook(long bookId, long authorId)
+    {
+        return Ok(await _bookFacade.AssignAuthorToBook(bookId, authorId));
+    }
 
+    [HttpGet]
+    [Route("filter")]
+    public async Task<IActionResult> FetchBooksByFilters(string? title, string? author, string? publisher, string? description,
+        BookGenre? bookGenre, double? LEQPrice, double? GEQPrice, string? sortParam, bool? asc, int pageNumber, int? pageSize)
+    {
+        var filter = new BookFilterDto(title, author, publisher, description, bookGenre, LEQPrice, GEQPrice, sortParam, asc, pageNumber, pageSize);
 
-
-
-
-
-
-
-
-
-
-    //[HttpPatch]
-    //[Route("{bookId}/{authorId}")]
-    //public async Task<IActionResult> AssignAuthorToBook(long bookId, long authorId)
-    //{
-    //    var book = await _unitOfWork.BookRepository.GetByIdAsync(bookId);
-    //    var author = await _unitOfWork.AuthorRepository.GetByIdAsync(authorId);
-
-    //    if (book == null || author == null) 
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    var authorBookAssociation = new AuthorBookAssociation()
-    //    {
-    //        AuthorId = authorId,
-    //        BookId = bookId
-    //    };
-
-    //    await _unitOfWork.AuthorBookAssociationRepository.AddAsync(authorBookAssociation);
-
-    //    return Ok(
-    //        _mapper.Map<DetailedBookViewDto>(book)
-    //        );
-    //}
-
-
-
-
-
-
-
-    //[HttpGet]
-    //[Route("filter")]
-    //public async Task<IActionResult> FetchBooksByFilters([FromQuery] IDictionary<string, string> query)
-    //{
-    //    var filter = new BookFilter(query);
-    //    IQuery<Book> query1 = new QueryBase<Book, long>(_unitOfWork)
-    //    {
-    //        CurrentPage = 1,
-    //        Filter = filter,
-    //        SortAccordingTo = "Price",
-    //        UseAscendingOrder = false
-    //    };
-
-    //    query1.Include(x => x.Authors, x => x.Reviews);
-    //    query1.Where(filter.CreateExpression());
-    //    query1.Page(1, 20);
-    //    query1.SortBy("Price", false);
-
-    //    var res = await query1.ExecuteAsync();
-    //    var books = res.Items;
-
-    //    return Ok(
-    //        _mapper.Map<IEnumerable<DetailedBookViewDto>>(books)
-    //        );
-    //}
+        var books = await _bookFacade.FetchFilteredBooksAsync(filter);
+        return Ok(books);
+    }
 }

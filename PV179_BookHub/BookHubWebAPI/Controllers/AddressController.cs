@@ -62,14 +62,8 @@ public class AddressController : Controller
     [Route("{id}")]
     public async Task<IActionResult> DeleteAddress(long id)
     {
-        bool wasDeleted = await _addressFacade.DeleteAddressByIdAsync(id);
-
-        if (wasDeleted)
-        {
-            return Ok();
-        }
-
-        return BadRequest();
+        await _addressFacade.DeleteAddressByIdAsync(id);
+        return NoContent();
     }
 
 }

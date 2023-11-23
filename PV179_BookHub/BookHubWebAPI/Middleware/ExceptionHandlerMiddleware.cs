@@ -20,7 +20,7 @@ public class ExceptionHandlerMiddleware
         HttpStatusCode code;
         switch (exception)
         {
-            case NoSuchEntityException:
+            case NoSuchEntityException<long> or NoSuchEntityException<IEnumerable<long>>:
                 code = HttpStatusCode.NotFound; 
                 break;
             default:

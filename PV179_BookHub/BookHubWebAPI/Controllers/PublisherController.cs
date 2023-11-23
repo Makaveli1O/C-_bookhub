@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.Publisher.Create;
 using BusinessLayer.DTOs.Publisher.View;
-using DataAccessLayer.Models.Publication;
-using Infrastructure.UnitOfWork;
+using BusinessLayer.Facades.Publisher;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
@@ -11,26 +10,21 @@ namespace BookHubWebAPI.Controllers;
 [Route("[controller]")]
 public class PublisherController : Controller
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
+    private readonly IPublisherFacade _publisherFacade;
 
-    public PublisherController(IUnitOfWork unitOfWork, IMapper mapper)
+    public PublisherController(IPublisherFacade publisherFacade)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
+        _publisherFacade = publisherFacade;
     }
 
     [HttpPost]
     public async Task<IActionResult> CreatePublisher(CreatePublisherDto createPublisherDto)
     {
-        var publisher = _mapper.Map<Publisher>(createPublisherDto);
-
-        await _unitOfWork.PublisherRepository.AddAsync(publisher);
-        await _unitOfWork.CommitAsync();
+        var publisher = await _publisherFacade.CreatePublisherAsync(createPublisherDto);
 
         return Created(
             new Uri($"{Request.Path}/{publisher.Id}", UriKind.Relative),
-            _mapper.Map<GeneralPublisherViewDto>(publisher)
+            publisher
             );
     }
 
@@ -38,59 +32,27 @@ public class PublisherController : Controller
     [Route("{id}")]
     public async Task<IActionResult> UpdatePublisher(long id, CreatePublisherDto createPublisherDto)
     {
-        var publisher = await _unitOfWork.PublisherRepository.GetByIdAsync(id);
-        if (publisher == null)
-        {
-            return NotFound();
-        }
-
-        publisher.Name = createPublisherDto.Name ?? publisher.Name;
-
-        _unitOfWork.PublisherRepository.Update(publisher);
-        await _unitOfWork.CommitAsync();
-
-        return Ok(
-            _mapper.Map<GeneralPublisherViewDto>(publisher)
-            );
+        return Ok(await _publisherFacade.UpdatePublisherAsync(id, createPublisherDto));
     }
 
     [HttpGet]
     public async Task<IActionResult> FetchAll()
     {
-        var publishers = await _unitOfWork.PublisherRepository.GetAllAsync();
-
-        return Ok(
-            _mapper.Map<List<GeneralPublisherViewDto>>(publishers)
-            );
+        return Ok(await _publisherFacade.GetAllPublishersAsync());
     }
 
     [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> FetchSingle(long id)
     {
-        var publisher = await _unitOfWork.PublisherRepository.GetByIdAsync(id);
-        if (publisher == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(
-            _mapper.Map<GeneralPublisherViewDto>(publisher)
-            );
+        return Ok(await _publisherFacade.FindPublisherByIdAsync(id));
     }
 
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeleteById(long id)
     {
-        var publisher = await _unitOfWork.PublisherRepository.GetByIdAsync(id);
-        if (publisher == null)
-        {
-            return NotFound();
-        }
-
-        _unitOfWork.PublisherRepository.Delete(publisher);
-        await _unitOfWork.CommitAsync();
+        await _publisherFacade.DeletePublisherAsync(id);
         return NoContent();
     }
 }
