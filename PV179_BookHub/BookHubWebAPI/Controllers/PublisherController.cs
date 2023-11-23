@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using BusinessLayer.DTOs.Publisher.Create;
-using BusinessLayer.DTOs.Publisher.View;
+﻿using BusinessLayer.DTOs.Publisher.Create;
 using BusinessLayer.Facades.Publisher;
 using Microsoft.AspNetCore.Mvc;
 
