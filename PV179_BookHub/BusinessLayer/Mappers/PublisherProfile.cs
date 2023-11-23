@@ -11,5 +11,6 @@ public class PublisherProfile : Profile
     {
         CreateMap<CreatePublisherDto, Publisher>();
         CreateMap<Publisher, GeneralPublisherViewDto>();
+        CreateMap<Publisher, DetailedPublisherViewDto>();
     }
 }

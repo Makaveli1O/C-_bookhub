@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.Address.Create;
 using BusinessLayer.DTOs.Address.View;
-using DataAccessLayer.Models.Logistics;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.Address;
 
-public class AddressService : BaseService, IAddressService
+public class AddressService : BaseService<DataAccessLayer.Models.Logistics.Address, long>, IAddressService
 {
     public AddressService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
@@ -14,19 +13,19 @@ public class AddressService : BaseService, IAddressService
 
     public async Task<DetailedAddressView?> FindAddressByIdAsync(long id)
     {
-        var address = await _unitOfWork.AddressRepository.GetByIdAsync(id);
+        var address = await Repository.GetByIdAsync(id);
 
         return _mapper.Map<DetailedAddressView>(address);
     }
 
     public async Task<bool> DeleteAddressByIdAsync(long id)
     {
-        var address = await _unitOfWork.AddressRepository.GetByIdAsync(id);
+        var address = await Repository.GetByIdAsync(id);
 
         if (address != null)
         {
-            _unitOfWork.AddressRepository.Delete(address);
-            await _unitOfWork.CommitAsync();
+            Repository.Delete(address);
+            await SaveAsync();
 
             return true;
         }
@@ -38,15 +37,15 @@ public class AddressService : BaseService, IAddressService
     {
         var address = _mapper.Map<DataAccessLayer.Models.Logistics.Address>(createAddressDto);
 
-        await _unitOfWork.AddressRepository.AddAsync(address);
-        await _unitOfWork.CommitAsync();
+        await Repository.AddAsync(address);
+        await SaveAsync();
 
         return _mapper.Map<DetailedAddressView>(address);
     }
 
     public async Task<DetailedAddressView?> UpdateAddressAsync(long id, CreateAddressDto createAddressDto)
     {
-        var address = await _unitOfWork.AddressRepository.GetByIdAsync(id);
+        var address = await Repository.GetByIdAsync(id);
 
         if (address != null)
         {
@@ -56,8 +55,8 @@ public class AddressService : BaseService, IAddressService
             address.Street = createAddressDto.Street ?? address.Street;
             address.PostalCode = createAddressDto.PostalCode ?? address.PostalCode;
 
-            _unitOfWork.AddressRepository.Update(address);
-            await _unitOfWork.CommitAsync();
+            Repository.Update(address);
+            await SaveAsync();
         }
         return _mapper.Map<DetailedAddressView>(address);
     }
