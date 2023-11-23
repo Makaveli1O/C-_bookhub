@@ -1,4 +1,5 @@
 using BookHubWebAPI.Middleware;
+using BookHubWebAPI.Swagger;
 using BusinessLayer.Facades;
 using BusinessLayer.Mappers;
 using BusinessLayer.Services;
@@ -64,6 +65,13 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+
+    c.OperationFilter<FormatQueryParameterOperationFilter>(
+         "format",
+         "The format of the response",
+         "json",
+         new List<string> {"json", "xml"},
+         false);
 });
 
 builder.Services.AddLogging();
@@ -82,6 +90,8 @@ app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseMiddleware<TokenAuthenticationMiddleware>();
+
+app.UseMiddleware<XmlResponseConverterMiddleware>();
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
