@@ -6,7 +6,7 @@ namespace BookHubWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PublisherController : Controller
+public class PublisherController : ControllerBase
 {
     private readonly IPublisherFacade _publisherFacade;
 
