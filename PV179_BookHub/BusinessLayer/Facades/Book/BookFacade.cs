@@ -32,7 +32,7 @@ public class BookFacade : BaseFacade, IBookFacade
         var book = _mapper.Map<DataAccessLayer.Models.Publication.Book>(createBookDto);
         book.Authors = authors;
         book.Publisher = publisher;
-        await _bookService.CreateEntityAsync(book);
+        await _bookService.CreateAsync(book);
 
         return _mapper.Map<DetailedBookViewDto>(book);
     }
@@ -56,7 +56,7 @@ public class BookFacade : BaseFacade, IBookFacade
         var authors = await _authorService.FetchAllAuthorsByIdsAsync(updateBookDto.AuthorIds);
         book.Authors = authors;
 
-        await _bookService.UpdateEntityAsync(book);
+        await _bookService.UpdateAsync(book);
         return _mapper.Map<DetailedBookViewDto>(book);
     }
 
@@ -68,7 +68,7 @@ public class BookFacade : BaseFacade, IBookFacade
         var authors = book.Authors?.ToList() ?? new List<DataAccessLayer.Models.Publication.Author>();
         authors.Add(newAuthor);
         book.Authors = authors;
-        await _bookService.UpdateEntityAsync(book);
+        await _bookService.UpdateAsync(book);
 
         return _mapper.Map<DetailedBookViewDto>(book);
     }
@@ -109,6 +109,6 @@ public class BookFacade : BaseFacade, IBookFacade
     {
         var book = await _bookService.FindByIdAsync(id);
 
-        await _bookService.DeleteEntityAsync(book);
+        await _bookService.DeleteAsync(book);
     }
 }

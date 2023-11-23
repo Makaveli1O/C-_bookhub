@@ -17,7 +17,7 @@ public class AuthorFacade : BaseFacade, IAuthorFacade
     {
         var author = _mapper.Map<DataAccessLayer.Models.Publication.Author>(createAuthorDto);
 
-        await _authorService.CreateEntityAsync(author);
+        await _authorService.CreateAsync(author);
 
         return _mapper.Map<DetailedAuthorViewDto>(author);
     }
@@ -26,7 +26,7 @@ public class AuthorFacade : BaseFacade, IAuthorFacade
     {
         var author = await _authorService.FindByIdAsync(id);
 
-        await _authorService.DeleteEntityAsync(author);
+        await _authorService.DeleteAsync(author);
     }
 
     public async Task<DetailedAuthorViewDto> FindAuthorByIdAsync(long id)
@@ -48,7 +48,7 @@ public class AuthorFacade : BaseFacade, IAuthorFacade
         author.Name = updateAuthorDto.Name ?? author.Name;
         author.Biography = updateAuthorDto.Biography ?? author.Biography;
 
-        await _authorService.UpdateEntityAsync(author);
+        await _authorService.UpdateAsync(author);
         return _mapper.Map<DetailedAuthorViewDto>(author);
     }
 }

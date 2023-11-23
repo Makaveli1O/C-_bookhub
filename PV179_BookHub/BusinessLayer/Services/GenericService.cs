@@ -13,7 +13,7 @@ public class GenericService<TEntity, TKey> : BaseService, IGenericService<TEntit
         Repository = _unitOfWork.GetRepositoryByEntity<TEntity, TKey>();
     }
 
-    public virtual async Task<TEntity> CreateEntityAsync(TEntity entity, bool save = true)
+    public virtual async Task<TEntity> CreateAsync(TEntity entity, bool save = true)
     {
         await Repository.AddAsync(entity);
         await SaveAsync(save);
@@ -21,7 +21,7 @@ public class GenericService<TEntity, TKey> : BaseService, IGenericService<TEntit
         return entity;
     }
 
-    public virtual async Task<TEntity> UpdateEntityAsync(TEntity entity, bool save = true)
+    public virtual async Task<TEntity> UpdateAsync(TEntity entity, bool save = true)
     {
         Repository.Update(entity);
         await SaveAsync(save);
@@ -44,7 +44,7 @@ public class GenericService<TEntity, TKey> : BaseService, IGenericService<TEntit
         return entity;
     }
 
-    public virtual async Task DeleteEntityAsync(TEntity entity, bool save = true)
+    public virtual async Task DeleteAsync(TEntity entity, bool save = true)
     {
         Repository.Delete(entity);
         await SaveAsync(save);

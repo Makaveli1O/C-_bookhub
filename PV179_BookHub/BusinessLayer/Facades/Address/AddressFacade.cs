@@ -16,7 +16,7 @@ public class AddressFacade : BaseFacade, IAddressFacade
     public async Task<DetailedAddressView> CreateAddressAsync(CreateAddressDto createAddressDto)
     {
         var address = _mapper.Map<DataAccessLayer.Models.Logistics.Address>(createAddressDto);
-        await _addressService.CreateEntityAsync(address);
+        await _addressService.CreateAsync(address);
 
         return _mapper.Map<DetailedAddressView>(address);
     }
@@ -24,7 +24,7 @@ public class AddressFacade : BaseFacade, IAddressFacade
     public async Task DeleteAddressByIdAsync(long id)
     {
         var address = await _addressService.FindByIdAsync(id);
-        await _addressService.DeleteEntityAsync(address);
+        await _addressService.DeleteAsync(address);
     }
 
     public async Task<DetailedAddressView> FindAddressByIdAsync(long id)
@@ -42,7 +42,7 @@ public class AddressFacade : BaseFacade, IAddressFacade
         address.Street = createAddressDto.Street ?? address.Street;
         address.PostalCode = createAddressDto.PostalCode ?? address.PostalCode;
 
-        await _addressService.UpdateEntityAsync(address);
+        await _addressService.UpdateAsync(address);
         return _mapper.Map<DetailedAddressView>(address);
     }
 }

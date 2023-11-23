@@ -17,7 +17,7 @@ namespace BusinessLayer.Facades.Publisher
         public async Task<DetailedPublisherViewDto> CreatePublisherAsync(CreatePublisherDto createPublisherDto)
         {
             var publisher = _mapper.Map<DataAccessLayer.Models.Publication.Publisher>(createPublisherDto);
-            await _publisherService.CreateEntityAsync(publisher);
+            await _publisherService.CreateAsync(publisher);
 
             return _mapper.Map<DetailedPublisherViewDto>(publisher);
         }
@@ -26,7 +26,7 @@ namespace BusinessLayer.Facades.Publisher
         {
             var publisher = await _publisherService.FindByIdAsync(id);
 
-            await _publisherService.DeleteEntityAsync(publisher);
+            await _publisherService.DeleteAsync(publisher);
         }
 
         public async Task<DetailedPublisherViewDto> FindPublisherByIdAsync(long id)
@@ -50,7 +50,7 @@ namespace BusinessLayer.Facades.Publisher
             publisher.City = updatePublisherDto.City ?? publisher.City;
             publisher.YearFounded = updatePublisherDto.YearFounded ?? publisher.YearFounded;
 
-            await _publisherService.UpdateEntityAsync(publisher);
+            await _publisherService.UpdateAsync(publisher);
             return _mapper.Map<DetailedPublisherViewDto>(publisher);
         }
     }
