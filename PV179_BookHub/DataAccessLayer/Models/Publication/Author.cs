@@ -11,4 +11,5 @@ public class Author : BaseEntity
     public string? Biography { get; set; }
 
     public virtual IEnumerable<Book>? Books { get; set; }
+    public virtual IEnumerable<AuthorBookAssociation>? AuthorBookAssociations { get; set; }
 }

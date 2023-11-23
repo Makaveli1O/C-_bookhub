@@ -130,6 +130,21 @@ public class BookHubDbContext : DbContext
             .UsingEntity<AuthorBookAssociation>();
     }
 
+    private static void AddRelationshipsForAuthorBookAssociations(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AuthorBookAssociation>()
+            .HasOne(assoc => assoc.Book)
+            .WithMany(book => book.AuthorBookAssociations)
+            .HasForeignKey(assoc => assoc.BookId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<AuthorBookAssociation>()
+            .HasOne(assoc => assoc.Author)
+            .WithMany(author => author.AuthorBookAssociations)
+            .HasForeignKey(assoc => assoc.AuthorId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
@@ -138,6 +153,7 @@ public class BookHubDbContext : DbContext
         }
 
         /* here added relationships */
+        AddRelationshipsForAuthorBookAssociations(modelBuilder);
         AddRelationshipsForBook(modelBuilder);
         AddRelationshipsForInventoryItem(modelBuilder);
         AddRelationshipsForOrder(modelBuilder);
