@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using BusinessLayer.DTOs;
 using BusinessLayer.DTOs.Book.Create;
+using BusinessLayer.DTOs.Book.Filter;
 using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
 using DataAccessLayer.Models.Publication;
+using Infrastructure.NaiveQuery.Filters.EntityFilters;
 
 namespace BusinessLayer.Facades.Book;
 
@@ -58,12 +61,44 @@ public class BookFacade : BaseFacade, IBookFacade
         return _mapper.Map<DetailedBookViewDto>(book);
     }
 
-    public async Task<List<GeneralBookViewDto>> FetchAllBooksAsync()
+    public async Task<DetailedBookViewDto> AssignAuthorToBook(long id, long authorId)
+    {
+        var book = await _bookService.FindByIdAsync(id);
+        var newAuthor = await _authorService.FindByIdAsync(authorId);
+
+        var authors = book.Authors?.ToList() ?? new List<Author>();
+        authors.Add(newAuthor);
+        book.Authors = authors;
+        await _bookService.UpdateEntityAsync(book);
+
+        return _mapper.Map<DetailedBookViewDto>(book);
+    }
+
+    public async Task<IEnumerable<GeneralBookViewDto>> FetchAllBooksAsync()
     {
         var books = await _bookService.FetchAllAsync();
 
         return _mapper.Map<List<GeneralBookViewDto>>(books);
     }
+
+    public async Task<IEnumerable<GeneralBookViewDto>> FetchFilteredBooksAsync(BookFilterDto bookFilterDto)
+    {
+        var bookFilter = new BookFilter()
+        {
+            Author = bookFilterDto.Author,
+            Title = bookFilterDto.Title,
+            Publisher = bookFilterDto.Publisher,
+            Description = bookFilterDto.Description,
+            BookGenre = bookFilterDto.BookGenre,
+            GEQ_Price = bookFilterDto.GEQPrice,
+            LEQ_Price = bookFilterDto.LEQPrice
+        };
+
+        var queryResult = await _bookService.FetchFilteredBooksAsync(bookFilter,
+            bookFilterDto.PageNumber, bookFilterDto.PageSize, bookFilterDto.SortParam, bookFilterDto.Asc);
+        return _mapper.Map<List<GeneralBookViewDto>>(queryResult.Items);
+    }
+
     public async Task<DetailedBookViewDto> FindBookByIdAsync(long id)
     {
         var book = await _bookService.FindByIdAsync(id);
