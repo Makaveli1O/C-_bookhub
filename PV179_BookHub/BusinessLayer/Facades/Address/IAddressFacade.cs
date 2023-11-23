@@ -5,8 +5,8 @@ namespace BusinessLayer.Facades.Address;
 
 public interface IAddressFacade
 {
-    Task<DetailedAddressView?> FindAddressByIdAsync(long id);
-    Task<bool> DeleteAddressByIdAsync(long id);
-    Task<DetailedAddressView?> CreateAddressAsync(CreateAddressDto createAddressDto);
-    Task<DetailedAddressView?> UpdateAddressAsync(long id, CreateAddressDto createAddressDto);
+    Task<DetailedAddressView> FindAddressByIdAsync(long id);
+    Task DeleteAddressByIdAsync(long id);
+    Task<DetailedAddressView> CreateAddressAsync(CreateAddressDto createAddressDto);
+    Task<DetailedAddressView> UpdateAddressAsync(long id, CreateAddressDto createAddressDto);
 }

@@ -1,13 +1,5 @@
-﻿using BusinessLayer.DTOs.Book.Create;
-using BusinessLayer.DTOs.Book.View;
+﻿namespace BusinessLayer.Services.Book;
 
-namespace BusinessLayer.Services.Book;
-
-public interface IBookService : IBaseService
+public interface IBookService : IGenericService<DataAccessLayer.Models.Publication.Book, long>
 {
-    Task<DetailedBookViewDto> CreateBookAsync(CreateBookDto createBookDto, bool save = true);
-    Task<DetailedBookViewDto> UpdateBookAsync(long id, CreateBookDto updateBookDto, bool save = true);
-    Task<List<GeneralBookViewDto>> FetchAllBooksAsync();
-    Task<DetailedBookViewDto> FindBookByIdAsync(long id);
-    Task DeleteBookByIdAsync(long id, bool save = true);
 }

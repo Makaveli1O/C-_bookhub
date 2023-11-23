@@ -1,71 +1,28 @@
-﻿using AutoMapper;
-using BusinessLayer.DTOs.Author.Create;
-using BusinessLayer.DTOs.Author.View;
-using BusinessLayer.Exceptions;
+﻿using BusinessLayer.Exceptions;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.Author;
 
-public class AuthorService : BaseService<DataAccessLayer.Models.Publication.Author, long>, IAuthorService
+public class AuthorService : GenericService<DataAccessLayer.Models.Publication.Author, long>, IAuthorService
 {
-    public AuthorService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+    public AuthorService(IUnitOfWork unitOfWork) : base(unitOfWork)
     {
     }
 
-    public async Task<DetailedAuthorViewDto> CreateAuthorAsync(CreateAuthorDto createAuthorDto, bool save = true)
+    public async Task<IEnumerable<DataAccessLayer.Models.Publication.Author>> FetchAllAuthorsByIdsAsync(IEnumerable<long>? ids)
     {
-        var author = _mapper.Map<DataAccessLayer.Models.Publication.Author>(createAuthorDto);
-
-        await Repository.AddAsync(author);
-        await SaveAsync(save);
-
-        return _mapper.Map<DetailedAuthorViewDto>(author);
-    }
-
-    public async Task<DetailedAuthorViewDto> UpdateAuthorAsync(long id, CreateAuthorDto updateAuthorDto, bool save = true)
-    {
-        var author = await Repository.GetByIdAsync(id);
-        if (author == null)
+        if (ids == null)
         {
-            throw new NoSuchEntityException(typeof(DataAccessLayer.Models.Publication.Author), id);
+            return new List<DataAccessLayer.Models.Publication.Author>();
         }
 
-        author.Name = updateAuthorDto.Name ?? author.Name;
-        author.Biography = updateAuthorDto.Biography ?? author.Biography;
+        var authors = await Repository.GetAllAsync(x => ids.Contains(x.Id));
 
-        Repository.Update(author);
-        await SaveAsync(save);
-
-        return _mapper.Map<DetailedAuthorViewDto>(author);
-    }
-
-    public async Task<List<GeneralAuthorViewDto>> FetchAllAuthorsAsync()
-    {
-        var authors = await Repository.GetAllAsync();
-        return _mapper.Map<List<GeneralAuthorViewDto>>(authors);
-    }
-
-    public async Task<DetailedAuthorViewDto> FindAuthorByIdAsync(long id)
-    {
-        var author = await Repository
-            .GetByIdAsync(id, x => x.Books);
-        if (author == null)
+        if (authors.Count() != ids.Count())
         {
-            throw new NoSuchEntityException(typeof(DataAccessLayer.Models.Publication.Author), id);
+            throw new NoSuchEntityException<long>(typeof(DataAccessLayer.Models.Publication.Author), ids);
         }
 
-        return _mapper.Map<DetailedAuthorViewDto>(author);
-    }
-
-    public async Task DeleteAuthorByIdAsync(long id, bool save = true)
-    {
-        var author = await Repository.GetByIdAsync(id);
-        if (author == null)
-        {
-            throw new NoSuchEntityException(typeof(DataAccessLayer.Models.Publication.Author), id);
-        }
-
-        Repository.Delete(author);
-        await SaveAsync(save);
+        return authors;
     }
 }

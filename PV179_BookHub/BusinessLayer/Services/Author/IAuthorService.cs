@@ -1,13 +1,8 @@
-﻿using BusinessLayer.DTOs.Author.Create;
-using BusinessLayer.DTOs.Author.View;
+﻿
 
 namespace BusinessLayer.Services.Author;
 
-public interface IAuthorService : IBaseService
+public interface IAuthorService : IGenericService<DataAccessLayer.Models.Publication.Author, long>
 {
-    Task<DetailedAuthorViewDto> CreateAuthorAsync(CreateAuthorDto createAuthorDto, bool save = true);
-    Task<DetailedAuthorViewDto> UpdateAuthorAsync(long id, CreateAuthorDto updateAuthorDto, bool save = true);
-    Task<List<GeneralAuthorViewDto>> FetchAllAuthorsAsync();
-    Task<DetailedAuthorViewDto> FindAuthorByIdAsync(long id);
-    Task DeleteAuthorByIdAsync(long id, bool save = true);
+    Task<IEnumerable<DataAccessLayer.Models.Publication.Author>> FetchAllAuthorsByIdsAsync(IEnumerable<long>? ids);
 }

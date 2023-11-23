@@ -1,34 +1,48 @@
-﻿using BusinessLayer.DTOs.Address.Create;
+﻿using AutoMapper;
+using BusinessLayer.DTOs.Address.Create;
 using BusinessLayer.DTOs.Address.View;
-using BusinessLayer.Services.Address;
+using BusinessLayer.Services;
 
 namespace BusinessLayer.Facades.Address;
 
-public class AddressFacade : IAddressFacade
+public class AddressFacade : BaseFacade, IAddressFacade
 {
-    private readonly IAddressService _addressService;
-    public AddressFacade(IAddressService addressService)
+    private readonly IGenericService<DataAccessLayer.Models.Logistics.Address, long> _addressService;
+    public AddressFacade(IMapper mapper, IGenericService<DataAccessLayer.Models.Logistics.Address, long> addressService) : base(mapper)
     {
         _addressService = addressService;
     }
 
-    public Task<DetailedAddressView?> CreateAddressAsync(CreateAddressDto createAddressDto)
+    public async Task<DetailedAddressView> CreateAddressAsync(CreateAddressDto createAddressDto)
     {
-        return _addressService.CreateAddressAsync(createAddressDto);
+        var address = _mapper.Map<DataAccessLayer.Models.Logistics.Address>(createAddressDto);
+        await _addressService.CreateEntityAsync(address);
+
+        return _mapper.Map<DetailedAddressView>(address);
     }
 
-    public Task<bool> DeleteAddressByIdAsync(long id)
+    public async Task DeleteAddressByIdAsync(long id)
     {
-        return _addressService.DeleteAddressByIdAsync(id);
+        var address = await _addressService.FindByIdAsync(id);
+        await _addressService.DeleteEntityAsync(address);
     }
 
-    public Task<DetailedAddressView?> FindAddressByIdAsync(long id)
+    public async Task<DetailedAddressView> FindAddressByIdAsync(long id)
     {
-        return _addressService.FindAddressByIdAsync(id);
+        return _mapper.Map<DetailedAddressView>(await _addressService.FindByIdAsync(id));
     }
 
-    public Task<DetailedAddressView?> UpdateAddressAsync(long id, CreateAddressDto createAddressDto)
+    public async Task<DetailedAddressView> UpdateAddressAsync(long id, CreateAddressDto createAddressDto)
     {
-        return UpdateAddressAsync(id, createAddressDto);
+        var address = await _addressService.FindByIdAsync(id);
+
+        address.StreetNumber = createAddressDto.StreetNumber ?? address.StreetNumber;
+        address.City = createAddressDto.City ?? address.City;
+        address.State = createAddressDto.State ?? address.State;
+        address.Street = createAddressDto.Street ?? address.Street;
+        address.PostalCode = createAddressDto.PostalCode ?? address.PostalCode;
+
+        await _addressService.UpdateEntityAsync(address);
+        return _mapper.Map<DetailedAddressView>(address);
     }
 }

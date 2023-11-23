@@ -1,19 +1,14 @@
-﻿using AutoMapper;
-using Infrastructure.Repository;
-using Infrastructure.UnitOfWork;
+﻿using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services;
 
-public abstract class BaseService<TEntity, TKey> : IBaseService where TEntity : class
+public abstract class BaseService : IBaseService
 {
     protected readonly IUnitOfWork _unitOfWork;
-    protected readonly IMapper _mapper;
-    public readonly IGenericRepository<TEntity, TKey> Repository;
-    public BaseService(IUnitOfWork unitOfWork, IMapper mapper)
+    
+    public BaseService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
-        Repository = _unitOfWork.GetRepositoryByEntity<TEntity, TKey>();
     }
 
     public virtual async Task SaveAsync(bool save = true)
