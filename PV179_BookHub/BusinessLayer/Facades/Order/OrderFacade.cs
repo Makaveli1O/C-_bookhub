@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.DTOs.Order.Create;
 using BusinessLayer.DTOs.Order.View;
 using BusinessLayer.Exceptions;
+using BusinessLayer.Services;
+using BusinessLayer.Services.Book;
 using BusinessLayer.Services.Order;
 
 namespace BusinessLayer.Facades.Order;
@@ -9,9 +12,17 @@ namespace BusinessLayer.Facades.Order;
 public class OrderFacade : BaseFacade, IOrderFacade
 {
     private readonly IOrderService _orderService;
-    public OrderFacade(IMapper mapper, IOrderService orderService) : base(mapper)
+    private readonly IGenericService<DataAccessLayer.Models.Purchasing.OrderItem, long> _orderItemService;
+    private readonly IBookService _bookService;
+    public OrderFacade(IMapper mapper, 
+        IOrderService orderService, 
+        IGenericService<DataAccessLayer.Models.Purchasing.OrderItem, long> orderItemService,
+        IBookService bookService
+        ) : base(mapper)
     {
         _orderService = orderService;
+        _orderItemService = orderItemService;
+        _bookService = bookService;
     }
 
     public async Task<DetailedOrderViewDto> CreateOrderAsync(long userId)
@@ -126,21 +137,27 @@ public class OrderFacade : BaseFacade, IOrderFacade
 
         var orderItem = _mapper.Map<DataAccessLayer.Models.Purchasing.OrderItem>(createOrderItemDto);
         orderItem.Order = order;
-        // TODO await _orderItemService.CreateAsync(orderItem)
+        await _orderItemService.CreateAsync(orderItem);
 
-        return _mapper.Map<DetailedOrderItemViewDto>(order);
+        return _mapper.Map<DetailedOrderItemViewDto>(orderItem);
     }
 
     public async Task<DetailedOrderItemViewDto> FindOrderItemByIdAsync(long id)
     {
-        //var orderItem = await _orderItemService.FindByIdAsync(id);
-        //var book = await _bookService.FindByIdAsync(orderItem.BookId);
+        var orderItem = await _orderItemService.FindByIdAsync(id);
+        
+        var orderItemDto = _mapper.Map<DetailedOrderItemViewDto>(orderItem);
+        orderItemDto.Book = _mapper.Map<GeneralBookViewDto>(await _bookService.FindByIdAsync(orderItem.BookId));
         //var bookStore = await _bookStoreService.FindByIdAsync(orderItem.BookStoreId);
-        throw new NotImplementedException();
+
+        return orderItemDto;
     }
 
-    public Task DeleteOrderItemByIdAsync(long id)
+    public async Task DeleteOrderItemByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        var orderItem = await _orderItemService.FindByIdAsync(id);
+        await AddBookStock(orderItem.BookId, orderItem.BookStoreId, orderItem.Quantity);
+
+        await _orderItemService.DeleteAsync(orderItem);
     }
 }

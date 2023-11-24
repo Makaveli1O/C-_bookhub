@@ -2,7 +2,6 @@
 using BusinessLayer.DTOs.Order.Create;
 using BusinessLayer.DTOs.Order.View;
 using BusinessLayer.Facades.Order;
-using DataAccessLayer.Models.Purchasing;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 

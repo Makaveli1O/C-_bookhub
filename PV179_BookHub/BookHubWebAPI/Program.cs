@@ -61,6 +61,8 @@ builder.Services.AddScoped<IWishListFacade, WishListFacade>();
 builder.Services.AddScoped<IGenericService<User, long>, GenericService<User, long>>();
 builder.Services.AddScoped<IUserFacade, UserFacade>();
 
+builder.Services.AddScoped<IGenericService<OrderItem, long>, GenericService<OrderItem, long>>();
+
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
 
