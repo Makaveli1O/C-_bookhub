@@ -5,6 +5,7 @@ using BusinessLayer.Facades.Author;
 using BusinessLayer.Facades.Book;
 using BusinessLayer.Facades.Publisher;
 using BusinessLayer.Facades.WishList;
+using BusinessLayer.Facades.User;
 using BusinessLayer.Mappers;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
@@ -51,6 +52,9 @@ builder.Services.AddScoped<IBookFacade, BookFacade>();
 builder.Services.AddScoped<IGenericService<WishList, long>, GenericService<WishList, long>>();
 builder.Services.AddScoped<IGenericService<WishListItem, long>, GenericService<WishListItem, long>>();
 builder.Services.AddScoped<IWishListFacade, WishListFacade>();
+
+builder.Services.AddScoped<IGenericService<User, long>, GenericService<User, long>>();
+builder.Services.AddScoped<IUserFacade, UserFacade>();
 
 builder.Services.AddAutoMapper(typeof(AddressProfile));
 builder.Services.AddAutoMapper(typeof(BookProfile));
