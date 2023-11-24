@@ -1,6 +1,6 @@
 ﻿using BusinessLayer.Exceptions;
 using Infrastructure.NaiveQuery;
-using Infrastructure.NaiveQuery.Filters.EntityFilters;
+using Infrastructure.NaiveQuery.Filters.EnitityFilters;
 using Infrastructure.UnitOfWork;
 
 

@@ -5,7 +5,7 @@ using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
-using Infrastructure.NaiveQuery.Filters.EntityFilters;
+using Infrastructure.NaiveQuery.Filters.EnitityFilters;
 
 namespace BusinessLayer.Facades.Book;
 
