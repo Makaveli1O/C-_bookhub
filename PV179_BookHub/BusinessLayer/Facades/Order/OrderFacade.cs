@@ -3,7 +3,6 @@ using BusinessLayer.DTOs.Order.Create;
 using BusinessLayer.DTOs.Order.View;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Services.Order;
-using DataAccessLayer.Models.Account;
 
 namespace BusinessLayer.Facades.Order;
 
@@ -30,11 +29,6 @@ public class OrderFacade : BaseFacade, IOrderFacade
         return _mapper.Map<DetailedOrderViewDto>(order);
     }
 
-    public Task<DetailedOrderViewDto> CreateOrderItem(long orderId, CreateOrderItemDto createOrderItemDto)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task DeleteOrderByIdAsync(long id)
     {
         var order = await _orderService.FindByIdAsync(id);
@@ -45,11 +39,6 @@ public class OrderFacade : BaseFacade, IOrderFacade
         }
 
         await _orderService.DeleteAsync(order);
-    }
-
-    public Task DeleteOrderItemByIdAsync(long id)
-    {
-        throw new NotImplementedException();
     }
 
     public async Task<IEnumerable<GeneralOrderViewDto>> FetchOrdersByUserIdAsync(long userId)
@@ -65,11 +54,6 @@ public class OrderFacade : BaseFacade, IOrderFacade
         var order = await _orderService.FindByIdAsync(id);
 
         return _mapper.Map<DetailedOrderViewDto>(order);
-    }
-
-    public Task<DetailedOrderItemViewDto> FindOrderItemByIdAsync(long id)
-    {
-        throw new NotImplementedException();
     }
 
     private async Task<DataAccessLayer.Models.Purchasing.Order> UpdateOrder(long id,
@@ -117,5 +101,46 @@ public class OrderFacade : BaseFacade, IOrderFacade
             await UpdateOrder(id, 
             DataAccessLayer.Models.Enums.OrderState.Created,
             DataAccessLayer.Models.Enums.OrderState.Cancelled));
+    }
+
+    private async Task LowerBookStock(long bookId, long bookStoreId, uint quantity)
+    {
+
+    }
+
+    private async Task AddBookStock(long bookId, long bookStoreId, uint quantity)
+    {
+
+    }
+
+    public async Task<DetailedOrderItemViewDto> CreateOrderItem(long orderId, CreateOrderItemDto createOrderItemDto)
+    {
+        var order = await _orderService.FindByIdAsync(orderId);
+
+        if (order.State != DataAccessLayer.Models.Enums.OrderState.Created)
+        {
+            throw new WrongOrderStateException(orderId, order.State, "created");
+        }
+
+        await LowerBookStock(createOrderItemDto.BookId, createOrderItemDto.BookStoreId, createOrderItemDto.Quantity);
+
+        var orderItem = _mapper.Map<DataAccessLayer.Models.Purchasing.OrderItem>(createOrderItemDto);
+        orderItem.Order = order;
+        // TODO await _orderItemService.CreateAsync(orderItem)
+
+        return _mapper.Map<DetailedOrderItemViewDto>(order);
+    }
+
+    public async Task<DetailedOrderItemViewDto> FindOrderItemByIdAsync(long id)
+    {
+        //var orderItem = await _orderItemService.FindByIdAsync(id);
+        //var book = await _bookService.FindByIdAsync(orderItem.BookId);
+        //var bookStore = await _bookStoreService.FindByIdAsync(orderItem.BookStoreId);
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteOrderItemByIdAsync(long id)
+    {
+        throw new NotImplementedException();
     }
 }

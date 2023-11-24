@@ -23,6 +23,9 @@ public class ExceptionHandlerMiddleware
             case NoSuchEntityException<long> or NoSuchEntityException<IEnumerable<long>>:
                 code = HttpStatusCode.NotFound; 
                 break;
+            case WrongOrderStateException:
+                code = HttpStatusCode.BadRequest;
+                break;
             default:
                 code = HttpStatusCode.InternalServerError;
                 break;

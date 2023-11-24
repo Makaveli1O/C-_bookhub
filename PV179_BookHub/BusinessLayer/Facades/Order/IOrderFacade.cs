@@ -12,7 +12,7 @@ public interface IOrderFacade
     Task<DetailedOrderViewDto> CancelOrderAsync(long id);
     Task<DetailedOrderViewDto> RefundOrderAsync(long id);
     Task DeleteOrderByIdAsync(long id);
-    Task<DetailedOrderViewDto> CreateOrderItem(long orderId, CreateOrderItemDto createOrderItemDto);
+    Task<DetailedOrderItemViewDto> CreateOrderItem(long orderId, CreateOrderItemDto createOrderItemDto);
     Task<DetailedOrderItemViewDto> FindOrderItemByIdAsync(long id);
     Task DeleteOrderItemByIdAsync(long id);
 }
