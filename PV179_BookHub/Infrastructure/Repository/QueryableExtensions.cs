@@ -10,7 +10,7 @@ public static class QueryableExtensions
         Expression<Func<TEntity, bool>>? filter
         ) where TEntity : class
     {
-        return filter == null ? query : query.WhereCheck(filter);
+        return filter == null ? query : query.Where(filter);
     }
 
     public static IQueryable<TEntity> IncludeMultipleCheck<TEntity>(

@@ -10,6 +10,7 @@ public class PublisherProfile : Profile
     public PublisherProfile()
     {
         CreateMap<CreatePublisherDto, Publisher>();
-        CreateMap<Publisher, ViewPublisherDto>();
+        CreateMap<Publisher, GeneralPublisherViewDto>();
+        CreateMap<Publisher, DetailedPublisherViewDto>();
     }
 }

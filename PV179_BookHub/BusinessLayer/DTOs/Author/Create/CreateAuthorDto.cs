@@ -2,6 +2,6 @@
 
 public class CreateAuthorDto
 {
-    public required string Name { get; set; }
+    public string? Name { get; set; }
     public string? Biography { get; set; }
 }

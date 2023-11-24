@@ -5,29 +5,8 @@ namespace Infrastructure.NaiveQuery.Filters.EntityFilters;
 
 public class BookFilter : FilterBase<Book>
 {
-    public BookFilter(IDictionary<string, string> filters) : base()
+    public BookFilter() : base()
     {
-        foreach (var property in GetType().GetProperties())
-        {
-            var propertyName = property.Name.ToLower();
-            if (!filters.ContainsKey(propertyName))
-            {
-                continue;
-            }
-
-            if (property.PropertyType == typeof(double?))
-            {
-                property.SetValue(this, Convert.ToDouble(filters[propertyName]));
-            }
-            else if (property.PropertyType == typeof(BookGenre?))
-            {
-                property.SetValue(this, Enum.Parse<BookGenre>(filters[propertyName]));
-            }
-            else
-            {
-                property.SetValue(this, filters[propertyName]);
-            }
-        }
     }
 
     protected override void SetUpSpecialLambdaExpressions()
@@ -35,11 +14,14 @@ public class BookFilter : FilterBase<Book>
         _lambdaDictionary.Add("Title", source => source.Title.Contains(Title));
         _lambdaDictionary.Add("Author", source => source.Authors.Any(author => author.Name.Contains(Author)));
         _lambdaDictionary.Add("Publisher", source => source.Publisher.Name.Contains(Publisher));
+        _lambdaDictionary.Add("Description", source => source.Description.Contains(Description));
     }
 
     public string? Title { get; set; }
     public string? Author { get; set; }
     public string? Publisher { get; set; }
+    public string? Description { get; set; }
     public BookGenre? BookGenre { get; set; }
-    public double? Price { get; set; }
+    public double? LEQ_Price { get; set; }
+    public double? GEQ_Price { get; set; }
 }
