@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.Order.Create;
 using BusinessLayer.DTOs.Order.View;
-using DataAccessLayer.Models;
+using BusinessLayer.Facades.Order;
 using DataAccessLayer.Models.Purchasing;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +13,13 @@ namespace BookHubWebAPI.Controllers;
 [Route("[controller]")]
 public class OrderController : ControllerBase
 {
+    private readonly IOrderFacade _orderFacade;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public OrderController(IUnitOfWork unitOfWork, IMapper mapper)
+    public OrderController(IOrderFacade orderFacade, IUnitOfWork unitOfWork, IMapper mapper)
     {
+        _orderFacade = orderFacade;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
@@ -26,17 +28,11 @@ public class OrderController : ControllerBase
     [Route("{userId}")]
     public async Task<IActionResult> CreateOrder(long userId)
     {
-        var order = new Order()
-        { 
-            UserId = userId 
-        };
-
-        await _unitOfWork.OrderRepository.AddAsync(order);
-        await _unitOfWork.CommitAsync();
+        var order = await _orderFacade.CreateOrderAsync(userId);
 
         return Created(
             new Uri($"{Request.Path}/{order.Id}", UriKind.Relative), 
-            _mapper.Map<DetailedOrderViewDto>(order)
+            order
             );
     }
 
@@ -44,37 +40,21 @@ public class OrderController : ControllerBase
     [Route("{userId}")]
     public async Task<IActionResult> FetchOrdersByUserId(long userId)
     {
-        var orders = await _unitOfWork.OrderRepository
-            .GetAllAsync(ord => ord.UserId == userId);
-
-        return Ok(_mapper.Map<List<GeneralOrderViewDto>>(orders));
+        return Ok(await _orderFacade.FetchOrdersByUserIdAsync(userId));
     }
 
     [HttpGet]
     [Route("detail/{id}")]
     public async Task<IActionResult> FetchOrderById(long id)
     {
-        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
-        if (order != null)
-        {
-            return Ok(_mapper.Map<DetailedOrderViewDto>(order));
-        }
-        else
-        {
-            return NotFound();
-        }
+        return Ok(await _orderFacade.FindOrderByIdAsync(id));
     }
 
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeleteOrder(long id)
     {
-        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
-        if (order != null)
-        {
-            _unitOfWork.OrderRepository.Delete(order);
-            await _unitOfWork.CommitAsync();
-        }
+        await _orderFacade.DeleteOrderByIdAsync(id);
 
         return NoContent();
     }
@@ -83,45 +63,21 @@ public class OrderController : ControllerBase
     [Route("pay/{id}")]
     public async Task<IActionResult> PayForOrder(long id)
     {
-        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
-        if (order != null && order.State == DataAccessLayer.Models.Enums.OrderState.Created)
-        {
-            order.State = DataAccessLayer.Models.Enums.OrderState.Paid;
-            _unitOfWork.OrderRepository.Update(order);
-            await _unitOfWork.CommitAsync();
-        }
-
-        return Ok(_mapper.Map<DetailedOrderViewDto>(order));
+        return Ok(await _orderFacade.PayForOrderAsync(id));
     }
 
     [HttpPatch]
     [Route("cancel/{id}")]
-    public async Task<IActionResult> CancellOrder(long id)
+    public async Task<IActionResult> CancelOrder(long id)
     {
-        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
-        if (order != null && order.State == DataAccessLayer.Models.Enums.OrderState.Created)
-        {
-            order.State = DataAccessLayer.Models.Enums.OrderState.Cancelled;
-            _unitOfWork.OrderRepository.Update(order);
-            await _unitOfWork.CommitAsync();
-        }
-
-        return Ok(_mapper.Map<DetailedOrderViewDto>(order));
+        return Ok(await _orderFacade.CancelOrderAsync(id));
     }
 
     [HttpPatch]
     [Route("refund/{id}")]
     public async Task<IActionResult> RefundOrder(long id)
     {
-        var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
-        if (order != null && order.State == DataAccessLayer.Models.Enums.OrderState.Paid)
-        {
-            order.State = DataAccessLayer.Models.Enums.OrderState.Refunded;
-            _unitOfWork.OrderRepository.Update(order);
-            await _unitOfWork.CommitAsync();
-        }
-
-        return Ok(_mapper.Map<DetailedOrderViewDto>(order));
+        return Ok(await _orderFacade.RefundOrderAsync(id));
     }
 
     [HttpPost]

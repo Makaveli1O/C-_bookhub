@@ -3,6 +3,7 @@ using BookHubWebAPI.Swagger;
 using BusinessLayer.Facades.Address;
 using BusinessLayer.Facades.Author;
 using BusinessLayer.Facades.Book;
+using BusinessLayer.Facades.Order;
 using BusinessLayer.Facades.Publisher;
 using BusinessLayer.Facades.WishList;
 using BusinessLayer.Facades.User;
@@ -10,12 +11,14 @@ using BusinessLayer.Mappers;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
+using BusinessLayer.Services.Order;
 using BusinessLayer.Services.Publisher;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Purchasing;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -50,12 +53,16 @@ builder.Services.AddScoped<IPublisherFacade, PublisherFacade>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookFacade, BookFacade>();
 
+
 builder.Services.AddScoped<IGenericService<WishList, long>, GenericService<WishList, long>>();
 builder.Services.AddScoped<IGenericService<WishListItem, long>, GenericService<WishListItem, long>>();
 builder.Services.AddScoped<IWishListFacade, WishListFacade>();
 
 builder.Services.AddScoped<IGenericService<User, long>, GenericService<User, long>>();
 builder.Services.AddScoped<IUserFacade, UserFacade>();
+
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderFacade, OrderFacade>();
 
 builder.Services.AddAutoMapper(typeof(AddressProfile));
 builder.Services.AddAutoMapper(typeof(BookProfile));
