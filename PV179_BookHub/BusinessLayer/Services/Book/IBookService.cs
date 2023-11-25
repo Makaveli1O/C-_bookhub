@@ -1,5 +1,5 @@
 ﻿using Infrastructure.NaiveQuery;
-using Infrastructure.NaiveQuery.Filters.EnitityFilters;
+using Infrastructure.NaiveQuery.Filters.EntityFilters;
 
 namespace BusinessLayer.Services.Book;
 
