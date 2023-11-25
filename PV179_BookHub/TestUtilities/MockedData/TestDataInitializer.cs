@@ -360,15 +360,13 @@ public static class TestDataInitializer
             {
                 Id = 1,
                 UserId = 3,
-                State = OrderState.Cancelled,
-                TotalPrice = 0
+                State = OrderState.Cancelled
             },
             new Order
             {
                 Id = 2,
                 UserId = 3,
-                State = OrderState.Created,
-                TotalPrice = 18.80
+                State = OrderState.Created
             },
         };
     }
