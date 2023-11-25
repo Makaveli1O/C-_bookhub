@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.DTOs.WishList.Create;
 using BusinessLayer.DTOs.WishList.View;
 using BusinessLayer.Services;
+using BusinessLayer.Services.Book;
 using DataAccessLayer.Models.Preferences;
 using System;
 using System.Collections.Generic;
@@ -18,14 +20,17 @@ public class WishListFacade : BaseFacade, IWishListFacade
 {
     private readonly IGenericService<WishListEntity, long> _wishListService;
     private readonly IGenericService<WishListItemEntity, long> _wishListItemService;
+    private readonly IBookService _bookService;
 
     public WishListFacade(IMapper mapper,
                           IGenericService<WishListEntity, long> wishListService,
-                          IGenericService<WishListItemEntity, long> wishListItemService)
+                          IGenericService<WishListItemEntity, long> wishListItemService,
+                          IBookService bookService)
         : base(mapper)
     {
         _wishListService = wishListService;
         _wishListItemService = wishListItemService;
+        _bookService = bookService;
     }
 
     public async Task<GeneralWishListViewDto> CreateWishListAsync(CreateWishListDto createWishListDto)
@@ -43,8 +48,10 @@ public class WishListFacade : BaseFacade, IWishListFacade
 
         await _wishListItemService.CreateAsync(wishListItem);
 
-        return _mapper.Map<GeneralWishListItemViewDto>(wishListItem);
+        var wishListItemView = _mapper.Map<GeneralWishListItemViewDto>(wishListItem);
+        wishListItemView.Book = _mapper.Map<GeneralBookViewDto>(await _bookService.FindByIdAsync(createWishListItemDto.BookId));
 
+        return wishListItemView;
     }
     public async Task<GeneralWishListViewDto> UpdateWishListAsync(long id, string? wishListDescription)
     {
