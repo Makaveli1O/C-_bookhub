@@ -1114,113 +1114,97 @@ public static class DataInitializer
             {
                 Id = 1,
                 UserId = 4,
-                State = OrderState.Cancelled,
-                TotalPrice = 0
+                State = OrderState.Cancelled
             },
             new Order
             {
                 Id = 2,
                 UserId = 4,
-                State = OrderState.Created,
-                TotalPrice = 6.80
+                State = OrderState.Created
             },
             new Order
             {
                 Id = 3,
                 UserId = 5,
-                State = OrderState.Created,
-                TotalPrice = 13.10
+                State = OrderState.Created
             },
             new Order
             {
                 Id = 4,
                 UserId = 5,
-                State = OrderState.Refunded,
-                TotalPrice = 11.99
+                State = OrderState.Refunded
             },
             new Order
             {
                 Id = 5,
                 UserId = 6,
-                State = OrderState.Paid,
-                TotalPrice = 111.90
+                State = OrderState.Paid
             },
             new Order
             {
                 Id = 6,
                 UserId = 7,
-                State = OrderState.Paid,
-                TotalPrice = 60.8
+                State = OrderState.Paid
             },
             new Order
             {
                 Id = 7,
                 UserId = 7,
-                State = OrderState.Cancelled,
-                TotalPrice = 0
+                State = OrderState.Cancelled
             },
             new Order
             {
                 Id = 8,
                 UserId = 7,
-                State = OrderState.Cancelled,
-                TotalPrice = 0
+                State = OrderState.Cancelled
             },
             new Order
             {
                 Id = 9,
                 UserId = 7,
-                State = OrderState.Created,
-                TotalPrice = 0
+                State = OrderState.Created
             },
             new Order
             {
                 Id = 10,
                 UserId = 8,
-                State = OrderState.Paid,
-                TotalPrice = 747.6
+                State = OrderState.Paid
             },
             new Order
             {
                 Id = 11,
                 UserId = 8,
-                State = OrderState.Paid,
-                TotalPrice = 80.02
+                State = OrderState.Paid
             },
             new Order
             {
                 Id = 12,
                 UserId = 8,
-                State = OrderState.Created,
-                TotalPrice = 45.99
+                State = OrderState.Created  
             },
             new Order
             {
                 Id = 13,
                 UserId = 8,
-                State = OrderState.Created,
-                TotalPrice = 0
+                State = OrderState.Created
             },
             new Order
             {
                 Id = 14,
                 UserId = 8,
-                State = OrderState.Cancelled,
-                TotalPrice = 240.09
+                State = OrderState.Cancelled
             },
             new Order
             {
                 Id = 15,
                 UserId = 15,
-                State = OrderState.Paid,
-                TotalPrice = 0.50
+                State = OrderState.Paid
             },
             new Order
             {
                 Id = 16,
                 UserId = 15,
-                State = OrderState.Paid,
-                TotalPrice = 24.99
+                State = OrderState.Paid
             }
         };
     }

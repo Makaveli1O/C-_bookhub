@@ -164,8 +164,6 @@ public class OrderController : ControllerBase
         var orderItem = _mapper.Map<OrderItem>(createOrderItemDto);
         orderItem.OrderId = orderId;
 
-        order.TotalPrice += orderItem.Price * orderItem.Quantity;
-
         _unitOfWork.OrderRepository.Update(order);
         _unitOfWork.InventoryItemRepository.Update(singleItem);
         await _unitOfWork.OrderItemRepository.AddAsync(orderItem);

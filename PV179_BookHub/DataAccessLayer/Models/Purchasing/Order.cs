@@ -10,7 +10,6 @@ public class Order : BaseEntity
     [ForeignKey(nameof(UserId))]
     public virtual User? User { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public double TotalPrice { get; set; }
     public OrderState State { get; set; }
     public virtual IEnumerable<OrderItem>? Items { get; set; }
 }
