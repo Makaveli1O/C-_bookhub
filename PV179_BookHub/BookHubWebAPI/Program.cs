@@ -56,7 +56,6 @@ builder.Services.AddScoped<IPublisherFacade, PublisherFacade>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookFacade, BookFacade>();
 
-
 builder.Services.AddScoped<IGenericService<WishList, long>, GenericService<WishList, long>>();
 builder.Services.AddScoped<IGenericService<WishListItem, long>, GenericService<WishListItem, long>>();
 builder.Services.AddScoped<IWishListFacade, WishListFacade>();

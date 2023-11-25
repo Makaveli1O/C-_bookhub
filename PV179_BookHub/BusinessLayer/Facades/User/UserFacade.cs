@@ -5,8 +5,6 @@ using BusinessLayer.Services;
 
 namespace BusinessLayer.Facades.User;
 
-using UserEntity = DataAccessLayer.Models.Account.User;
-
 public class UserFacade : BaseFacade, IUserFacade
 {
     private readonly IGenericService<UserEntity, long> _userService;

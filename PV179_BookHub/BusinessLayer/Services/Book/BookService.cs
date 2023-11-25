@@ -6,13 +6,13 @@ using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.Book;
 
-public class BookService : GenericService<DataAccessLayer.Models.Publication.Book, long>, IBookService
+public class BookService : GenericService<BookEntity, long>, IBookService
 {
     public BookService(IUnitOfWork unitOfWork) : base(unitOfWork)
     {
     }
 
-    public override async Task<IEnumerable<DataAccessLayer.Models.Publication.Book>> FetchAllAsync()
+    public override async Task<IEnumerable<BookEntity>> FetchAllAsync()
     {
         var books = await Repository
             .GetAllAsync(
@@ -24,12 +24,12 @@ public class BookService : GenericService<DataAccessLayer.Models.Publication.Boo
         return books;
     }
 
-    public async Task<QueryResult<DataAccessLayer.Models.Publication.Book>> 
+    public async Task<QueryResult<BookEntity>> 
         FetchFilteredBooksAsync(BookFilter bookFilter, int? pageNumber, int? pageSize, string? sortParam, bool? asc)
     {
         {
-            QueryBase<DataAccessLayer.Models.Publication.Book, long> query =
-                new QueryBase<DataAccessLayer.Models.Publication.Book, long>(_unitOfWork)
+            QueryBase<BookEntity, long> query =
+                new QueryBase<BookEntity, long>(_unitOfWork)
                 {
                     Filter = bookFilter,
                 };
@@ -48,7 +48,7 @@ public class BookService : GenericService<DataAccessLayer.Models.Publication.Boo
         }
     }
 
-    public override async Task<DataAccessLayer.Models.Publication.Book> FindByIdAsync(long id)
+    public override async Task<BookEntity> FindByIdAsync(long id)
     {
         var book = await Repository
             .GetByIdAsync(
@@ -60,7 +60,7 @@ public class BookService : GenericService<DataAccessLayer.Models.Publication.Boo
 
         if (book == null)
         {
-            throw new NoSuchEntityException<long>(typeof(DataAccessLayer.Models.Publication.Book), id);
+            throw new NoSuchEntityException<long>(typeof(BookEntity), id);
         }
 
         return book;

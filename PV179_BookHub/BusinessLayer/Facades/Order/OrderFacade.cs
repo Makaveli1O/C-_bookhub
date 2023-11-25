@@ -16,18 +16,21 @@ public class OrderFacade : BaseFacade, IOrderFacade
 {
     private readonly IOrderService _orderService;
     private readonly IGenericService<OrderItemEntity, long> _orderItemService;
+    private readonly IGenericService<UserEntity, long> _userService;
     private readonly IBookService _bookService;
     private readonly IInventoryItemService _inventoryItemService;
 
     public OrderFacade(IMapper mapper, 
         IOrderService orderService, 
         IGenericService<OrderItemEntity, long> orderItemService,
+        IGenericService<UserEntity, long> userService, 
         IBookService bookService,
         IInventoryItemService inventoryItemService
         ) : base(mapper)
     {
         _orderService = orderService;
         _orderItemService = orderItemService;
+        _userService = userService;
         _bookService = bookService;
         _inventoryItemService = inventoryItemService;
     }
@@ -37,7 +40,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
         var order = new OrderEntity()
         {
             UserId = userId,
-            // TODO User = await _userService.FindByIdAsync(userId);
+            User = await _userService.FindByIdAsync(userId),
             State = OrderState.Created
         };
 
@@ -60,7 +63,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
 
     public async Task<IEnumerable<GeneralOrderViewDto>> FetchOrdersByUserIdAsync(long userId)
     {
-        //TODO await _userService.FindByIdAsync(userId);
+        _ = await _userService.FindByIdAsync(userId);
         var orders = await _orderService.FetchAllByUserIdAsync(userId);
         var ordersDto = new List<GeneralOrderViewDto>();
 

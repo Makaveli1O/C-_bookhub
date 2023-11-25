@@ -2,7 +2,7 @@
 
 namespace BusinessLayer.Services.Author;
 
-public interface IAuthorService : IGenericService<DataAccessLayer.Models.Publication.Author, long>
+public interface IAuthorService : IGenericService<AuthorEntity, long>
 {
-    Task<IEnumerable<DataAccessLayer.Models.Publication.Author>> FetchAllAuthorsByIdsAsync(IEnumerable<long>? ids);
+    Task<IEnumerable<AuthorEntity>> FetchAllAuthorsByIdsAsync(IEnumerable<long>? ids);
 }
