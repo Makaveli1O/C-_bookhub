@@ -1,8 +1,12 @@
-﻿global using OrderEntity = DataAccessLayer.Models.Purchasing.Order;
-global using OrderItemEntity = DataAccessLayer.Models.Purchasing.OrderItem;
-global using InventoryItemEntity = DataAccessLayer.Models.Logistics.InventoryItem;
+﻿global using BookReviewEntity = DataAccessLayer.Models.Account.BookReview;
 global using UserEntity = DataAccessLayer.Models.Account.User;
 global using AddressEntity = DataAccessLayer.Models.Logistics.Address;
+global using BookStoreEntity = DataAccessLayer.Models.Logistics.BookStore;
+global using InventoryItemEntity = DataAccessLayer.Models.Logistics.InventoryItem;
+global using WishListEntity = DataAccessLayer.Models.Preferences.WishList;
+global using WishListItemEntity = DataAccessLayer.Models.Preferences.WishListItem;
 global using AuthorEntity = DataAccessLayer.Models.Publication.Author;
 global using PublisherEntity = DataAccessLayer.Models.Publication.Publisher;
 global using BookEntity = DataAccessLayer.Models.Publication.Book;
+global using OrderEntity = DataAccessLayer.Models.Purchasing.Order;
+global using OrderItemEntity = DataAccessLayer.Models.Purchasing.OrderItem;

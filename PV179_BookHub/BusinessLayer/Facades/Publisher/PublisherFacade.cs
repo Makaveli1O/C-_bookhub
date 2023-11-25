@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.Publisher.Create;
 using BusinessLayer.DTOs.Publisher.View;
+using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
 
 namespace BusinessLayer.Facades.Publisher
@@ -25,6 +26,10 @@ namespace BusinessLayer.Facades.Publisher
         public async Task DeletePublisherAsync(long id)
         {
             var publisher = await _publisherService.FindByIdAsync(id);
+            if (publisher.Books != null && publisher.Books.Any())
+            {
+                throw new RemoveErrorException(typeof(PublisherEntity), typeof(BookEntity));
+            }
 
             await _publisherService.DeleteAsync(publisher);
         }
