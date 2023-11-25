@@ -13,7 +13,7 @@ namespace BookHubWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController : Controller
+public class UserController : ControllerBase
 {
     private readonly IUserFacade _userFacade;
 

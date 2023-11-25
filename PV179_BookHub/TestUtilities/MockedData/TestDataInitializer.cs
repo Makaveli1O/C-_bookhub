@@ -333,21 +333,21 @@ public static class TestDataInitializer
                 Id = 1,
                 WishListId = 1,
                 BookId = 1,
-                PreferencePriorty = 1,
+                PreferencePriority = 1,
             },
             new WishListItem
             {
                 Id = 2,
                 WishListId = 1,
                 BookId = 3,
-                PreferencePriorty = 2,
+                PreferencePriority = 2,
             },
             new WishListItem
             {
                 Id = 3,
                 WishListId = 2,
                 BookId = 2,
-                PreferencePriorty = 1,
+                PreferencePriority = 1,
             },
         };
     }

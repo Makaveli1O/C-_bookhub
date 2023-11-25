@@ -15,6 +15,7 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
+using DataAccessLayer.Models.Account;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
