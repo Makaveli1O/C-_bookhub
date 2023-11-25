@@ -1052,56 +1052,56 @@ public static class DataInitializer
                 Id = 1,
                 WishListId = 1,
                 BookId = 1,
-                PreferencePriorty = 1,
+                PreferencePriority = 1,
             },
             new WishListItem
             {
                 Id = 2,
                 WishListId = 2,
                 BookId = 2,
-                PreferencePriorty = 1,
+                PreferencePriority = 1,
             },
             new WishListItem
             {
                 Id = 3,
                 WishListId = 2,
                 BookId = 18,
-                PreferencePriorty = 2,
+                PreferencePriority = 2,
             },
             new WishListItem
             {
                 Id = 4,
                 WishListId = 3,
                 BookId = 3,
-                PreferencePriorty = 1,
+                PreferencePriority = 1,
             },
             new WishListItem
             {
                 Id = 5,
                 WishListId = 3,
                 BookId = 4,
-                PreferencePriorty = 2,
+                PreferencePriority = 2,
             },
             new WishListItem
             {
                 Id = 6,
                 WishListId = 3,
                 BookId = 5,
-                PreferencePriorty = 0,
+                PreferencePriority = 0,
             },
             new WishListItem
             {
                 Id = 7,
                 WishListId = 4,
                 BookId = 6,
-                PreferencePriorty = 1,
+                PreferencePriority = 1,
             },
             new WishListItem
             {
                 Id = 8,
                 WishListId = 5,
                 BookId = 7,
-                PreferencePriorty = 1,
+                PreferencePriority = 1,
             }
         };
     }
