@@ -17,10 +17,6 @@ namespace TestUtilities.MockedObjects
     {
         private IServiceCollection _serviceCollection = new ServiceCollection();
 
-        public MockedDependencyInjectionBuilder()
-        {
-        }
-
         public MockedDependencyInjectionBuilder AddMockdDBContext()
         {
             _serviceCollection = _serviceCollection
