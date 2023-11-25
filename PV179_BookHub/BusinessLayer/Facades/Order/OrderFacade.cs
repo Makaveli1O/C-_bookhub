@@ -5,10 +5,9 @@ using BusinessLayer.DTOs.Order.View;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
+using BusinessLayer.Services.InventoryItem;
 using BusinessLayer.Services.Order;
-using OrderEntity = DataAccessLayer.Models.Purchasing.Order;
-using OrderItemEntity = DataAccessLayer.Models.Purchasing.OrderItem;
-using InventoryItemEntity = DataAccessLayer.Models.Logistics.InventoryItem;
+
 using DataAccessLayer.Models.Enums;
 
 namespace BusinessLayer.Facades.Order;
@@ -18,13 +17,13 @@ public class OrderFacade : BaseFacade, IOrderFacade
     private readonly IOrderService _orderService;
     private readonly IGenericService<OrderItemEntity, long> _orderItemService;
     private readonly IBookService _bookService;
-    private readonly IGenericService<InventoryItemEntity, long> _inventoryItemService;
+    private readonly IInventoryItemService _inventoryItemService;
 
     public OrderFacade(IMapper mapper, 
         IOrderService orderService, 
         IGenericService<OrderItemEntity, long> orderItemService,
         IBookService bookService,
-        IGenericService<InventoryItemEntity, long> inventoryItemService
+        IInventoryItemService inventoryItemService
         ) : base(mapper)
     {
         _orderService = orderService;
@@ -39,8 +38,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
         {
             UserId = userId,
             // TODO User = await _userService.FindByIdAsync(userId);
-            State = DataAccessLayer.Models.Enums.OrderState.Created,
-            TotalPrice = 0
+            State = OrderState.Created
         };
 
         await _orderService.CreateAsync(order);
@@ -54,7 +52,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
 
         if (order.State == OrderState.Created)
         {
-            // TODO return stock if possible
+            await ReturnStock(order);
         }
 
         await _orderService.DeleteAsync(order);
@@ -64,15 +62,41 @@ public class OrderFacade : BaseFacade, IOrderFacade
     {
         //TODO await _userService.FindByIdAsync(userId);
         var orders = await _orderService.FetchAllByUserIdAsync(userId);
+        var ordersDto = new List<GeneralOrderViewDto>();
 
-        return _mapper.Map<List<GeneralOrderViewDto>>(orders);
+        foreach (var order in orders)
+        {
+            var orderDto = _mapper.Map<DetailedOrderViewDto>(order);
+            orderDto.TotalPrice = CalculateTotalPrice(order.Items);
+            ordersDto.Add(orderDto);
+        }
+
+        return ordersDto;
     }
+
+    private double CalculateTotalPrice(IEnumerable<OrderItemEntity>? items)
+    {
+        if (items == null)
+        {
+            return 0;
+        }
+
+        double total = 0;
+        foreach (var item in items)
+        {
+            total += (item.Price * item.Quantity);
+        }
+
+        return total;
+    } 
 
     public async Task<DetailedOrderViewDto> FindOrderByIdAsync(long id)
     {
         var order = await _orderService.FindByIdAsync(id);
+        var orderDto = _mapper.Map<DetailedOrderViewDto>(order);
+        orderDto.TotalPrice = CalculateTotalPrice(order.Items);
 
-        return _mapper.Map<DetailedOrderViewDto>(order);
+        return orderDto;
     }
 
     private async Task<OrderEntity> UpdateOrder(long id, OrderState requiredState, OrderState newState, bool returnStock = true)
@@ -86,7 +110,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
 
         if (returnStock)
         {
-            // TODO
+            await ReturnStock(order);
         }
         order.State = newState;
         await _orderService.UpdateAsync(order);
@@ -119,19 +143,36 @@ public class OrderFacade : BaseFacade, IOrderFacade
             OrderState.Cancelled));
     }
 
+    private async Task ReturnStock(OrderEntity order)
+    {
+        if (order.Items != null)
+        {
+            foreach (var item in order.Items)
+            {
+                await AddBookStock(item.BookId, item.BookStoreId, item.Quantity);
+            }
+        }
+    }
+
+    // NOTE: use false for save, since we want to make it in single transaction
     private async Task LowerBookStock(long bookId, long bookStoreId, uint quantity)
     {
-
+        await _inventoryItemService.ChangeStockAsync(
+            bookId, bookStoreId, quantity, 
+            StockDirection.StockReduction, false);  
     }
 
     private async Task AddBookStock(long bookId, long bookStoreId, uint quantity)
     {
-
+        await _inventoryItemService.ChangeStockAsync(
+            bookId, bookStoreId, quantity, 
+            StockDirection.StockAddition, false);
     }
 
     public async Task<DetailedOrderItemViewDto> CreateOrderItem(long orderId, CreateOrderItemDto createOrderItemDto)
     {
         var order = await _orderService.FindByIdAsync(orderId);
+        var book = await _bookService.FindByIdAsync(createOrderItemDto.BookId);
 
         if (order.State != OrderState.Created)
         {
@@ -141,7 +182,9 @@ public class OrderFacade : BaseFacade, IOrderFacade
         await LowerBookStock(createOrderItemDto.BookId, createOrderItemDto.BookStoreId, createOrderItemDto.Quantity);
 
         var orderItem = _mapper.Map<OrderItemEntity>(createOrderItemDto);
+        orderItem.Price = book.Price;
         orderItem.Order = order;
+        orderItem.Book = book;
         await _orderItemService.CreateAsync(orderItem);
 
         return _mapper.Map<DetailedOrderItemViewDto>(orderItem);

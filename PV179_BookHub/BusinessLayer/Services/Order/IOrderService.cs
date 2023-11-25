@@ -2,7 +2,8 @@
 
 namespace BusinessLayer.Services.Order;
 
-public interface IOrderService : IGenericService<DataAccessLayer.Models.Purchasing.Order, long>
+public interface IOrderService : IGenericService<OrderEntity, long>
 {
-    Task<IEnumerable<DataAccessLayer.Models.Purchasing.Order>> FetchAllByUserIdAsync(long userId);
+    Task<IEnumerable<OrderEntity>> FetchAllByUserIdAsync(long userId);
+    Task<bool> CheckForActiveOrdersByUserIdAsync(long userId);
 }

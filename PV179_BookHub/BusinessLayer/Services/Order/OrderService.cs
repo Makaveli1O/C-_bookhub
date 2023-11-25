@@ -1,25 +1,32 @@
 ﻿using BusinessLayer.Exceptions;
+using DataAccessLayer.Models.Enums;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.Order;
 
-public class OrderService : GenericService<DataAccessLayer.Models.Purchasing.Order, long>, IOrderService
+public class OrderService : GenericService<OrderEntity, long>, IOrderService
 {
     public OrderService(IUnitOfWork unitOfWork) : base(unitOfWork)
     {
     }
 
-    public async Task<IEnumerable<DataAccessLayer.Models.Purchasing.Order>> FetchAllByUserIdAsync(long userId)
+    public async Task<bool> CheckForActiveOrdersByUserIdAsync(long userId)
     {
-        return await Repository.GetAllAsync(x => x.UserId == userId);
+        var orders = await Repository.GetAllAsync(x => (x.UserId == userId) && (x.State == OrderState.Created));
+        return orders.Any();
     }
 
-    public override async Task<DataAccessLayer.Models.Purchasing.Order> FindByIdAsync(long id)
+    public async Task<IEnumerable<OrderEntity>> FetchAllByUserIdAsync(long userId)
+    {
+        return await Repository.GetAllAsync(x => x.UserId == userId, x => x.Items);
+    }
+
+    public override async Task<OrderEntity> FindByIdAsync(long id)
     {
         var order = await Repository.GetByIdAsync(id, order => order.Items);
         if (order == null)
         {
-            throw new NoSuchEntityException<long>(typeof(DataAccessLayer.Models.Purchasing.Order), id);
+            throw new NoSuchEntityException<long>(typeof(OrderEntity), id);
         }
         return order;
     }

@@ -11,6 +11,7 @@ using BusinessLayer.Mappers;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
+using BusinessLayer.Services.InventoryItem;
 using BusinessLayer.Services.Order;
 using BusinessLayer.Services.Publisher;
 using DataAccessLayer.Data;
@@ -43,6 +44,8 @@ builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
 
 builder.Services.AddScoped<IGenericService<Address, long>, GenericService<Address, long>>();
 builder.Services.AddScoped<IAddressFacade, AddressFacade>();
+
+builder.Services.AddScoped<IInventoryItemService, InventoryItemService>();
 
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IAuthorFacade, AuthorFacade>();
