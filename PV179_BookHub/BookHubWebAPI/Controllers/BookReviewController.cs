@@ -10,6 +10,7 @@ namespace BookHubWebAPI.Controllers;
 public class BookReviewController : Controller
 {
     private readonly IBookReviewFacade _bookReviewFacade;
+
     public BookReviewController(IBookReviewFacade bookReviewFacade)
     {
         _bookReviewFacade = bookReviewFacade;
