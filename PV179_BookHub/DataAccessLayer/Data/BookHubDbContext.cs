@@ -22,6 +22,9 @@ public class BookHubDbContext : DbContext
     public DbSet<Publisher> Publishers { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<AuthorBookAssociation> AuthorBookAssociations { get; set; }
+    public virtual DbSet<LocalIdentityUser> IdentityUsers { get; set; }
+
+
 
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)
     {
