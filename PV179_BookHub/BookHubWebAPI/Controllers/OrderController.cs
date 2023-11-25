@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using BusinessLayer.DTOs.Order.Create;
-using BusinessLayer.DTOs.Order.View;
+﻿using BusinessLayer.DTOs.Order.Create;
 using BusinessLayer.Facades.Order;
-using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
@@ -13,14 +10,10 @@ namespace BookHubWebAPI.Controllers;
 public class OrderController : ControllerBase
 {
     private readonly IOrderFacade _orderFacade;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
 
-    public OrderController(IOrderFacade orderFacade, IUnitOfWork unitOfWork, IMapper mapper)
+    public OrderController(IOrderFacade orderFacade)
     {
         _orderFacade = orderFacade;
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
     }
 
     [HttpPost]
@@ -87,7 +80,7 @@ public class OrderController : ControllerBase
 
         return Created(
             new Uri($"{Request.Path}/item/{orderItem.Id}", UriKind.Relative),
-            _mapper.Map<DetailedOrderItemViewDto>(orderItem)
+            orderItem
             );
     }
 

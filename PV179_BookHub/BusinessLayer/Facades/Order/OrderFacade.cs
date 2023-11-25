@@ -6,28 +6,36 @@ using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.Order;
+using OrderEntity = DataAccessLayer.Models.Purchasing.Order;
+using OrderItemEntity = DataAccessLayer.Models.Purchasing.OrderItem;
+using InventoryItemEntity = DataAccessLayer.Models.Logistics.InventoryItem;
+using DataAccessLayer.Models.Enums;
 
 namespace BusinessLayer.Facades.Order;
 
 public class OrderFacade : BaseFacade, IOrderFacade
 {
     private readonly IOrderService _orderService;
-    private readonly IGenericService<DataAccessLayer.Models.Purchasing.OrderItem, long> _orderItemService;
+    private readonly IGenericService<OrderItemEntity, long> _orderItemService;
     private readonly IBookService _bookService;
+    private readonly IGenericService<InventoryItemEntity, long> _inventoryItemService;
+
     public OrderFacade(IMapper mapper, 
         IOrderService orderService, 
-        IGenericService<DataAccessLayer.Models.Purchasing.OrderItem, long> orderItemService,
-        IBookService bookService
+        IGenericService<OrderItemEntity, long> orderItemService,
+        IBookService bookService,
+        IGenericService<InventoryItemEntity, long> inventoryItemService
         ) : base(mapper)
     {
         _orderService = orderService;
         _orderItemService = orderItemService;
         _bookService = bookService;
+        _inventoryItemService = inventoryItemService;
     }
 
     public async Task<DetailedOrderViewDto> CreateOrderAsync(long userId)
     {
-        var order = new DataAccessLayer.Models.Purchasing.Order()
+        var order = new OrderEntity()
         {
             UserId = userId,
             // TODO User = await _userService.FindByIdAsync(userId);
@@ -44,7 +52,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
     {
         var order = await _orderService.FindByIdAsync(id);
 
-        if (order.State == DataAccessLayer.Models.Enums.OrderState.Created)
+        if (order.State == OrderState.Created)
         {
             // TODO return stock if possible
         }
@@ -67,10 +75,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
         return _mapper.Map<DetailedOrderViewDto>(order);
     }
 
-    private async Task<DataAccessLayer.Models.Purchasing.Order> UpdateOrder(long id,
-        DataAccessLayer.Models.Enums.OrderState requiredState,
-        DataAccessLayer.Models.Enums.OrderState newState,
-        bool returnStock = true)
+    private async Task<OrderEntity> UpdateOrder(long id, OrderState requiredState, OrderState newState, bool returnStock = true)
     {
         var order = await _orderService.FindByIdAsync(id);
 
@@ -93,8 +98,8 @@ public class OrderFacade : BaseFacade, IOrderFacade
     {
         return _mapper.Map<DetailedOrderViewDto>(
             await UpdateOrder(id, 
-            DataAccessLayer.Models.Enums.OrderState.Created, 
-            DataAccessLayer.Models.Enums.OrderState.Paid,
+            OrderState.Created, 
+            OrderState.Paid,
             false));
     }
 
@@ -102,16 +107,16 @@ public class OrderFacade : BaseFacade, IOrderFacade
     {
         return _mapper.Map<DetailedOrderViewDto>(
             await UpdateOrder(id, 
-            DataAccessLayer.Models.Enums.OrderState.Paid,
-            DataAccessLayer.Models.Enums.OrderState.Refunded));
+            OrderState.Paid,
+            OrderState.Refunded));
     }
 
     public async Task<DetailedOrderViewDto> CancelOrderAsync(long id)
     {
         return _mapper.Map<DetailedOrderViewDto>(
             await UpdateOrder(id, 
-            DataAccessLayer.Models.Enums.OrderState.Created,
-            DataAccessLayer.Models.Enums.OrderState.Cancelled));
+            OrderState.Created,
+            OrderState.Cancelled));
     }
 
     private async Task LowerBookStock(long bookId, long bookStoreId, uint quantity)
@@ -128,14 +133,14 @@ public class OrderFacade : BaseFacade, IOrderFacade
     {
         var order = await _orderService.FindByIdAsync(orderId);
 
-        if (order.State != DataAccessLayer.Models.Enums.OrderState.Created)
+        if (order.State != OrderState.Created)
         {
             throw new WrongOrderStateException(orderId, order.State, "created");
         }
 
         await LowerBookStock(createOrderItemDto.BookId, createOrderItemDto.BookStoreId, createOrderItemDto.Quantity);
 
-        var orderItem = _mapper.Map<DataAccessLayer.Models.Purchasing.OrderItem>(createOrderItemDto);
+        var orderItem = _mapper.Map<OrderItemEntity>(createOrderItemDto);
         orderItem.Order = order;
         await _orderItemService.CreateAsync(orderItem);
 

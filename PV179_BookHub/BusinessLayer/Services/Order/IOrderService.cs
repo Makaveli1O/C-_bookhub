@@ -1,4 +1,5 @@
 ﻿
+
 namespace BusinessLayer.Services.Order;
 
 public interface IOrderService : IGenericService<DataAccessLayer.Models.Purchasing.Order, long>
