@@ -4,5 +4,5 @@ public class CreateWishListItemDto
 {
     public long WishListId { get; set; }
     public long BookId { get; set; }
-    public uint PreferencePriorty { get; set; }
+    public uint PreferencePriority { get; set; }
 }

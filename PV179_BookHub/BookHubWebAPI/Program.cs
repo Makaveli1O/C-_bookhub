@@ -4,6 +4,7 @@ using BusinessLayer.Facades.Address;
 using BusinessLayer.Facades.Author;
 using BusinessLayer.Facades.Book;
 using BusinessLayer.Facades.Publisher;
+using BusinessLayer.Facades.WishList;
 using BusinessLayer.Mappers;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
@@ -11,6 +12,7 @@ using BusinessLayer.Services.Book;
 using BusinessLayer.Services.Publisher;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +47,10 @@ builder.Services.AddScoped<IPublisherFacade, PublisherFacade>();
 
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookFacade, BookFacade>();
+
+builder.Services.AddScoped<IGenericService<WishList, long>, GenericService<WishList, long>>();
+builder.Services.AddScoped<IGenericService<WishListItem, long>, GenericService<WishListItem, long>>();
+builder.Services.AddScoped<IWishListFacade, WishListFacade>();
 
 builder.Services.AddAutoMapper(typeof(AddressProfile));
 builder.Services.AddAutoMapper(typeof(BookProfile));
