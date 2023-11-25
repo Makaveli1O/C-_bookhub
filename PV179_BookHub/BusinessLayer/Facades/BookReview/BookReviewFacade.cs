@@ -2,21 +2,31 @@
 using BusinessLayer.DTOs.BookReview.Create;
 using BusinessLayer.DTOs.BookReview.Update;
 using BusinessLayer.DTOs.BookReview.View;
+using BusinessLayer.Facades.User;
+using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.BookReview;
+
 using BookReviewEntity = DataAccessLayer.Models.Account.BookReview;
+using UserEntity = DataAccessLayer.Models.Account.User;
+
 namespace BusinessLayer.Facades.BookReview;
 
 public class BookReviewFacade : BaseFacade, IBookReviewFacade
 {
     private readonly IBookReviewService _bookReviewService;
     private readonly IBookService _bookService;
-    //private readonly IUserService _userService;
-    public BookReviewFacade(IMapper mapper, IBookService bookService,IBookReviewService bookReviewService) : base(mapper)
+    private readonly IGenericService<UserEntity, long> _userService;
+
+    public BookReviewFacade(
+        IMapper mapper,
+        IBookService bookService,
+         IGenericService<UserEntity, long> userService,
+        IBookReviewService bookReviewService) : base(mapper)
     {
         _bookReviewService = bookReviewService;
         _bookService = bookService;
-       // _userService = userService;
+        _userService = userService;
     }
 
     public async Task<List<GeneralBookReviewViewDto>> FindBookReviewsAsync(long id)
@@ -34,11 +44,11 @@ public class BookReviewFacade : BaseFacade, IBookReviewFacade
     public async Task<GeneralBookReviewViewDto> CreateBookReview(CreateBookReviewDto createBookReviewDto)
     {
         var book = await _bookService.FindByIdAsync(createBookReviewDto.BookId);
-        //var user = await _userService.FindByIdAsync(createBookReviewDto.ReviewerId);
+        var user = await _userService.FindByIdAsync(createBookReviewDto.ReviewerId);
 
         var bookReview = _mapper.Map<BookReviewEntity>(createBookReviewDto);
-        //bookReview.Reviewer = user;
-        //bookReview.Book = book;
+        bookReview.Reviewer = user;
+        bookReview.Book = book;
         await _bookReviewService.CreateAsync(bookReview);
 
         return _mapper.Map<GeneralBookReviewViewDto>(bookReview);
