@@ -16,6 +16,13 @@ using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Models.Publication;
 using BusinessLayer.Mappers;
+using BusinessLayer.Facades.BookReview;
+using BusinessLayer.Facades.Order;
+using BusinessLayer.Services.BookReview;
+using BusinessLayer.Services.InventoryItem;
+using BusinessLayer.Services.Order;
+using DataAccessLayer.Models.Purchasing;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +47,8 @@ builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
 builder.Services.AddScoped<IGenericService<Address, long>, GenericService<Address, long>>();
 builder.Services.AddScoped<IAddressFacade, AddressFacade>();
 
+builder.Services.AddScoped<IInventoryItemService, InventoryItemService>();
+
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IAuthorFacade, AuthorFacade>();
 
@@ -56,6 +65,13 @@ builder.Services.AddScoped<IWishListFacade, WishListFacade>();
 builder.Services.AddScoped<IGenericService<User, long>, GenericService<User, long>>();
 builder.Services.AddScoped<IUserFacade, UserFacade>();
 
+builder.Services.AddScoped<IGenericService<OrderItem, long>, GenericService<OrderItem, long>>();
+
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderFacade, OrderFacade>();
+builder.Services.AddScoped<IBookReviewService, BookReviewService>();
+builder.Services.AddScoped<IBookReviewFacade, BookReviewFacade>();
+
 builder.Services.AddAutoMapper(typeof(AddressProfile));
 builder.Services.AddAutoMapper(typeof(BookProfile));
 builder.Services.AddAutoMapper(typeof(BookReviewProfile));
@@ -68,6 +84,24 @@ builder.Services.AddAutoMapper(typeof(AuthorBookAssociationProfile));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// This line adds the default identity system configuration for the specified user and role types to the services container.
+builder.Services.AddIdentity<LocalIdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<BookHubDbContext>()
+    // This adds the default token providers used to generate tokens for account confirmation, password resets, etc.
+    .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Password settings.
+    options.Password.RequiredLength = 6;
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+});
+
 
 var app = builder.Build();
 

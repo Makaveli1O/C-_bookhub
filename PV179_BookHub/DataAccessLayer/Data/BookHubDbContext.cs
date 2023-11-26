@@ -3,11 +3,12 @@ using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Purchasing;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
 
-public class BookHubDbContext : DbContext
+public class BookHubDbContext :  IdentityDbContext
 {
     public DbSet<BookStore> BookStores { get; set; }
     public DbSet<InventoryItem> InventoryItems { get; set; }

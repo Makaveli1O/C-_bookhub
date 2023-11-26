@@ -5,7 +5,7 @@ namespace DataAccessLayer.Models.Account
 {
     public class LocalIdentityUser : IdentityUser
     {
-        public int UserId { get; set; }
+        public long UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public virtual User? User { get; set; }
