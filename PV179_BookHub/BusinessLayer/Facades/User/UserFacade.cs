@@ -1,24 +1,19 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.User.Create;
 using BusinessLayer.DTOs.User.View;
-using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
-using BusinessLayer.Services.Order;
 
 namespace BusinessLayer.Facades.User;
 
 public class UserFacade : BaseFacade, IUserFacade
 {
     private readonly IGenericService<UserEntity, long> _userService;
-    private readonly IOrderService _orderService;
 
     public UserFacade(IMapper mapper,
-                      IGenericService<UserEntity, long> userService,
-                      IOrderService orderService)
+                      IGenericService<UserEntity, long> userService)
         : base(mapper)
     {
         _userService = userService;
-        _orderService = orderService;
     }
 
     public async Task<GeneralUserViewDto> CreateUserAsync(CreateUserDto createUserDto)
@@ -47,12 +42,6 @@ public class UserFacade : BaseFacade, IUserFacade
     public async Task DeleteUserAsync(long id)
     {
         var user = await _userService.FindByIdAsync(id);
-
-        if (await _orderService.CheckForActiveOrdersByUserIdAsync(id)) 
-        {
-            throw new RemoveErrorException(typeof(UserEntity), typeof(OrderEntity));
-        }
-
         await _userService.DeleteAsync(user);
     }
 

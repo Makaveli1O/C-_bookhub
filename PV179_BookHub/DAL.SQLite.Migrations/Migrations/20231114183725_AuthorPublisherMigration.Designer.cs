@@ -1598,7 +1598,7 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Property<long>("BookId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<uint>("PreferencePriority")
+                    b.Property<uint>("PreferencePriorty")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("WishListId")
@@ -1617,56 +1617,56 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 1L,
                             BookId = 1L,
-                            PreferencePriority = 1u,
+                            PreferencePriorty = 1u,
                             WishListId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             BookId = 2L,
-                            PreferencePriority = 1u,
+                            PreferencePriorty = 1u,
                             WishListId = 2L
                         },
                         new
                         {
                             Id = 3L,
                             BookId = 18L,
-                            PreferencePriority = 2u,
+                            PreferencePriorty = 2u,
                             WishListId = 2L
                         },
                         new
                         {
                             Id = 4L,
                             BookId = 3L,
-                            PreferencePriority = 1u,
+                            PreferencePriorty = 1u,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 5L,
                             BookId = 4L,
-                            PreferencePriority = 2u,
+                            PreferencePriorty = 2u,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 6L,
                             BookId = 5L,
-                            PreferencePriority = 0u,
+                            PreferencePriorty = 0u,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 7L,
                             BookId = 6L,
-                            PreferencePriority = 1u,
+                            PreferencePriorty = 1u,
                             WishListId = 4L
                         },
                         new
                         {
                             Id = 8L,
                             BookId = 7L,
-                            PreferencePriority = 1u,
+                            PreferencePriorty = 1u,
                             WishListId = 5L
                         });
                 });
