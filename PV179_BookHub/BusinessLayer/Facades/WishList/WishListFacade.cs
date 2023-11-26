@@ -4,17 +4,8 @@ using BusinessLayer.DTOs.WishList.Create;
 using BusinessLayer.DTOs.WishList.View;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
-using DataAccessLayer.Models.Preferences;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.Facades.WishList;
-
-using WishListEntity = DataAccessLayer.Models.Preferences.WishList;
-using WishListItemEntity = DataAccessLayer.Models.Preferences.WishListItem;
 
 public class WishListFacade : BaseFacade, IWishListFacade
 {
