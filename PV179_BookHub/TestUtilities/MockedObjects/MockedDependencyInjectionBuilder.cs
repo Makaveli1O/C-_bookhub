@@ -1,5 +1,9 @@
 ﻿using BusinessLayer.Facades.Book;
+using BusinessLayer.Facades.BookReview;
+using BusinessLayer.Mappers;
+using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
+using BusinessLayer.Services.BookReview;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Account;
 using DataAccessLayer.Models.Logistics;
@@ -17,7 +21,7 @@ namespace TestUtilities.MockedObjects
     {
         private IServiceCollection _serviceCollection = new ServiceCollection();
 
-        public MockedDependencyInjectionBuilder AddMockdDBContext()
+        public MockedDependencyInjectionBuilder AddMockedDBContext()
         {
             _serviceCollection = _serviceCollection
                 .AddDbContext<BookHubDbContext>(options => options
@@ -31,6 +35,22 @@ namespace TestUtilities.MockedObjects
         {
             _serviceCollection = _serviceCollection
                 .AddScoped<T>(_ => objectToRegister);
+
+            return this;
+        }
+
+        public MockedDependencyInjectionBuilder AddAutoMapper()
+        {
+            _serviceCollection = _serviceCollection
+                .AddAutoMapper(typeof(AddressProfile))
+                .AddAutoMapper(typeof(BookProfile))
+                .AddAutoMapper(typeof(BookReviewProfile))
+                .AddAutoMapper(typeof(BookStoreProfile))
+                .AddAutoMapper(typeof(OrderProfile))
+                .AddAutoMapper(typeof(UserProfile))
+                .AddAutoMapper(typeof(WishListItemProfile))
+                .AddAutoMapper(typeof(WishListProfile))
+                .AddAutoMapper(typeof(AuthorBookAssociationProfile));
 
             return this;
         }
@@ -66,7 +86,9 @@ namespace TestUtilities.MockedObjects
         public MockedDependencyInjectionBuilder AddServices()
         {
             _serviceCollection = _serviceCollection
-                .AddScoped<IBookService, BookService>();
+                .AddScoped<IBookService, BookService>()
+                .AddScoped<IGenericService<User, long>, GenericService<User, long>>()
+                .AddScoped<IBookReviewService, BookReviewService>();
 
             return this;
         }
@@ -74,7 +96,8 @@ namespace TestUtilities.MockedObjects
         public MockedDependencyInjectionBuilder AddFacades()
         {
             _serviceCollection = _serviceCollection
-                .AddScoped<IBookFacade, BookFacade>();
+                .AddScoped<IBookFacade, BookFacade>()
+                .AddScoped<IBookReviewFacade, BookReviewFacade>();
 
             return this;
         }
