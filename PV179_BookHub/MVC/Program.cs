@@ -85,10 +85,8 @@ builder.Services.AddAutoMapper(typeof(AuthorBookAssociationProfile));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// This line adds the default identity system configuration for the specified user and role types to the services container.
 builder.Services.AddIdentity<LocalIdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<BookHubDbContext>()
-    // This adds the default token providers used to generate tokens for account confirmation, password resets, etc.
     .AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options =>
