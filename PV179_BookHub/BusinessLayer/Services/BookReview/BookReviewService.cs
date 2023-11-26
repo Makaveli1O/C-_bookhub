@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Exceptions;
 using Infrastructure.UnitOfWork;
-using BookReviewEntity = DataAccessLayer.Models.Account.BookReview;
 
 namespace BusinessLayer.Services.BookReview;
 

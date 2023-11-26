@@ -1,5 +1,4 @@
-﻿using BookReviewEntity = DataAccessLayer.Models.Account.BookReview;
-namespace BusinessLayer.Services.BookReview;
+﻿namespace BusinessLayer.Services.BookReview;
 
 public interface IBookReviewService : IGenericService<BookReviewEntity, long>
 {

@@ -7,8 +7,6 @@ using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.BookReview;
 
-using BookReviewEntity = DataAccessLayer.Models.Account.BookReview;
-using UserEntity = DataAccessLayer.Models.Account.User;
 
 namespace BusinessLayer.Facades.BookReview;
 
