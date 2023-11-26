@@ -1,8 +1,11 @@
-﻿using BusinessLayer.Facades.Book;
+﻿using BusinessLayer.Facades.Author;
+using BusinessLayer.Facades.Book;
 using BusinessLayer.Facades.BookReview;
 using BusinessLayer.Facades.User;
+using BusinessLayer.Facades.Publisher;
 using BusinessLayer.Mappers;
 using BusinessLayer.Services;
+using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.BookReview;
 using BusinessLayer.Services.Order;
@@ -30,6 +33,7 @@ public class MockedDependencyInjectionBuilder
                 .UseInMemoryDatabase(MockedDbContext.RandomDBName));
 
         return this;
+
     }
 
     public MockedDependencyInjectionBuilder AddScoped<T>(T objectToRegister)
