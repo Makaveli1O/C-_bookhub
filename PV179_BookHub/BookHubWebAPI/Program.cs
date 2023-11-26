@@ -25,6 +25,7 @@ using DataAccessLayer.Models.Purchasing;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using BusinessLayer.Facades.BookStore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,7 @@ builder.Services.AddScoped<IGenericService<Address, long>, GenericService<Addres
 builder.Services.AddScoped<IAddressFacade, AddressFacade>();
 
 builder.Services.AddScoped<IInventoryItemService, InventoryItemService>();
+builder.Services.AddScoped<IInventoryItemFacade, InventoryItemFacade>();
 
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IAuthorFacade, AuthorFacade>();
@@ -71,6 +73,9 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
 builder.Services.AddScoped<IBookReviewService, BookReviewService>();
 builder.Services.AddScoped<IBookReviewFacade, BookReviewFacade>();
+
+builder.Services.AddScoped<IGenericService<BookStore, long>, GenericService<BookStore, long>>();
+builder.Services.AddScoped<IBookStoreFacade, BookStoreFacade>();
 
 builder.Services.AddAutoMapper(typeof(AddressProfile));
 builder.Services.AddAutoMapper(typeof(BookProfile));

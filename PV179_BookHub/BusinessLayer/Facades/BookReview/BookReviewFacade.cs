@@ -2,7 +2,6 @@
 using BusinessLayer.DTOs.BookReview.Create;
 using BusinessLayer.DTOs.BookReview.Update;
 using BusinessLayer.DTOs.BookReview.View;
-using BusinessLayer.Facades.User;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.BookReview;
@@ -47,7 +46,7 @@ public class BookReviewFacade : BaseFacade, IBookReviewFacade
         var bookReview = _mapper.Map<BookReviewEntity>(createBookReviewDto);
         bookReview.Reviewer = user;
         bookReview.Book = book;
-        await _bookReviewService.CreateAsync(bookReview);
+        bookReview = await _bookReviewService.CreateAsync(bookReview);
 
         return _mapper.Map<DetailedBookReviewViewDto>(bookReview);
     }
@@ -58,6 +57,8 @@ public class BookReviewFacade : BaseFacade, IBookReviewFacade
 
         bookReview.Description = updateBookReviewDto.Description ?? bookReview.Description;
         bookReview.Rating = updateBookReviewDto.Rating;
+
+        bookReview = await _bookReviewService.UpdateAsync(bookReview);
 
         return _mapper.Map<GeneralBookReviewViewDto>(bookReview);
     }
