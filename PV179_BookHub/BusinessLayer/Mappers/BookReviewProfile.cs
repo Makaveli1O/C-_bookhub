@@ -12,6 +12,7 @@ namespace BusinessLayer.Mappers
         {
             CreateMap<CreateBookReviewDto, BookReview>();
             CreateMap<BookReview, GeneralBookReviewViewDto>();
+            CreateMap<BookReview, DetailedBookReviewViewDto>();
         }
     }
 }

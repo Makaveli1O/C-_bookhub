@@ -114,7 +114,7 @@ public class BookHubDbContext : DbContext
         modelBuilder.Entity<BookStore>()
             .HasOne(store => store.Manager)
             .WithOne(user => user.BookStore)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder.Entity<BookStore>()
             .HasMany(store => store.InventoryItems)
