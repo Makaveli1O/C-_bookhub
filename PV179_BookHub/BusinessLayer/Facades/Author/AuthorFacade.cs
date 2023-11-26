@@ -15,7 +15,7 @@ public class AuthorFacade : BaseFacade, IAuthorFacade
 
     public async Task<DetailedAuthorViewDto> CreateAuthorAsync(CreateAuthorDto createAuthorDto)
     {
-        var author = _mapper.Map<DataAccessLayer.Models.Publication.Author>(createAuthorDto);
+        var author = _mapper.Map<AuthorEntity>(createAuthorDto);
 
         await _authorService.CreateAsync(author);
 

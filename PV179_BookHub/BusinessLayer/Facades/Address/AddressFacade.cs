@@ -7,15 +7,15 @@ namespace BusinessLayer.Facades.Address;
 
 public class AddressFacade : BaseFacade, IAddressFacade
 {
-    private readonly IGenericService<DataAccessLayer.Models.Logistics.Address, long> _addressService;
-    public AddressFacade(IMapper mapper, IGenericService<DataAccessLayer.Models.Logistics.Address, long> addressService) : base(mapper)
+    private readonly IGenericService<AddressEntity, long> _addressService;
+    public AddressFacade(IMapper mapper, IGenericService<AddressEntity, long> addressService) : base(mapper)
     {
         _addressService = addressService;
     }
 
     public async Task<DetailedAddressView> CreateAddressAsync(CreateAddressDto createAddressDto)
     {
-        var address = _mapper.Map<DataAccessLayer.Models.Logistics.Address>(createAddressDto);
+        var address = _mapper.Map<AddressEntity>(createAddressDto);
         await _addressService.CreateAsync(address);
 
         return _mapper.Map<DetailedAddressView>(address);

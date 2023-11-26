@@ -13,10 +13,10 @@ public class BookFacade : BaseFacade, IBookFacade
 {
     private readonly IBookService _bookService;
     private readonly IAuthorService _authorService;
-    private readonly IGenericService<DataAccessLayer.Models.Publication.Publisher, long> _publisherService;
+    private readonly IGenericService<PublisherEntity, long> _publisherService;
 
     public BookFacade(IMapper mapper, IBookService bookService, IAuthorService authorService, 
-        IGenericService<DataAccessLayer.Models.Publication.Publisher, long> publisherService)
+        IGenericService<PublisherEntity, long> publisherService)
         : base(mapper)
     {
         _bookService = bookService;
@@ -29,7 +29,7 @@ public class BookFacade : BaseFacade, IBookFacade
         var publisher = await _publisherService.FindByIdAsync(createBookDto.PublisherId);
         var authors = await _authorService.FetchAllAuthorsByIdsAsync(createBookDto.AuthorIds);
 
-        var book = _mapper.Map<DataAccessLayer.Models.Publication.Book>(createBookDto);
+        var book = _mapper.Map<BookEntity>(createBookDto);
         book.Authors = authors;
         book.Publisher = publisher;
         await _bookService.CreateAsync(book);
@@ -65,7 +65,7 @@ public class BookFacade : BaseFacade, IBookFacade
         var book = await _bookService.FindByIdAsync(id);
         var newAuthor = await _authorService.FindByIdAsync(authorId);
 
-        var authors = book.Authors?.ToList() ?? new List<DataAccessLayer.Models.Publication.Author>();
+        var authors = book.Authors?.ToList() ?? new List<AuthorEntity>();
         authors.Add(newAuthor);
         book.Authors = authors;
         await _bookService.UpdateAsync(book);

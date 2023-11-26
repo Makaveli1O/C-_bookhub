@@ -1,5 +1,4 @@
-﻿using BusinessLayer.DTOs;
-using BusinessLayer.DTOs.Book.Create;
+﻿using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.Filter;
 using BusinessLayer.DTOs.Book.View;
 
