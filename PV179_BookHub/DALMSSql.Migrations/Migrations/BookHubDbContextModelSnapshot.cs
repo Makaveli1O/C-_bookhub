@@ -457,8 +457,8 @@ namespace DAL.MSSql.Migrations.Migrations
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Street")
                         .HasMaxLength(30)
@@ -1565,35 +1565,35 @@ namespace DAL.MSSql.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3197),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(8949),
                             Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.",
                             UserId = 1L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3276),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9001),
                             Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.",
                             UserId = 2L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3278),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9003),
                             Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!",
                             UserId = 3L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3280),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9005),
                             Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!",
                             UserId = 4L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3282),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9006),
                             Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.",
                             UserId = 5L
                         });
@@ -2318,112 +2318,112 @@ namespace DAL.MSSql.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3298),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9027),
                             State = 3,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3306),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9031),
                             State = 0,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3308),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9033),
                             State = 0,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3309),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9034),
                             State = 2,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3311),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9036),
                             State = 1,
                             UserId = 6L
                         },
                         new
                         {
                             Id = 6L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3313),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9038),
                             State = 1,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 7L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3315),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9039),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 8L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3316),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9041),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 9L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3318),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9042),
                             State = 0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 10L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3320),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9044),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 11L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3322),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9046),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 12L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3323),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9048),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 13L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3325),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9049),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 14L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3326),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9051),
                             State = 3,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 15L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3328),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9052),
                             State = 1,
                             UserId = 15L
                         },
                         new
                         {
                             Id = 16L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3329),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9054),
                             State = 1,
                             UserId = 15L
                         });
@@ -2702,7 +2702,7 @@ namespace DAL.MSSql.Migrations.Migrations
                     b.HasOne("DataAccessLayer.Models.Account.User", "Manager")
                         .WithOne("BookStore")
                         .HasForeignKey("DataAccessLayer.Models.Logistics.BookStore", "ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Address");

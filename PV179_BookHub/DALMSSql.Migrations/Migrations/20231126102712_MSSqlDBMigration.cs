@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.MSSql.Migrations.Migrations
 {
     /// <inheritdoc />
-    public partial class MSSql_fixAddress : Migration
+    public partial class MSSqlDBMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,7 +22,7 @@ namespace DAL.MSSql.Migrations.Migrations
                     City = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Street = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     StreetNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    State = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    State = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
@@ -125,8 +125,7 @@ namespace DAL.MSSql.Migrations.Migrations
                         name: "FK_BookStores_Users_ManagerId",
                         column: x => x.ManagerId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -284,7 +283,8 @@ namespace DAL.MSSql.Migrations.Migrations
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -444,22 +444,22 @@ namespace DAL.MSSql.Migrations.Migrations
                 columns: new[] { "Id", "CreatedAt", "State", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3298), 3, 4L },
-                    { 2L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3306), 0, 4L },
-                    { 3L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3308), 0, 5L },
-                    { 4L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3309), 2, 5L },
-                    { 5L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3311), 1, 6L },
-                    { 6L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3313), 1, 7L },
-                    { 7L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3315), 3, 7L },
-                    { 8L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3316), 3, 7L },
-                    { 9L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3318), 0, 7L },
-                    { 10L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3320), 1, 8L },
-                    { 11L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3322), 1, 8L },
-                    { 12L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3323), 0, 8L },
-                    { 13L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3325), 0, 8L },
-                    { 14L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3326), 3, 8L },
-                    { 15L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3328), 1, 15L },
-                    { 16L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3329), 1, 15L }
+                    { 1L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9027), 3, 4L },
+                    { 2L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9031), 0, 4L },
+                    { 3L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9033), 0, 5L },
+                    { 4L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9034), 2, 5L },
+                    { 5L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9036), 1, 6L },
+                    { 6L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9038), 1, 7L },
+                    { 7L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9039), 3, 7L },
+                    { 8L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9041), 3, 7L },
+                    { 9L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9042), 0, 7L },
+                    { 10L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9044), 1, 8L },
+                    { 11L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9046), 1, 8L },
+                    { 12L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9048), 0, 8L },
+                    { 13L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9049), 0, 8L },
+                    { 14L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9051), 3, 8L },
+                    { 15L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9052), 1, 15L },
+                    { 16L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9054), 1, 15L }
                 });
 
             migrationBuilder.InsertData(
@@ -467,11 +467,11 @@ namespace DAL.MSSql.Migrations.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3197), "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.", 1L },
-                    { 2L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3276), "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.", 2L },
-                    { 3L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3278), "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!", 3L },
-                    { 4L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3280), "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!", 4L },
-                    { 5L, new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3282), "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.", 5L }
+                    { 1L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(8949), "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.", 1L },
+                    { 2L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9001), "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.", 2L },
+                    { 3L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9003), "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!", 3L },
+                    { 4L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9005), "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!", 4L },
+                    { 5L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9006), "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.", 5L }
                 });
 
             migrationBuilder.InsertData(

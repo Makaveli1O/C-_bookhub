@@ -3,17 +3,16 @@ using System;
 using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DAL.MSSql.Migrations.Migrations
+namespace DAL.SQLite.Migrations.Migrations
 {
     [DbContext(typeof(BookHubDbContext))]
-    [Migration("20231126072525_MSSql_fixAddress")]
-    partial class MSSql_fixAddress
+    [Migration("20231126103045_DbContextAddressFixMigration")]
+    partial class DbContextAddressFixMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,30 +20,28 @@ namespace DAL.MSSql.Migrations.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.12")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true);
 
             modelBuilder.Entity("DataAccessLayer.Models.Account.BookReview", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("BookId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("ReviewerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -277,25 +274,23 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Role")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Salt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -444,32 +439,30 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Street")
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("StreetNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -581,30 +574,28 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("AddressId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("ManagerId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -713,21 +704,19 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("BookId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("BookStoreId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
-                    b.Property<long>("InStock")
-                        .HasColumnType("bigint");
+                    b.Property<uint>("InStock")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("LastRestock")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -743,7 +732,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 1L,
                             BookId = 1L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -751,7 +740,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 2L,
                             BookId = 2L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -759,7 +748,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 3L,
                             BookId = 3L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -767,7 +756,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 4L,
                             BookId = 4L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -775,7 +764,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 5L,
                             BookId = 5L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -783,7 +772,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 6L,
                             BookId = 6L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -791,7 +780,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 7L,
                             BookId = 7L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -799,7 +788,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 8L,
                             BookId = 8L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -807,7 +796,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 9L,
                             BookId = 9L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -815,7 +804,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 10L,
                             BookId = 10L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -823,7 +812,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 11L,
                             BookId = 11L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -831,7 +820,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 12L,
                             BookId = 12L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -839,7 +828,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 13L,
                             BookId = 13L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -847,7 +836,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 14L,
                             BookId = 14L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -855,7 +844,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 15L,
                             BookId = 15L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -863,7 +852,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 16L,
                             BookId = 16L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -871,7 +860,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 17L,
                             BookId = 17L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -879,7 +868,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 18L,
                             BookId = 18L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -887,7 +876,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 19L,
                             BookId = 19L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -895,7 +884,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 20L,
                             BookId = 20L,
                             BookStoreId = 1L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 13, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -903,7 +892,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 21L,
                             BookId = 1L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -911,7 +900,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 22L,
                             BookId = 2L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -919,7 +908,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 23L,
                             BookId = 3L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -927,7 +916,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 24L,
                             BookId = 4L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -935,7 +924,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 25L,
                             BookId = 5L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -943,7 +932,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 26L,
                             BookId = 6L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -951,7 +940,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 27L,
                             BookId = 7L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -959,7 +948,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 28L,
                             BookId = 8L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -967,7 +956,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 29L,
                             BookId = 9L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -975,7 +964,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 30L,
                             BookId = 10L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -983,7 +972,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 31L,
                             BookId = 11L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -991,7 +980,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 32L,
                             BookId = 12L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -999,7 +988,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 33L,
                             BookId = 13L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1007,7 +996,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 34L,
                             BookId = 14L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1015,7 +1004,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 35L,
                             BookId = 15L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1023,7 +1012,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 36L,
                             BookId = 16L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1031,7 +1020,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 37L,
                             BookId = 17L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1039,7 +1028,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 38L,
                             BookId = 18L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1047,7 +1036,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 39L,
                             BookId = 19L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1055,7 +1044,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 40L,
                             BookId = 20L,
                             BookStoreId = 2L,
-                            InStock = 5L,
+                            InStock = 5u,
                             LastRestock = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1063,7 +1052,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 41L,
                             BookId = 1L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1071,7 +1060,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 42L,
                             BookId = 2L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1079,7 +1068,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 43L,
                             BookId = 3L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1087,7 +1076,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 44L,
                             BookId = 4L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1095,7 +1084,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 45L,
                             BookId = 5L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1103,7 +1092,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 46L,
                             BookId = 6L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1111,7 +1100,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 47L,
                             BookId = 7L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1119,7 +1108,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 48L,
                             BookId = 8L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1127,7 +1116,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 49L,
                             BookId = 9L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1135,7 +1124,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 50L,
                             BookId = 10L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1143,7 +1132,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 51L,
                             BookId = 11L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1151,7 +1140,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 52L,
                             BookId = 12L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1159,7 +1148,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 53L,
                             BookId = 13L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1167,7 +1156,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 54L,
                             BookId = 14L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1175,7 +1164,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 55L,
                             BookId = 15L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1183,7 +1172,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 56L,
                             BookId = 16L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1191,7 +1180,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 57L,
                             BookId = 17L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1199,7 +1188,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 58L,
                             BookId = 18L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1207,7 +1196,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 59L,
                             BookId = 19L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1215,7 +1204,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 60L,
                             BookId = 20L,
                             BookStoreId = 3L,
-                            InStock = 2L,
+                            InStock = 2u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1223,7 +1212,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 61L,
                             BookId = 1L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1231,7 +1220,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 62L,
                             BookId = 2L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1239,7 +1228,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 63L,
                             BookId = 3L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1247,7 +1236,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 64L,
                             BookId = 4L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1255,7 +1244,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 65L,
                             BookId = 5L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1263,7 +1252,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 66L,
                             BookId = 6L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1271,7 +1260,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 67L,
                             BookId = 7L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1279,7 +1268,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 68L,
                             BookId = 8L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1287,7 +1276,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 69L,
                             BookId = 9L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1295,7 +1284,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 70L,
                             BookId = 10L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1303,7 +1292,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 71L,
                             BookId = 11L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1311,7 +1300,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 72L,
                             BookId = 12L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1319,7 +1308,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 73L,
                             BookId = 13L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1327,7 +1316,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 74L,
                             BookId = 14L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1335,7 +1324,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 75L,
                             BookId = 15L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1343,7 +1332,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 76L,
                             BookId = 16L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1351,7 +1340,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 77L,
                             BookId = 17L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1359,7 +1348,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 78L,
                             BookId = 18L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1367,7 +1356,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 79L,
                             BookId = 19L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1375,7 +1364,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 80L,
                             BookId = 20L,
                             BookStoreId = 4L,
-                            InStock = 7L,
+                            InStock = 7u,
                             LastRestock = new DateTime(2023, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1383,7 +1372,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 81L,
                             BookId = 1L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1391,7 +1380,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 82L,
                             BookId = 2L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1399,7 +1388,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 83L,
                             BookId = 3L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1407,7 +1396,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 84L,
                             BookId = 4L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1415,7 +1404,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 85L,
                             BookId = 5L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1423,7 +1412,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 86L,
                             BookId = 6L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1431,7 +1420,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 87L,
                             BookId = 7L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1439,7 +1428,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 88L,
                             BookId = 8L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1447,7 +1436,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 89L,
                             BookId = 9L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1455,7 +1444,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 90L,
                             BookId = 10L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1463,7 +1452,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 91L,
                             BookId = 11L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1471,7 +1460,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 92L,
                             BookId = 12L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1479,7 +1468,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 93L,
                             BookId = 13L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1487,7 +1476,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 94L,
                             BookId = 14L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1495,7 +1484,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 95L,
                             BookId = 15L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1503,7 +1492,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 96L,
                             BookId = 16L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1511,7 +1500,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 97L,
                             BookId = 17L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1519,7 +1508,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 98L,
                             BookId = 18L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1527,7 +1516,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 99L,
                             BookId = 19L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -1535,7 +1524,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             Id = 100L,
                             BookId = 20L,
                             BookStoreId = 5L,
-                            InStock = 10L,
+                            InStock = 10u,
                             LastRestock = new DateTime(2022, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -1544,19 +1533,17 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -1568,35 +1555,35 @@ namespace DAL.MSSql.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3197),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2209),
                             Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.",
                             UserId = 1L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3276),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2260),
                             Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.",
                             UserId = 2L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3278),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2262),
                             Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!",
                             UserId = 3L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3280),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2263),
                             Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!",
                             UserId = 4L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3282),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2265),
                             Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.",
                             UserId = 5L
                         });
@@ -1606,18 +1593,16 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("BookId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
-                    b.Property<long>("PreferencePriority")
-                        .HasColumnType("bigint");
+                    b.Property<uint>("PreferencePriority")
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("WishListId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -1632,56 +1617,56 @@ namespace DAL.MSSql.Migrations.Migrations
                         {
                             Id = 1L,
                             BookId = 1L,
-                            PreferencePriority = 1L,
+                            PreferencePriority = 1u,
                             WishListId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             BookId = 2L,
-                            PreferencePriority = 1L,
+                            PreferencePriority = 1u,
                             WishListId = 2L
                         },
                         new
                         {
                             Id = 3L,
                             BookId = 18L,
-                            PreferencePriority = 2L,
+                            PreferencePriority = 2u,
                             WishListId = 2L
                         },
                         new
                         {
                             Id = 4L,
                             BookId = 3L,
-                            PreferencePriority = 1L,
+                            PreferencePriority = 1u,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 5L,
                             BookId = 4L,
-                            PreferencePriority = 2L,
+                            PreferencePriority = 2u,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 6L,
                             BookId = 5L,
-                            PreferencePriority = 0L,
+                            PreferencePriority = 0u,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 7L,
                             BookId = 6L,
-                            PreferencePriority = 1L,
+                            PreferencePriority = 1u,
                             WishListId = 4L
                         },
                         new
                         {
                             Id = 8L,
                             BookId = 7L,
-                            PreferencePriority = 1L,
+                            PreferencePriority = 1u,
                             WishListId = 5L
                         });
                 });
@@ -1690,18 +1675,16 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Biography")
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -1790,15 +1773,13 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("AuthorId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("BookId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -1935,32 +1916,30 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("BookGenre")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ISBN")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("TEXT");
 
                     b.Property<double>("Price")
-                        .HasColumnType("float");
+                        .HasColumnType("REAL");
 
                     b.Property<long>("PublisherId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -2175,25 +2154,23 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Country")
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("YearFounded")
-                        .HasColumnType("int");
+                    b.Property<ushort>("YearFounded")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -2206,7 +2183,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             City = "London",
                             Country = "United Kingdom",
                             Name = "CreateSpace Independent Publishing Platform",
-                            YearFounded = 2008
+                            YearFounded = (ushort)2008
                         },
                         new
                         {
@@ -2214,7 +2191,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             City = "London",
                             Country = "United Kingdom",
                             Name = "Packt Publishing",
-                            YearFounded = 2003
+                            YearFounded = (ushort)2003
                         },
                         new
                         {
@@ -2222,14 +2199,14 @@ namespace DAL.MSSql.Migrations.Migrations
                             City = "New York",
                             Country = "United States",
                             Name = "Scholastic",
-                            YearFounded = 1995
+                            YearFounded = (ushort)1995
                         },
                         new
                         {
                             Id = 4L,
                             Country = "France",
                             Name = "Next door Publishing",
-                            YearFounded = 2022
+                            YearFounded = (ushort)2022
                         },
                         new
                         {
@@ -2237,7 +2214,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             City = "Nove Zamky",
                             Country = "Slovakia",
                             Name = "Matej K.",
-                            YearFounded = 2020
+                            YearFounded = (ushort)2020
                         },
                         new
                         {
@@ -2245,7 +2222,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             City = "Los Angeles",
                             Country = "United States",
                             Name = "World Wide Publishing",
-                            YearFounded = 2005
+                            YearFounded = (ushort)2005
                         },
                         new
                         {
@@ -2253,13 +2230,13 @@ namespace DAL.MSSql.Migrations.Migrations
                             City = "Mark",
                             Country = "Zuckerbergland",
                             Name = "Facebook Publishing Company",
-                            YearFounded = 890
+                            YearFounded = (ushort)890
                         },
                         new
                         {
                             Id = 8L,
                             Name = "Hachette UK",
-                            YearFounded = 1989
+                            YearFounded = (ushort)1989
                         },
                         new
                         {
@@ -2267,7 +2244,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             City = "Tokyo",
                             Country = "Japan",
                             Name = "Horizon Publications",
-                            YearFounded = 2013
+                            YearFounded = (ushort)2013
                         },
                         new
                         {
@@ -2275,14 +2252,14 @@ namespace DAL.MSSql.Migrations.Migrations
                             City = "Berlin",
                             Country = "Germany",
                             Name = "Enigma Press",
-                            YearFounded = 1942
+                            YearFounded = (ushort)1942
                         },
                         new
                         {
                             Id = 11L,
                             Country = "Ireland",
                             Name = "Addison-Wesley Professional",
-                            YearFounded = 2018
+                            YearFounded = (ushort)2018
                         },
                         new
                         {
@@ -2290,7 +2267,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             City = "Las Vegas",
                             Country = "United States",
                             Name = "DC Comics",
-                            YearFounded = 2010
+                            YearFounded = (ushort)2010
                         });
                 });
 
@@ -2298,18 +2275,16 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("State")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -2321,112 +2296,112 @@ namespace DAL.MSSql.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3298),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2278),
                             State = 3,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3306),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2282),
                             State = 0,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3308),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2284),
                             State = 0,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3309),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2285),
                             State = 2,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3311),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2287),
                             State = 1,
                             UserId = 6L
                         },
                         new
                         {
                             Id = 6L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3313),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2289),
                             State = 1,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 7L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3315),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2291),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 8L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3316),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2293),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 9L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3318),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2294),
                             State = 0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 10L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3320),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2296),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 11L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3322),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2298),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 12L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3323),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2299),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 13L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3325),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2301),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 14L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3326),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2303),
                             State = 3,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 15L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3328),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2304),
                             State = 1,
                             UserId = 15L
                         },
                         new
                         {
                             Id = 16L,
-                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3329),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2306),
                             State = 1,
                             UserId = 15L
                         });
@@ -2436,24 +2411,22 @@ namespace DAL.MSSql.Migrations.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("BookId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("BookStoreId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("OrderId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("Price")
-                        .HasColumnType("float");
+                        .HasColumnType("REAL");
 
-                    b.Property<long>("Quantity")
-                        .HasColumnType("bigint");
+                    b.Property<uint>("Quantity")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -2473,7 +2446,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 2L,
                             OrderId = 2L,
                             Price = 6.7999999999999998,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2482,7 +2455,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 3L,
                             Price = 6.7999999999999998,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2491,7 +2464,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 3L,
                             Price = 6.2999999999999998,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2500,7 +2473,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 4L,
                             Price = 11.99,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2509,7 +2482,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 3L,
                             OrderId = 5L,
                             Price = 111.90000000000001,
-                            Quantity = 10L
+                            Quantity = 10u
                         },
                         new
                         {
@@ -2518,7 +2491,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 6L,
                             Price = 6.7999999999999998,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2527,7 +2500,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 6L,
                             Price = 6.2999999999999998,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2536,7 +2509,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 6L,
                             Price = 8.1999999999999993,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2545,7 +2518,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 6L,
                             Price = 11.9,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2554,7 +2527,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 6L,
                             Price = 9.3000000000000007,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2563,7 +2536,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 6L,
                             Price = 9.3499999999999996,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2572,7 +2545,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 6L,
                             Price = 8.9499999999999993,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2581,7 +2554,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 2L,
                             OrderId = 10L,
                             Price = 105.8,
-                            Quantity = 10L
+                            Quantity = 10u
                         },
                         new
                         {
@@ -2590,7 +2563,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 2L,
                             OrderId = 10L,
                             Price = 350.89999999999998,
-                            Quantity = 10L
+                            Quantity = 10u
                         },
                         new
                         {
@@ -2599,7 +2572,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 2L,
                             OrderId = 10L,
                             Price = 290.89999999999998,
-                            Quantity = 10L
+                            Quantity = 10u
                         },
                         new
                         {
@@ -2608,7 +2581,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 3L,
                             OrderId = 11L,
                             Price = 46.450000000000003,
-                            Quantity = 5L
+                            Quantity = 5u
                         },
                         new
                         {
@@ -2617,7 +2590,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 3L,
                             OrderId = 11L,
                             Price = 33.57,
-                            Quantity = 3L
+                            Quantity = 3u
                         },
                         new
                         {
@@ -2626,7 +2599,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 3L,
                             OrderId = 12L,
                             Price = 30.989999999999998,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2635,7 +2608,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 3L,
                             OrderId = 12L,
                             Price = 15.0,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2644,7 +2617,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 14L,
                             Price = 120.09999999999999,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2653,7 +2626,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 14L,
                             Price = 119.98999999999999,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2662,7 +2635,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 1L,
                             OrderId = 15L,
                             Price = 0.5,
-                            Quantity = 1L
+                            Quantity = 1u
                         },
                         new
                         {
@@ -2671,7 +2644,7 @@ namespace DAL.MSSql.Migrations.Migrations
                             BookStoreId = 2L,
                             OrderId = 16L,
                             Price = 24.989999999999998,
-                            Quantity = 1L
+                            Quantity = 1u
                         });
                 });
 
@@ -2705,7 +2678,7 @@ namespace DAL.MSSql.Migrations.Migrations
                     b.HasOne("DataAccessLayer.Models.Account.User", "Manager")
                         .WithOne("BookStore")
                         .HasForeignKey("DataAccessLayer.Models.Logistics.BookStore", "ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Address");
