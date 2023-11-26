@@ -1,6 +1,4 @@
-﻿using BusinessLayer.DTOs.Book.Create;
-using BusinessLayer.DTOs.Book.View;
-using BusinessLayer.DTOs.BookStore.Create;
+﻿using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
 
 namespace BusinessLayer.Facades.BookStore
