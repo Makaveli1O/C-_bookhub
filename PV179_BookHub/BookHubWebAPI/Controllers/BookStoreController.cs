@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using BusinessLayer.DTOs.BookStore.Create;
+﻿using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
-using DataAccessLayer.Models;
+using BusinessLayer.Facades.BookStore;
 using DataAccessLayer.Models.Logistics;
-using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
@@ -12,73 +10,47 @@ namespace BookHubWebAPI.Controllers;
 [Route("[controller]")]
 public class BookStoreController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
+    private readonly IBookStoreFacade _bookStoreFacade;
 
-    public BookStoreController(IUnitOfWork unitOfWork, IMapper mapper)
+    public BookStoreController(IBookStoreFacade bookStoreFacade)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
+        _bookStoreFacade = bookStoreFacade;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAllBookStores()
     {
-        var bookStore = await _unitOfWork.BookStoreRepository.GetAllAsync();
-        return Ok(_mapper.Map<List<DetailedBookStoreViewDto>>(bookStore));
+        return Ok(await _bookStoreFacade.GetAllBookStores());
     }
 
     [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> GetBookStore(long id)
     {
-        var bookStore = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
-        return Ok(_mapper.Map<DetailedBookStoreViewDto>(bookStore));
+        return Ok(await _bookStoreFacade.GetBookStore(id));
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateBookStore(CreateBookStoreDto createBookStoreDto)
     {
-        var bookStore = _mapper.Map<BookStore>(createBookStoreDto);
-
-        await _unitOfWork.BookStoreRepository.AddAsync(bookStore);
-        await _unitOfWork.CommitAsync();
-
+        var newBookStore = await _bookStoreFacade.CreateBookStore(createBookStoreDto);
         return Created(
-            new Uri($"{Request.Path}/{bookStore.Id}", UriKind.Relative),
-            _mapper.Map<DetailedBookStoreViewDto>(bookStore));
+            new Uri($"{Request.Path}/{newBookStore.BookStoreId}", UriKind.Relative), newBookStore);
     }
 
     [HttpPut]
     [Route("{id}")]
-    public async Task<IActionResult> UpdateBookStore(long id, CreateBookStoreDto createBookStoreDto)
+    public async Task<IActionResult> UpdateBookStore(long id, CreateBookStoreDto updateBookStoreDto)
     {
-        var bookStore = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
-        if (bookStore != null)
-        {
-            bookStore.AddressId = createBookStoreDto.AddressId;
-            bookStore.ManagerId = createBookStoreDto.ManagerId;
-            bookStore.Name = createBookStoreDto.Name;
-            bookStore.PhoneNumber = createBookStoreDto.PhoneNumber;
-            bookStore.Email = createBookStoreDto.Email;
-
-            _unitOfWork.BookStoreRepository.Update(bookStore);
-            await _unitOfWork.CommitAsync();
-        }
-        return Ok(_mapper.Map<DetailedBookStoreViewDto>(bookStore));
+        return Ok(await _bookStoreFacade.UpdateBookStore(id, updateBookStoreDto));
     }
-
+    
 
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeleteBookStore(long id)
     {
-        var bookStore = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
-        if (bookStore != null)
-        {
-            _unitOfWork.BookStoreRepository.Delete(bookStore);
-            await _unitOfWork.CommitAsync();
-        }
+        await _bookStoreFacade.DeleteBookStore(id);
         return NoContent();
     }
 
