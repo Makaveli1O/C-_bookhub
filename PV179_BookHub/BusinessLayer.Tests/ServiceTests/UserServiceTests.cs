@@ -110,9 +110,9 @@ public class UserServiceTests
 
         using (var scope = serviceProvider.CreateScope())
         {
-            var bookReviewService = scope.ServiceProvider.GetRequiredService<IGenericService<User, long>>();
+            var userService = scope.ServiceProvider.GetRequiredService<IGenericService<User, long>>();
 
-            var result = await bookReviewService.FetchAllAsync();
+            var result = await userService.FetchAllAsync();
 
             Assert.NotNull(result);
             Assert.Empty(result);
@@ -143,7 +143,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public async Task GetBookReviewAsync_ShouldThrowException()
+    public async Task GetUserAsync_ShouldThrowException()
     {
         var serviceProvider = CreateServiceProvider();
 

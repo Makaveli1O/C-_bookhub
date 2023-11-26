@@ -25,7 +25,7 @@ public class UserFacade : BaseFacade, IUserFacade
     {
         var user = _mapper.Map<UserEntity>(createUserDto);
        
-        await _userService.CreateAsync(user);
+        user = await _userService.CreateAsync(user);
 
         return _mapper.Map<GeneralUserViewDto>(user);
     }
