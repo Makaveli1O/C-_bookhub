@@ -10,7 +10,7 @@ public class Address : BaseEntity
     public string? Street { get; set; }
     [MaxLength(10)]
     public string? StreetNumber { get; set; }
-    [MaxLength(10)]
+    [MaxLength(20)]
     public required string State { get; set; }
     [MaxLength(10)]
     public required string PostalCode { get; set; }
