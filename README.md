@@ -6,7 +6,9 @@
       - C# (ASP.NET Core for the API)
       - Entity Framework Core for data access and migrations
       - SQLite Database
+      - MSSql Database
       - Swagger for API documentation
+      - XUnit and NSubstitute for testing
    - **Frontend** _(TODO)_
    - **Development tools**
       - Package Manager : NuGet
@@ -18,6 +20,7 @@
   - Jozef Mihale
   - Samuel Líška
 - **Assignment :** Develop a digital platform for the company called "BookHub", a company that sells books of various genres. The platform should facilitate easy browsing and purchase of books, letting customers sort and filter by authors, publishers, and genres. After customers create accounts, they should be able to review their purchase history, rate books, and make wishlists. Administrators should have privileges to update book details, manage user accounts, and regulate book prices.
+- **Additional Functionality :** Create multiple book store (branches), where each book store has its own manager that is responsible for managing stock (books). Orders should also be modified to adhere to this new functionality.
 
 
 ## Table of Contents
@@ -74,6 +77,35 @@
 
 ### Milestone 2
 
+1. **Revisiting the code and implementing notes from reviewers (outside of project)**:
+   - Based on the reviews from other colleagues and tutors, revisit some parts of the code to improve it.
+   - Create some new entities instead of strings (Author, Publisher).
+
+2. **Infrastructure and Business Layer**:
+   - (Optional) Create/update infrastructure to support patterns such as repository, unit of work and/or query.
+   - Create layers Service and Facade to further split the presentation layer from any logic and keep it just for the view.
+   - Create meaningful tests for some services and facades (required 1 for each member of the team).
+   - Set-up CI/CD pipeline for merge request.
+
+3. **New gitlab settings**:
+   - Only successful request can be merged (successful pipeline).
+   - 2 approvals from reviewers are required to merge each request.
+
+4. **Integrate an Identity Framework**:
+   - Develop a separate MVC application for this.
+   - For the current milestone, only implement authentication using the Identity Framework.
+
+5. **Json to XML Middleware**: 
+   - Create new Middleware that can transform Json response to XML (based on user/client input).
+   - Default format should be JSON unless specified in the query parameter.
+
+6. **Simultaneous Running of Applications**:
+   - Ensure that MVC and WebAPI are set up as separate projects.
+   - Allow each presentation layer: Operate under different configurations, Use different database setups and Maintain clear boundaries, ensuring API endpoints are not accessible from MVC, and vice versa.
+   - Each layer should also have different database (e.g. SQLite for WebApi and MSSql for MVC)
+
+
+
 ### Milestone 3
 
 ## Installation
@@ -116,12 +148,18 @@ Before running the program itself, use the DAL.SQLite.Migrations project to upda
 When running with Visual Studio, open PMC (`Tools -> Nuget Package Manager -> Package Manager Console`).
 ```shell
 # update databse based on existing snapshot(s)
-Update-Database -project  DAL.SQLite.Migrations
+Update-Database -project  DAL.SQLite.Migrations # use for WEBAPI
 
 # or make changes to entities and create a new migration
 Add-Migration <migration_name> -project DAL.SQLite.Migrations
-# when using the newly created migration, do not forget to update the databse
+# when using the newly created migration, do not forget to update the database
+
+# to use the Web MVC use the MSSql Database (and project)
+Update-Database -project DALMSSql.Migrations # or consider using new migration
 ```
+### Set-up configuration (only for MSSql Database)
+Navigate to appsettings.json in the MVC project and set-up your connection string (based on your MSSql Database server).
+
 ### Run the project
 ```shell
 # Navigate to the project directory
@@ -146,6 +184,18 @@ The project is organized into several key folders to maintain a clean and organi
 
 - The presentation layer where API endpoints, controllers, mappers, and middleware are located.
 
+### MVC
+
+- Model-View-Controller project or different presentation layer for BookHub company.
+
+###  BusinessLayer.Tests
+
+- Facade and service layer tests for some entities.
+
+###  BusinessLayer
+
+- Layered architecture components to distinguish between DAL and presentation layer.
+
 ### DataAccessLayer
 
 - Handles database access, models, and related data operations.
@@ -158,6 +208,18 @@ The project is organized into several key folders to maintain a clean and organi
 
 - A dedicated project for SQLite database migrations to manage changes to the database schema.
 
+###  DAL.SQLite.Migrations
+
+- A dedicated project for MSSql database migrations to manage changes to the database schema.
+
+### Infrastructure
+
+- Project for patterns such as Repository, UnitOfWork and some (Naive) Query.
+
+### TestUtilities
+
+- Project for mocking data for tests.
+
 ## Technical overview
 
 ### Dependencies
@@ -169,6 +231,9 @@ The project is organized into several key folders to maintain a clean and organi
 
 - **[SQLite](https://www.sqlite.org/index.html)**
    - [Microsoft.EntityFrameworkCore.Sqlite](https://learn.microsoft.com/en-us/ef/core/providers/sqlite/?tabs=dotnet-core-cli)
+
+- **[MSSql](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwiAg7Wi0uKCAxXPhv0HHZ7cDCIQFnoECBgQAQ&url=https%3A%2F%2Fwww.microsoft.com%2Fen-us%2Fsql-server%2Fsql-server-downloads&usg=AOvVaw0d74lgRcnfX6ZThGwL_ED6&opi=89978449)**
+   - [Microsoft.EntityFrameworkCore.MSSql](https://learn.microsoft.com/en-us/ef/core/providers/sql-server/?tabs=dotnet-core-cli)
 
 
 ### Use-Case Diagram
