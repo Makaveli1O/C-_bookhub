@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.MSSql.Migrations.Migrations
 {
     [DbContext(typeof(BookHubDbContext))]
-    [Migration("20231125180430_Initial")]
-    partial class Initial
+    [Migration("20231126072525_MSSql_fixAddress")]
+    partial class MSSql_fixAddress
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -460,8 +460,8 @@ namespace DAL.MSSql.Migrations.Migrations
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Street")
                         .HasMaxLength(30)
@@ -1568,35 +1568,35 @@ namespace DAL.MSSql.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(191),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3197),
                             Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.",
                             UserId = 1L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(241),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3276),
                             Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.",
                             UserId = 2L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(244),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3278),
                             Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!",
                             UserId = 3L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(245),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3280),
                             Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!",
                             UserId = 4L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(247),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3282),
                             Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.",
                             UserId = 5L
                         });
@@ -1613,7 +1613,7 @@ namespace DAL.MSSql.Migrations.Migrations
                     b.Property<long>("BookId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PreferencePriorty")
+                    b.Property<long>("PreferencePriority")
                         .HasColumnType("bigint");
 
                     b.Property<long>("WishListId")
@@ -1632,56 +1632,56 @@ namespace DAL.MSSql.Migrations.Migrations
                         {
                             Id = 1L,
                             BookId = 1L,
-                            PreferencePriorty = 1L,
+                            PreferencePriority = 1L,
                             WishListId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             BookId = 2L,
-                            PreferencePriorty = 1L,
+                            PreferencePriority = 1L,
                             WishListId = 2L
                         },
                         new
                         {
                             Id = 3L,
                             BookId = 18L,
-                            PreferencePriorty = 2L,
+                            PreferencePriority = 2L,
                             WishListId = 2L
                         },
                         new
                         {
                             Id = 4L,
                             BookId = 3L,
-                            PreferencePriorty = 1L,
+                            PreferencePriority = 1L,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 5L,
                             BookId = 4L,
-                            PreferencePriorty = 2L,
+                            PreferencePriority = 2L,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 6L,
                             BookId = 5L,
-                            PreferencePriorty = 0L,
+                            PreferencePriority = 0L,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 7L,
                             BookId = 6L,
-                            PreferencePriorty = 1L,
+                            PreferencePriority = 1L,
                             WishListId = 4L
                         },
                         new
                         {
                             Id = 8L,
                             BookId = 7L,
-                            PreferencePriorty = 1L,
+                            PreferencePriority = 1L,
                             WishListId = 5L
                         });
                 });
@@ -2308,9 +2308,6 @@ namespace DAL.MSSql.Migrations.Migrations
                     b.Property<int>("State")
                         .HasColumnType("int");
 
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
@@ -2324,129 +2321,113 @@ namespace DAL.MSSql.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(264),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3298),
                             State = 3,
-                            TotalPrice = 0.0,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(270),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3306),
                             State = 0,
-                            TotalPrice = 6.7999999999999998,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(272),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3308),
                             State = 0,
-                            TotalPrice = 13.1,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(274),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3309),
                             State = 2,
-                            TotalPrice = 11.99,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(276),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3311),
                             State = 1,
-                            TotalPrice = 111.90000000000001,
                             UserId = 6L
                         },
                         new
                         {
                             Id = 6L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(278),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3313),
                             State = 1,
-                            TotalPrice = 60.799999999999997,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 7L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(279),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3315),
                             State = 3,
-                            TotalPrice = 0.0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 8L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(281),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3316),
                             State = 3,
-                            TotalPrice = 0.0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 9L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(283),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3318),
                             State = 0,
-                            TotalPrice = 0.0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 10L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(285),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3320),
                             State = 1,
-                            TotalPrice = 747.60000000000002,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 11L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(287),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3322),
                             State = 1,
-                            TotalPrice = 80.019999999999996,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 12L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(289),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3323),
                             State = 0,
-                            TotalPrice = 45.990000000000002,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 13L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(291),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3325),
                             State = 0,
-                            TotalPrice = 0.0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 14L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(293),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3326),
                             State = 3,
-                            TotalPrice = 240.09,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 15L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(294),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3328),
                             State = 1,
-                            TotalPrice = 0.5,
                             UserId = 15L
                         },
                         new
                         {
                             Id = 16L,
-                            CreatedAt = new DateTime(2023, 11, 25, 19, 4, 30, 358, DateTimeKind.Local).AddTicks(296),
+                            CreatedAt = new DateTime(2023, 11, 26, 8, 25, 25, 786, DateTimeKind.Local).AddTicks(3329),
                             State = 1,
-                            TotalPrice = 24.989999999999998,
                             UserId = 15L
                         });
                 });
@@ -2743,7 +2724,7 @@ namespace DAL.MSSql.Migrations.Migrations
                     b.HasOne("DataAccessLayer.Models.Logistics.BookStore", "BookStore")
                         .WithMany("InventoryItems")
                         .HasForeignKey("BookStoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
@@ -2784,15 +2765,15 @@ namespace DAL.MSSql.Migrations.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.Publication.AuthorBookAssociation", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.Publication.Author", "Author")
-                        .WithMany()
+                        .WithMany("AuthorBookAssociations")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
-                        .WithMany()
+                        .WithMany("AuthorBookAssociations")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -2805,7 +2786,7 @@ namespace DAL.MSSql.Migrations.Migrations
                     b.HasOne("DataAccessLayer.Models.Publication.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Publisher");
@@ -2827,13 +2808,13 @@ namespace DAL.MSSql.Migrations.Migrations
                     b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
                         .WithMany("OrderItems")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DataAccessLayer.Models.Logistics.BookStore", "BookStore")
                         .WithMany("OrderItems")
                         .HasForeignKey("BookStoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DataAccessLayer.Models.Purchasing.Order", "Order")
@@ -2877,8 +2858,15 @@ namespace DAL.MSSql.Migrations.Migrations
                     b.Navigation("WishListItems");
                 });
 
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.Author", b =>
+                {
+                    b.Navigation("AuthorBookAssociations");
+                });
+
             modelBuilder.Entity("DataAccessLayer.Models.Publication.Book", b =>
                 {
+                    b.Navigation("AuthorBookAssociations");
+
                     b.Navigation("InventoryItems");
 
                     b.Navigation("OrderItems");
