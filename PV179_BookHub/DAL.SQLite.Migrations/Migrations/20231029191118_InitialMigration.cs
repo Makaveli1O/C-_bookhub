@@ -233,7 +233,7 @@ namespace DAL.SQLite.Migrations.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     WishListId = table.Column<long>(type: "INTEGER", nullable: false),
                     BookId = table.Column<long>(type: "INTEGER", nullable: false),
-                    PreferencePriorty = table.Column<uint>(type: "INTEGER", nullable: false)
+                    PreferencePriority = table.Column<uint>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -546,7 +546,7 @@ namespace DAL.SQLite.Migrations.Migrations
 
             migrationBuilder.InsertData(
                 table: "WishListItem",
-                columns: new[] { "Id", "BookId", "PreferencePriorty", "WishListId" },
+                columns: new[] { "Id", "BookId", "PreferencePriority", "WishListId" },
                 values: new object[,]
                 {
                     { 1L, 1L, 1u, 1L },
