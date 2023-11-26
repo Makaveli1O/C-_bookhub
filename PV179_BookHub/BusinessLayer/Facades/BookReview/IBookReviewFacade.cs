@@ -8,6 +8,6 @@ public interface IBookReviewFacade
 {
     Task<List<GeneralBookReviewViewDto>> FindBookReviewsAsync(long id);
     Task<List<GeneralBookReviewViewDto>> FindUserReviewsAsync(long id);
-    Task<GeneralBookReviewViewDto> CreateBookReview(CreateBookReviewDto createBookReviewDto);
+    Task<DetailedBookReviewViewDto> CreateBookReview(CreateBookReviewDto createBookReviewDto);
     Task<GeneralBookReviewViewDto> UpdateBookReview(long id, UpdateBookReviewDto updateBookReviewDto);
 }

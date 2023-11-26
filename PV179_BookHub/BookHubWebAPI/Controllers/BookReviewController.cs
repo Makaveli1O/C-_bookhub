@@ -2,6 +2,7 @@
 using BusinessLayer.Facades.BookReview;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.DTOs.BookReview.Update;
+using DataAccessLayer.Models.Account;
 
 namespace BookHubWebAPI.Controllers;
 
@@ -19,39 +20,39 @@ public class BookReviewController : ControllerBase
     [HttpPost("Create")]
     public async Task<IActionResult> CreateBookReview(CreateBookReviewDto createBookReviewDto)
     {
-        await _bookReviewFacade.CreateBookReview(createBookReviewDto);
-
-        return Ok(createBookReviewDto);
+        var bookReview = await _bookReviewFacade.CreateBookReview(createBookReviewDto);
+        return Created(
+            new Uri($"{Request.Path}/{bookReview.BookReviewId}", UriKind.Relative),
+            bookReview
+        );
+        
     }
 
     [HttpPut]
     [Route("Update/{bookReviewId}")]
     public async Task<IActionResult> UpdateBookReview(long bookReviewId, UpdateBookReviewDto updateBookReviewDto)
     {
-        var bookReview = await _bookReviewFacade.UpdateBookReview(bookReviewId, updateBookReviewDto);
-
-        return Created(
-            new Uri($"{Request.Path}/{bookReviewId}", UriKind.Relative),
-            bookReview
-            );
+        return Ok(
+            await _bookReviewFacade.UpdateBookReview(bookReviewId, updateBookReviewDto)
+        );
     }
 
     [HttpGet]
     [Route("Book/{bookId}")]
     public async Task<IActionResult> FetchBookReviews(long bookId)
     {
-        var bookReviews = await _bookReviewFacade.FindBookReviewsAsync(bookId);
-
-        return Ok(bookReviews);
+        return Ok(
+            await _bookReviewFacade.FindBookReviewsAsync(bookId)
+        );
     }
 
     [HttpGet]
     [Route("User/{userId}")]
     public async Task<IActionResult> FetchUserReviews(long userId)
     {
-        var bookReviews = await _bookReviewFacade.FindUserReviewsAsync(userId);
-
-        return Ok(bookReviews);
+        return Ok(
+            await _bookReviewFacade.FindUserReviewsAsync(userId)
+        );
     }
 
 }

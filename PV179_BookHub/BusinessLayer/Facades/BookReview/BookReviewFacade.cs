@@ -39,7 +39,7 @@ public class BookReviewFacade : BaseFacade, IBookReviewFacade
         return _mapper.Map<List<GeneralBookReviewViewDto>>(bookReviews);
     }
 
-    public async Task<GeneralBookReviewViewDto> CreateBookReview(CreateBookReviewDto createBookReviewDto)
+    public async Task<DetailedBookReviewViewDto> CreateBookReview(CreateBookReviewDto createBookReviewDto)
     {
         var book = await _bookService.FindByIdAsync(createBookReviewDto.BookId);
         var user = await _userService.FindByIdAsync(createBookReviewDto.ReviewerId);
@@ -49,7 +49,7 @@ public class BookReviewFacade : BaseFacade, IBookReviewFacade
         bookReview.Book = book;
         await _bookReviewService.CreateAsync(bookReview);
 
-        return _mapper.Map<GeneralBookReviewViewDto>(bookReview);
+        return _mapper.Map<DetailedBookReviewViewDto>(bookReview);
     }
 
     public async Task<GeneralBookReviewViewDto> UpdateBookReview(long id, UpdateBookReviewDto updateBookReviewDto)
