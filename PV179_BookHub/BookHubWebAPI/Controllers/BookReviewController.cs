@@ -1,81 +1,58 @@
-﻿using AutoMapper;
-using BusinessLayer.DTOs.BookReview.Create;
-using BusinessLayer.DTOs.BookReview.View;
-using DataAccessLayer.Models;
-using DataAccessLayer.Models.Account;
-using Infrastructure.UnitOfWork;
+﻿using BusinessLayer.DTOs.BookReview.Create;
+using BusinessLayer.Facades.BookReview;
 using Microsoft.AspNetCore.Mvc;
+using BusinessLayer.DTOs.BookReview.Update;
+using DataAccessLayer.Models.Account;
 
 namespace BookHubWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BookReviewController : Controller
+public class BookReviewController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-    public BookReviewController(IUnitOfWork unitOfWork, IMapper mapper)
+    private readonly IBookReviewFacade _bookReviewFacade;
+
+    public BookReviewController(IBookReviewFacade bookReviewFacade)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
+        _bookReviewFacade = bookReviewFacade;
     }
 
     [HttpPost("Create")]
     public async Task<IActionResult> CreateBookReview(CreateBookReviewDto createBookReviewDto)
     {
-        var bookReview = _mapper.Map<BookReview>(createBookReviewDto);
-
-        await _unitOfWork.BookReviewRepository.AddAsync(bookReview);
-        await _unitOfWork.CommitAsync();
-
+        var bookReview = await _bookReviewFacade.CreateBookReview(createBookReviewDto);
         return Created(
-             new Uri($"{Request.Path}/{bookReview.Id}", UriKind.Relative),
-            _mapper.Map<GeneralBookReviewViewDto>(bookReview));
+            new Uri($"{Request.Path}/{bookReview.BookReviewId}", UriKind.Relative),
+            bookReview
+        );
+        
     }
 
     [HttpPut]
     [Route("Update/{bookReviewId}")]
-    public async Task<IActionResult> UpdateBookReview(long bookReviewId, string? bookReviewDescription)
+    public async Task<IActionResult> UpdateBookReview(long bookReviewId, UpdateBookReviewDto updateBookReviewDto)
     {
-        var bookReview = await _unitOfWork.BookReviewRepository.GetByIdAsync(bookReviewId);
-
-        if (bookReview != null)
-        {
-            bookReview.Description = bookReviewDescription;
-            _unitOfWork.BookReviewRepository.Update(bookReview);
-            await _unitOfWork.CommitAsync();
-        }
-
         return Ok(
-            _mapper.Map<GeneralBookReviewViewDto>(bookReview)
-            );
+            await _bookReviewFacade.UpdateBookReview(bookReviewId, updateBookReviewDto)
+        );
     }
 
     [HttpGet]
     [Route("Book/{bookId}")]
     public async Task<IActionResult> FetchBookReviews(long bookId)
     {
-        var bookReviews = await _unitOfWork.BookReviewRepository.GetAllAsync(
-            review => review.BookId == bookId
-            );
-       
-
         return Ok(
-            _mapper.Map<IEnumerable<GeneralBookReviewViewDto>>(bookReviews)
-            );
+            await _bookReviewFacade.FindBookReviewsAsync(bookId)
+        );
     }
 
     [HttpGet]
     [Route("User/{userId}")]
     public async Task<IActionResult> FetchUserReviews(long userId)
     {
-        var bookReviews = 
-            await _unitOfWork.BookReviewRepository.GetAllAsync(
-                user => user.Reviewer.Id == userId
-                );
-
         return Ok(
-            _mapper.Map<IEnumerable<GeneralBookReviewViewDto>>(bookReviews));
+            await _bookReviewFacade.FindUserReviewsAsync(userId)
+        );
     }
 
 }

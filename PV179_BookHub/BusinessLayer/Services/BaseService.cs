@@ -1,19 +1,17 @@
-﻿using AutoMapper;
-using Infrastructure.UnitOfWork;
+﻿using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services;
 
-public class BaseService : IBaseService
+public abstract class BaseService : IBaseService
 {
     protected readonly IUnitOfWork _unitOfWork;
-    protected readonly IMapper _mapper;
-    public BaseService(IUnitOfWork unitOfWork, IMapper mapper)
+    
+    public BaseService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
     }
 
-    public async Task SaveAsync(bool save = true)
+    public virtual async Task SaveAsync(bool save = true)
     {
         if (save)
         {

@@ -1,6 +1,10 @@
-﻿namespace BusinessLayer.DTOs.Publisher.Create;
+﻿
+namespace BusinessLayer.DTOs.Publisher.Create;
 
 public class CreatePublisherDto
 {
-    public required string Name { get; set; }
+    public string? Name { get; set; }
+    public string? City { get; set; }
+    public string? Country { get; set; }
+    public ushort? YearFounded { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models;
+﻿using Infrastructure.Exceptions;
 using Infrastructure.NaiveQuery.Filters;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +13,9 @@ public class QueryBase<TEntity, TKey> : IQuery<TEntity> where TEntity : class
     public IUnitOfWork UnitOfWork {  get; set; }
     public IFilter<TEntity>? Filter { get; set; }
     public int PageSize { get; set; } = 20;
-    public int CurrentPage { get; set; }
-    public string? SortAccordingTo { get; set; }
-    public bool UseAscendingOrder { get; set; }
+    public int CurrentPage { get; set; } = 1;
+    public string SortAccordingTo { get; set; } = string.Empty;
+    public bool UseAscendingOrder { get; set; } = false;
 
 
     public QueryBase(IUnitOfWork unitOfWork)
@@ -57,9 +57,12 @@ public class QueryBase<TEntity, TKey> : IQuery<TEntity> where TEntity : class
         //https://stackoverflow.com/questions/1689199/c-sharp-code-to-order-by-a-property-using-the-property-name-as-a-string/67630860#67630860
         var param = Expression.Parameter(typeof(TEntity));
         var memberAccess = Expression.Property(param, sortAccordingTo);
+        if (memberAccess == null)
+        {
+            throw new NoSuchPropertyException(sortAccordingTo);
+        }
         var convertedMemberAccess = Expression.Convert(memberAccess, typeof(object));
         var orderPredicate = Expression.Lambda<Func<TEntity, object>>(convertedMemberAccess, param);
-
 
         if (ascending)
         {

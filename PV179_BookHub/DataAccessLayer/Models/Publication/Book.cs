@@ -30,4 +30,5 @@ public class Book : BaseEntity
     public virtual IEnumerable<OrderItem>? OrderItems { get; set; }
     public virtual IEnumerable<WishListItem>? WishListItems { get; set; }
     public virtual IEnumerable<Author>? Authors { get; set; }
+    public virtual IEnumerable<AuthorBookAssociation>? AuthorBookAssociations { get; set; }
 }

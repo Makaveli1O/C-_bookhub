@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.WishList.Create;
 using BusinessLayer.DTOs.WishList.View;
+using BusinessLayer.Facades.WishList;
 using DataAccessLayer.Models;
 using DataAccessLayer.Models.Preferences;
 using Infrastructure.UnitOfWork;
@@ -12,121 +13,73 @@ namespace BookHubWebAPI.Controllers;
 [Route("[controller]")]
 public class WishListController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
+    private readonly IWishListFacade _wishListFacade;
 
-    public WishListController(IUnitOfWork unitOfWork, IMapper mapper)
+    public WishListController(IWishListFacade wishListFacade)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
+        _wishListFacade = wishListFacade;
     }
     
     [HttpPost("createWishList")]
     public async Task<IActionResult> CreateWishList(CreateWishListDto createWishListDto)
     {
-        var wishList = _mapper.Map<WishList>(createWishListDto);
+        var wishList = await _wishListFacade.CreateWishListAsync(createWishListDto);
         
-        await _unitOfWork.WishListRepository.AddAsync(wishList);
-        await _unitOfWork.CommitAsync();
-
         return Created(
              new Uri($"{Request.Path}/{wishList.Id}", UriKind.Relative),
-            _mapper.Map<GeneralWishListViewDto>(wishList));
+             wishList);
     }
 
     [HttpPost("addedItemToWishList")]
     public async Task<IActionResult> CreateWishListItem(CreateWishListItemDto createWishListItemDto)
     {
-        var wishListItem = _mapper.Map<WishListItem>(createWishListItemDto);
-
-        await _unitOfWork.WishListItemRepository.AddAsync(wishListItem);
-        await _unitOfWork.CommitAsync();
-
+        var wishListItem = await _wishListFacade.CreateWishListItemAsync(createWishListItemDto);
+     
         return Created(
              new Uri($"{Request.Path}/{wishListItem.Id}", UriKind.Relative),
-            _mapper.Map<GeneralWishListItemViewDto>(wishListItem));
+            wishListItem);
     }
 
     [HttpPut]
     [Route("updateWishList/{wishListId}")]
     public async Task<IActionResult> UpdateWishList(long wishListId, string? wishListDescription)
     {
-        var wishList = await _unitOfWork.WishListRepository.GetByIdAsync(wishListId);
-        
-        if (wishList != null)
-        {
-            wishList.Description = wishListDescription;
-            _unitOfWork.WishListRepository.Update(wishList);
-            await _unitOfWork.CommitAsync();
-        }
-
-        return Ok(
-            _mapper.Map<GeneralWishListViewDto>(wishList)
-            );
+        return Ok(await _wishListFacade.UpdateWishListAsync(wishListId, wishListDescription));
     }
 
     [HttpPut]
     [Route("updateWishListItem/{wishListItemId}")]
-    public async Task<IActionResult> UpdateWishListItem(long wishListItemId, uint preferencePriorituy)
+    public async Task<IActionResult> UpdateWishListItem(long wishListItemId, uint preferencePriority)
     {
-        var wishListItem = await _unitOfWork.WishListItemRepository.GetByIdAsync(wishListItemId);
-
-        if (wishListItem != null)
-        {
-            wishListItem.PreferencePriorty = preferencePriorituy;
-            _unitOfWork.WishListItemRepository.Update(wishListItem);
-            await _unitOfWork.CommitAsync();
-        }
-
-        return Ok(
-            _mapper.Map<GeneralWishListItemViewDto>(wishListItem)
-            );
+        return Ok(await _wishListFacade.UpdateWishListItemAsync(wishListItemId, preferencePriority));
     }
 
     [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> FetchWishList(long id)
     {
-        var wishList = await _unitOfWork.WishListRepository.GetByIdAsync(id);
-
-        return Ok(
-            _mapper.Map<GeneralWishListViewDto>(wishList)
-            );
+        return Ok(await _wishListFacade.FetchWishListAsync(id));
     }
 
     [HttpGet]
     [Route("all/{wishListId}")]
     public async Task<IActionResult> FetchAllItemsFromWishList(long wishListId)
     {
-        var wishList = await _unitOfWork.WishListRepository.GetByIdAsync(wishListId);
-
-        return Ok(
-            _mapper.Map<IEnumerable<GeneralWishListItemViewDto>>(wishList?.WishListItems)
-            );
+        return Ok(await _wishListFacade.FetchAllItemsFromWishListAsync(wishListId));
     }
 
     [HttpGet]
     [Route("wishList/{itemId}")]
     public async Task<IActionResult> FetchSingleItemFromWishList(long itemId)
     {
-        var wishListItem = await _unitOfWork.WishListItemRepository.GetByIdAsync(itemId);
-
-        return Ok(
-               _mapper.Map<GeneralWishListItemViewDto>(wishListItem)
-               );
+        return Ok(await _wishListFacade.FetchSingleItemFromWishListAsync(itemId));
     }
 
     [HttpDelete]
     [Route("{wishListId}")]
     public async Task<IActionResult> DeleteWishList(long wishListId)
     {
-        var wishList = await _unitOfWork.WishListRepository.GetByIdAsync(wishListId);
-
-        if (wishList != null)
-        {
-            _unitOfWork.WishListRepository.Delete(wishList);
-            await _unitOfWork.CommitAsync();
-        }
+        await _wishListFacade.DeleteWishListAsync(wishListId);
         return NoContent();
     }
 
@@ -134,13 +87,7 @@ public class WishListController : ControllerBase
     [Route("item/{wishListItemId}")]
     public async Task<IActionResult> DeleteWishListItem(long wishListItemId)
     {
-        var wishListItem = await _unitOfWork.WishListItemRepository.GetByIdAsync(wishListItemId);
-
-        if (wishListItem != null)
-        {
-            _unitOfWork.WishListItemRepository.Delete(wishListItem);
-            await _unitOfWork.CommitAsync();
-        }
+        await _wishListFacade.DeleteWishListItemAsync(wishListItemId);
         return NoContent();
     }
 
@@ -148,13 +95,7 @@ public class WishListController : ControllerBase
     [Route("{wishListId}/items")]
     public async Task<IActionResult> DeleteWishListItems(long wishListId)
     {
-        var wishList = await _unitOfWork.WishListRepository.GetByIdAsync(wishListId);
-
-        if (wishList != null)
-        {
-            wishList.WishListItems?.ToList().ForEach(_unitOfWork.WishListItemRepository.Delete);
-            await _unitOfWork.CommitAsync();
-        }
+        await _wishListFacade.DeleteWishListItemsAsync(wishListId);
         return NoContent();
     }
 }

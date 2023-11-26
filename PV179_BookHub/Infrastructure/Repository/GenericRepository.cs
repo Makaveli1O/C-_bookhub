@@ -23,6 +23,11 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
         await _dbContext.Set<TEntity>().AddAsync(entity);
     }
 
+    public virtual async Task AddRangeAsync(params TEntity[] entities)
+    {
+        await _dbContext.Set<TEntity>().AddRangeAsync(entities);
+    }
+
     public virtual void Delete(TEntity entity)
     {
         _dbContext.Set<TEntity>().Remove(entity);

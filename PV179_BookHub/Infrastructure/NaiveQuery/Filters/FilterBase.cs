@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Infrastructure.Exceptions;
 using Infrastructure.NaiveQuery.Filters.LambdaAndOr;
 
 namespace Infrastructure.NaiveQuery.Filters;
@@ -14,6 +15,23 @@ public abstract class FilterBase<TEntity> : IFilter<TEntity> where TEntity : cla
     }
 
     protected abstract void SetUpSpecialLambdaExpressions();
+
+    protected virtual Expression BuildExpression(string op, Expression left, Expression right)
+    {
+        switch(op.ToUpper())
+        {
+            case "LEQ":
+                return Expression.LessThanOrEqual(left, right);
+            case "LE":
+                return Expression.LessThan(left, right);
+            case "GEQ":
+                return Expression.GreaterThanOrEqual(left, right);
+            case "GE":
+                return Expression.GreaterThan(left, right);
+            default:
+                return Expression.Equal(left, right);
+        }
+    }
 
     public virtual Expression<Func<TEntity, bool>>? CreateExpression()
     {
@@ -35,20 +53,24 @@ public abstract class FilterBase<TEntity> : IFilter<TEntity> where TEntity : cla
             }
             else
             {
-                MemberExpression member = Expression.Property(param, item.Name);
-                Expression expression = Expression.Equal(member, constant);
+                var itemName = item.Name;
+                string op = string.Empty;
+                var split = itemName.Split('_');
+                if (split.Length == 2)
+                {
+                    itemName = split[1];
+                    op = split[0];
+                }
+                else if (split.Length > 3)
+                {
+                    throw new UnsupportedPropertyNameException(item.Name);
+                }
+                MemberExpression member = Expression.Property(param, itemName);
+                Expression expression = BuildExpression(op, member, constant);
                 current = Expression.Lambda<Func<TEntity, bool>>(expression, param);
             }
 
-            if (final == null)
-            {
-                final = current;
-            }
-            else
-            {
-                final = final.And(current);
-            }
-
+            final = final == null ? current : final.And(current);
         }
         return final;
     }

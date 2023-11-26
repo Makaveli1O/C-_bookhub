@@ -1,8 +1,27 @@
 using BookHubWebAPI.Middleware;
-using BusinessLayer.Facades;
+using BookHubWebAPI.Swagger;
+using BusinessLayer.Facades.Address;
+using BusinessLayer.Facades.Author;
+using BusinessLayer.Facades.Book;
+using BusinessLayer.Facades.Order;
+using BusinessLayer.Facades.BookReview;
+using BusinessLayer.Facades.Publisher;
+using BusinessLayer.Facades.WishList;
+using BusinessLayer.Facades.User;
 using BusinessLayer.Mappers;
 using BusinessLayer.Services;
+using BusinessLayer.Services.Author;
+using BusinessLayer.Services.Book;
+using BusinessLayer.Services.InventoryItem;
+using BusinessLayer.Services.Order;
+using BusinessLayer.Services.BookReview;
+using BusinessLayer.Services.Publisher;
 using DataAccessLayer.Data;
+using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Preferences;
+using DataAccessLayer.Models.Publication;
+using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Purchasing;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -22,9 +41,36 @@ builder.Services.AddDbContextFactory<BookHubDbContext>(options =>
             )
         .UseLazyLoadingProxies();
 });
+
 builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
-builder.Services.AddScoped<IAddressService, AddressService>();
+
+builder.Services.AddScoped<IGenericService<Address, long>, GenericService<Address, long>>();
 builder.Services.AddScoped<IAddressFacade, AddressFacade>();
+
+builder.Services.AddScoped<IInventoryItemService, InventoryItemService>();
+
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<IAuthorFacade, AuthorFacade>();
+
+builder.Services.AddScoped<IGenericService<Publisher, long>, PublisherService>();
+builder.Services.AddScoped<IPublisherFacade, PublisherFacade>();
+
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IBookFacade, BookFacade>();
+
+builder.Services.AddScoped<IGenericService<WishList, long>, GenericService<WishList, long>>();
+builder.Services.AddScoped<IGenericService<WishListItem, long>, GenericService<WishListItem, long>>();
+builder.Services.AddScoped<IWishListFacade, WishListFacade>();
+
+builder.Services.AddScoped<IGenericService<User, long>, GenericService<User, long>>();
+builder.Services.AddScoped<IUserFacade, UserFacade>();
+
+builder.Services.AddScoped<IGenericService<OrderItem, long>, GenericService<OrderItem, long>>();
+
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderFacade, OrderFacade>();
+builder.Services.AddScoped<IBookReviewService, BookReviewService>();
+builder.Services.AddScoped<IBookReviewFacade, BookReviewFacade>();
 
 builder.Services.AddAutoMapper(typeof(AddressProfile));
 builder.Services.AddAutoMapper(typeof(BookProfile));
@@ -34,6 +80,7 @@ builder.Services.AddAutoMapper(typeof(OrderProfile));
 builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddAutoMapper(typeof(WishListItemProfile));
 builder.Services.AddAutoMapper(typeof(WishListProfile));
+builder.Services.AddAutoMapper(typeof(AuthorBookAssociationProfile));
 
 
 builder.Services.AddControllers();
@@ -64,6 +111,13 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+
+    c.OperationFilter<FormatQueryParameterOperationFilter>(
+         "format",
+         "The format of the response",
+         "json",
+         new List<string> {"json", "xml"},
+         false);
 });
 
 builder.Services.AddLogging();
@@ -82,6 +136,8 @@ app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseMiddleware<TokenAuthenticationMiddleware>();
+
+app.UseMiddleware<XmlResponseConverterMiddleware>();
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
