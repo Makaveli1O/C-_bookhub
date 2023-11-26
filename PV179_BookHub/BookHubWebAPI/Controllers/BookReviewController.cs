@@ -7,7 +7,7 @@ namespace BookHubWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BookReviewController : Controller
+public class BookReviewController : ControllerBase
 {
     private readonly IBookReviewFacade _bookReviewFacade;
 
@@ -19,9 +19,9 @@ public class BookReviewController : Controller
     [HttpPost("Create")]
     public async Task<IActionResult> CreateBookReview(CreateBookReviewDto createBookReviewDto)
     {
-        var bookReview = await _bookReviewFacade.CreateBookReview(createBookReviewDto);
+        await _bookReviewFacade.CreateBookReview(createBookReviewDto);
 
-        return Ok(bookReview);
+        return Ok(createBookReviewDto);
     }
 
     [HttpPut]
