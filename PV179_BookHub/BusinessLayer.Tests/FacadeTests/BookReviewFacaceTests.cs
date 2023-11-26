@@ -12,7 +12,6 @@ using DataAccessLayer.Models.Publication;
 using BusinessLayer.Exceptions;
 using NSubstitute.ExceptionExtensions;
 using BusinessLayer.DTOs.BookReview.Update;
-using System.Net;
 
 namespace BusinessLayer.Tests.FacadeTests;
 
