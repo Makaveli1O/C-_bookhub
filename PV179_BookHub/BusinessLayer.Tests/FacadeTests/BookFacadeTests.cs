@@ -1,25 +1,14 @@
 ﻿using BusinessLayer.Services.Author;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestUtilities.MockedObjects;
-using BusinessLayer.Services.BookReview;
 using NSubstitute;
-using DataAccessLayer.Models.Account;
 using Microsoft.Extensions.DependencyInjection;
 using TestUtilities.MockedData;
 using BusinessLayer.DTOs.Book.Create;
 using DataAccessLayer.Models.Publication;
-using BusinessLayer.Facades.BookReview;
-using System.Diagnostics.Eventing.Reader;
 using NSubstitute.ExceptionExtensions;
 using BusinessLayer.Exceptions;
-using System.Net;
-using DataAccessLayer.Models.Enums;
 using BusinessLayer.Facades.Book;
 
 namespace BusinessLayer.Tests.FacadeTests;
@@ -29,7 +18,7 @@ public class BookFacadeTests
     private MockedDependencyInjectionBuilder _serviceProviderBuilder;
     private readonly IBookService _bookServiceMock;
     private readonly IAuthorService _authorServiceMock;
-    private readonly IGenericService<DataAccessLayer.Models.Publication.Publisher, long> _publisherServiceMock;
+    private readonly IGenericService<Publisher, long> _publisherServiceMock;
 
     public BookFacadeTests()
     {
@@ -43,7 +32,7 @@ public class BookFacadeTests
 
         _bookServiceMock = Substitute.For<IBookService>();
         _authorServiceMock = Substitute.For<IAuthorService>();
-        _publisherServiceMock = Substitute.For<IGenericService<DataAccessLayer.Models.Publication.Publisher, long>>();
+        _publisherServiceMock = Substitute.For<IGenericService<Publisher, long>>();
     }
 
     private ServiceProvider CreateServiceProvider()
@@ -62,7 +51,7 @@ public class BookFacadeTests
         
         var authorAssociates = TestDataInitializer.GetTestAuthorBookAssociations().First(x => x.BookId == book.Id);
         
-        var author = TestDataInitializer.GetTestAuthors().First(x => x.Id == authorAssociates.AuthorId);
+        var authors = TestDataInitializer.GetTestAuthors().Where(x => x.Id == authorAssociates.AuthorId);
         var publisher = TestDataInitializer.GetTestPublishers().First(x => x.Id == book.PublisherId);
 
         var bookDto = new CreateBookDto()
@@ -70,14 +59,14 @@ public class BookFacadeTests
             Title = book.Title,
             ISBN = book.ISBN,
             PublisherId = book.PublisherId,
-            AuthorIds = new[] { author.Id },
+            AuthorIds = authors.Select(x => x.Id),
             BookGenre = book.BookGenre,
             Description = book.Description,
             Price = book.Price,
         };
 
         _bookServiceMock.CreateAsync(Arg.Any<Book>()).Returns(book);
-        _authorServiceMock.FindByIdAsync(Arg.Any<long>()).Returns(author);
+        _authorServiceMock.FetchAllAuthorsByIdsAsync(Arg.Any<IEnumerable<long>>()).Returns(authors);
         _publisherServiceMock.FindByIdAsync(Arg.Any<long>()).Returns(publisher);
 
         var serviceProvider = CreateServiceProvider();
@@ -89,9 +78,10 @@ public class BookFacadeTests
             var result = await bookFacade.CreateBookAsync(bookDto);
 
             Assert.NotNull(result);
+            Assert.Equal(book.Id, result.Id);
             Assert.Equal(book.Price, result.Price);
             await _bookServiceMock.Received(1).CreateAsync((Arg.Any<Book>()));
-            await _authorServiceMock.Received(1).FindByIdAsync(Arg.Any<long>());
+            await _authorServiceMock.Received(1).FetchAllAuthorsByIdsAsync(Arg.Any<IEnumerable<long>>());
             await _publisherServiceMock.Received(1).FindByIdAsync(Arg.Any<long>());
         }
     }
@@ -117,7 +107,7 @@ public class BookFacadeTests
         var publisher = TestDataInitializer.GetTestPublishers().First(x => x.Id == book.PublisherId);
 
         _bookServiceMock.CreateAsync(Arg.Any<Book>()).Returns(book);
-        _authorServiceMock.FindByIdAsync(Arg.Any<long>()).Throws(new NoSuchEntityException<long>(typeof(Author), authorAssociates.AuthorId));
+        _authorServiceMock.FetchAllAuthorsByIdsAsync(Arg.Any<IEnumerable<long>>()).Throws(new NoSuchEntityException<IEnumerable<long>>(typeof(Author), new List<long> { 1 }));
         _publisherServiceMock.FindByIdAsync(Arg.Any<long>()).Returns(publisher);
 
         var serviceProvider = CreateServiceProvider();
@@ -125,7 +115,7 @@ public class BookFacadeTests
         using (var scope = serviceProvider.CreateScope())
         {
             var bookFacade = scope.ServiceProvider.GetRequiredService<IBookFacade>();
-            await Assert.ThrowsAnyAsync<NoSuchEntityException<long>>(async () => await bookFacade.CreateBookAsync(bookDto));
+            await Assert.ThrowsAnyAsync<NoSuchEntityException<IEnumerable<long>>>(async () => await bookFacade.CreateBookAsync(bookDto));
         }
     }
     [Fact]

@@ -32,7 +32,7 @@ public class BookFacade : BaseFacade, IBookFacade
         var book = _mapper.Map<BookEntity>(createBookDto);
         book.Authors = authors;
         book.Publisher = publisher;
-        await _bookService.CreateAsync(book);
+        book = await _bookService.CreateAsync(book);
 
         return _mapper.Map<DetailedBookViewDto>(book);
     }

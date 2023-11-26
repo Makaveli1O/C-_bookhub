@@ -6,11 +6,7 @@ using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 using TestUtilities.MockedData;
 using TestUtilities.MockedObjects;
 
@@ -91,12 +87,14 @@ public class BookServiceTests
 
         var book = TestDataInitializer.GetTestBooks().First(x => x.Id == id);
 
+        _repositoryMock.GetByIdAsync(Arg.Any<long>(), Arg.Any<Expression<Func<Book, object>>[]>()).Returns(book);
+
         var serviceProvider = CreateServiceProvider();
 
         using (var scope = serviceProvider.CreateScope())
         {
-            var bookFacade = scope.ServiceProvider.GetRequiredService<IBookService>();
-            var result = await bookFacade.FindByIdAsync(id);
+            var bookService = scope.ServiceProvider.GetRequiredService<IBookService>();
+            var result = await bookService.FindByIdAsync(id);
             Assert.NotNull(result);
             Assert.Equal(book.Id, result.Id);
             Assert.Equal(book.Price, result.Price);

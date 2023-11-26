@@ -95,7 +95,9 @@ public class MockedDependencyInjectionBuilder
             .AddScoped<IBookService, BookService>()
             .AddScoped<IGenericService<User, long>, GenericService<User, long>>()
             .AddScoped<IOrderService, OrderService>()
-            .AddScoped<IBookReviewService, BookReviewService>();
+            .AddScoped<IBookReviewService, BookReviewService>()
+            .AddScoped<IAuthorService, AuthorService>()
+            .AddScoped<IGenericService<Publisher, long>, GenericService<Publisher, long>>();
 
         return this;
     }
