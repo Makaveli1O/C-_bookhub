@@ -30,7 +30,10 @@ public class BookReviewController : ControllerBase
     {
         var bookReview = await _bookReviewFacade.UpdateBookReview(bookReviewId, updateBookReviewDto);
 
-        return Ok(bookReview);
+        return Created(
+            new Uri($"{Request.Path}/{bookReviewId}", UriKind.Relative),
+            bookReview
+            );
     }
 
     [HttpGet]
