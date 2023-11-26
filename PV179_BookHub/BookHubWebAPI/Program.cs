@@ -4,6 +4,7 @@ using BusinessLayer.Facades.Address;
 using BusinessLayer.Facades.Author;
 using BusinessLayer.Facades.Book;
 using BusinessLayer.Facades.Order;
+using BusinessLayer.Facades.BookReview;
 using BusinessLayer.Facades.Publisher;
 using BusinessLayer.Facades.WishList;
 using BusinessLayer.Facades.User;
@@ -13,6 +14,7 @@ using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.InventoryItem;
 using BusinessLayer.Services.Order;
+using BusinessLayer.Services.BookReview;
 using BusinessLayer.Services.Publisher;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Logistics;
@@ -67,6 +69,8 @@ builder.Services.AddScoped<IGenericService<OrderItem, long>, GenericService<Orde
 
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderFacade, OrderFacade>();
+builder.Services.AddScoped<IBookReviewService, BookReviewService>();
+builder.Services.AddScoped<IBookReviewFacade, BookReviewFacade>();
 
 builder.Services.AddAutoMapper(typeof(AddressProfile));
 builder.Services.AddAutoMapper(typeof(BookProfile));
