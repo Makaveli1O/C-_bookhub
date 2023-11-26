@@ -169,10 +169,10 @@ cd <project_directory>
 dotnet restore
 
 # Build the application
-dotnet build
+dotnet build <PROJECT> # specify which project you want to run WebApi or MVC
 
 # Run the application
-dotnet run
+dotnet run --project <PROJECT> # again specify project
 ```
 This will start your project. Access the application using a web browser at http://localhost:5000 (or the appropriate address).
 
@@ -238,8 +238,8 @@ The project is organized into several key folders to maintain a clean and organi
 
 ### Use-Case Diagram
 
-![My UML Diagram](http://cdn-0.plantuml.com/plantuml/png/TLBTRXDD3BsVf_3Nctv8JNW1X5gAK96ea0A56wJ8cN5thSnFDFOage1tPtPcexqWxCNAnpuU-zY-5SMi9NXp3KUMWXw4L3aEOlxJaGA1fLmyOLobefuZcP5TzNAsdepiEHumOu0TslsGKudkFlcKuJIoaZ6UdXKqGUPXL72SoIgdQ0nQhQmx5pW22g0Bi-iH8mwK9sSOyknyakufaesfFtZpQxLgyJ1qq5wetrG0u-09tgMqVoWx-6bYKeAh3oc3S3XujgmlDt0TMgLhi1XXHs1J57QKoS6FrfCeHeVPWP12UeRxpTDxI0VAE4cGzTL4YZerH1Q5uFzFQG2EhrFHLqrKqN49Dc6zBVYYAPCqqkDM9l0Nxu455YvyZ4UArNgPapWUBwRSMPjAr9c5rbvaVSwEyhb-okuYwJlBw5dqp3jLl12_CPrQWpsysUwg_MyL6snNrRceT9c-lFVO2R_DlBsl8ytNmWBeVJgH0qtG4y-ovQRkhgkh9gbTJujBEbA_ePeQNSzfGE14tlTDeWlRgPQf1gpN2su7jrgzdVVPGH_kWleKErfcrU0ocmuN-QrKJ-X7iE0U3qDFwVk-fUXAy7y0)
+![My UML Diagram](https://gitlab.fi.muni.cz/xbaran4/bookhub/-/raw/main/diagrams/usecase/usecase_diagram.png?ref_type=heads)
 
 ### ERD Diagram
 
-![My UML Diagram](http://cdn-0.plantuml.com/plantuml/png/jPNFQXin4CRlUWerbq8XVe0GGjf28VHGQ2azBkFLu1NMIkxCoAx9vjqhUUEDDjw53QMvvVlcpy_ZqVYU1KXYwzHxlRSSmMb64UithDv9Wotg6Yaw17yTeZZhKJNM9DLIxL3nrleT4BGwMtBSeGuaJIYCDTJR3ONepUVW0kb3OmLL-aClLexwwYSZNUb7fVK7Q_IDzh5T8-dRsmrw910qTtV9lBxE4P6HFBIOuWJ_I9Psm7m8PAe6k2bq1YV5lnGStcXCrTNJI_DVbXjdMTu4K8t3ldnDVh9gmXnSGMvhG51iYzamo3NPdTZWpq0J20-2xMACmtFI3CewXEsCjICRA3U-7COtCaZ_TH8I15oL46eSyhBE0e9pH6yQJCWPowTIMYo1S6vgaUe662VOVqVeQGUn-02VKjt5x2d5bPiDKPf0XM1vxSlDZsjdkS4o9DMbOPBJkzSlGOrplDznR_6mc7f-gdChCiz5a6zFkGW5rmy9X8knm1X2vfdsBNZOpCAzlZ1Dy5ZrKOMCBLWtyQ0_zfqNax8GeXI5U-6oOPtBbs4W8yoG55VLmU04rOFVevT0nyNFwH-VZFLLikljwB4uOAa8JqPn6X9d_XdGNRTQXKTzFeaZyNGBHihBiXPofuTTKUfSw7NXF0EL2uwhdsILyoTQb79PfpJACWE6xi9grNNwUIyAup9fz2tffpvnI9YtrJrw4rlt5m00)
+![My UML Diagram](https://gitlab.fi.muni.cz/xbaran4/bookhub/-/raw/main/diagrams/ERD/erd.png?ref_type=heads)
