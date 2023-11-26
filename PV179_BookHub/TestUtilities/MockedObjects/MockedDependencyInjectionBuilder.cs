@@ -1,5 +1,7 @@
 ﻿using BusinessLayer.Facades.Book;
+using BusinessLayer.Facades.BookReview;
 using BusinessLayer.Services.Book;
+using BusinessLayer.Services.BookReview;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Account;
 using DataAccessLayer.Models.Logistics;
@@ -17,7 +19,7 @@ namespace TestUtilities.MockedObjects
     {
         private IServiceCollection _serviceCollection = new ServiceCollection();
 
-        public MockedDependencyInjectionBuilder AddMockdDBContext()
+        public MockedDependencyInjectionBuilder AddMockedDBContext()
         {
             _serviceCollection = _serviceCollection
                 .AddDbContext<BookHubDbContext>(options => options
@@ -66,7 +68,8 @@ namespace TestUtilities.MockedObjects
         public MockedDependencyInjectionBuilder AddServices()
         {
             _serviceCollection = _serviceCollection
-                .AddScoped<IBookService, BookService>();
+                .AddScoped<IBookService, BookService>()
+                .AddScoped<IBookReviewService, BookReviewService>();
 
             return this;
         }
@@ -74,7 +77,8 @@ namespace TestUtilities.MockedObjects
         public MockedDependencyInjectionBuilder AddFacades()
         {
             _serviceCollection = _serviceCollection
-                .AddScoped<IBookFacade, BookFacade>();
+                .AddScoped<IBookFacade, BookFacade>()
+                .AddScoped<IBookReviewFacade, BookReviewFacade>();
 
             return this;
         }
