@@ -1,7 +1,5 @@
 ﻿using BusinessLayer.DTOs.BookStore.Create;
-using BusinessLayer.DTOs.BookStore.View;
 using BusinessLayer.Facades.BookStore;
-using DataAccessLayer.Models.Logistics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;

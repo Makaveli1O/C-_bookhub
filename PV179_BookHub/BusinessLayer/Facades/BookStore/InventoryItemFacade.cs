@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
+using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
-using BusinessLayer.Services.BookStore;
 using BusinessLayer.Services.InventoryItem;
 
 namespace BusinessLayer.Facades.BookStore
@@ -11,12 +11,12 @@ namespace BusinessLayer.Facades.BookStore
     {
         private readonly IInventoryItemService _inventoryItemService;
         private readonly IBookService _bookService;
-        private readonly IBookStoreService _bookStoreService;
+        private readonly IGenericService<BookStoreEntity, long> _bookStoreService;
 
         public InventoryItemFacade(
             IMapper mapper,
             IInventoryItemService inventoryItemService,
-            IBookStoreService bookStoreService,
+            IGenericService<BookStoreEntity, long> bookStoreService,
             IBookService bookService)
             : base(mapper)
         {
@@ -50,6 +50,8 @@ namespace BusinessLayer.Facades.BookStore
         public async Task<DetailedInventoryItemViewDto> UpdateInventoryItem(long id, CreateInventoryItemDto updateInventoryItemDto)
         {
             var inventoryItem = await _inventoryItemService.FindByIdAsync(id);
+
+            // will throw not found exception if entities do not exist
             await _bookService.FindByIdAsync(updateInventoryItemDto.BookId);
             await _bookStoreService.FindByIdAsync(updateInventoryItemDto.BookStoreId);
 
