@@ -176,6 +176,14 @@ dotnet run --project <PROJECT> # again specify project
 ```
 This will start your project. Access the application using a web browser at http://localhost:5000 (or the appropriate address).
 
+#### Run the MVC project
+Before you can use the MVC project, you need to have MSSql database installed and run:
+```shell
+Update-Database -project  DAL.MSSql.Migrations
+```
+With the same commands as above you can start the MVC project. You can access application using a webrowser at http://localhost:5094.
+You should be able to register and sign in.
+
 ## Folder Structure
 
 The project is organized into several key folders to maintain a clean and organized codebase. Here's an overview of the main folders:
