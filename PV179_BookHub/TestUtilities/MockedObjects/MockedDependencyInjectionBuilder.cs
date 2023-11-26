@@ -1,8 +1,11 @@
-﻿using BusinessLayer.Facades.Book;
+﻿using BusinessLayer.Facades.Author;
+using BusinessLayer.Facades.Book;
 using BusinessLayer.Facades.BookReview;
 using BusinessLayer.Facades.User;
+using BusinessLayer.Facades.Publisher;
 using BusinessLayer.Mappers;
 using BusinessLayer.Services;
+using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.BookReview;
 using BusinessLayer.Services.Order;
@@ -30,6 +33,7 @@ public class MockedDependencyInjectionBuilder
                 .UseInMemoryDatabase(MockedDbContext.RandomDBName));
 
         return this;
+
     }
 
     public MockedDependencyInjectionBuilder AddScoped<T>(T objectToRegister)
@@ -91,7 +95,9 @@ public class MockedDependencyInjectionBuilder
             .AddScoped<IBookService, BookService>()
             .AddScoped<IGenericService<User, long>, GenericService<User, long>>()
             .AddScoped<IOrderService, OrderService>()
-            .AddScoped<IBookReviewService, BookReviewService>();
+            .AddScoped<IBookReviewService, BookReviewService>()
+            .AddScoped<IAuthorService, AuthorService>()
+            .AddScoped<IGenericService<Publisher, long>, GenericService<Publisher, long>>();
 
         return this;
     }
