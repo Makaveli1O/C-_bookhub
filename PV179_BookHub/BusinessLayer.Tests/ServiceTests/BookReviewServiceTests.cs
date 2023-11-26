@@ -15,8 +15,8 @@ namespace BusinessLayer.Tests.ServiceTests;
 public class BookReviewServiceTests
 {
     private MockedDependencyInjectionBuilder _serviceProviderBuilder;
-    private readonly IGenericRepository<BookReview, long> _repositoryMock;
-    private readonly IUnitOfWork _uowMock;
+    private IGenericRepository<BookReview, long> _repositoryMock;
+    private IUnitOfWork _uowMock;
 
     public BookReviewServiceTests()
     {

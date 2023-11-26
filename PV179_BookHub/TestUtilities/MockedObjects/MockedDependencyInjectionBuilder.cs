@@ -1,5 +1,7 @@
 ﻿using BusinessLayer.Facades.Book;
 using BusinessLayer.Facades.BookReview;
+using BusinessLayer.Mappers;
+using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.BookReview;
 using DataAccessLayer.Data;
@@ -37,6 +39,22 @@ namespace TestUtilities.MockedObjects
             return this;
         }
 
+        public MockedDependencyInjectionBuilder AddAutoMapper()
+        {
+            _serviceCollection = _serviceCollection
+                .AddAutoMapper(typeof(AddressProfile))
+                .AddAutoMapper(typeof(BookProfile))
+                .AddAutoMapper(typeof(BookReviewProfile))
+                .AddAutoMapper(typeof(BookStoreProfile))
+                .AddAutoMapper(typeof(OrderProfile))
+                .AddAutoMapper(typeof(UserProfile))
+                .AddAutoMapper(typeof(WishListItemProfile))
+                .AddAutoMapper(typeof(WishListProfile))
+                .AddAutoMapper(typeof(AuthorBookAssociationProfile));
+
+            return this;
+        }
+
         public MockedDependencyInjectionBuilder AddRepositories()
         {
             _serviceCollection = _serviceCollection
@@ -69,6 +87,7 @@ namespace TestUtilities.MockedObjects
         {
             _serviceCollection = _serviceCollection
                 .AddScoped<IBookService, BookService>()
+                .AddScoped<IGenericService<User, long>, GenericService<User, long>>()
                 .AddScoped<IBookReviewService, BookReviewService>();
 
             return this;

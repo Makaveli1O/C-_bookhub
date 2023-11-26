@@ -4,7 +4,7 @@ namespace BusinessLayer.DTOs.BookReview.View;
 
 public class DetailedBookReviewViewDto
 {
-    public long BookReviewId { get; set; }
+    public long Id { get; set; }
     public long BookId { get; set; }
     public long ReviewerId { get; set; }
     public string Description { get; set; }

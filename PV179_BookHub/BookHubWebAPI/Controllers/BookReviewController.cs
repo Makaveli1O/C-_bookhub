@@ -22,7 +22,7 @@ public class BookReviewController : ControllerBase
     {
         var bookReview = await _bookReviewFacade.CreateBookReview(createBookReviewDto);
         return Created(
-            new Uri($"{Request.Path}/{bookReview.BookReviewId}", UriKind.Relative),
+            new Uri($"{Request.Path}/{bookReview.Id}", UriKind.Relative),
             bookReview
         );
         
