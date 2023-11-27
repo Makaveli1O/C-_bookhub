@@ -18,6 +18,7 @@ using DataAccessLayer.Models.Purchasing;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
+using BusinessLayer.Facades.BookStore;
 using BusinessLayer.Facades.Order;
 
 namespace TestUtilities.MockedObjects;
@@ -108,7 +109,10 @@ public class MockedDependencyInjectionBuilder
             .AddScoped<IBookFacade, BookFacade>()
             .AddScoped<IUserFacade, UserFacade>()
             .AddScoped<IBookReviewFacade, BookReviewFacade>()
-            .AddScoped<IOrderFacade, OrderFacade>();
+            .AddScoped<IOrderFacade, OrderFacade>()
+            .AddScoped<IBookStoreFacade, BookStoreFacade>()
+            .AddScoped<IBookStoreFacade, BookStoreFacade>()
+            .AddScoped<IInventoryItemFacade, InventoryItemFacade>();
 
         return this;
     }

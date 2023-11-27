@@ -35,7 +35,7 @@ public class BookStoreController : ControllerBase
     {
         var newBookStore = await _bookStoreFacade.CreateBookStore(createBookStoreDto);
         return Created(
-            new Uri($"{Request.Path}/{newBookStore.BookStoreId}", UriKind.Relative), newBookStore);
+            new Uri($"{Request.Path}/{newBookStore.Id}", UriKind.Relative), newBookStore);
     }
 
     [HttpPut]
