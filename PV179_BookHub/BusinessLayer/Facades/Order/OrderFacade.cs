@@ -44,7 +44,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
             State = OrderState.Created
         };
 
-        await _orderService.CreateAsync(order);
+        order = await _orderService.CreateAsync(order);
 
         return _mapper.Map<DetailedOrderViewDto>(order);
     }
@@ -188,7 +188,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
         orderItem.Price = book.Price;
         orderItem.Order = order;
         orderItem.Book = book;
-        await _orderItemService.CreateAsync(orderItem);
+        orderItem = await _orderItemService.CreateAsync(orderItem);
 
         return _mapper.Map<DetailedOrderItemViewDto>(orderItem);
     }

@@ -1,5 +1,5 @@
-﻿using BusinessLayer.Facades.Author;
-using BusinessLayer.Facades.Book;
+﻿using BusinessLayer.Facades.Book;
+using BusinessLayer.Facades.Author;
 using BusinessLayer.Facades.BookReview;
 using BusinessLayer.Facades.User;
 using BusinessLayer.Facades.Publisher;
@@ -18,7 +18,7 @@ using DataAccessLayer.Models.Purchasing;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
-
+using BusinessLayer.Facades.Order;
 
 namespace TestUtilities.MockedObjects;
 
@@ -107,7 +107,8 @@ public class MockedDependencyInjectionBuilder
         _serviceCollection = _serviceCollection
             .AddScoped<IBookFacade, BookFacade>()
             .AddScoped<IUserFacade, UserFacade>()
-            .AddScoped<IBookReviewFacade, BookReviewFacade>();
+            .AddScoped<IBookReviewFacade, BookReviewFacade>()
+            .AddScoped<IOrderFacade, OrderFacade>();
 
         return this;
     }
