@@ -111,6 +111,8 @@ public class MockedDependencyInjectionBuilder
             .AddScoped<IBookReviewFacade, BookReviewFacade>()
             .AddScoped<IOrderFacade, OrderFacade>();
             .AddScoped<IBookStoreFacade, BookStoreFacade>();
+            .AddScoped<IBookStoreFacade, BookStoreFacade>()
+            .AddScoped<IInventoryItemFacade, InventoryItemFacade>();
 
         return this;
     }
