@@ -109,8 +109,8 @@ public class MockedDependencyInjectionBuilder
             .AddScoped<IBookFacade, BookFacade>()
             .AddScoped<IUserFacade, UserFacade>()
             .AddScoped<IBookReviewFacade, BookReviewFacade>()
-            .AddScoped<IOrderFacade, OrderFacade>();
-            .AddScoped<IBookStoreFacade, BookStoreFacade>();
+            .AddScoped<IOrderFacade, OrderFacade>()
+            .AddScoped<IBookStoreFacade, BookStoreFacade>()
             .AddScoped<IBookStoreFacade, BookStoreFacade>()
             .AddScoped<IInventoryItemFacade, InventoryItemFacade>();
 
