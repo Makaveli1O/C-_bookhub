@@ -6,99 +6,119 @@ skinparam linetype ortho
 skinparam backgroundColor white
 
 
-
 entity "User" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *username : text
-  *password_hash : text
-  *salt : text
-  *role: enum
+  *UserName : text
+  *PasswordHash : text
+  *Salt : text
+  *Role: enum
 }
 
 entity "Wishlist" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *user_id : number <<FK>>
-  *created_at : datetime
-  *description : text
+  *UserId : number <<FK>>
+  *CreatedAt : datetime
+  *Description : text
 }
 
 entity "WishlistItem" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *wishlist_id : number <<FK>>
-  *book_id : number <<FK>>
-  *priority : enum
+  *WishlistId : number <<FK>>
+  *BookId : number <<FK>>
+  *PreferencePriority : enum
 }
 
 entity "Order" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *user_id : number <<FK>>
-  *created_at : datetime
-  *total_price : number
-  *state : enum
+  *UserId : number <<FK>>
+  *CreatedAt : datetime
+  *State : enum
 }
 
 entity "OrderItem" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *order_id : number <<FK>>
-  *book_id : number <<FK>>
-  *bookstore_id : number <<FK>>
-  *purchase_price : number
-  *quantity : number
+  *OrderId : number <<FK>>
+  *BookId : number <<FK>>
+  *BookstoreId : number <<FK>>
+  *Price : number
+  *Quantity : number
 }
 
 entity "Book" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *title : text
-  *author : text
-  *isbn : text
-  *publisher : text
-  *genre : enum
-  *description : text
-  *price: number
+  *Title : text
+  *ISBN : text
+  *PublisherId : number <<FK>>
+  *BookGenre : enum
+  *Description : text
+  *Price: number
+}
+
+entity "Author" {
+  *Id : number <<generated>>
+  --
+  *Name : text
+  *Biography : text
+}
+
+entity "Publisher" {
+  *Id : number <<generated>>
+  --
+  *Name : text
+  *City : text
+  *Country : text
+  *YearFounded : number
+}
+
+entity "AuthorBookAssociation" {
+  *Id : number <<generated>>
+  --
+  *AuthorId : number <<FK>>
+  *BookId : number <<FK>>
 }
 
 entity "BookReview" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *book_id : number <<FK>>
-  *user_id : number <<FK>>
-  *description : text
-  *rating : enum
+  *BookId : number <<FK>>
+  *ReviewerId : number <<FK>>
+  *Description : text
+  *Rating : enum
 }
 
 entity "BookStore" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *address_id : number <<FK>>
-  *manager_id : number <<FK>>
-  *name : text
-  *phone_number : text
-  *email : text
+  *AddressId : number <<FK>>
+  *ManagerId : number <<FK>>
+  *Name : text
+  *PhoneNumber : text
+  *Email : text
 }
 
 entity "Address" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *street : text
-  *street_number : text
-  *city : text
-  *state : text
-  *postal_code : text
+  *Street : text
+  *StreetNumber : text
+  *City : text
+  *State : text
+  *PostalCode : text
 }
 
 entity "InventoryItem" {
-  *id : number <<generated>>
+  *Id : number <<generated>>
   --
-  *book_id : number <<FK>>
-  *bookstore_id : number <<FK>>
-  *in_stock : number
-  *last_restock: datetime
+  *BookId : number <<FK>>
+  *BookstoreId : number <<FK>>
+  *InStock : number
+  *LastRestock: datetime
 }
 
 User ||..o{ Wishlist
@@ -112,11 +132,15 @@ Order ||..o{ OrderItem
 Book ||..o{ BookReview
 Book ||..o{ WishlistItem
 Book ||..o{ OrderItem
+Book ||..o{ AuthorBookAssociation
+Book }o..|| Publisher
 
 BookStore |o..|| Address
 BookStore ||..o{ OrderItem
 
 InventoryItem }o..|| BookStore
 InventoryItem }o..|| Book
+
+Author ||..o{ AuthorBookAssociation
 
 @enduml
