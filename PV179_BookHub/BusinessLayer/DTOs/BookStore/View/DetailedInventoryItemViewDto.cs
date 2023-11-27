@@ -2,7 +2,7 @@
 {
     public class DetailedInventoryItemViewDto
     {
-        public long InventoryItemId { get; set; }
+        public long Id { get; set; }
         public long BookId { get; set; }
         public long BookStoreId { get; set; }
         public uint InStock { get; set; }
