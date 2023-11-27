@@ -27,7 +27,7 @@ public class OrderServiceTests
             .AddUnitOfWork()
             .AddRepositories()
             .AddServices()
-            .AddMockdDBContext();
+            .AddMockedDBContext();
 
 
         _serviceProviderBuilder.AddServices().Create();
