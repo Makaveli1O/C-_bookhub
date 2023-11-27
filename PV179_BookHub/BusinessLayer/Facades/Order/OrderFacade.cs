@@ -44,7 +44,7 @@ public class OrderFacade : BaseFacade, IOrderFacade
             State = OrderState.Created
         };
 
-        await _orderService.CreateAsync(order);
+        order = await _orderService.CreateAsync(order);
 
         return _mapper.Map<DetailedOrderViewDto>(order);
     }
