@@ -2,7 +2,7 @@
 {
     public class DetailedBookStoreViewDto
     {
-        public long BookStoreId { get; set; }
+        public long Id { get; set; }
         public long AddressId { get; set; }
         public long ManagerId { get; set; }
         public required string Name { get; set; }
