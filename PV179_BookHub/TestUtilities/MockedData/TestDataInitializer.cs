@@ -324,7 +324,7 @@ public static class TestDataInitializer
         };
     }
 
-    public static List<WishListItem> GetTestWishListItem()
+    public static List<WishListItem> GetTestWishListItems()
     {
         return new List<WishListItem>()
         {
