@@ -28,19 +28,19 @@ public class WishListFacade : BaseFacade, IWishListFacade
     {
         var wishList = _mapper.Map<WishListEntity>(createWishListDto);
 
-        await _wishListService.CreateAsync(wishList);
+        var createdWishList = await _wishListService.CreateAsync(wishList);
 
-        return _mapper.Map<GeneralWishListViewDto>(wishList);
+        return _mapper.Map<GeneralWishListViewDto>(createdWishList);
     }
 
     public async Task<GeneralWishListItemViewDto> CreateWishListItemAsync(CreateWishListItemDto createWishListItemDto)
     {
         var wishListItem = _mapper.Map<WishListItemEntity>(createWishListItemDto);
-
-        await _wishListItemService.CreateAsync(wishListItem);
-
-        var wishListItemView = _mapper.Map<GeneralWishListItemViewDto>(wishListItem);
-        wishListItemView.Book = _mapper.Map<GeneralBookViewDto>(await _bookService.FindByIdAsync(createWishListItemDto.BookId));
+        var book = _mapper.Map<GeneralBookViewDto>(await _bookService.FindByIdAsync(createWishListItemDto.BookId));
+        
+        var createdWishListItem = await _wishListItemService.CreateAsync(wishListItem);
+        var wishListItemView = _mapper.Map<GeneralWishListItemViewDto>(createdWishListItem);
+        wishListItemView.Book = book;
 
         return wishListItemView;
     }
@@ -58,12 +58,13 @@ public class WishListFacade : BaseFacade, IWishListFacade
     public async Task<GeneralWishListItemViewDto> UpdateWishListItemAsync(long id, uint preferencePriority)
     {
         var wishListItem = await _wishListItemService.FindByIdAsync(id);
+        var book = _mapper.Map<GeneralBookViewDto>(await _bookService.FindByIdAsync(wishListItem.BookId));
 
         wishListItem.PreferencePriority = preferencePriority;
+        var updatedWishListItemDto = _mapper.Map<GeneralWishListItemViewDto>(await _wishListItemService.UpdateAsync(wishListItem));
+        updatedWishListItemDto.Book = book;
 
-        await _wishListItemService.UpdateAsync(wishListItem);
-
-        return _mapper.Map<GeneralWishListItemViewDto>(wishListItem);
+        return updatedWishListItemDto;
     }
     
     public async Task DeleteWishListAsync(long id)

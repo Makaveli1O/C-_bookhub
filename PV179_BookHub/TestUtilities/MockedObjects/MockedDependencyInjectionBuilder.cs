@@ -1,8 +1,6 @@
 ﻿using BusinessLayer.Facades.Book;
-using BusinessLayer.Facades.Author;
 using BusinessLayer.Facades.BookReview;
 using BusinessLayer.Facades.User;
-using BusinessLayer.Facades.Publisher;
 using BusinessLayer.Mappers;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
@@ -20,6 +18,8 @@ using Infrastructure.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 using BusinessLayer.Facades.BookStore;
 using BusinessLayer.Facades.Order;
+using BusinessLayer.Facades.Address;
+using BusinessLayer.Facades.WishList;
 
 namespace TestUtilities.MockedObjects;
 
@@ -112,7 +112,9 @@ public class MockedDependencyInjectionBuilder
             .AddScoped<IOrderFacade, OrderFacade>()
             .AddScoped<IBookStoreFacade, BookStoreFacade>()
             .AddScoped<IBookStoreFacade, BookStoreFacade>()
-            .AddScoped<IInventoryItemFacade, InventoryItemFacade>();
+            .AddScoped<IInventoryItemFacade, InventoryItemFacade>()
+            .AddScoped<IAddressFacade, AddressFacade>()
+            .AddScoped<IWishListFacade, WishListFacade>();
 
         return this;
     }

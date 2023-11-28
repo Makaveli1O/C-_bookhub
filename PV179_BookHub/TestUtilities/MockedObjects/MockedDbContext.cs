@@ -46,7 +46,7 @@ public static class MockedDbContext
         bookHubDbContext.InventoryItems.AddRange(TestDataInitializer.GetTestInventoryItems());
 
         bookHubDbContext.WishList.AddRange(TestDataInitializer.GetTestWishLists());
-        bookHubDbContext.WishListItem.AddRange(TestDataInitializer.GetTestWishListItem());
+        bookHubDbContext.WishListItem.AddRange(TestDataInitializer.GetTestWishListItems());
 
         bookHubDbContext.Orders.AddRange(TestDataInitializer.GetTestOrderList());
         bookHubDbContext.OrderItems.AddRange(TestDataInitializer.GetTestOrderItems());
