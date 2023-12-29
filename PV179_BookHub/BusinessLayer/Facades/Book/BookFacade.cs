@@ -51,7 +51,7 @@ public class BookFacade : BaseFacade, IBookFacade
         book.ISBN = updateBookDto.ISBN ?? book.ISBN;
         book.BookGenre = updateBookDto.BookGenre;
         book.Description = updateBookDto.Description ?? book.Description;
-        book.Price = book.Price;
+        book.Price = updateBookDto.Price;
 
         var authors = await _authorService.FetchAllAuthorsByIdsAsync(updateBookDto.AuthorIds);
         book.Authors = authors;
