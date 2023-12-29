@@ -1,6 +1,4 @@
-﻿
-
-namespace BusinessLayer.Exceptions;
+﻿namespace BusinessLayer.Exceptions;
 
 public class RemoveErrorException : Exception
 {

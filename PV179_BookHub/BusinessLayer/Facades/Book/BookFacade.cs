@@ -2,6 +2,7 @@
 using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.Filter;
 using BusinessLayer.DTOs.Book.View;
+using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
@@ -66,6 +67,12 @@ public class BookFacade : BaseFacade, IBookFacade
         var newAuthor = await _authorService.FindByIdAsync(authorId);
 
         var authors = book.Authors?.ToList() ?? new List<AuthorEntity>();
+
+        if (authors.Any(auth => auth.Id == authorId))
+        {
+            throw new AuthorBookAssociationException(id, authorId);
+        }
+
         authors.Add(newAuthor);
         book.Authors = authors;
         await _bookService.UpdateAsync(book);
