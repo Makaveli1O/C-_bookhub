@@ -48,7 +48,7 @@ public class OrderServiceTests
 
 
     [Fact]
-    public async Task FetchAllOrders_ShouldReturnEmptyList()
+    public async Task FetchAllOrders_ShouldReturnEmptyListOfOrders()
     {
         _repositoryMock.GetAllAsync().Returns(new List<Order>());
 
@@ -89,7 +89,7 @@ public class OrderServiceTests
 
 
     [Fact]
-    public async Task GetOrderAsync_ShouldThrowException()
+    public async Task GetOrderAsync_ShouldThrowExceptionOrderDoesNotExist()
     {
         var serviceProvider = CreateServiceProvider();
 
@@ -101,7 +101,7 @@ public class OrderServiceTests
     }
 
     [Fact]
-    public async Task CheckForActiveOrdersByUserIdAsync_ShoudReturnFalse()
+    public async Task CheckForActiveOrdersByUserIdAsync_ShoudReturnFalseNoActiveOrdersForUser()
     {
         var order = TestDataInitializer.GetTestUsers().ElementAt(1);
 
@@ -119,7 +119,7 @@ public class OrderServiceTests
     }
 
     [Fact]
-    public async Task CheckForActiveOrdersByUserIdAsync_ShoudReturnTrue()
+    public async Task CheckForActiveOrdersByUserIdAsync_ShoudReturnTrueActiveOrdersForUser()
     {
         var user = TestDataInitializer.GetTestUsers().ElementAt(2);
 
@@ -137,7 +137,7 @@ public class OrderServiceTests
     }
 
     [Fact]
-    public async Task FetchAllByUserIdAsync_ShouldReturnEmpty()
+    public async Task FetchAllByUserIdAsync_ShouldReturnEmptyListOfOrders()
     {
         long userId = 1;
         var orders = TestDataInitializer.GetTestOrderList().Where(x => x.UserId == userId);
@@ -167,7 +167,7 @@ public class OrderServiceTests
     }
 
     [Fact]
-    public async Task FetchAllByUserIdAsync_ShouldReturnOrders()
+    public async Task FetchAllByUserIdAsync_ShouldReturnOrdersWithSpecifiedUserId()
     {
         long userId = 3;
         var orders = TestDataInitializer.GetTestOrderList().Where(x => x.UserId == userId);

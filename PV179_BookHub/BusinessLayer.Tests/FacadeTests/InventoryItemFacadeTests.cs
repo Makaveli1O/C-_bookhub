@@ -51,7 +51,7 @@ public class InventoryItemFacadeTests
     }
     
     [Fact]
-    public async Task GetAllInventoryItems_ShouldSuccess()
+    public async Task GetAllInventoryItems_ShouldReturnAllInventoryItems()
     {
         var inventoryItems = TestDataInitializer.GetTestInventoryItems();
         _inventoryItemServiceMock.FetchAllAsync().Returns(inventoryItems);
@@ -73,7 +73,7 @@ public class InventoryItemFacadeTests
     [Theory]
     [InlineData(1)]
     [InlineData(2)]
-    public async Task GetInventoryItem_ShouldSuccess(long inventoryItemId)
+    public async Task GetInventoryItem_ShouldReturnExistingInventoryItem(long inventoryItemId)
     {
         var inventoryItem = TestDataInitializer.GetTestInventoryItems().First(x => x.Id == inventoryItemId);
         _inventoryItemServiceMock.FindByIdAsync(Arg.Any<long>()).Returns(inventoryItem);
@@ -93,7 +93,7 @@ public class InventoryItemFacadeTests
     }
 
     [Fact]
-    public async Task CreateInventoryItem_ShouldSuccess()
+    public async Task CreateInventoryItem_ShouldCreateNewInventoryItem()
     {
         var inventoryItem = TestDataInitializer.GetTestInventoryItems().ElementAt(0);
         _inventoryItemServiceMock.CreateAsync(Arg.Any<InventoryItem>()).Returns(inventoryItem);
@@ -121,7 +121,7 @@ public class InventoryItemFacadeTests
     }
     
     [Fact]
-    public async Task UpdateBookStore_ShouldSuccess()
+    public async Task UpdateBookStore_ShouldUpdateExistingInventoryItem()
     {
         var inventoryItem = TestDataInitializer.GetTestInventoryItems().ElementAt(0);
         _inventoryItemServiceMock.FindByIdAsync(Arg.Any<long>()).Returns(inventoryItem);

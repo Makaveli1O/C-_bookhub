@@ -45,7 +45,7 @@ public class BookFacadeTests
     }
 
     [Fact]
-    public async Task CreateBook_ShouldReturnSuccess()
+    public async Task CreateBook_ShouldReturnNewBook()
     {
         var book = TestDataInitializer.GetTestBooks().ElementAt(0);
         
@@ -87,7 +87,7 @@ public class BookFacadeTests
     }
 
     [Fact]
-    public async Task CreateBookWithoutAuthor_ShouldThrowException()
+    public async Task CreateBookWithoutAuthor_ShouldThrowExceptionAuthorForTheBookDoesNotExist()
     {
         var book = TestDataInitializer.GetTestBooks().ElementAt(0);
        
@@ -119,7 +119,7 @@ public class BookFacadeTests
         }
     }
     [Fact]
-    public async Task CreateBookWithoutPublisher_ShouldThrowException()
+    public async Task CreateBookWithoutPublisher_ShouldThrowExceptionPublisherForTheBookDoesNotExist()
     {
         var book = TestDataInitializer.GetTestBooks().ElementAt(0);
 
@@ -152,7 +152,7 @@ public class BookFacadeTests
     }
 
     [Fact]
-    public async Task UpdateBook_ShouldReturnSuccess()
+    public async Task UpdateBook_ShouldReturnUpdatedBook()
     {
         var book = TestDataInitializer.GetTestBooks().ElementAt(0);
         
@@ -190,7 +190,7 @@ public class BookFacadeTests
     }
 
     [Fact]
-    public async Task UpdateNotExistingBook_ShouldThrowException()
+    public async Task UpdateNotExistingBook_ShouldThrowExceptionBookDoesNotExist()
     {
         var book = TestDataInitializer.GetTestBooks().ElementAt(0);
 
@@ -221,7 +221,7 @@ public class BookFacadeTests
     }
 
     [Fact]
-    public async Task FindBook_ShouldReturnSuccess()
+    public async Task FindBook_ShouldReturnExistingBook()
     {
         long id = 1;
         var book = TestDataInitializer.GetTestBooks().First(x => x.Id == id);

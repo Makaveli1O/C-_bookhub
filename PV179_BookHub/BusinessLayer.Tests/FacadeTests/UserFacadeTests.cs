@@ -41,7 +41,7 @@ public class UserFacadeTests
     }
 
     [Fact]
-    public async Task CreateUser_ShouldReturnSuccess()
+    public async Task CreateUser_ShouldReturnNewUser()
     {
         var user = TestDataInitializer.GetTestUsers().First();
 
@@ -70,7 +70,7 @@ public class UserFacadeTests
     }
 
     [Fact]
-    public async Task UpdateUser_ShouldReturnUpdatedEntity()
+    public async Task UpdateUser_ShouldReturnUpdatedUser()
     {
         var user = TestDataInitializer.GetTestUsers().First();
 
@@ -101,7 +101,7 @@ public class UserFacadeTests
     }
 
     [Fact]
-    public async Task UpdateNonExistingUser_ShouldThrowException()
+    public async Task UpdateNonExistingUser_ShouldThrowExceptionUserDoesNotExist()
     {
         var user = TestDataInitializer.GetTestUsers().First();
 
@@ -125,7 +125,7 @@ public class UserFacadeTests
     }
 
     [Fact]
-    public async Task DeleteUserWithOutActiveOrders_ShouldReturnSuccess()
+    public async Task DeleteUserWithOutActiveOrders_ShouldReturnNothingUserShouldBeDeleted()
     {
         var user = TestDataInitializer.GetTestUsers().First();
 
@@ -147,7 +147,7 @@ public class UserFacadeTests
     }
 
     [Fact]
-    public async Task DeleteUserWithActiveOrders_ShouldThrowException()
+    public async Task DeleteUserWithActiveOrders_ShouldThrowExceptionUserDoesNotExist()
     {
         var user = TestDataInitializer.GetTestUsers().First();
 
@@ -192,7 +192,7 @@ public class UserFacadeTests
     [InlineData(1)]
     [InlineData(2)]
     [InlineData(3)]
-    public async Task FetchSingleUser_ShouldReturnSuccess(long userId)
+    public async Task FetchSingleUser_ShouldReturnExistingUser(long userId)
     {
         var user = TestDataInitializer.GetTestUsers().First(x => x.Id == userId);
 
@@ -216,7 +216,7 @@ public class UserFacadeTests
     [Theory]
     [InlineData(100)]
     [InlineData(200)]
-    public async Task FetchNonExistingUser_ShouldThrowException(long userId)
+    public async Task FetchNonExistingUser_ShouldThrowExceptionUserDoesNotExist(long userId)
     {
         _userServiceMock.FindByIdAsync(Arg.Any<long>()).Throws(new NoSuchEntityException<long>(typeof(User), userId));
 
