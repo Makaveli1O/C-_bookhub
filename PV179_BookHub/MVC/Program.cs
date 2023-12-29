@@ -12,8 +12,6 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Models.Account;
 using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
-using Infrastructure.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Models.Publication;
 using BusinessLayer.Mappers;
 using BusinessLayer.Facades.BookReview;
@@ -24,6 +22,7 @@ using BusinessLayer.Services.Order;
 using DataAccessLayer.Models.Purchasing;
 using Microsoft.AspNetCore.Identity;
 using DataAccessLayer.DependencyInjection;
+using Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +33,7 @@ var configuration = new ConfigurationBuilder()
 
 builder.Services.RegisterDALDependencies(configuration);
 
-builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
+builder.Services.RegisterInfrastructureDependencies();
 
 builder.Services.AddScoped<IGenericService<Address, long>, GenericService<Address, long>>();
 builder.Services.AddScoped<IAddressFacade, AddressFacade>();

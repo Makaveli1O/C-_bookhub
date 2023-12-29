@@ -21,10 +21,10 @@ using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Account;
 using DataAccessLayer.Models.Purchasing;
-using Infrastructure.UnitOfWork;
 using Microsoft.OpenApi.Models;
 using BusinessLayer.Facades.BookStore;
 using DataAccessLayer.DependencyInjection;
+using Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,8 +35,7 @@ var configuration = new ConfigurationBuilder()
 
 builder.Services.RegisterDALDependencies(configuration);
 
-
-builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
+builder.Services.RegisterInfrastructureDependencies();
 
 builder.Services.AddScoped<IGenericService<Address, long>, GenericService<Address, long>>();
 builder.Services.AddScoped<IAddressFacade, AddressFacade>();
