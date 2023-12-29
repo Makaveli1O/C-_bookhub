@@ -28,7 +28,7 @@ public class DatabaseTypeContext
                 DatabaseStrategy = new MSSQLDbStrategy(Config);
                 break;
             default:
-                throw new Exception();
+                throw new UnsupportedDatabaseTypeException(dbType);
         }
     }
 
