@@ -100,17 +100,6 @@ public class OrderServiceTests
         }
     }
 
-    public async Task GetOrderAsync_Shouldasd()
-    {
-        var serviceProvider = CreateServiceProvider();
-
-        using (var scope = serviceProvider.CreateScope())
-        {
-            var orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
-            await Assert.ThrowsAnyAsync<NoSuchEntityException<long>>(async () => await orderService.FindByIdAsync(1));
-        }
-    }
-
     [Fact]
     public async Task CheckForActiveOrdersByUserIdAsync_ShoudReturnFalse()
     {
