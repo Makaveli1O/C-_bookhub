@@ -7,7 +7,7 @@ namespace DataAccessLayer.DependencyInjection.DBStrategies;
 
 public class MSSQLDbStrategy : IDBStrategy
 {
-    private static string _migrationsProject = "DAL.SQLite.Migrations";
+    private static string _migrationsProject = "DAL.MSSql.Migrations";
 
     public MSSQLDbStrategy(IConfiguration configuration) : base(configuration)
     {

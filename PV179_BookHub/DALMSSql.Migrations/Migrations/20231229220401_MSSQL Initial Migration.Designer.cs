@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.MSSql.Migrations.Migrations
 {
     [DbContext(typeof(BookHubDbContext))]
-    [Migration("20231126102712_MSSqlDBMigration")]
-    partial class MSSqlDBMigration
+    [Migration("20231229220401_MSSQL Initial Migration")]
+    partial class MSSQLInitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,9 @@ namespace DAL.MSSql.Migrations.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.12")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -1568,35 +1571,35 @@ namespace DAL.MSSql.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(8949),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7178),
                             Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.",
                             UserId = 1L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9001),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7247),
                             Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.",
                             UserId = 2L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9003),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7251),
                             Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!",
                             UserId = 3L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9005),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7255),
                             Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!",
                             UserId = 4L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9006),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7260),
                             Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.",
                             UserId = 5L
                         });
@@ -2321,112 +2324,112 @@ namespace DAL.MSSql.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9027),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7287),
                             State = 3,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9031),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7298),
                             State = 0,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9033),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7302),
                             State = 0,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9034),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7307),
                             State = 2,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9036),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7311),
                             State = 1,
                             UserId = 6L
                         },
                         new
                         {
                             Id = 6L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9038),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7317),
                             State = 1,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 7L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9039),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7321),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 8L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9041),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7326),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 9L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9042),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7330),
                             State = 0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 10L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9044),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7335),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 11L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9046),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7340),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 12L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9048),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7344),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 13L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9049),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7348),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 14L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9051),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7353),
                             State = 3,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 15L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9052),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7357),
                             State = 1,
                             UserId = 15L
                         },
                         new
                         {
                             Id = 16L,
-                            CreatedAt = new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9054),
+                            CreatedAt = new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7361),
                             State = 1,
                             UserId = 15L
                         });
@@ -2675,6 +2678,224 @@ namespace DAL.MSSql.Migrations.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Account.LocalIdentityUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("UserId");
+
+                    b.HasDiscriminator().HasValue("LocalIdentityUser");
+                });
+
             modelBuilder.Entity("DataAccessLayer.Models.Account.BookReview", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
@@ -2828,6 +3049,68 @@ namespace DAL.MSSql.Migrations.Migrations
                     b.Navigation("BookStore");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Account.LocalIdentityUser", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Account.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Account.User", b =>
