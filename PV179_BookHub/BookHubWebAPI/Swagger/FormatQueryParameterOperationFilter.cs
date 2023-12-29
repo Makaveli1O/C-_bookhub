@@ -21,7 +21,6 @@ public class FormatQueryParameterOperationFilter : IOperationFilter
         _defaultValue = defaultValue;
         _required = required;
         _options = options;
-        _required = required; 
     }
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
