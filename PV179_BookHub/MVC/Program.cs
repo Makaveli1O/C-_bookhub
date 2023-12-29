@@ -23,6 +23,7 @@ using BusinessLayer.Services.InventoryItem;
 using BusinessLayer.Services.Order;
 using DataAccessLayer.Models.Purchasing;
 using Microsoft.AspNetCore.Identity;
+using DataAccessLayer.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,16 +32,7 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .Build();
 
-builder.Services.AddDbContextFactory<BookHubDbContext>(options =>
-{
-    var connectionString = configuration.GetConnectionString("DefaultConnection");
-    options
-        .UseSqlServer(
-            connectionString,
-            x => x.MigrationsAssembly("DAL.MSSql.Migrations")
-        )
-        ;
-});
+builder.Services.RegisterDALDependencies(configuration);
 
 builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
 

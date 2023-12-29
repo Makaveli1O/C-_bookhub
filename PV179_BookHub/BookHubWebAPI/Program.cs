@@ -16,32 +16,25 @@ using BusinessLayer.Services.InventoryItem;
 using BusinessLayer.Services.Order;
 using BusinessLayer.Services.BookReview;
 using BusinessLayer.Services.Publisher;
-using DataAccessLayer.Data;
 using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Account;
 using DataAccessLayer.Models.Purchasing;
 using Infrastructure.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using BusinessLayer.Facades.BookStore;
+using DataAccessLayer.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContextFactory<BookHubDbContext>(options =>
-{
-    var folder = Environment.SpecialFolder.LocalApplicationData;
-    var dbPath = Path.Join(Environment.GetFolderPath(folder), "BookHub.db");
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
 
-    options
-        .UseSqlite(
-            $"Data Source={dbPath}",
-            x => x.MigrationsAssembly("DAL.SQLite.Migrations")
-            )
-        .UseLazyLoadingProxies();
-});
+builder.Services.RegisterDALDependencies(configuration);
+
 
 builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
 
