@@ -1,8 +1,10 @@
-﻿namespace DataAccessLayer.DependencyInjection;
+﻿using DataAccessLayer.DependencyInjection.DBStrategies;
+
+namespace DataAccessLayer.DependencyInjection;
 
 public class UnsupportedDatabaseTypeException : Exception
 {
-    public UnsupportedDatabaseTypeException(string dbType) : base($"Database Type <<{dbType}>> is not supported and could not be initialized!")
+    public UnsupportedDatabaseTypeException(DatabaseType dbType) : base($"Database Type <<{dbType}>> is not supported and could not be initialized!")
     {
     }
 }
