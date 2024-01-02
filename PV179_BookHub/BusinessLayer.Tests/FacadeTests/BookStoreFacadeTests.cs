@@ -49,7 +49,7 @@ public class BookStoreFacadeTests
     }
 
     [Fact]
-    public async Task GetAllBookStores_ShouldSuccess()
+    public async Task GetAllBookStores_ShouldReturnListOfBookStores()
     {
         var bookStores = TestDataInitializer.GetTestBookStores();
         _bookStoreServiceMock.FetchAllAsync().Returns(bookStores);
@@ -71,7 +71,7 @@ public class BookStoreFacadeTests
     [Theory]
     [InlineData(1)]
     [InlineData(2)]
-    public async Task GetBookStore_ShouldSuccess(long bookstoreId)
+    public async Task GetBookStore_ShouldReturnExistingBookStore(long bookstoreId)
     {
         var bookStore = TestDataInitializer.GetTestBookStores().First(x => x.Id == bookstoreId);
         _bookStoreServiceMock.FindByIdAsync(Arg.Any<long>()).Returns(bookStore);
@@ -91,7 +91,7 @@ public class BookStoreFacadeTests
     }
 
     [Fact]
-    public async Task CreateBookStore_ShouldSuccess()
+    public async Task CreateBookStore_ShouldCreateNewBookStore()
     {
         var bookStore = TestDataInitializer.GetTestBookStores().ElementAt(0);
         _bookStoreServiceMock.CreateAsync(Arg.Any<BookStore>()).Returns(bookStore);
@@ -120,7 +120,7 @@ public class BookStoreFacadeTests
     }
 
     [Fact]
-    public async Task UpdateBookStore_ShouldSuccess()
+    public async Task UpdateBookStore_ShouldUpdateExistingBookStore()
     {
         var bookStore = TestDataInitializer.GetTestBookStores().ElementAt(0);
         _bookStoreServiceMock.UpdateAsync(Arg.Any<BookStore>()).Returns(bookStore);

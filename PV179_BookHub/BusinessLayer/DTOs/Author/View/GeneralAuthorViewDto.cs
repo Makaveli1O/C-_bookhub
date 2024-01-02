@@ -1,6 +1,4 @@
-﻿
-
-namespace BusinessLayer.DTOs.Author.View;
+﻿namespace BusinessLayer.DTOs.Author.View;
 
 public class GeneralAuthorViewDto
 {

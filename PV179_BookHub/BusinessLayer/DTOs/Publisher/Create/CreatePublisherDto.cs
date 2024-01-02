@@ -1,5 +1,4 @@
-﻿
-namespace BusinessLayer.DTOs.Publisher.Create;
+﻿namespace BusinessLayer.DTOs.Publisher.Create;
 
 public class CreatePublisherDto
 {

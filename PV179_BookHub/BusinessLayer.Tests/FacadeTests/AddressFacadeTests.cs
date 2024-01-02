@@ -36,7 +36,7 @@ public class AddressFacadeTests
     }
 
     [Fact]
-    public async Task CreateAddress_ShouldReturnSuccess()
+    public async Task CreateAddress_ShouldReturnNewAddress()
     {
         var address = TestDataInitializer.GetTestAddresses().ElementAt(0);
 
@@ -66,7 +66,7 @@ public class AddressFacadeTests
     }
 
     [Fact]
-    public async Task UpdateAddress_ShouldReturnSuccess()
+    public async Task UpdateAddress_ShouldReturnUpdatedAddress()
     {
         var address = TestDataInitializer.GetTestAddresses().ElementAt(0);
         var addressDto = new CreateAddressDto()
@@ -96,7 +96,7 @@ public class AddressFacadeTests
     }
 
     [Fact]
-    public async Task UpdateNotExistingAddress_ShouldThrowException()
+    public async Task UpdateNotExistingAddress_ShouldThrowExceptionAddressDoesNotExist()
     {
         var address = TestDataInitializer.GetTestAddresses().ElementAt(0);
 
@@ -119,7 +119,7 @@ public class AddressFacadeTests
     }
 
     [Fact]
-    public async Task FindAddress_ShouldReturnSuccess()
+    public async Task FindAddress_ShouldReturnExistingAddress()
     {
         long id = 1;
         var address = TestDataInitializer.GetTestAddresses().First(x => x.Id == id);

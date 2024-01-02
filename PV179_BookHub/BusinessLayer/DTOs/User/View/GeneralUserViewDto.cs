@@ -1,6 +1,4 @@
-﻿using DataAccessLayer.Models;
-using DataAccessLayer.Models.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using DataAccessLayer.Models.Enums;
 
 namespace BusinessLayer.DTOs.User.View;
 

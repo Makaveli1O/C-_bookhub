@@ -1,6 +1,4 @@
-﻿
-
-using BusinessLayer.DTOs.Book.View;
+﻿using BusinessLayer.DTOs.Book.View;
 
 namespace BusinessLayer.DTOs.Publisher.View;
 

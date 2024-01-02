@@ -1,6 +1,4 @@
-﻿using DataAccessLayer.Models.Enums;
-
-namespace BusinessLayer.DTOs.Order.View;
+﻿namespace BusinessLayer.DTOs.Order.View;
 
 public class DetailedOrderViewDto : GeneralOrderViewDto
 {

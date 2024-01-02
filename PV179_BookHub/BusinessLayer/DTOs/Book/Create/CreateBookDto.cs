@@ -1,5 +1,4 @@
-﻿using BusinessLayer.DTOs.Author.View;
-using DataAccessLayer.Models.Enums;
+﻿using DataAccessLayer.Models.Enums;
 
 namespace BusinessLayer.DTOs.Book.Create;
 

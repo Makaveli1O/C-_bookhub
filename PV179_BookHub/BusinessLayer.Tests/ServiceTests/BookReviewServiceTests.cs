@@ -60,7 +60,7 @@ public class BookReviewServiceTests
     }
 
     [Fact]
-    public async Task UpdateBookReviewAsync_ShouldReturnUpdatedEntity()
+    public async Task UpdateBookReviewAsync_ShouldReturnUpdatedBookReview()
     {
         var bookReview = TestDataInitializer.GetTestBookReviews().ElementAt(0);
         bookReview.Rating = DataAccessLayer.Models.Enums.Rating.Fair;
@@ -104,7 +104,7 @@ public class BookReviewServiceTests
     }
 
     [Fact]
-    public async Task FetchAllBookReviews_ShouldReturnEmptyList()
+    public async Task FetchAllBookReviews_ShouldReturnEmptyListOfReviews()
     {
         _repositoryMock.GetAllAsync().Returns(new List<BookReview>());
 
@@ -123,7 +123,7 @@ public class BookReviewServiceTests
     }
 
     [Fact]
-    public async Task GetBookReviewAsync_ShouldReturnBookReview()
+    public async Task GetBookReviewAsync_ShouldReturnExistingBookReview()
     {
         var bookReview = TestDataInitializer.GetTestBookReviews().ElementAt(0);
 
@@ -145,7 +145,7 @@ public class BookReviewServiceTests
     }
 
     [Fact]
-    public async Task GetBookReviewAsync_ShouldThrowException()
+    public async Task GetBookReviewAsync_ShouldThrowExceptionBookReviewDoesNotExist()
     {
         var serviceProvider = CreateServiceProvider();
 
@@ -157,7 +157,7 @@ public class BookReviewServiceTests
     }
 
     [Fact]
-    public async Task FindByBookIdAsync_ShouldReturnReviews()
+    public async Task FindByBookIdAsync_ShouldReturnReviewsByBookId()
     {
         long bookId = 2;
         var bookReviews = TestDataInitializer.GetTestBookReviews().Where(x => x.BookId == bookId);
@@ -180,7 +180,7 @@ public class BookReviewServiceTests
     }
 
     [Fact]
-    public async Task FindByUserIdAsync_ShouldReturnReviews()
+    public async Task FindByUserIdAsync_ShouldReturnReviewsByUserId()
     {
         long userId = 3;
         var bookReviews = TestDataInitializer.GetTestBookReviews().Where(x => x.ReviewerId == userId);

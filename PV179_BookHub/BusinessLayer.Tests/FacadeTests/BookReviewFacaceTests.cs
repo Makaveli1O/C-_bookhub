@@ -47,7 +47,7 @@ public class BookReviewFacaceTests
     }
 
     [Fact]
-    public async Task CreateBookReview_ShouldReturnSuccess()
+    public async Task CreateBookReview_ShouldReturnNewBookReview()
     {
         var bookReview = TestDataInitializer.GetTestBookReviews().ElementAt(0);
         var book = TestDataInitializer.GetTestBooks().First(x => x.Id == bookReview.BookId);
@@ -84,7 +84,7 @@ public class BookReviewFacaceTests
     }
 
     [Fact]
-    public async Task CreateReviewForNonExistingBook_ShouldThrowException()
+    public async Task CreateReviewForNonExistingBook_ShouldThrowExceptionBookDoesNotExist()
     {
         var bookReview = TestDataInitializer.GetTestBookReviews().ElementAt(0);
         var user = TestDataInitializer.GetTestUsers().First(x => x.Id == bookReview.ReviewerId);
@@ -111,7 +111,7 @@ public class BookReviewFacaceTests
     }
 
     [Fact]
-    public async Task CreateReviewForNonExistingUser_ShouldThrowException()
+    public async Task CreateReviewForNonExistingUser_ShouldThrowExceptionUserDoesNotExist()
     {
         var bookReview = TestDataInitializer.GetTestBookReviews().ElementAt(0);
         var book = TestDataInitializer.GetTestBooks().First(x => x.Id == bookReview.BookId);
@@ -138,7 +138,7 @@ public class BookReviewFacaceTests
     }
 
     [Fact]
-    public async Task UpdateReview_ShouldReturnUpdatedEntity()
+    public async Task UpdateReview_ShouldReturnUpdatedBookReview()
     {
         var bookReview = TestDataInitializer.GetTestBookReviews().ElementAt(0);
 
@@ -168,7 +168,7 @@ public class BookReviewFacaceTests
     }
 
     [Fact]
-    public async Task UpdateNonExistingReview_ShouldThrowException()
+    public async Task UpdateNonExistingReview_ShouldThrowExceptionBookReviewDoesNotExist()
     {
         var bookReview = TestDataInitializer.GetTestBookReviews().ElementAt(0);
 
@@ -196,7 +196,7 @@ public class BookReviewFacaceTests
     [InlineData(3)]
     [InlineData(4)]
 
-    public async Task FindBookReviews_ShouldReturnSuccess(long bookId)
+    public async Task FindBookReviews_ShouldReturnExistingBookReviews(long bookId)
     {
         var reviews = TestDataInitializer.GetTestBookReviews().Where(x => x.BookId == bookId).ToList();
 
@@ -216,7 +216,7 @@ public class BookReviewFacaceTests
      }
 
     [Fact]
-    public async Task FindUserReviews_ShouldReturnSuccess()
+    public async Task FindUserReviews_ShouldReturnExistingBookReviewsByUserId()
     {
         long userId = 3;
         var reviews = TestDataInitializer.GetTestBookReviews().Where(x => x.ReviewerId == userId).ToList();

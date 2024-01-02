@@ -1,6 +1,4 @@
-﻿using BusinessLayer.Exceptions;
-using BusinessLayer.Services.Book;
-using DataAccessLayer.Models.Account;
+﻿using BusinessLayer.Services.Book;
 using DataAccessLayer.Models.Publication;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
@@ -39,7 +37,7 @@ public class BookServiceTests
     }
 
     [Fact]
-    public async Task CreateBook_ShouldReturnSuccess()
+    public async Task CreateBook_ShouldReturnNewBook()
     {
         var book = TestDataInitializer.GetTestBooks().ElementAt(0);
 
@@ -47,9 +45,9 @@ public class BookServiceTests
 
         using (var scope = serviceProvider.CreateScope())
         {
-            var bookFacade = scope.ServiceProvider.GetRequiredService<IBookService>();
+            var bookService = scope.ServiceProvider.GetRequiredService<IBookService>();
 
-            var result = await bookFacade.CreateAsync(book);
+            var result = await bookService.CreateAsync(book);
 
             Assert.NotNull(result);
             Assert.Equal(book.Id, result.Id);
@@ -59,7 +57,7 @@ public class BookServiceTests
 
 
     [Fact]
-    public async Task UpdateBook_ShouldReturnSuccess()
+    public async Task UpdateBook_ShouldReturnUpdatedBook()
     {
         var book = TestDataInitializer.GetTestBooks().ElementAt(0);
 
@@ -69,9 +67,9 @@ public class BookServiceTests
 
         using (var scope = serviceProvider.CreateScope())
         {
-            var bookFacade = scope.ServiceProvider.GetRequiredService<IBookService>();
+            var bookService = scope.ServiceProvider.GetRequiredService<IBookService>();
 
-            var result = await bookFacade.UpdateAsync(book);
+            var result = await bookService.UpdateAsync(book);
 
             Assert.NotNull(result);
             Assert.Equal(book.Id, result.Id);
@@ -81,7 +79,7 @@ public class BookServiceTests
     }
 
     [Fact]
-    public async Task FindBook_ShouldReturnSuccess()
+    public async Task FindBook_ShouldReturnExistingBook()
     {
         long id = 1;
 

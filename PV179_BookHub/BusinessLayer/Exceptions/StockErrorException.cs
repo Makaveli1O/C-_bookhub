@@ -1,5 +1,4 @@
-﻿
-namespace BusinessLayer.Exceptions;
+﻿namespace BusinessLayer.Exceptions;
 
 public class StockErrorException : Exception
 {

@@ -58,7 +58,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public async Task UpdateUserAsync_ShouldReturnUpdatedEntity()
+    public async Task UpdateUserAsync_ShouldReturnUpdatedUser()
     {
         var user = TestDataInitializer.GetTestUsers().First();
         user.UserName = user.UserName.ToUpper();
@@ -102,7 +102,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public async Task FetchAllUsers_ShouldReturnEmptyList()
+    public async Task FetchAllUsers_ShouldReturnEmptyListOfUsers()
     {
         _repositoryMock.GetAllAsync().Returns(new List<User>());
 
@@ -121,7 +121,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public async Task GetUserAsync_ShouldReturnUser()
+    public async Task GetUserAsync_ShouldReturnExistingUser()
     {
         var user = TestDataInitializer.GetTestUsers().First();
 
@@ -143,7 +143,7 @@ public class UserServiceTests
     }
 
     [Fact]
-    public async Task GetUserAsync_ShouldThrowException()
+    public async Task GetUserAsync_ShouldThrowExceptionUserDoesNotExist()
     {
         var serviceProvider = CreateServiceProvider();
 

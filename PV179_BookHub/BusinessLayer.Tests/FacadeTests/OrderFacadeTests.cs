@@ -54,7 +54,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task CreateOrder_ShouldReturnSuccess()
+    public async Task CreateOrder_ShouldReturnNewOrder()
     {
         var order = TestDataInitializer.GetTestOrderList().ElementAt(0);
         var user = TestDataInitializer.GetTestUsers().First(x => x.Id == order.UserId);
@@ -83,7 +83,7 @@ public class OrderFacadeTests
     [Theory]
     [InlineData(1)]
     [InlineData(2)]
-    public async Task FetchOrdersByUserIdAsync_ShouldFail(long userId)
+    public async Task FetchOrdersByUserIdAsync_ShouldReturnOrdersByUserId(long userId)
     {
         var order = TestDataInitializer.GetTestOrderList().Where(x => x.UserId == userId);
         _orderServiceMock.FetchAllByUserIdAsync(Arg.Any<long>()).Returns(order);
@@ -104,7 +104,7 @@ public class OrderFacadeTests
 
     [Theory]
     [InlineData(3)]
-    public async Task FetchOrdersByUserIdAsync_ShouldSuccess(long userId)
+    public async Task FetchOrdersByUserIdAsync_ShouldReturnMultipleOrdersByUserId(long userId)
     {
         var order = TestDataInitializer.GetTestOrderList().Where(x => x.UserId == userId);
         _orderServiceMock.FetchAllByUserIdAsync(Arg.Any<long>()).Returns(order);
@@ -125,7 +125,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task FindOrderByIdAsync_ShouldSucceess()
+    public async Task FindOrderByIdAsync_ShouldReturnExistingOrder()
     {
         var order = TestDataInitializer.GetTestOrderList().ElementAt(0);
         _orderServiceMock.FindByIdAsync(Arg.Any<long>()).Returns(order);
@@ -146,7 +146,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task PayForOrderAsync_ShouldThrowException()
+    public async Task PayForOrderAsync_ShouldThrowExceptionCannotPayForOrderWrongState()
     {
         var order = TestDataInitializer.GetTestOrderList().ElementAt(0);
 
@@ -164,7 +164,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task PayForOrderAsync_ShouldSuccess()
+    public async Task PayForOrderAsync_ShouldReturnPaidOrder()
     {
         var order = TestDataInitializer.GetTestOrderList().ElementAt(0);
         order.State = OrderState.Created;
@@ -186,7 +186,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task RefundOrderAsync_ShouldThrowException()
+    public async Task RefundOrderAsync_ShouldThrowExceptionWrongOrderState()
     {
         var order = TestDataInitializer.GetTestOrderList().ElementAt(0);
 
@@ -204,7 +204,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task RefundOrderAsync_ShouldSuccess()
+    public async Task RefundOrderAsync_ShouldReturnRefundedOrder()
     {
         var order = TestDataInitializer.GetTestOrderList().ElementAt(0);
         order.State = OrderState.Paid;
@@ -226,7 +226,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task CancelOrderAsync_ShouldThrowException()
+    public async Task CancelOrderAsync_ShouldThrowExceptionCannotRefundOrder()
     {
         var order = TestDataInitializer.GetTestOrderList().ElementAt(0);
 
@@ -244,7 +244,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task CancelOrderAsync_ShouldSuccess()
+    public async Task CancelOrderAsync_ShouldReturnCancelledOrder()
     {
         var order = TestDataInitializer.GetTestOrderList().ElementAt(0);
         order.State = OrderState.Created;
@@ -266,7 +266,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task CreateOrderItem_ShouldThrowException()
+    public async Task CreateOrderItem_ShouldThrowExceptionCannotCreateOrderItem()
     {
         var orderItem = TestDataInitializer.GetTestOrderItems().ElementAt(0);
 
@@ -296,7 +296,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task CreateOrderItem_ShouldSuccess()
+    public async Task CreateOrderItem_ShouldReturnOrderWithNewOrderItem()
     {
         var orderItem = TestDataInitializer.GetTestOrderItems().ElementAt(0);
 
@@ -333,7 +333,7 @@ public class OrderFacadeTests
     }
 
     [Fact]
-    public async Task FindOrderItemByIdAsync_ShouldSuccess()
+    public async Task FindOrderItemByIdAsync_ShouldReturnExistingOrderItem()
     {
         var orderItem = TestDataInitializer.GetTestOrderItems().ElementAt(0);
         _orderItemServiceMock.FindByIdAsync(Arg.Any<long>()).Returns(orderItem);

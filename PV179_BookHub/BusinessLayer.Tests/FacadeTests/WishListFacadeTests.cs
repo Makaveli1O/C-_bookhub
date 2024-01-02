@@ -45,7 +45,7 @@ public class WishListFacadeTests
 	}
 
 	[Fact]
-	public async Task CreateWishList_ShouldReturnSuccess()
+	public async Task CreateWishList_ShouldReturnNewWishList()
 	{
 		var wishlist = TestDataInitializer.GetTestWishLists().ElementAt(0);
 
@@ -69,7 +69,7 @@ public class WishListFacadeTests
 	}
 
     [Fact]
-    public async Task UpdateNonExistingWishList_ShouldThrowException()
+    public async Task UpdateNonExistingWishList_ShouldThrowExceptionWishListDoesNotExist()
     {
         _wishListServiceMock.FindByIdAsync(Arg.Any<long>()).Throws(new NoSuchEntityException<long>(typeof(WishList), 1));
 
@@ -83,7 +83,7 @@ public class WishListFacadeTests
     }
 
     [Fact]
-	public async Task CreateWishListItem_ShouldReturnSuccess()
+	public async Task CreateWishListItem_ShouldReturnNewWishListItem()
 	{
 		var wishListItem = TestDataInitializer.GetTestWishListItems().ElementAt(0);
 		var book = TestDataInitializer.GetTestBooks().First(x => x.Id == wishListItem.BookId);
@@ -108,7 +108,7 @@ public class WishListFacadeTests
 	}
 
 	[Fact]
-	public async Task CreateWishListItemNonExistingBook_ShouldThrowException()
+	public async Task CreateWishListItemNonExistingBook_ShouldThrowExceptionWishListDoesNotExist()
 	{
 		_bookServiceMock.FindByIdAsync(Arg.Any<long>()).Throws(new NoSuchEntityException<long>(typeof(Book), 0));
 
@@ -123,7 +123,7 @@ public class WishListFacadeTests
 	}
 
     [Fact]
-    public async Task UpdateWishListItem_ShouldReturnSuccess()
+    public async Task UpdateWishListItem_ShouldReturnUpdatedWishList()
     {
         var wishListItem = TestDataInitializer.GetTestWishListItems().ElementAt(0);
         var book = TestDataInitializer.GetTestBooks().First(x => x.Id == wishListItem.BookId);
@@ -151,7 +151,7 @@ public class WishListFacadeTests
     }
 
     [Fact]
-    public async Task UpdateNonExistingWishListItem_ShouldThrowException()
+    public async Task UpdateNonExistingWishListItem_ShouldThrowExceptionWishListDoesNotExist()
     {
         _wishListItemServiceMock.FindByIdAsync(Arg.Any<long>()).Throws(new NoSuchEntityException<long>(typeof(WishListItem), 1));
 
