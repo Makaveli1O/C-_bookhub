@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.MSSql.Migrations.Migrations
 {
     /// <inheritdoc />
-    public partial class MSSqlDBMigration : Migration
+    public partial class MSSQLInitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,6 +28,20 @@ namespace DAL.MSSql.Migrations.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,6 +91,27 @@ namespace DAL.MSSql.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
@@ -98,6 +133,39 @@ namespace DAL.MSSql.Migrations.Migrations
                         principalTable: "Publishers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -220,6 +288,91 @@ namespace DAL.MSSql.Migrations.Migrations
                         name: "FK_BookReviews_Users_ReviewerId",
                         column: x => x.ReviewerId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -444,22 +597,22 @@ namespace DAL.MSSql.Migrations.Migrations
                 columns: new[] { "Id", "CreatedAt", "State", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9027), 3, 4L },
-                    { 2L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9031), 0, 4L },
-                    { 3L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9033), 0, 5L },
-                    { 4L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9034), 2, 5L },
-                    { 5L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9036), 1, 6L },
-                    { 6L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9038), 1, 7L },
-                    { 7L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9039), 3, 7L },
-                    { 8L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9041), 3, 7L },
-                    { 9L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9042), 0, 7L },
-                    { 10L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9044), 1, 8L },
-                    { 11L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9046), 1, 8L },
-                    { 12L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9048), 0, 8L },
-                    { 13L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9049), 0, 8L },
-                    { 14L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9051), 3, 8L },
-                    { 15L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9052), 1, 15L },
-                    { 16L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9054), 1, 15L }
+                    { 1L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7287), 3, 4L },
+                    { 2L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7298), 0, 4L },
+                    { 3L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7302), 0, 5L },
+                    { 4L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7307), 2, 5L },
+                    { 5L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7311), 1, 6L },
+                    { 6L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7317), 1, 7L },
+                    { 7L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7321), 3, 7L },
+                    { 8L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7326), 3, 7L },
+                    { 9L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7330), 0, 7L },
+                    { 10L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7335), 1, 8L },
+                    { 11L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7340), 1, 8L },
+                    { 12L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7344), 0, 8L },
+                    { 13L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7348), 0, 8L },
+                    { 14L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7353), 3, 8L },
+                    { 15L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7357), 1, 15L },
+                    { 16L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7361), 1, 15L }
                 });
 
             migrationBuilder.InsertData(
@@ -467,11 +620,11 @@ namespace DAL.MSSql.Migrations.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(8949), "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.", 1L },
-                    { 2L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9001), "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.", 2L },
-                    { 3L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9003), "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!", 3L },
-                    { 4L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9005), "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!", 4L },
-                    { 5L, new DateTime(2023, 11, 26, 11, 27, 12, 456, DateTimeKind.Local).AddTicks(9006), "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.", 5L }
+                    { 1L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7178), "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.", 1L },
+                    { 2L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7247), "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.", 2L },
+                    { 3L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7251), "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!", 3L },
+                    { 4L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7255), "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!", 4L },
+                    { 5L, new DateTime(2023, 12, 29, 23, 4, 1, 512, DateTimeKind.Local).AddTicks(7260), "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.", 5L }
                 });
 
             migrationBuilder.InsertData(
@@ -688,6 +841,50 @@ namespace DAL.MSSql.Migrations.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_UserId",
+                table: "AspNetUsers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AuthorBookAssociations_AuthorId",
                 table: "AuthorBookAssociations",
                 column: "AuthorId");
@@ -774,6 +971,21 @@ namespace DAL.MSSql.Migrations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "AuthorBookAssociations");
 
             migrationBuilder.DropTable(
@@ -787,6 +999,12 @@ namespace DAL.MSSql.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "WishListItem");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Authors");
