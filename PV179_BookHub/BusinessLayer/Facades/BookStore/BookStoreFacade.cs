@@ -16,7 +16,7 @@ public class BookStoreFacade : BaseFacade, IBookStoreFacade
         IGenericService<BookStoreEntity, long> bookStoreService,
         IGenericService<UserEntity, long> userService,
         IGenericService<AddressEntity, long> addressService)
-        : base(mapper)
+        : base(mapper, null, null)
     {
         _bookStoreService = bookStoreService;
         _userService = userService;

@@ -9,6 +9,7 @@ using BusinessLayer.Services.InventoryItem;
 using BusinessLayer.Services.Order;
 
 using DataAccessLayer.Models.Enums;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLayer.Facades.Order;
 
@@ -95,9 +96,14 @@ public class OrderFacade : BaseFacade, IOrderFacade
 
     public async Task<DetailedOrderViewDto> FindOrderByIdAsync(long id)
     {
-        var order = await _orderService.FindByIdAsync(id);
-        var orderDto = _mapper.Map<DetailedOrderViewDto>(order);
-        orderDto.TotalPrice = CalculateTotalPrice(order.Items);
+        if (!(_memoryCache?.TryGetValue(GetMemoryCacheKey(id), out OrderEntity? cachedOrder) ?? false))
+        {
+           cachedOrder = await _orderService.FindByIdAsync(id);
+           _memoryCache?.Set(GetMemoryCacheKey(id), cachedOrder);
+        }
+       
+        var orderDto = _mapper.Map<DetailedOrderViewDto>(cachedOrder);
+        orderDto.TotalPrice = CalculateTotalPrice(cachedOrder?.Items);
 
         return orderDto;
     }
@@ -116,6 +122,8 @@ public class OrderFacade : BaseFacade, IOrderFacade
             await ReturnStock(order);
         }
         order.State = newState;
+
+        _memoryCache?.Set(GetMemoryCacheKey(id), order);
         await _orderService.UpdateAsync(order);
 
         return order;
@@ -208,7 +216,6 @@ public class OrderFacade : BaseFacade, IOrderFacade
     {
         var orderItem = await _orderItemService.FindByIdAsync(id);
         await AddBookStock(orderItem.BookId, orderItem.BookStoreId, orderItem.Quantity);
-
         await _orderItemService.DeleteAsync(orderItem);
     }
 }

@@ -18,8 +18,9 @@ public class BookReviewFacade : BaseFacade, IBookReviewFacade
     public BookReviewFacade(
         IMapper mapper,
         IGenericService<BookEntity, long> bookService,
-         IGenericService<UserEntity, long> userService,
-        IBookReviewService bookReviewService) : base(mapper)
+        IGenericService<UserEntity, long> userService,
+        IBookReviewService bookReviewService)
+        : base(mapper, null, null)
     {
         _bookReviewService = bookReviewService;
         _bookService = bookService;

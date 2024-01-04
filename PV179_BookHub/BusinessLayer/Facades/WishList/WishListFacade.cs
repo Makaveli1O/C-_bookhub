@@ -4,6 +4,8 @@ using BusinessLayer.DTOs.WishList.Create;
 using BusinessLayer.DTOs.WishList.View;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
+using DataAccessLayer.Models.Publication;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLayer.Facades.WishList;
 
@@ -17,7 +19,8 @@ public class WishListFacade : BaseFacade, IWishListFacade
                           IGenericService<WishListEntity, long> wishListService,
                           IGenericService<WishListItemEntity, long> wishListItemService,
                           IGenericService<BookEntity, long> bookService)
-        : base(mapper)
+                          IMemoryCache memoryCache)
+        : base(mapper, memoryCache, "wishlist-")
     {
         _wishListService = wishListService;
         _wishListItemService = wishListItemService;
@@ -49,7 +52,8 @@ public class WishListFacade : BaseFacade, IWishListFacade
         var wishList = await _wishListService.FindByIdAsync(id);
 
         wishList.Description = wishListDescription;
-
+        
+        _memoryCache?.Set(GetMemoryCacheKey(id), wishList);
         await _wishListService.UpdateAsync(wishList);
 
         return _mapper.Map<GeneralWishListViewDto>(wishList);
@@ -70,6 +74,7 @@ public class WishListFacade : BaseFacade, IWishListFacade
     public async Task DeleteWishListAsync(long id)
     {
         var wishList = await _wishListService.FindByIdAsync(id);
+        _memoryCache?.Remove(wishList);
         await _wishListService.DeleteAsync(wishList);
     }
    
@@ -103,6 +108,12 @@ public class WishListFacade : BaseFacade, IWishListFacade
     
     public async Task<GeneralWishListViewDto> FetchWishListAsync(long id)
     {
-        return _mapper.Map<GeneralWishListViewDto>(await _wishListService.FindByIdAsync(id));
+        if (!(_memoryCache?.TryGetValue(GetMemoryCacheKey(id), out var cachedWishList) ?? false))
+        {
+            cachedWishList = await _wishListService.FindByIdAsync(id);
+            _memoryCache?.Set(GetMemoryCacheKey(id), cachedWishList);
+        }
+
+        return _mapper.Map<GeneralWishListViewDto>(cachedWishList);
     }
 }
