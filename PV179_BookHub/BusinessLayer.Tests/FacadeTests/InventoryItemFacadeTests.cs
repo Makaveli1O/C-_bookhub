@@ -29,12 +29,8 @@ public class InventoryItemFacadeTests
     public InventoryItemFacadeTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddAutoMapper()
-            .AddServices()
-            .AddFacades()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
         _bookStoreServiceMock = Substitute.For<IGenericService<BookStore, long>>();
         _bookServiceMock = Substitute.For<IBookService>();

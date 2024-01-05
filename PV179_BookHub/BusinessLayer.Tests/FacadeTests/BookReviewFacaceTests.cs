@@ -25,12 +25,8 @@ public class BookReviewFacaceTests
     public BookReviewFacaceTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddAutoMapper()
-            .AddServices()
-            .AddFacades()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
         _bookReviewServiceMock = Substitute.For<IBookReviewService>();
         _bookServiceMock = Substitute.For<IBookService>();

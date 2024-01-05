@@ -24,13 +24,10 @@ public class WishListFacadeTests
 	public WishListFacadeTests()
 	{
 		_serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-			.AddUnitOfWork()
-			.AddRepositories()
-			.AddAutoMapper()
-			.AddServices()
-			.AddFacades()
-			.AddMockedDBContext();
-		_wishListServiceMock = Substitute.For<IGenericService<WishList, long>>();
+            .AddInfrastructure()
+            .AddBusinessLayer();
+
+        _wishListServiceMock = Substitute.For<IGenericService<WishList, long>>();
 		_wishListItemServiceMock = Substitute.For<IGenericService<WishListItem, long>>();
 		_bookServiceMock = Substitute.For<IBookService>();
 	}

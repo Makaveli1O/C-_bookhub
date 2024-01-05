@@ -19,10 +19,8 @@ public class BookServiceTests
     public BookServiceTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddServices()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
         _repositoryMock = Substitute.For<IGenericRepository<Book, long>>();
         _uowMock = Substitute.For<IUnitOfWork>();

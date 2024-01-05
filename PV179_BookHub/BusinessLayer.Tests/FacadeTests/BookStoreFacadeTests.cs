@@ -27,12 +27,8 @@ public class BookStoreFacadeTests
     public BookStoreFacadeTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddAutoMapper()
-            .AddServices()
-            .AddFacades()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
         _bookStoreServiceMock = Substitute.For<IGenericService<BookStore, long>>();
         _userServiceMock = Substitute.For<IGenericService<User, long>>();
