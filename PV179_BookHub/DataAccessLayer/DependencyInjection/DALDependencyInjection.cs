@@ -8,6 +8,6 @@ public static class DALDependencyInjection
     public static void RegisterDALDependencies(this IServiceCollection services, IConfiguration configuration)
     {
         DatabaseTypeContext databaseTypeContext = new DatabaseTypeContext(services, configuration);
-        databaseTypeContext.addDbContext();
+        databaseTypeContext.AddDbContext();
     }
 }
