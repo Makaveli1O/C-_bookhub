@@ -1,7 +1,6 @@
 ﻿using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.Filter;
 using BusinessLayer.Facades.Book;
-using DataAccessLayer.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
@@ -64,12 +63,9 @@ public class BookController : ControllerBase
 
     [HttpGet]
     [Route("filter")]
-    public async Task<IActionResult> FetchBooksByFilters(string? title, string? author, string? publisher, string? description,
-        BookGenre? bookGenre, double? LEQPrice, double? GEQPrice, string? sortParam, bool? asc, int pageNumber, int? pageSize)
+    public async Task<IActionResult> FetchBooksByFilters([FromQuery] BookFilterDto bookFilterDto)
     {
-        var filter = new BookFilterDto(title, author, publisher, description, bookGenre, LEQPrice, GEQPrice, sortParam, asc, pageNumber, pageSize);
-
-        var books = await _bookFacade.FetchFilteredBooksAsync(filter);
+        var books = await _bookFacade.FetchFilteredBooksAsync(bookFilterDto);
         return Ok(books);
     }
 }

@@ -1,12 +1,13 @@
 ﻿using BusinessLayer.Exceptions;
 using DataAccessLayer.Models.Enums;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.Order;
 
 public class OrderService : GenericService<OrderEntity, long>, IOrderService
 {
-    public OrderService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    public OrderService(IUnitOfWork unitOfWork, IQuery<OrderEntity, long> query) : base(unitOfWork, query)
     {
     }
 

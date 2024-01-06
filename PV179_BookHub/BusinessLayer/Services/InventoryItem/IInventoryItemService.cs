@@ -1,6 +1,4 @@
-﻿
-
-namespace BusinessLayer.Services.InventoryItem;
+﻿namespace BusinessLayer.Services.InventoryItem;
 
 public interface IInventoryItemService : IGenericService<InventoryItemEntity, long>
 {

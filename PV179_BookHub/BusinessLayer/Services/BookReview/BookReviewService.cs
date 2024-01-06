@@ -1,11 +1,12 @@
 ﻿using BusinessLayer.Exceptions;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.BookReview;
 
 public class BookReviewService : GenericService<BookReviewEntity, long>, IBookReviewService
 {
-    public BookReviewService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    public BookReviewService(IUnitOfWork unitOfWork, IQuery<BookReviewEntity, long> query) : base(unitOfWork, query)
     {
     }
     public async Task<IEnumerable<BookReviewEntity>> FindByBookIdAsync(long id)
