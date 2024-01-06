@@ -1,0 +1,11 @@
+﻿﻿@using MVC.Models.WishList;
+@model WishListCreateViewModel
+
+<form asp-action="WishListCreate" method="post">
+    <div>
+        <label asp-for="Description"></label>
+        <input asp-for="Description" />
+        <span asp-validation-for="Description"></span>
+    </div>
+    <button type="submit">Create WishList</button>
+</form>

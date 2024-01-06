@@ -1,0 +1,62 @@
+﻿@using MVC.Models.WishList;
+@model WishListUpdateViewModel;
+
+@using (Html.BeginForm("WishListEdit", "User", FormMethod.Post))
+{
+    <div>
+        @Html.LabelFor(model => model.Description) : @Html.DisplayFor(model => model.Description)
+        <br>
+
+        <div>
+            @if (Model.WishListItems != null)
+            {
+                foreach (var item in Model.WishListItems)
+                {
+                    <li>
+                        @Html.DisplayFor(model => item.Book)
+                        @Html.HiddenFor(model => item.Id)
+                        <button type="button" class="delete-item" data-item-id="@item.Id">Delete</button>
+                    </li>
+                }
+            }
+        </div>
+
+        <!-- Add section for new wish list items -->
+        <div id="newWishListItems">
+            <h4>Add New Item</h4>
+            <input type="text" id="newItemName" name="newItemName" placeholder="New Item Name" />
+            <button type="button" id="addNewItem">Add Item</button>
+        </div>
+    </div>
+
+    <button type="submit">Update my WishList</button>
+}
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.delete-item').click(function () {
+                var itemId = $(this).data('item-id');
+                // Add logic to handle item deletion if needed
+            });
+
+            $('#addNewItem').click(function () {
+                var newItemName = $('#newItemName').val();
+                if (newItemName) {
+                    var newItemHtml = `
+                        <li>
+                            ${newItemName}
+                            <input type="hidden" name="newWishListItems" value="${newItemName}" />
+                            <button type="button" class="delete-new-item">Delete</button>
+                        </li>
+                    `;
+                    $('#newWishListItems ul').append(newItemHtml);
+                }
+            });
+
+            $('#newWishListItems').on('click', '.delete-new-item', function () {
+                $(this).closest('li').remove();
+            });
+        });
+    </script>
+}
