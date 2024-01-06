@@ -19,7 +19,7 @@ public class WishListFacadeTests
 	private MockedDependencyInjectionBuilder _serviceProviderBuilder;
 	private readonly IGenericService<WishList, long> _wishListServiceMock;
 	private readonly IGenericService<WishListItem, long> _wishListItemServiceMock;
-	private readonly IBookService _bookServiceMock;
+	private readonly IGenericService<Book, long> _bookServiceMock;
 
 	public WishListFacadeTests()
 	{
@@ -29,7 +29,7 @@ public class WishListFacadeTests
 
         _wishListServiceMock = Substitute.For<IGenericService<WishList, long>>();
 		_wishListItemServiceMock = Substitute.For<IGenericService<WishListItem, long>>();
-		_bookServiceMock = Substitute.For<IBookService>();
+		_bookServiceMock = Substitute.For<IGenericService<Book, long>>();
 	}
 
 	private ServiceProvider CreateServiceProvider()

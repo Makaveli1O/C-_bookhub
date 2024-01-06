@@ -16,7 +16,7 @@ namespace BusinessLayer.Tests.FacadeTests;
 public class BookFacadeTests
 {
     private MockedDependencyInjectionBuilder _serviceProviderBuilder;
-    private readonly IBookService _bookServiceMock;
+    private readonly IGenericService<Book, long> _bookServiceMock;
     private readonly IAuthorService _authorServiceMock;
     private readonly IGenericService<Publisher, long> _publisherServiceMock;
 
@@ -26,7 +26,7 @@ public class BookFacadeTests
             .AddInfrastructure()
             .AddBusinessLayer();
 
-        _bookServiceMock = Substitute.For<IBookService>();
+        _bookServiceMock = Substitute.For<IGenericService<Book, long>>();
         _authorServiceMock = Substitute.For<IAuthorService>();
         _publisherServiceMock = Substitute.For<IGenericService<Publisher, long>>();
     }
