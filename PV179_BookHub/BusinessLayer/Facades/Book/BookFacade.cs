@@ -92,12 +92,12 @@ public class BookFacade : BaseFacade, IBookFacade
         var bookFilter = new BookFilter()
         {
             Author = bookFilterDto.Author,
-            Title = bookFilterDto.Title,
+            CONTAINS_Title = bookFilterDto.Title,
             Publisher = bookFilterDto.Publisher,
             Description = bookFilterDto.Description,
             BookGenre = bookFilterDto.BookGenre,
-            GEQ_Price = bookFilterDto.GEQPrice,
-            LEQ_Price = bookFilterDto.LEQPrice
+            GE_Price = bookFilterDto.GEQPrice,
+            LE_Price = bookFilterDto.LEQPrice
         };
 
         var queryResult = await _bookService.FetchFilteredBooksAsync(bookFilter,

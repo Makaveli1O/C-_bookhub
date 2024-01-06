@@ -1,13 +1,19 @@
 ﻿using System.Linq.Expressions;
 using Infrastructure.Exceptions;
+using Infrastructure.NaiveQuery.Filters.ExpressionStrategy;
 using Infrastructure.NaiveQuery.Filters.LambdaAndOr;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.NaiveQuery.Filters;
 
 public abstract class FilterBase<TEntity> : IFilter<TEntity> where TEntity : class
 {
-    protected IDictionary<string, Expression<Func<TEntity, bool>>> _lambdaDictionary;
+    private const string _lambdaParam = "source";
+    private const char _separatorCharacter = '_';
+    private const string _defaultOperation = "EQ";
 
+    protected IDictionary<string, Expression<Func<TEntity, bool>>> _lambdaDictionary;
+    
     public FilterBase()
     {
         _lambdaDictionary = new Dictionary<string, Expression<Func<TEntity, bool>>>();
@@ -18,25 +24,14 @@ public abstract class FilterBase<TEntity> : IFilter<TEntity> where TEntity : cla
 
     protected virtual Expression BuildExpression(string op, Expression left, Expression right)
     {
-        switch(op.ToUpper())
-        {
-            case "LEQ":
-                return Expression.LessThanOrEqual(left, right);
-            case "LE":
-                return Expression.LessThan(left, right);
-            case "GEQ":
-                return Expression.GreaterThanOrEqual(left, right);
-            case "GE":
-                return Expression.GreaterThan(left, right);
-            default:
-                return Expression.Equal(left, right);
-        }
+        ExpressionContext expressionContext = new ExpressionContext(op.IsNullOrEmpty() ? _defaultOperation : op.ToUpper());
+        return expressionContext.BuildExpression(left, right);
     }
 
     public virtual Expression<Func<TEntity, bool>>? CreateExpression()
     {
         Expression<Func<TEntity, bool>>? final = null;
-        var param = Expression.Parameter(typeof(TEntity), "source");
+        var param = Expression.Parameter(typeof(TEntity), _lambdaParam);
 
         foreach (var item in GetType().GetProperties())
         {
@@ -55,7 +50,7 @@ public abstract class FilterBase<TEntity> : IFilter<TEntity> where TEntity : cla
             {
                 var itemName = item.Name;
                 string op = string.Empty;
-                var split = itemName.Split('_');
+                var split = itemName.Split(_separatorCharacter);
                 if (split.Length == 2)
                 {
                     itemName = split[1];

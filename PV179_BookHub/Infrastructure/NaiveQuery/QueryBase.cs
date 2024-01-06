@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.NaiveQuery;
 
-public class QueryBase<TEntity, TKey> : IQuery<TEntity> where TEntity : class
+public class QueryBase<TEntity, TKey> : IQuery<TEntity, TKey> where TEntity : class
 {
     private IQueryable<TEntity> _query;
 
@@ -42,16 +42,18 @@ public class QueryBase<TEntity, TKey> : IQuery<TEntity> where TEntity : class
         return queryResult;
     }
 
-    public void Page(int pageToFetch, int pageSize)
+    public IQuery<TEntity, TKey> Page(int pageToFetch, int pageSize)
     {
         _query = _query.Skip((pageToFetch - 1) * pageSize).Take(pageSize);
+
+        return this;
     }
 
-    public void SortBy(string sortAccordingTo, bool ascending)
+    public IQuery<TEntity, TKey> SortBy(string sortAccordingTo, bool ascending)
     {
         if (sortAccordingTo == string.Empty)
         {
-            return;
+            return this;
         }
 
         //https://stackoverflow.com/questions/1689199/c-sharp-code-to-order-by-a-property-using-the-property-name-as-a-string/67630860#67630860
@@ -72,22 +74,28 @@ public class QueryBase<TEntity, TKey> : IQuery<TEntity> where TEntity : class
         {
             _query = _query.OrderByDescending(orderPredicate);
         }
+
+        return this;
     }
 
-    public void Where(Expression<Func<TEntity, bool>>? filter = null)
+    public IQuery<TEntity, TKey> Where(Expression<Func<TEntity, bool>>? filter = null)
     {
         if (filter != null)
         {
             _query = _query.Where(filter);
         }
+
+        return this;
     }
 
-    public void Include(params Expression<Func<TEntity, object?>>[] includes)
+    public IQuery<TEntity, TKey> Include(params Expression<Func<TEntity, object?>>[] includes)
     {
         if (includes != null)
         {
             _query = includes
                 .Aggregate(_query, (current, include) => current.Include(include));
         }
+
+        return this;
     }
 }
