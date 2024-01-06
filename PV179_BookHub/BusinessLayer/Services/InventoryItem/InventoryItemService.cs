@@ -1,11 +1,12 @@
 ﻿using BusinessLayer.Exceptions;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.InventoryItem;
 
 public class InventoryItemService : GenericService<InventoryItemEntity, long>, IInventoryItemService
 {
-    public InventoryItemService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    public InventoryItemService(IUnitOfWork unitOfWork, IQuery<InventoryItemEntity, long> query) : base(unitOfWork, query)
     {
     }
 

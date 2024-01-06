@@ -40,7 +40,7 @@ public class XmlResponseConverterMiddleware
 
         if (modifiedResponse == null)
         {
-            throw new XmlResponseConverterMiddlewareExcaption("Unable to convert JSON response to XML.");
+            throw new XmlResponseConverterMiddlewareException("Unable to convert JSON response to XML.");
         }
 
         context.Response.Body = originalBodyStream;

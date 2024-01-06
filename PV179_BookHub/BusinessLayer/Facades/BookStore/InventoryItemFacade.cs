@@ -2,7 +2,6 @@
 using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
 using BusinessLayer.Services;
-using BusinessLayer.Services.Book;
 using BusinessLayer.Services.InventoryItem;
 
 namespace BusinessLayer.Facades.BookStore;
@@ -10,14 +9,14 @@ namespace BusinessLayer.Facades.BookStore;
 public class InventoryItemFacade : BaseFacade, IInventoryItemFacade
 {
     private readonly IInventoryItemService _inventoryItemService;
-    private readonly IBookService _bookService;
+    private readonly IGenericService<BookEntity, long> _bookService;
     private readonly IGenericService<BookStoreEntity, long> _bookStoreService;
 
     public InventoryItemFacade(
         IMapper mapper,
         IInventoryItemService inventoryItemService,
         IGenericService<BookStoreEntity, long> bookStoreService,
-        IBookService bookService)
+        IGenericService<BookEntity, long> bookService)
         : base(mapper)
     {
         _inventoryItemService = inventoryItemService;

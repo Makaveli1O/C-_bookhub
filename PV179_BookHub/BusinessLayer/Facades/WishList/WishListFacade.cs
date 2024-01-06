@@ -11,12 +11,12 @@ public class WishListFacade : BaseFacade, IWishListFacade
 {
     private readonly IGenericService<WishListEntity, long> _wishListService;
     private readonly IGenericService<WishListItemEntity, long> _wishListItemService;
-    private readonly IBookService _bookService;
+    private readonly IGenericService<BookEntity, long> _bookService;
 
     public WishListFacade(IMapper mapper,
                           IGenericService<WishListEntity, long> wishListService,
                           IGenericService<WishListItemEntity, long> wishListItemService,
-                          IBookService bookService)
+                          IGenericService<BookEntity, long> bookService)
         : base(mapper)
     {
         _wishListService = wishListService;

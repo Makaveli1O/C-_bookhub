@@ -17,14 +17,14 @@ public class OrderFacade : BaseFacade, IOrderFacade
     private readonly IOrderService _orderService;
     private readonly IGenericService<OrderItemEntity, long> _orderItemService;
     private readonly IGenericService<UserEntity, long> _userService;
-    private readonly IBookService _bookService;
+    private readonly IGenericService<BookEntity, long> _bookService;
     private readonly IInventoryItemService _inventoryItemService;
 
     public OrderFacade(IMapper mapper, 
         IOrderService orderService, 
         IGenericService<OrderItemEntity, long> orderItemService,
-        IGenericService<UserEntity, long> userService, 
-        IBookService bookService,
+        IGenericService<UserEntity, long> userService,
+        IGenericService<BookEntity, long> bookService,
         IInventoryItemService inventoryItemService
         ) : base(mapper)
     {
