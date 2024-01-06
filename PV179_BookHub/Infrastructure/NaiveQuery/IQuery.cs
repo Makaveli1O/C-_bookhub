@@ -1,13 +1,12 @@
-﻿
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Infrastructure.NaiveQuery;
 
-public interface IQuery<TEntity> where TEntity : class
+public interface IQuery<TEntity, TKey> where TEntity : class
 {
-    void Include(params Expression<Func<TEntity, object?>>[] includes);
-    void Where(Expression<Func<TEntity, bool>>? filter = null);
-    void SortBy(string sortAccordingTo, bool ascending);
-    void Page(int pageToFetch, int pageSize);
+    IQuery<TEntity, TKey> Include(params Expression<Func<TEntity, object?>>[] includes);
+    IQuery<TEntity, TKey> Where(Expression<Func<TEntity, bool>>? filter = null);
+    IQuery<TEntity, TKey> SortBy(string sortAccordingTo, bool ascending);
+    IQuery<TEntity, TKey> Page(int pageToFetch, int pageSize);
     Task<QueryResult<TEntity>> ExecuteAsync();
 }

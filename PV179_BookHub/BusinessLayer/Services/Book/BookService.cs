@@ -24,8 +24,8 @@ public class BookService : GenericService<BookEntity, long>, IBookService
         return books;
     }
 
-    public async Task<QueryResult<BookEntity>> 
-        FetchFilteredBooksAsync(BookFilter bookFilter, int? pageNumber, int? pageSize, string? sortParam, bool? asc)
+    public async Task<QueryResult<BookEntity>> FetchFilteredBooksAsync(BookFilter bookFilter, 
+        int? pageNumber, int? pageSize, string? sortParam, bool? asc)
     {
         {
             QueryBase<BookEntity, long> query =
@@ -39,10 +39,11 @@ public class BookService : GenericService<BookEntity, long>, IBookService
             query.SortAccordingTo = sortParam ?? query.SortAccordingTo;
             query.UseAscendingOrder = asc ?? query.UseAscendingOrder;
 
-            query.Include(book => book.Authors, book => book.Publisher);
-            query.Where(query.Filter.CreateExpression());
-            query.Page(query.CurrentPage, query.PageSize);
-            query.SortBy(query.SortAccordingTo, query.UseAscendingOrder);
+            query
+                .Include(book => book.Authors, book => book.Publisher)
+                .Where(query.Filter.CreateExpression())
+                .Page(query.CurrentPage, query.PageSize)
+                .SortBy(query.SortAccordingTo, query.UseAscendingOrder);
 
             return await query.ExecuteAsync();
         }
