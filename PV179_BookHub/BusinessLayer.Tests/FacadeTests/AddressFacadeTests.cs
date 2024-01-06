@@ -19,12 +19,8 @@ public class AddressFacadeTests
     public AddressFacadeTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddAutoMapper()
-            .AddServices()
-            .AddFacades()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
         _addressServiceMock = Substitute.For<IGenericService<Address, long>>();
     }
 

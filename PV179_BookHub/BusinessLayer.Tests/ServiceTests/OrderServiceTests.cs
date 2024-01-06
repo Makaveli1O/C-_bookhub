@@ -4,14 +4,10 @@ using Infrastructure.Repository;
 using DataAccessLayer.Models.Purchasing;
 using BusinessLayer.Services.Order;
 using Microsoft.Extensions.DependencyInjection;
-using DataAccessLayer.Models.Enums;
 using System.Linq.Expressions;
 using TestUtilities.MockedData;
-using DataAccessLayer.Models.Account;
 using Infrastructure.UnitOfWork;
-using BusinessLayer.Services.BookReview;
 using BusinessLayer.Exceptions;
-using DataAccessLayer.Models.Publication;
 
 namespace BusinessLayer.Tests.ServiceTests;
 
@@ -24,13 +20,8 @@ public class OrderServiceTests
     public OrderServiceTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddServices()
-            .AddMockedDBContext();
-
-
-        _serviceProviderBuilder.AddServices().Create();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
         _repositoryMock = Substitute.For<IGenericRepository<Order, long>>();
         _uowMock = Substitute.For<IUnitOfWork>();

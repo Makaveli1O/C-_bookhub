@@ -13,7 +13,7 @@ public class MSSQLDbStrategy : IDBStrategy
     {
     }
 
-    public override IServiceCollection addDbContext(IServiceCollection services)
+    public override IServiceCollection AddDbContext(IServiceCollection services)
     {
         services.AddDbContextFactory<BookHubDbContext>(options =>
         {

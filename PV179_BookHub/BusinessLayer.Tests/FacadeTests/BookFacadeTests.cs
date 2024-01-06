@@ -23,12 +23,8 @@ public class BookFacadeTests
     public BookFacadeTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddAutoMapper()
-            .AddServices()
-            .AddFacades()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
         _bookServiceMock = Substitute.For<IBookService>();
         _authorServiceMock = Substitute.For<IAuthorService>();

@@ -15,10 +15,10 @@ public class DatabaseTypeContext
     {
         Services = services;
         Config = configuration;
-        setDatabaseStrategy();
+        SetDatabaseStrategy();
     }
 
-    private void setDatabaseStrategy()
+    private void SetDatabaseStrategy()
     {
         if (!Enum.TryParse(Config.GetSection(_appSettingsKeyName).Value ?? string.Empty, out DatabaseType dbType))
         {
@@ -38,8 +38,8 @@ public class DatabaseTypeContext
         }
     }
 
-    public void addDbContext()
+    public void AddDbContext()
     {
-        Services = DatabaseStrategy.addDbContext(Services);
+        Services = DatabaseStrategy.AddDbContext(Services);
     }
 }

@@ -21,10 +21,8 @@ public class BookReviewServiceTests
     public BookReviewServiceTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddServices()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
         _repositoryMock = Substitute.For<IGenericRepository<BookReview, long>>();
         _uowMock = Substitute.For<IUnitOfWork>();

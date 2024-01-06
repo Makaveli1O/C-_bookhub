@@ -28,13 +28,9 @@ public class OrderFacadeTests
     public OrderFacadeTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddAutoMapper()
-            .AddServices()
-            .AddFacades()
-            .AddMockedDBContext();
-        
+            .AddInfrastructure()
+            .AddBusinessLayer();
+
         _orderServiceMock = Substitute.For<IOrderService>();
         _orderItemServiceMock = Substitute.For<IGenericService<OrderItem, long>>();
         _inventoryItemServiceMock = Substitute.For<IInventoryItemService>();

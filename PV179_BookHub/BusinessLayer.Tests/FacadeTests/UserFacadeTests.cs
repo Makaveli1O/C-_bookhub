@@ -21,12 +21,8 @@ public class UserFacadeTests
     public UserFacadeTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddAutoMapper()
-            .AddServices()
-            .AddFacades()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
         _orderService = Substitute.For<IOrderService>();
         _userServiceMock = Substitute.For<IGenericService<User, long>>();
