@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Services.Book;
+﻿using BusinessLayer.Services;
 using DataAccessLayer.Models.Publication;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
@@ -43,7 +43,7 @@ public class BookServiceTests
 
         using (var scope = serviceProvider.CreateScope())
         {
-            var bookService = scope.ServiceProvider.GetRequiredService<IBookService>();
+            var bookService = scope.ServiceProvider.GetRequiredService<IGenericService<Book, long>>();
 
             var result = await bookService.CreateAsync(book);
 
@@ -65,7 +65,7 @@ public class BookServiceTests
 
         using (var scope = serviceProvider.CreateScope())
         {
-            var bookService = scope.ServiceProvider.GetRequiredService<IBookService>();
+            var bookService = scope.ServiceProvider.GetRequiredService<IGenericService<Book, long>>();
 
             var result = await bookService.UpdateAsync(book);
 
@@ -89,7 +89,7 @@ public class BookServiceTests
 
         using (var scope = serviceProvider.CreateScope())
         {
-            var bookService = scope.ServiceProvider.GetRequiredService<IBookService>();
+            var bookService = scope.ServiceProvider.GetRequiredService<IGenericService<Book, long>>();
             var result = await bookService.FindByIdAsync(id);
             Assert.NotNull(result);
             Assert.Equal(book.Id, result.Id);
