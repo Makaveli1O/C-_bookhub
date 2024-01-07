@@ -13,6 +13,11 @@ public class AddressFacade : BaseFacade, IAddressFacade
         _addressService = addressService;
     }
 
+    public async Task<IEnumerable<DetailedAddressView>> GetAllAddressesAsync()
+    {
+        return _mapper.Map<IEnumerable<DetailedAddressView>>(await _addressService.FetchAllAsync());
+    }
+
     public async Task<DetailedAddressView> CreateAddressAsync(CreateAddressDto createAddressDto)
     {
         var address = _mapper.Map<AddressEntity>(createAddressDto);
