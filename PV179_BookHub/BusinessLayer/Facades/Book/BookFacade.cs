@@ -6,17 +6,19 @@ using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
-using Infrastructure.NaiveQuery.Filters.EntityFilters;
+using Infrastructure.Query;
+using Infrastructure.Query.Filters;
+using Infrastructure.Query.Filters.EntityFilters;
 
 namespace BusinessLayer.Facades.Book;
 
 public class BookFacade : BaseFacade, IBookFacade
 {
-    private readonly IBookService _bookService;
+    private readonly IGenericService<BookEntity, long> _bookService;
     private readonly IAuthorService _authorService;
     private readonly IGenericService<PublisherEntity, long> _publisherService;
 
-    public BookFacade(IMapper mapper, IBookService bookService, IAuthorService authorService, 
+    public BookFacade(IMapper mapper, IGenericService<BookEntity, long> bookService, IAuthorService authorService, 
         IGenericService<PublisherEntity, long> publisherService)
         : base(mapper)
     {
@@ -89,19 +91,10 @@ public class BookFacade : BaseFacade, IBookFacade
 
     public async Task<IEnumerable<GeneralBookViewDto>> FetchFilteredBooksAsync(BookFilterDto bookFilterDto)
     {
-        var bookFilter = new BookFilter()
-        {
-            Author = bookFilterDto.Author,
-            Title = bookFilterDto.Title,
-            Publisher = bookFilterDto.Publisher,
-            Description = bookFilterDto.Description,
-            BookGenre = bookFilterDto.BookGenre,
-            GEQ_Price = bookFilterDto.GEQPrice,
-            LEQ_Price = bookFilterDto.LEQPrice
-        };
+        var queryResult = await _bookService
+            .FetchFilteredAsync(_mapper.Map<BookFilter>(bookFilterDto), 
+                                _mapper.Map<QueryParams>(bookFilterDto));
 
-        var queryResult = await _bookService.FetchFilteredBooksAsync(bookFilter,
-            bookFilterDto.PageNumber, bookFilterDto.PageSize, bookFilterDto.SortParam, bookFilterDto.Asc);
         return _mapper.Map<List<GeneralBookViewDto>>(queryResult.Items);
     }
 

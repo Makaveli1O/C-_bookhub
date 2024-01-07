@@ -1,11 +1,12 @@
 ﻿using BusinessLayer.Exceptions;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.Publisher;
 
 public class PublisherService : GenericService<PublisherEntity, long>
 {
-    public PublisherService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    public PublisherService(IUnitOfWork unitOfWork, IQuery<PublisherEntity, long> query) : base(unitOfWork, query)
     {
     }
 

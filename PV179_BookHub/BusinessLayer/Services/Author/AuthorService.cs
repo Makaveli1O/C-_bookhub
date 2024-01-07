@@ -1,11 +1,12 @@
 ﻿using BusinessLayer.Exceptions;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.Author;
 
 public class AuthorService : GenericService<AuthorEntity, long>, IAuthorService
 {
-    public AuthorService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    public AuthorService(IUnitOfWork unitOfWork, IQuery<AuthorEntity, long> query) : base(unitOfWork, query)
     {
     }
 
