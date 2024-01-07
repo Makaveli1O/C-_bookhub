@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.Filter;
+using BusinessLayer.DTOs.Book.Update;
 using BusinessLayer.Facades.Book;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +29,7 @@ public class BookController : ControllerBase
 
     [HttpPut]
     [Route("{id}")]
-    public async Task<IActionResult> UpdateBook(long id, CreateBookDto updateBookDto)
+    public async Task<IActionResult> UpdateBook(long id, UpdateBookDto updateBookDto)
     {
         return Ok(await _bookFacade.UpdateBookAsync(id, updateBookDto));
     }

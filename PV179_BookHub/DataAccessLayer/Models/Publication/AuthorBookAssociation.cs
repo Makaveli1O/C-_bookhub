@@ -13,4 +13,6 @@ public class AuthorBookAssociation : BaseEntity
     public virtual long BookId { get; set; }
     [ForeignKey(nameof(BookId))]
     public virtual Book? Book { get; set; }
+    [Required]
+    public bool IsPrimary {  get; set; }
 }

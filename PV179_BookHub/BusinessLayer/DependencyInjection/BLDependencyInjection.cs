@@ -23,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BusinessLayer.Mappers.Enitity;
 using BusinessLayer.Mappers;
 using Microsoft.Extensions.Caching.Memory;
+using BusinessLayer.Services.AuthorBookAssociation;
 
 namespace BusinessLayer.DependencyInjection;
 
@@ -57,6 +58,8 @@ public static class BLDependencyInjection
         services.AddScoped<IGenericService<Publisher, long>, PublisherService>();
         services.AddScoped<IPublisherFacade, PublisherFacade>();
 
+        services.AddScoped<IAuthorBookAsssociationService, AuthorBookAsssociationService>();
+        
         services.AddScoped<IGenericService<Book, long>, BookService>();
         services.AddScoped<IBookFacade, BookFacade>();
 
@@ -78,7 +81,7 @@ public static class BLDependencyInjection
         services.AddScoped<IBookStoreFacade, BookStoreFacade>();
     }
 
-    private static void RegisterMemoryCatche(IServiceCollection services)
+    private static void RegisterMemoryCache(IServiceCollection services)
     {
         services.AddScoped<IMemoryCache, MemoryCache>();
     }
@@ -87,6 +90,6 @@ public static class BLDependencyInjection
     {
         RegisterMappers(services);
         RegisterServicesAndFacades(services);
-        RegisterMemoryCatche(services);
+        RegisterMemoryCache(services);
     }
 }

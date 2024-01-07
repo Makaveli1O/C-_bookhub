@@ -35,7 +35,8 @@ public class BookService : GenericService<BookEntity, long>
                 id, 
                 x => x.Authors, 
                 x => x.Reviews, 
-                x => x.Publisher
+                x => x.Publisher,
+                x => x.AuthorBookAssociations
             );
 
         if (book == null)

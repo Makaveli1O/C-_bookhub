@@ -21,12 +21,7 @@
         {
             <tr>
                 <td>@book.Title</td>
-                <td>
-                    @foreach (var author in book.Authors)
-                    {
-                        <span>@author.Name</span>
-                    }
-                </td>
+                <td>@book.Author</td>
                 <td>@book.BookGenre</td>
 
             </tr>
