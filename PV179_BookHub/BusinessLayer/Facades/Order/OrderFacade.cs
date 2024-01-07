@@ -21,13 +21,14 @@ public class OrderFacade : BaseFacade, IOrderFacade
     private readonly IGenericService<BookEntity, long> _bookService;
     private readonly IInventoryItemService _inventoryItemService;
 
-    public OrderFacade(IMapper mapper, 
-        IOrderService orderService, 
+    public OrderFacade(IMapper mapper,
+        IOrderService orderService,
         IGenericService<OrderItemEntity, long> orderItemService,
         IGenericService<UserEntity, long> userService,
         IGenericService<BookEntity, long> bookService,
-        IInventoryItemService inventoryItemService
-        ) : base(mapper)
+        IInventoryItemService inventoryItemService,
+        IMemoryCache memoryCache
+        ) : base(mapper, memoryCache, "order-")
     {
         _orderService = orderService;
         _orderItemService = orderItemService;

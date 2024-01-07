@@ -18,7 +18,7 @@ public class WishListFacade : BaseFacade, IWishListFacade
     public WishListFacade(IMapper mapper,
                           IGenericService<WishListEntity, long> wishListService,
                           IGenericService<WishListItemEntity, long> wishListItemService,
-                          IGenericService<BookEntity, long> bookService)
+                          IGenericService<BookEntity, long> bookService,
                           IMemoryCache memoryCache)
         : base(mapper, memoryCache, "wishlist-")
     {
