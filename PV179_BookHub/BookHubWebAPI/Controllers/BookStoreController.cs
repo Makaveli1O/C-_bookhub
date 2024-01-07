@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using BookHubWebAPI.Api.BookStore.Create;
-using BookHubWebAPI.Api.BookStore.View;
-using DataAccessLayer.Models;
-using Infrastructure.UnitOfWork;
+﻿using BusinessLayer.DTOs.BookStore.Create;
+using BusinessLayer.Facades.BookStore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
@@ -11,73 +8,49 @@ namespace BookHubWebAPI.Controllers;
 [Route("[controller]")]
 public class BookStoreController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
+    private readonly IBookStoreFacade _bookStoreFacade;
+    private readonly IInventoryItemFacade _inventoryItemFacade;
 
-    public BookStoreController(IUnitOfWork unitOfWork, IMapper mapper)
+    public BookStoreController(IBookStoreFacade bookStoreFacade, IInventoryItemFacade inventoryItemFacade)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
+        _bookStoreFacade = bookStoreFacade;
+        _inventoryItemFacade = inventoryItemFacade;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAllBookStores()
     {
-        var bookStore = await _unitOfWork.BookStoreRepository.GetAllAsync();
-        return Ok(_mapper.Map<List<DetailedBookStoreViewDto>>(bookStore));
+        return Ok(await _bookStoreFacade.GetAllBookStores());
     }
 
     [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> GetBookStore(long id)
     {
-        var bookStore = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
-        return Ok(_mapper.Map<DetailedBookStoreViewDto>(bookStore));
+        return Ok(await _bookStoreFacade.GetBookStore(id));
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateBookStore(CreateBookStoreDto createBookStoreDto)
     {
-        var bookStore = _mapper.Map<BookStore>(createBookStoreDto);
-
-        await _unitOfWork.BookStoreRepository.AddAsync(bookStore);
-        await _unitOfWork.CommitAsync();
-
+        var newBookStore = await _bookStoreFacade.CreateBookStore(createBookStoreDto);
         return Created(
-            new Uri($"{Request.Path}/{bookStore.Id}", UriKind.Relative),
-            _mapper.Map<DetailedBookStoreViewDto>(bookStore));
+            new Uri($"{Request.Path}/{newBookStore.Id}", UriKind.Relative), newBookStore);
     }
 
     [HttpPut]
     [Route("{id}")]
-    public async Task<IActionResult> UpdateBookStore(long id, CreateBookStoreDto createBookStoreDto)
+    public async Task<IActionResult> UpdateBookStore(long id, CreateBookStoreDto updateBookStoreDto)
     {
-        var bookStore = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
-        if (bookStore != null)
-        {
-            bookStore.AddressId = createBookStoreDto.AddressId;
-            bookStore.ManagerId = createBookStoreDto.ManagerId;
-            bookStore.Name = createBookStoreDto.Name;
-            bookStore.PhoneNumber = createBookStoreDto.PhoneNumber;
-            bookStore.Email = createBookStoreDto.Email;
-
-            _unitOfWork.BookStoreRepository.Update(bookStore);
-            await _unitOfWork.CommitAsync();
-        }
-        return Ok(_mapper.Map<DetailedBookStoreViewDto>(bookStore));
+        return Ok(await _bookStoreFacade.UpdateBookStore(id, updateBookStoreDto));
     }
-
+    
 
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeleteBookStore(long id)
     {
-        var bookStore = await _unitOfWork.BookStoreRepository.GetByIdAsync(id);
-        if (bookStore != null)
-        {
-            _unitOfWork.BookStoreRepository.Delete(bookStore);
-            await _unitOfWork.CommitAsync();
-        }
+        await _bookStoreFacade.DeleteBookStore(id);
         return NoContent();
     }
 
@@ -86,60 +59,37 @@ public class BookStoreController : ControllerBase
     [Route("Inventory")]
     public async Task<IActionResult> GetAllInventoryItems()
     {
-        var inventoryItems = await _unitOfWork.InventoryItemRepository.GetAllAsync();
-        return Ok(_mapper.Map<List<DetailedInventoryItemViewDto>>(inventoryItems));
+        return Ok(await _inventoryItemFacade.GetAllInventoryItems());
     }
 
     [HttpGet]
     [Route("Inventory/{id}")]
     public async Task<IActionResult> GetInventoryItem(long id)
     {
-        var inventoryItems = await _unitOfWork.InventoryItemRepository.GetByIdAsync(id);
-        return Ok(_mapper.Map<DetailedInventoryItemViewDto>(inventoryItems));
+        return Ok(await _inventoryItemFacade.GetInventoryItem(id));
     }
 
     [HttpPost]
     [Route("Inventory")]
     public async Task<IActionResult> CreateInventoryItem(CreateInventoryItemDto createInventoryItemDto)
     {
-        var inventoryItem = _mapper.Map<InventoryItem>(createInventoryItemDto);
-
-        await _unitOfWork.InventoryItemRepository.AddAsync(inventoryItem);
-        await _unitOfWork.CommitAsync();
-
+        var newInventoryItem = await _inventoryItemFacade.CreateInventoryItem(createInventoryItemDto);
         return Created(
-            new Uri($"{Request.Path}/{inventoryItem.Id}", UriKind.Relative),
-            _mapper.Map<DetailedInventoryItemViewDto>(inventoryItem));
+            new Uri($"{Request.Path}/{newInventoryItem.BookStoreId}", UriKind.Relative), newInventoryItem);
     }
 
     [HttpPut]
     [Route("Inventory/{id}")]
-    public async Task<IActionResult> UpdateInventoryItem(long id, CreateInventoryItemDto createInventoryItemDto)
+    public async Task<IActionResult> UpdateInventoryItem(long id, CreateInventoryItemDto updateInventoryItemDto)
     {
-        var inventoryItem = await _unitOfWork.InventoryItemRepository.GetByIdAsync(id);
-        if (inventoryItem != null)
-        {
-            inventoryItem.InStock = createInventoryItemDto.InStock;
-            inventoryItem.LastRestock = createInventoryItemDto.LastRestock;
-            inventoryItem.BookStoreId = createInventoryItemDto.BookStoreId;
-            inventoryItem.BookId = createInventoryItemDto.BookId;
-
-            _unitOfWork.InventoryItemRepository.Update(inventoryItem);
-            await _unitOfWork.CommitAsync();
-        }
-        return Ok(_mapper.Map<DetailedInventoryItemViewDto>(inventoryItem));
+        return Ok(await _inventoryItemFacade.UpdateInventoryItem(id, updateInventoryItemDto));
     }
 
     [HttpDelete]
     [Route("Inventory/{id}")]
     public async Task<IActionResult> DeleteInventoryItem(long id)
     {
-        var inventoryItem = await _unitOfWork.InventoryItemRepository.GetByIdAsync(id);
-        if (inventoryItem != null)
-        {
-            _unitOfWork.InventoryItemRepository.Delete(inventoryItem);
-            await _unitOfWork.CommitAsync();
-        }
+        await _inventoryItemFacade.DeleteInventoryItem(id);
         return NoContent();
     }
 }

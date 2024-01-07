@@ -21,403 +21,7 @@ namespace DAL.SQLite.Migrations.Migrations
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true);
 
-            modelBuilder.Entity("DataAccessLayer.Models.Address", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Street")
-                        .HasMaxLength(30)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("StreetNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Addresses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            City = "Brno",
-                            PostalCode = "602 00",
-                            State = "Czech Republic",
-                            Street = "Palackého třída",
-                            StreetNumber = "191/241"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            City = "Sampletown",
-                            PostalCode = "67890",
-                            State = "NY",
-                            Street = "456 Elm St",
-                            StreetNumber = "Unit 7"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            City = "Testville",
-                            PostalCode = "45678",
-                            State = "TX",
-                            Street = "789 Oak Ave",
-                            StreetNumber = "Suite 2C"
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            City = "Mockington",
-                            PostalCode = "90123",
-                            State = "FL",
-                            Street = "101 Pine Rd",
-                            StreetNumber = "Apt 6D"
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            City = "Trialsville",
-                            PostalCode = "34567",
-                            State = "IL",
-                            Street = "222 Cedar Ln",
-                            StreetNumber = "Unit 5A"
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            City = "Sample Springs",
-                            PostalCode = "78901",
-                            State = "AZ",
-                            Street = "333 Birch St",
-                            StreetNumber = "Suite 3B"
-                        },
-                        new
-                        {
-                            Id = 7L,
-                            City = "Illustration City",
-                            PostalCode = "23456",
-                            State = "WA",
-                            Street = "444 Redwood Ave",
-                            StreetNumber = "Apt 2F"
-                        },
-                        new
-                        {
-                            Id = 8L,
-                            City = "Instanceville",
-                            PostalCode = "56789",
-                            State = "OR",
-                            Street = "555 Sycamore Rd",
-                            StreetNumber = "Unit 4E"
-                        },
-                        new
-                        {
-                            Id = 9L,
-                            City = "Demo Town",
-                            PostalCode = "12345",
-                            State = "NM",
-                            Street = "666 Elm St",
-                            StreetNumber = "Suite 1A"
-                        },
-                        new
-                        {
-                            Id = 10L,
-                            City = "Example Springs",
-                            PostalCode = "67890",
-                            State = "NV",
-                            Street = "777 Oak Ave",
-                            StreetNumber = "Apt 5B"
-                        },
-                        new
-                        {
-                            Id = 11L,
-                            City = "Testington",
-                            PostalCode = "45678",
-                            State = "UT",
-                            Street = "888 Maple Ln",
-                            StreetNumber = "Unit 3C"
-                        });
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Book", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Author")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("BookGenre")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(700)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("REAL");
-
-                    b.Property<string>("Publisher")
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Author = "Jamie Chan",
-                            BookGenre = 28,
-                            Description = "Have you always wanted to learn computer programming but are afraid it'll be too difficult for you? Or perhaps you know other programming languages but are interested in learning the C# language fast? This book is for you. You no longer have to waste your time and money learning C# from boring books that are 600 pages long, expensive online courses or complicated C# tutorials that just leave you more confused.",
-                            ISBN = "978-1518800276",
-                            Price = 10.58,
-                            Publisher = "CreateSpace Independent Publishing Platform",
-                            Title = "Learn C# in One Day and Learn It Well"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Author = "Rafal Swidzinski",
-                            BookGenre = 28,
-                            Description = "Creating top-notch software is an extremely difficult undertaking. Developers researching the subject have difficulty determining which advice is up to date and which approaches have already been replaced by easier, better practices. At the same time, most online resources offer limited explanation, while also lacking the proper context and structure.",
-                            ISBN = "978-1801070058",
-                            Price = 35.990000000000002,
-                            Publisher = "Packt Publishing",
-                            Title = "Modern CMake for C++: Discover a better approach to building, testing, and packaging your software"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Author = "J.K. Rowling",
-                            BookGenre = 5,
-                            Description = "Harry Potter has no idea how famous he is. That's because he's being raised by his miserable aunt and uncle who are terrified Harry will learn that he's really a wizard, just as his parents were. But everything changes when Harry is summoned to attend an infamous school for wizards, and he begins to discover some clues about his illustrious birthright. From the surprising way he is greeted by a lovable giant, to the unique curriculum and colorful faculty at his unusual school, Harry finds himself drawn deep inside a mystical world he never knew existed and closer to his own noble destiny.",
-                            ISBN = "978-1338878929",
-                            Price = 6.7999999999999998,
-                            Publisher = "Scholastic",
-                            Title = "Harry Potter and the Sorcerer's Stone"
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            Author = "J.K. Rowling",
-                            BookGenre = 5,
-                            Description = "The Dursleys were so mean and hideous that summer that all Harry Potter wanted was to get back to the Hogwarts School for Witchcraft and Wizardry. But just as he's packing his bags, Harry receives a warning from a strange, impish creature named Dobby who says that if Harry Potter returns to Hogwarts, disaster will strike. And strike it does. For in Harry's second year at Hogwarts, fresh torments and horrors arise, including an outrageously stuck-up new professor, Gilderoy Lockhart, a spirit named Moaning Myrtle who haunts the girls' bathroom, and the unwanted attentions of Ron Weasley's younger sister, Ginny.",
-                            ISBN = "978-1338878936",
-                            Price = 6.2999999999999998,
-                            Publisher = "Scholastic",
-                            Title = "Harry Potter and the Chamber of Secrets"
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            Author = "J.K. Rowling",
-                            BookGenre = 5,
-                            Description = "For twelve long years, the dread fortress of Azkaban held an infamous prisoner named Sirius Black. Convicted of killing thirteen people with a single curse, he was said to be the heir apparent to the Dark Lord, Voldemort.Now he has escaped, leaving only two clues as to where he might be headed: Harry Potter's defeat of You-Know-Who was Black's downfall as well. And the Azkaban guards heard Black muttering in his sleep, \"He's at Hogwarts... he's at Hogwarts.\"Harry Potter isn't safe, not even within the walls of his magical school, surrounded by his friends. Because on top of it all, there may be a traitor in their midst.",
-                            ISBN = "978-1338299168",
-                            Price = 8.1999999999999993,
-                            Publisher = "Scholastic",
-                            Title = "Harry Potter and the Prisoner of Azkaban"
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            Author = "J.K. Rowling",
-                            BookGenre = 5,
-                            Description = "Harry wants to get away from the pernicious Dursleys and go to the International Quidditch Cup with Hermione, Ron, and the Weasleys. He wants to dream about Cho Chang, his crush (and maybe do more than dream). He wants to find out about the mysterious event involving two other rival schools of magic, and a competition that hasn't happened for a hundred years. He wants to be a normal, fourteen-year-old wizard. Unfortunately for Harry Potter, he's not normal - even by wizarding standards.And in this case, different can be deadly.",
-                            ISBN = "978-1338878950",
-                            Price = 11.99,
-                            Publisher = "Scholastic",
-                            Title = "Harry Potter and the Goblet of Fire"
-                        },
-                        new
-                        {
-                            Id = 7L,
-                            Author = "J.K. Rowling",
-                            BookGenre = 5,
-                            Description = "There is a door at the end of a silent corridor. And it's haunting Harry Potter's dreams. Why else would he be waking in the middle of the night, screaming in terror?It's not just the upcoming O.W.L. exams; a new teacher with a personality like poisoned honey; a venomous, disgruntled house-elf; or even the growing threat of He-Who-Must-Not-Be-Named. Now Harry Potter is faced with the unreliability of the very government of the magical world and the impotence of the authorities at Hogwarts.Despite this (or perhaps because of it), he finds depth and strength in his friends, beyond what even he knew; boundless loyalty; and unbearable sacrifice.",
-                            ISBN = "978-1338299182",
-                            Price = 9.3000000000000007,
-                            Publisher = "Scholastic",
-                            Title = "Harry Potter and the Order of the Phoenix"
-                        },
-                        new
-                        {
-                            Id = 8L,
-                            Author = "J.K. Rowling",
-                            BookGenre = 5,
-                            Description = "The war against Voldemort is not going well; even Muggle governments are noticing. Ron scans the obituary pages of the Daily Prophet, looking for familiar names. Dumbledore is absent from Hogwarts for long stretches of time, and the Order of the Phoenix has already suffered losses. And yet... As in all wars, life goes on. Sixth-year students learn to Apparate - and lose a few eyebrows in the process. The Weasley twins expand their business. Teenagers flirt and fight and fall in love. Classes are never straightforward, though Harry receives some extraordinary help from the mysterious Half-Blood Prince.",
-                            ISBN = "978-1338878974",
-                            Price = 9.3499999999999996,
-                            Publisher = "Scholastic",
-                            Title = "Harry Potter and the Half-Blood Prince"
-                        },
-                        new
-                        {
-                            Id = 9L,
-                            Author = "J.K. Rowling",
-                            BookGenre = 5,
-                            Description = "Will Harry die in the final battle against the mighty Voldemort? Maybe. Just read the book and you will find out.",
-                            ISBN = "978-1408855713",
-                            Price = 8.9499999999999993,
-                            Publisher = "Scholastic",
-                            Title = "Harry Potter and the Deathly Hallows"
-                        },
-                        new
-                        {
-                            Id = 10L,
-                            Author = "Jack Sparknotes",
-                            BookGenre = 2,
-                            Description = "Gripping mystery novel that delves into a world of secrets, where a seemingly ordinary door conceals a web of intrigue, unsolved crimes, and dark truths. As the detective Mike unravels the mysteries lurking \"behind the real door,\" the line between reality and illusion blurs, keeping readers on the edge of their seats until the shocking climax.",
-                            ISBN = "121-1409055700",
-                            Price = 120.2,
-                            Publisher = "Next door Publishing",
-                            Title = "Behind the real door"
-                        },
-                        new
-                        {
-                            Id = 11L,
-                            Author = "Jack Sparknotes",
-                            BookGenre = 2,
-                            Description = "In 'Whispers in the Shadows,' a small, enigmatic town hides dark secrets. As a series of eerie whispers and unexplained phenomena plague its residents, a determined investigator Mike must unearth the truth, facing a tangled web of deceit, paranormal occurrences, and a past that refuses to stay buried. With every page, the mystery deepens, keeping readers spellbound.",
-                            ISBN = "121-1409055701",
-                            Price = 119.98999999999999,
-                            Publisher = "Next door Publishing",
-                            Title = "Whispers in the Shadows"
-                        },
-                        new
-                        {
-                            Id = 12L,
-                            Author = "Matej K.",
-                            BookGenre = 36,
-                            Description = "Matej K., one of the greatest programmers and mathematicians of all time is sharing some of his knowledge with the readers. In his endles list of successes he helped Elon Musk build the ship to Mars, ended the world hunger and created a completly new approach to AI. Join him in this journey accross universes and take a glimpse look into his life full of interesting events.",
-                            ISBN = "420-4204204200",
-                            Price = 30.989999999999998,
-                            Publisher = "Matej K.",
-                            Title = "Memoirs of the Matej K., the great one"
-                        },
-                        new
-                        {
-                            Id = 13L,
-                            Author = "K. Racer",
-                            BookGenre = 13,
-                            Description = "Discover a world of gastronomic pleasures in 'Culinary Delights.' This recipe book takes you on a mouthwatering journey through diverse cuisines, offering a delightful array of dishes from appetizers to desserts. Whether you're a novice cook or a seasoned chef, you'll find inspiration and easy-to-follow recipes that will tantalize your taste buds and elevate your culinary skills.",
-                            ISBN = "321-7503791824",
-                            Price = 15.0,
-                            Publisher = "World Wide Publishing",
-                            Title = "Culinary Delights"
-                        },
-                        new
-                        {
-                            Id = 14L,
-                            Author = "Mark Zuckerberg",
-                            BookGenre = 53,
-                            Description = "Hi, my name is Mark, the CEO of Meta. Eons ago I created a funny app for sharing called facebook. In this book I will present to you, my audience (or simply my subjects), how we, the lizzardmen, are sharing data. This guide is mainly for children.",
-                            ISBN = "816-0815794691",
-                            Price = 0.5,
-                            Publisher = "Facebook Publishing Company",
-                            Title = "How to teach kids to share"
-                        },
-                        new
-                        {
-                            Id = 15L,
-                            Author = "Heisenberg",
-                            BookGenre = 11,
-                            Description = "From the periodic table to chemical reactions, this book demystifies the complexities of chemistry. Engaging explanations and real-world applications make it a captivating journey through the science that shapes our daily lives, from the laboratory to the natural world.",
-                            ISBN = "936-7213567800",
-                            Price = 9.9900000000000002,
-                            Publisher = "Hachette UK",
-                            Title = "Elemental: How the Periodic Table Can Now Explain (Nearly) Everything"
-                        },
-                        new
-                        {
-                            Id = 16L,
-                            Author = "Samantha Mitchell",
-                            BookGenre = 11,
-                            Description = "Join Sarah on a breathtaking adventure to unravel the mysteries of the skies. \"Eternal Skies\" explores meteorology and the wonders of the atmosphere, revealing the secrets hidden in every cloud and the magic of the ever-changing weather. A perfect guide for aspiring meteorologists and weather enthusiasts.",
-                            ISBN = "978-1234567890",
-                            Price = 24.989999999999998,
-                            Publisher = "Horizon Publications",
-                            Title = "Eternal Skies"
-                        },
-                        new
-                        {
-                            Id = 17L,
-                            Author = "James R. Anderson",
-                            BookGenre = 11,
-                            Description = "Dr. Amelia Stanton embarks on a thrilling archaeological quest to decode an ancient scroll. Uncover lost civilizations, hidden treasures, and cryptic messages as you follow her journey through time and space in \"Secrets of the Lost Scroll.\"",
-                            ISBN = "111-2850195739",
-                            Price = 18.949999999999999,
-                            Publisher = "Enigma Press",
-                            Title = "Secrets of the Lost Scroll"
-                        },
-                        new
-                        {
-                            Id = 18L,
-                            Author = "Bjarne Stroustrup",
-                            BookGenre = 28,
-                            Description = "Bjarne Stroustrup provides an overview of ISO C++, C++20, that aims to give experienced programmers a clear understanding of what constitutes modern C++. Featuring carefully crafted examples and practical help in getting started, this revised and updated edition concisely covers most major language features and the major standard-library components needed for effective use.",
-                            ISBN = "978-0136816485",
-                            Price = 29.989999999999998,
-                            Publisher = "Addison-Wesley Professional",
-                            Title = "Tour of C++"
-                        },
-                        new
-                        {
-                            Id = 19L,
-                            Author = "Frank Miller",
-                            BookGenre = 45,
-                            Description = "In 1986, Frank Miller and David Mazzucchelli produced this groundbreaking reinterpretation of the origin of Batman—who he is, and how he came to be. Sometimes careless and naive, this Dark Knight is far from the flawless vigilante he is today.In his first year on the job, Batman feels his way around a Gotham City far darker than the one he left. His solemn vow to extinguish the town’s criminal element is only half the battle; along with Lieutenant James Gordon, the Dark Knight must also fight a police force more corrupt than the scum in the streets.",
-                            ISBN = "978-0290204890",
-                            Price = 9.2899999999999991,
-                            Publisher = "DC Comics",
-                            Title = "Batman: Year One"
-                        },
-                        new
-                        {
-                            Id = 20L,
-                            Author = "Alan Moore",
-                            BookGenre = 45,
-                            Description = "Now Batman must race to stop his archnemesis before his reign of terror claims two of the Dark Knight's closest friends. Can he finally put an end to the cycle of bloodlust and lunacy that links these two iconic foes before it leads to its fatal conclusion? And as the horrifying origin of the Clown Prince of Crime is finally revealed, will the thin line that separates Batman's nobility and the Joker's insanity snap once and for all?",
-                            ISBN = "978-1401294052",
-                            Price = 11.19,
-                            Publisher = "DC Comics",
-                            Title = "Batman the Killing Joke: The Deluxe Edition"
-                        });
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.BookReview", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Account.BookReview", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -663,7 +267,307 @@ namespace DAL.SQLite.Migrations.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.BookStore", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Account.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Salt")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            PasswordHash = "954b39223c4cfd375e5b41ef79cdbe5cacaf9176",
+                            Role = 2,
+                            Salt = "8y4z6E",
+                            UserName = "Housemaster111"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            PasswordHash = "b5d66e00c0673d769f25c9919756341d34162cef",
+                            Role = 1,
+                            Salt = "3M9r1N",
+                            UserName = "olivia.johnson@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            PasswordHash = "fd3a0c6a60faa4f9e487f04e153f17919219bcbc",
+                            Role = 0,
+                            Salt = "ab7x9D",
+                            UserName = "liamthereaded"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            PasswordHash = "319f1f56edd200d17f693ee08180db1a8367be87",
+                            Role = 0,
+                            Salt = "aA8f9B",
+                            UserName = "emily_j"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            PasswordHash = "3b0e9558746f94f4fc36e307e5d78e86a37c6cca",
+                            Role = 0,
+                            Salt = "7K6p2h",
+                            UserName = "booklover88"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            PasswordHash = "67df5688eeff6daee952323aac4626a3c80f15c6",
+                            Role = 0,
+                            Salt = "1F5a3G",
+                            UserName = "maplewoodhighschool@edu.com"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            PasswordHash = "34b18f3e9b6795760e5246ce3fe534c53c9ecc6a",
+                            Role = 0,
+                            Salt = "fffA34",
+                            UserName = "Ethan Parker"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            PasswordHash = "2c4e2bcbb76a1125e3ed5a075ad850b8317f8dca",
+                            Role = 0,
+                            Salt = "9W2u1T",
+                            UserName = "codingWizard42"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            PasswordHash = "71a3b4d4e831e1a365ef1924ac2d05c8b64f7ad4",
+                            Role = 0,
+                            Salt = "7D1x4C",
+                            UserName = "bookworm"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            PasswordHash = "3e08d29af755dd663110b04c7c4136a98b4309a6",
+                            Role = 0,
+                            Salt = "2M3v8N",
+                            UserName = "22avidReader22"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            PasswordHash = "9b6039d84c9e6a08f7e7c810161c4b9aa2e6b1a3",
+                            Role = 0,
+                            Salt = "5P1t8R",
+                            UserName = "programmingGuru"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            PasswordHash = "9ef6ec5ec7f6101e0e37d680d41cb6c1a8b15a39",
+                            Role = 0,
+                            Salt = "0G8j6L",
+                            UserName = "mysteryFanatic"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            PasswordHash = "6a0b488fdb654fca6f366126b2a7c3a3ce2b93ff",
+                            Role = 0,
+                            Salt = "2R1n3T",
+                            UserName = "techEnthusiast"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            PasswordHash = "524bfcf1ff68e8d6f7684819469329c2723e7d91",
+                            Role = 0,
+                            Salt = "4K6q8p",
+                            UserName = "foodLover88"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            PasswordHash = "319ffa6d3266e2e2c6306348b91289d1a838b2ea",
+                            Role = 0,
+                            Salt = "3D6g3B",
+                            UserName = "John the Ripper"
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            PasswordHash = "6f8625099e98e6e0c810ba0979db55c36961f7a2",
+                            Role = 0,
+                            Salt = "1E5v3H",
+                            UserName = "Samuel Johnson"
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            PasswordHash = "53dcbf0fb77f0d16fa8f682d30a0f5c18c5f5db0",
+                            Role = 0,
+                            Salt = "2P5n4H",
+                            UserName = "joe11@yahoo.com"
+                        });
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Logistics.Address", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StreetNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            City = "Brno",
+                            PostalCode = "602 00",
+                            State = "Czech Republic",
+                            Street = "Palackého třída",
+                            StreetNumber = "191/241"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            City = "Sampletown",
+                            PostalCode = "67890",
+                            State = "NY",
+                            Street = "456 Elm St",
+                            StreetNumber = "Unit 7"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            City = "Testville",
+                            PostalCode = "45678",
+                            State = "TX",
+                            Street = "789 Oak Ave",
+                            StreetNumber = "Suite 2C"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            City = "Mockington",
+                            PostalCode = "90123",
+                            State = "FL",
+                            Street = "101 Pine Rd",
+                            StreetNumber = "Apt 6D"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            City = "Trialsville",
+                            PostalCode = "34567",
+                            State = "IL",
+                            Street = "222 Cedar Ln",
+                            StreetNumber = "Unit 5A"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            City = "Sample Springs",
+                            PostalCode = "78901",
+                            State = "AZ",
+                            Street = "333 Birch St",
+                            StreetNumber = "Suite 3B"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            City = "Illustration City",
+                            PostalCode = "23456",
+                            State = "WA",
+                            Street = "444 Redwood Ave",
+                            StreetNumber = "Apt 2F"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            City = "Instanceville",
+                            PostalCode = "56789",
+                            State = "OR",
+                            Street = "555 Sycamore Rd",
+                            StreetNumber = "Unit 4E"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            City = "Demo Town",
+                            PostalCode = "12345",
+                            State = "NM",
+                            Street = "666 Elm St",
+                            StreetNumber = "Suite 1A"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            City = "Example Springs",
+                            PostalCode = "67890",
+                            State = "NV",
+                            Street = "777 Oak Ave",
+                            StreetNumber = "Apt 5B"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            City = "Testington",
+                            PostalCode = "45678",
+                            State = "UT",
+                            Street = "888 Maple Ln",
+                            StreetNumber = "Unit 3C"
+                        });
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Logistics.BookStore", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -793,7 +697,7 @@ namespace DAL.SQLite.Migrations.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.InventoryItem", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Logistics.InventoryItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1622,7 +1526,749 @@ namespace DAL.SQLite.Migrations.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.Order", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Preferences.WishList", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("WishList");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2209),
+                            Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.",
+                            UserId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2260),
+                            Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.",
+                            UserId = 2L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2262),
+                            Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!",
+                            UserId = 3L
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2263),
+                            Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!",
+                            UserId = 4L
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2265),
+                            Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.",
+                            UserId = 5L
+                        });
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Preferences.WishListItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BookId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<uint>("PreferencePriority")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("WishListId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("WishListId");
+
+                    b.ToTable("WishListItem");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            BookId = 1L,
+                            PreferencePriority = 1u,
+                            WishListId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            BookId = 2L,
+                            PreferencePriority = 1u,
+                            WishListId = 2L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            BookId = 18L,
+                            PreferencePriority = 2u,
+                            WishListId = 2L
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            BookId = 3L,
+                            PreferencePriority = 1u,
+                            WishListId = 3L
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            BookId = 4L,
+                            PreferencePriority = 2u,
+                            WishListId = 3L
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            BookId = 5L,
+                            PreferencePriority = 0u,
+                            WishListId = 3L
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            BookId = 6L,
+                            PreferencePriority = 1u,
+                            WishListId = 4L
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            BookId = 7L,
+                            PreferencePriority = 1u,
+                            WishListId = 5L
+                        });
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.Author", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Biography")
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Biography = "Get to know me, pal",
+                            Name = "Jamie Chan"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Biography = "Kung-fu movie legend from China",
+                            Name = "Jackie Chan"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Biography = "Once upon a time I was dreaming of being a book author",
+                            Name = "Rafal Swidzinski"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Biography = "Enchanting readers with magical worlds in Harry Potter series, a testament to creativity and resilience",
+                            Name = "J.K. Rowling"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Biography = "Pioneer of science fiction, exploring robotics and future societies through visionary storytelling",
+                            Name = "Jack Sparknotes"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Biography = "The great one",
+                            Name = "Matej K."
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Biography = "Poetic voice of resilience and hope, inspiring through eloquence and empowerment",
+                            Name = "K. Racer"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Biography = "Born as a man that fights with lizzard powers",
+                            Name = "Mark Zuckerberg"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Biography = "Say my name!",
+                            Name = "Heisenberg"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Biography = "Himsical wordsmith, sparking imagination with playful rhymes and unforgettable characters",
+                            Name = "James R. Anderson"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Biography = "Master of horror, crafting chilling tales that delve into the human psyche and fears",
+                            Name = "Bjarne Stroustrup"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            Name = "Frank Miller"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            Name = "Alan Moore"
+                        });
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.AuthorBookAssociation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BookId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("AuthorBookAssociations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            AuthorId = 1L,
+                            BookId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            AuthorId = 2L,
+                            BookId = 1L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            AuthorId = 3L,
+                            BookId = 2L
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            AuthorId = 4L,
+                            BookId = 3L
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            AuthorId = 4L,
+                            BookId = 4L
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            AuthorId = 4L,
+                            BookId = 5L
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            AuthorId = 4L,
+                            BookId = 6L
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            AuthorId = 4L,
+                            BookId = 7L
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            AuthorId = 4L,
+                            BookId = 8L
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            AuthorId = 4L,
+                            BookId = 9L
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            AuthorId = 5L,
+                            BookId = 10L
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            AuthorId = 5L,
+                            BookId = 11L
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            AuthorId = 6L,
+                            BookId = 12L
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            AuthorId = 7L,
+                            BookId = 13L
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            AuthorId = 8L,
+                            BookId = 14L
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            AuthorId = 9L,
+                            BookId = 15L
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            AuthorId = 10L,
+                            BookId = 17L
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            AuthorId = 11L,
+                            BookId = 18L
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            AuthorId = 12L,
+                            BookId = 19L
+                        },
+                        new
+                        {
+                            Id = 20L,
+                            AuthorId = 13L,
+                            BookId = 20L
+                        });
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.Book", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BookGenre")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(700)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
+
+                    b.Property<long>("PublisherId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PublisherId");
+
+                    b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            BookGenre = 28,
+                            Description = "Have you always wanted to learn computer programming but are afraid it'll be too difficult for you? Or perhaps you know other programming languages but are interested in learning the C# language fast? This book is for you. You no longer have to waste your time and money learning C# from boring books that are 600 pages long, expensive online courses or complicated C# tutorials that just leave you more confused.",
+                            ISBN = "978-1518800276",
+                            Price = 10.58,
+                            PublisherId = 1L,
+                            Title = "Learn C# in One Day and Learn It Well"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            BookGenre = 28,
+                            Description = "Creating top-notch software is an extremely difficult undertaking. Developers researching the subject have difficulty determining which advice is up to date and which approaches have already been replaced by easier, better practices. At the same time, most online resources offer limited explanation, while also lacking the proper context and structure.",
+                            ISBN = "978-1801070058",
+                            Price = 35.990000000000002,
+                            PublisherId = 2L,
+                            Title = "Modern CMake for C++: Discover a better approach to building, testing, and packaging your software"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            BookGenre = 5,
+                            Description = "Harry Potter has no idea how famous he is. That's because he's being raised by his miserable aunt and uncle who are terrified Harry will learn that he's really a wizard, just as his parents were. But everything changes when Harry is summoned to attend an infamous school for wizards, and he begins to discover some clues about his illustrious birthright. From the surprising way he is greeted by a lovable giant, to the unique curriculum and colorful faculty at his unusual school, Harry finds himself drawn deep inside a mystical world he never knew existed and closer to his own noble destiny.",
+                            ISBN = "978-1338878929",
+                            Price = 6.7999999999999998,
+                            PublisherId = 3L,
+                            Title = "Harry Potter and the Sorcerer's Stone"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            BookGenre = 5,
+                            Description = "The Dursleys were so mean and hideous that summer that all Harry Potter wanted was to get back to the Hogwarts School for Witchcraft and Wizardry. But just as he's packing his bags, Harry receives a warning from a strange, impish creature named Dobby who says that if Harry Potter returns to Hogwarts, disaster will strike. And strike it does. For in Harry's second year at Hogwarts, fresh torments and horrors arise, including an outrageously stuck-up new professor, Gilderoy Lockhart, a spirit named Moaning Myrtle who haunts the girls' bathroom, and the unwanted attentions of Ron Weasley's younger sister, Ginny.",
+                            ISBN = "978-1338878936",
+                            Price = 6.2999999999999998,
+                            PublisherId = 3L,
+                            Title = "Harry Potter and the Chamber of Secrets"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            BookGenre = 5,
+                            Description = "For twelve long years, the dread fortress of Azkaban held an infamous prisoner named Sirius Black. Convicted of killing thirteen people with a single curse, he was said to be the heir apparent to the Dark Lord, Voldemort.Now he has escaped, leaving only two clues as to where he might be headed: Harry Potter's defeat of You-Know-Who was Black's downfall as well. And the Azkaban guards heard Black muttering in his sleep, \"He's at Hogwarts... he's at Hogwarts.\"Harry Potter isn't safe, not even within the walls of his magical school, surrounded by his friends. Because on top of it all, there may be a traitor in their midst.",
+                            ISBN = "978-1338299168",
+                            Price = 8.1999999999999993,
+                            PublisherId = 3L,
+                            Title = "Harry Potter and the Prisoner of Azkaban"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            BookGenre = 5,
+                            Description = "Harry wants to get away from the pernicious Dursleys and go to the International Quidditch Cup with Hermione, Ron, and the Weasleys. He wants to dream about Cho Chang, his crush (and maybe do more than dream). He wants to find out about the mysterious event involving two other rival schools of magic, and a competition that hasn't happened for a hundred years. He wants to be a normal, fourteen-year-old wizard. Unfortunately for Harry Potter, he's not normal - even by wizarding standards.And in this case, different can be deadly.",
+                            ISBN = "978-1338878950",
+                            Price = 11.99,
+                            PublisherId = 3L,
+                            Title = "Harry Potter and the Goblet of Fire"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            BookGenre = 5,
+                            Description = "There is a door at the end of a silent corridor. And it's haunting Harry Potter's dreams. Why else would he be waking in the middle of the night, screaming in terror?It's not just the upcoming O.W.L. exams; a new teacher with a personality like poisoned honey; a venomous, disgruntled house-elf; or even the growing threat of He-Who-Must-Not-Be-Named. Now Harry Potter is faced with the unreliability of the very government of the magical world and the impotence of the authorities at Hogwarts.Despite this (or perhaps because of it), he finds depth and strength in his friends, beyond what even he knew; boundless loyalty; and unbearable sacrifice.",
+                            ISBN = "978-1338299182",
+                            Price = 9.3000000000000007,
+                            PublisherId = 3L,
+                            Title = "Harry Potter and the Order of the Phoenix"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            BookGenre = 5,
+                            Description = "The war against Voldemort is not going well; even Muggle governments are noticing. Ron scans the obituary pages of the Daily Prophet, looking for familiar names. Dumbledore is absent from Hogwarts for long stretches of time, and the Order of the Phoenix has already suffered losses. And yet... As in all wars, life goes on. Sixth-year students learn to Apparate - and lose a few eyebrows in the process. The Weasley twins expand their business. Teenagers flirt and fight and fall in love. Classes are never straightforward, though Harry receives some extraordinary help from the mysterious Half-Blood Prince.",
+                            ISBN = "978-1338878974",
+                            Price = 9.3499999999999996,
+                            PublisherId = 3L,
+                            Title = "Harry Potter and the Half-Blood Prince"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            BookGenre = 5,
+                            Description = "Will Harry die in the final battle against the mighty Voldemort? Maybe. Just read the book and you will find out.",
+                            ISBN = "978-1408855713",
+                            Price = 8.9499999999999993,
+                            PublisherId = 3L,
+                            Title = "Harry Potter and the Deathly Hallows"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            BookGenre = 2,
+                            Description = "Gripping mystery novel that delves into a world of secrets, where a seemingly ordinary door conceals a web of intrigue, unsolved crimes, and dark truths. As the detective Mike unravels the mysteries lurking \"behind the real door,\" the line between reality and illusion blurs, keeping readers on the edge of their seats until the shocking climax.",
+                            ISBN = "121-1409055700",
+                            Price = 120.2,
+                            PublisherId = 4L,
+                            Title = "Behind the real door"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            BookGenre = 2,
+                            Description = "In 'Whispers in the Shadows,' a small, enigmatic town hides dark secrets. As a series of eerie whispers and unexplained phenomena plague its residents, a determined investigator Mike must unearth the truth, facing a tangled web of deceit, paranormal occurrences, and a past that refuses to stay buried. With every page, the mystery deepens, keeping readers spellbound.",
+                            ISBN = "121-1409055701",
+                            Price = 119.98999999999999,
+                            PublisherId = 4L,
+                            Title = "Whispers in the Shadows"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            BookGenre = 36,
+                            Description = "Matej K., one of the greatest programmers and mathematicians of all time is sharing some of his knowledge with the readers. In his endles list of successes he helped Elon Musk build the ship to Mars, ended the world hunger and created a completly new approach to AI. Join him in this journey accross universes and take a glimpse look into his life full of interesting events.",
+                            ISBN = "420-4204204200",
+                            Price = 30.989999999999998,
+                            PublisherId = 5L,
+                            Title = "Memoirs of the Matej K., the great one"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            BookGenre = 13,
+                            Description = "Discover a world of gastronomic pleasures in 'Culinary Delights.' This recipe book takes you on a mouthwatering journey through diverse cuisines, offering a delightful array of dishes from appetizers to desserts. Whether you're a novice cook or a seasoned chef, you'll find inspiration and easy-to-follow recipes that will tantalize your taste buds and elevate your culinary skills.",
+                            ISBN = "321-7503791824",
+                            Price = 15.0,
+                            PublisherId = 6L,
+                            Title = "Culinary Delights"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            BookGenre = 53,
+                            Description = "Hi, my name is Mark, the CEO of Meta. Eons ago I created a funny app for sharing called facebook. In this book I will present to you, my audience (or simply my subjects), how we, the lizzardmen, are sharing data. This guide is mainly for children.",
+                            ISBN = "816-0815794691",
+                            Price = 0.5,
+                            PublisherId = 7L,
+                            Title = "How to teach kids to share"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            BookGenre = 11,
+                            Description = "From the periodic table to chemical reactions, this book demystifies the complexities of chemistry. Engaging explanations and real-world applications make it a captivating journey through the science that shapes our daily lives, from the laboratory to the natural world.",
+                            ISBN = "936-7213567800",
+                            Price = 9.9900000000000002,
+                            PublisherId = 8L,
+                            Title = "Elemental: How the Periodic Table Can Now Explain (Nearly) Everything"
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            BookGenre = 11,
+                            Description = "Join Sarah on a breathtaking adventure to unravel the mysteries of the skies. \"Eternal Skies\" explores meteorology and the wonders of the atmosphere, revealing the secrets hidden in every cloud and the magic of the ever-changing weather. A perfect guide for aspiring meteorologists and weather enthusiasts.",
+                            ISBN = "978-1234567890",
+                            Price = 24.989999999999998,
+                            PublisherId = 9L,
+                            Title = "Eternal Skies"
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            BookGenre = 11,
+                            Description = "Dr. Amelia Stanton embarks on a thrilling archaeological quest to decode an ancient scroll. Uncover lost civilizations, hidden treasures, and cryptic messages as you follow her journey through time and space in \"Secrets of the Lost Scroll.\"",
+                            ISBN = "111-2850195739",
+                            Price = 18.949999999999999,
+                            PublisherId = 10L,
+                            Title = "Secrets of the Lost Scroll"
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            BookGenre = 28,
+                            Description = "Bjarne Stroustrup provides an overview of ISO C++, C++20, that aims to give experienced programmers a clear understanding of what constitutes modern C++. Featuring carefully crafted examples and practical help in getting started, this revised and updated edition concisely covers most major language features and the major standard-library components needed for effective use.",
+                            ISBN = "978-0136816485",
+                            Price = 29.989999999999998,
+                            PublisherId = 11L,
+                            Title = "Tour of C++"
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            BookGenre = 45,
+                            Description = "In 1986, Frank Miller and David Mazzucchelli produced this groundbreaking reinterpretation of the origin of Batman—who he is, and how he came to be. Sometimes careless and naive, this Dark Knight is far from the flawless vigilante he is today.In his first year on the job, Batman feels his way around a Gotham City far darker than the one he left. His solemn vow to extinguish the town’s criminal element is only half the battle; along with Lieutenant James Gordon, the Dark Knight must also fight a police force more corrupt than the scum in the streets.",
+                            ISBN = "978-0290204890",
+                            Price = 9.2899999999999991,
+                            PublisherId = 12L,
+                            Title = "Batman: Year One"
+                        },
+                        new
+                        {
+                            Id = 20L,
+                            BookGenre = 45,
+                            Description = "Now Batman must race to stop his archnemesis before his reign of terror claims two of the Dark Knight's closest friends. Can he finally put an end to the cycle of bloodlust and lunacy that links these two iconic foes before it leads to its fatal conclusion? And as the horrifying origin of the Clown Prince of Crime is finally revealed, will the thin line that separates Batman's nobility and the Joker's insanity snap once and for all?",
+                            ISBN = "978-1401294052",
+                            Price = 11.19,
+                            PublisherId = 12L,
+                            Title = "Batman the Killing Joke: The Deluxe Edition"
+                        });
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.Publisher", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("TEXT");
+
+                    b.Property<ushort>("YearFounded")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Publishers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            City = "London",
+                            Country = "United Kingdom",
+                            Name = "CreateSpace Independent Publishing Platform",
+                            YearFounded = (ushort)2008
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            City = "London",
+                            Country = "United Kingdom",
+                            Name = "Packt Publishing",
+                            YearFounded = (ushort)2003
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            City = "New York",
+                            Country = "United States",
+                            Name = "Scholastic",
+                            YearFounded = (ushort)1995
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Country = "France",
+                            Name = "Next door Publishing",
+                            YearFounded = (ushort)2022
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            City = "Nove Zamky",
+                            Country = "Slovakia",
+                            Name = "Matej K.",
+                            YearFounded = (ushort)2020
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            City = "Los Angeles",
+                            Country = "United States",
+                            Name = "World Wide Publishing",
+                            YearFounded = (ushort)2005
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            City = "Mark",
+                            Country = "Zuckerbergland",
+                            Name = "Facebook Publishing Company",
+                            YearFounded = (ushort)890
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Name = "Hachette UK",
+                            YearFounded = (ushort)1989
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            City = "Tokyo",
+                            Country = "Japan",
+                            Name = "Horizon Publications",
+                            YearFounded = (ushort)2013
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            City = "Berlin",
+                            Country = "Germany",
+                            Name = "Enigma Press",
+                            YearFounded = (ushort)1942
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Country = "Ireland",
+                            Name = "Addison-Wesley Professional",
+                            YearFounded = (ushort)2018
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            City = "Las Vegas",
+                            Country = "United States",
+                            Name = "DC Comics",
+                            YearFounded = (ushort)2010
+                        });
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Purchasing.Order", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1633,9 +2279,6 @@ namespace DAL.SQLite.Migrations.Migrations
 
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("REAL");
 
                     b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
@@ -1650,134 +2293,118 @@ namespace DAL.SQLite.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1305),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2278),
                             State = 3,
-                            TotalPrice = 0.0,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1308),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2282),
                             State = 0,
-                            TotalPrice = 6.7999999999999998,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1310),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2284),
                             State = 0,
-                            TotalPrice = 13.1,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1313),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2285),
                             State = 2,
-                            TotalPrice = 11.99,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1315),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2287),
                             State = 1,
-                            TotalPrice = 111.90000000000001,
                             UserId = 6L
                         },
                         new
                         {
                             Id = 6L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1317),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2289),
                             State = 1,
-                            TotalPrice = 60.799999999999997,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 7L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1319),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2291),
                             State = 3,
-                            TotalPrice = 0.0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 8L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1321),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2293),
                             State = 3,
-                            TotalPrice = 0.0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 9L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1323),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2294),
                             State = 0,
-                            TotalPrice = 0.0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 10L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1326),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2296),
                             State = 1,
-                            TotalPrice = 747.60000000000002,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 11L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1328),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2298),
                             State = 1,
-                            TotalPrice = 80.019999999999996,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 12L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1330),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2299),
                             State = 0,
-                            TotalPrice = 45.990000000000002,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 13L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1332),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2301),
                             State = 0,
-                            TotalPrice = 0.0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 14L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1334),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2303),
                             State = 3,
-                            TotalPrice = 240.09,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 15L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1337),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2304),
                             State = 1,
-                            TotalPrice = 0.5,
                             UserId = 15L
                         },
                         new
                         {
                             Id = 16L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1339),
+                            CreatedAt = new DateTime(2023, 11, 26, 11, 30, 45, 161, DateTimeKind.Local).AddTicks(2306),
                             State = 1,
-                            TotalPrice = 24.989999999999998,
                             UserId = 15L
                         });
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.OrderItem", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Purchasing.OrderItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2018,322 +2645,15 @@ namespace DAL.SQLite.Migrations.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.User", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Account.BookReview", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Salt")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            PasswordHash = "954b39223c4cfd375e5b41ef79cdbe5cacaf9176",
-                            Role = 2,
-                            Salt = "8y4z6E",
-                            UserName = "Housemaster111"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            PasswordHash = "b5d66e00c0673d769f25c9919756341d34162cef",
-                            Role = 1,
-                            Salt = "3M9r1N",
-                            UserName = "olivia.johnson@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            PasswordHash = "fd3a0c6a60faa4f9e487f04e153f17919219bcbc",
-                            Role = 0,
-                            Salt = "ab7x9D",
-                            UserName = "liamthereaded"
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            PasswordHash = "319f1f56edd200d17f693ee08180db1a8367be87",
-                            Role = 0,
-                            Salt = "aA8f9B",
-                            UserName = "emily_j"
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            PasswordHash = "3b0e9558746f94f4fc36e307e5d78e86a37c6cca",
-                            Role = 0,
-                            Salt = "7K6p2h",
-                            UserName = "booklover88"
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            PasswordHash = "67df5688eeff6daee952323aac4626a3c80f15c6",
-                            Role = 0,
-                            Salt = "1F5a3G",
-                            UserName = "maplewoodhighschool@edu.com"
-                        },
-                        new
-                        {
-                            Id = 7L,
-                            PasswordHash = "34b18f3e9b6795760e5246ce3fe534c53c9ecc6a",
-                            Role = 0,
-                            Salt = "fffA34",
-                            UserName = "Ethan Parker"
-                        },
-                        new
-                        {
-                            Id = 8L,
-                            PasswordHash = "2c4e2bcbb76a1125e3ed5a075ad850b8317f8dca",
-                            Role = 0,
-                            Salt = "9W2u1T",
-                            UserName = "codingWizard42"
-                        },
-                        new
-                        {
-                            Id = 9L,
-                            PasswordHash = "71a3b4d4e831e1a365ef1924ac2d05c8b64f7ad4",
-                            Role = 0,
-                            Salt = "7D1x4C",
-                            UserName = "bookworm"
-                        },
-                        new
-                        {
-                            Id = 10L,
-                            PasswordHash = "3e08d29af755dd663110b04c7c4136a98b4309a6",
-                            Role = 0,
-                            Salt = "2M3v8N",
-                            UserName = "22avidReader22"
-                        },
-                        new
-                        {
-                            Id = 11L,
-                            PasswordHash = "9b6039d84c9e6a08f7e7c810161c4b9aa2e6b1a3",
-                            Role = 0,
-                            Salt = "5P1t8R",
-                            UserName = "programmingGuru"
-                        },
-                        new
-                        {
-                            Id = 12L,
-                            PasswordHash = "9ef6ec5ec7f6101e0e37d680d41cb6c1a8b15a39",
-                            Role = 0,
-                            Salt = "0G8j6L",
-                            UserName = "mysteryFanatic"
-                        },
-                        new
-                        {
-                            Id = 13L,
-                            PasswordHash = "6a0b488fdb654fca6f366126b2a7c3a3ce2b93ff",
-                            Role = 0,
-                            Salt = "2R1n3T",
-                            UserName = "techEnthusiast"
-                        },
-                        new
-                        {
-                            Id = 14L,
-                            PasswordHash = "524bfcf1ff68e8d6f7684819469329c2723e7d91",
-                            Role = 0,
-                            Salt = "4K6q8p",
-                            UserName = "foodLover88"
-                        },
-                        new
-                        {
-                            Id = 15L,
-                            PasswordHash = "319ffa6d3266e2e2c6306348b91289d1a838b2ea",
-                            Role = 0,
-                            Salt = "3D6g3B",
-                            UserName = "John the Ripper"
-                        },
-                        new
-                        {
-                            Id = 16L,
-                            PasswordHash = "6f8625099e98e6e0c810ba0979db55c36961f7a2",
-                            Role = 0,
-                            Salt = "1E5v3H",
-                            UserName = "Samuel Johnson"
-                        },
-                        new
-                        {
-                            Id = 17L,
-                            PasswordHash = "53dcbf0fb77f0d16fa8f682d30a0f5c18c5f5db0",
-                            Role = 0,
-                            Salt = "2P5n4H",
-                            UserName = "joe11@yahoo.com"
-                        });
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.WishList", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("TEXT");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("WishList");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1231),
-                            Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.",
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1283),
-                            Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.",
-                            UserId = 2L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1285),
-                            Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!",
-                            UserId = 3L
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1287),
-                            Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!",
-                            UserId = 4L
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            CreatedAt = new DateTime(2023, 10, 29, 20, 11, 17, 913, DateTimeKind.Local).AddTicks(1289),
-                            Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.",
-                            UserId = 5L
-                        });
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.WishListItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("BookId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<uint>("PreferencePriorty")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("WishListId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("WishListId");
-
-                    b.ToTable("WishListItem");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            BookId = 1L,
-                            PreferencePriorty = 1u,
-                            WishListId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            BookId = 2L,
-                            PreferencePriorty = 1u,
-                            WishListId = 2L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            BookId = 18L,
-                            PreferencePriorty = 2u,
-                            WishListId = 2L
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            BookId = 3L,
-                            PreferencePriorty = 1u,
-                            WishListId = 3L
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            BookId = 4L,
-                            PreferencePriorty = 2u,
-                            WishListId = 3L
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            BookId = 5L,
-                            PreferencePriorty = 0u,
-                            WishListId = 3L
-                        },
-                        new
-                        {
-                            Id = 7L,
-                            BookId = 6L,
-                            PreferencePriorty = 1u,
-                            WishListId = 4L
-                        },
-                        new
-                        {
-                            Id = 8L,
-                            BookId = 7L,
-                            PreferencePriorty = 1u,
-                            WishListId = 5L
-                        });
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.BookReview", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Book", "Book")
+                    b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
                         .WithMany("Reviews")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccessLayer.Models.User", "Reviewer")
+                    b.HasOne("DataAccessLayer.Models.Account.User", "Reviewer")
                         .WithMany("BookReviews")
                         .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2344,18 +2664,18 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Navigation("Reviewer");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.BookStore", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Logistics.BookStore", b =>
                 {
-                    b.HasOne("DataAccessLayer.Models.Address", "Address")
+                    b.HasOne("DataAccessLayer.Models.Logistics.Address", "Address")
                         .WithOne("BookStore")
-                        .HasForeignKey("DataAccessLayer.Models.BookStore", "AddressId")
+                        .HasForeignKey("DataAccessLayer.Models.Logistics.BookStore", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccessLayer.Models.User", "Manager")
+                    b.HasOne("DataAccessLayer.Models.Account.User", "Manager")
                         .WithOne("BookStore")
-                        .HasForeignKey("DataAccessLayer.Models.BookStore", "ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("DataAccessLayer.Models.Logistics.BookStore", "ManagerId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Address");
@@ -2363,18 +2683,18 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.InventoryItem", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Logistics.InventoryItem", b =>
                 {
-                    b.HasOne("DataAccessLayer.Models.Book", "Book")
+                    b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
                         .WithMany("InventoryItems")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccessLayer.Models.BookStore", "BookStore")
+                    b.HasOne("DataAccessLayer.Models.Logistics.BookStore", "BookStore")
                         .WithMany("InventoryItems")
                         .HasForeignKey("BookStoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
@@ -2382,9 +2702,69 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Navigation("BookStore");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.Order", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Preferences.WishList", b =>
                 {
-                    b.HasOne("DataAccessLayer.Models.User", "User")
+                    b.HasOne("DataAccessLayer.Models.Account.User", "Creator")
+                        .WithMany("WishLists")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Preferences.WishListItem", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
+                        .WithMany("WishListItems")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccessLayer.Models.Preferences.WishList", "WishList")
+                        .WithMany("WishListItems")
+                        .HasForeignKey("WishListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("WishList");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.AuthorBookAssociation", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Publication.Author", "Author")
+                        .WithMany("AuthorBookAssociations")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
+                        .WithMany("AuthorBookAssociations")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.Book", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Publication.Publisher", "Publisher")
+                        .WithMany("Books")
+                        .HasForeignKey("PublisherId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Purchasing.Order", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Account.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2393,21 +2773,21 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.OrderItem", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Purchasing.OrderItem", b =>
                 {
-                    b.HasOne("DataAccessLayer.Models.Book", "Book")
+                    b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
                         .WithMany("OrderItems")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccessLayer.Models.BookStore", "BookStore")
+                    b.HasOne("DataAccessLayer.Models.Logistics.BookStore", "BookStore")
                         .WithMany("OrderItems")
                         .HasForeignKey("BookStoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccessLayer.Models.Order", "Order")
+                    b.HasOne("DataAccessLayer.Models.Purchasing.Order", "Order")
                         .WithMany("Items")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2420,65 +2800,7 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.WishList", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.User", "Creator")
-                        .WithMany("WishLists")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Creator");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.WishListItem", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Book", "Book")
-                        .WithMany("WishListItems")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Models.WishList", "WishList")
-                        .WithMany("WishListItems")
-                        .HasForeignKey("WishListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("WishList");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Address", b =>
-                {
-                    b.Navigation("BookStore");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Book", b =>
-                {
-                    b.Navigation("InventoryItems");
-
-                    b.Navigation("OrderItems");
-
-                    b.Navigation("Reviews");
-
-                    b.Navigation("WishListItems");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.BookStore", b =>
-                {
-                    b.Navigation("InventoryItems");
-
-                    b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Order", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.User", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Account.User", b =>
                 {
                     b.Navigation("BookReviews");
 
@@ -2489,9 +2811,49 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Navigation("WishLists");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.WishList", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Logistics.Address", b =>
+                {
+                    b.Navigation("BookStore");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Logistics.BookStore", b =>
+                {
+                    b.Navigation("InventoryItems");
+
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Preferences.WishList", b =>
                 {
                     b.Navigation("WishListItems");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.Author", b =>
+                {
+                    b.Navigation("AuthorBookAssociations");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.Book", b =>
+                {
+                    b.Navigation("AuthorBookAssociations");
+
+                    b.Navigation("InventoryItems");
+
+                    b.Navigation("OrderItems");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("WishListItems");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.Publisher", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Purchasing.Order", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

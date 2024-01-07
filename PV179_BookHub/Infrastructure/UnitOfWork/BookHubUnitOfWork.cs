@@ -1,38 +1,67 @@
 ﻿using DataAccessLayer.Data;
-using DataAccessLayer.Models;
+using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Logistics;
+using DataAccessLayer.Models.Preferences;
+using DataAccessLayer.Models.Publication;
+using DataAccessLayer.Models.Purchasing;
+using Infrastructure.Exceptions;
 using Infrastructure.Repository;
-using Infrastructure.Repository.EntityRepositories;
 
 namespace Infrastructure.UnitOfWork;
 
 public class BookHubUnitOfWork : IUnitOfWork
 {
     private readonly BookHubDbContext _dbContext;
-    private BookStoreRepository? _bookStoreRepository;
-    private InventoryItemRepository? _inventoryItemRepository;
-    private BookRepository? _bookRepository;
-    private WishListRepository? _wishListRepository;
-    private WishListItemRepository? _wishListItemRepository;
-    private OrderRepository? _orderRepository;
-    private OrderItemRepository? _orderItemRepository;
-    private UserRepository? _userRepository;
-    private BookReviewRepository? _bookReviewRepository;
-    private AddressRepository? _addressRepository;
 
-    public IGenericRepository<BookStore> BookStoreRepository => _bookStoreRepository ??= new BookStoreRepository(_dbContext);
-    public IGenericRepository<InventoryItem> InventoryItemRepository => _inventoryItemRepository ??= new InventoryItemRepository(_dbContext);
-    public IGenericRepository<Book> BookRepository => _bookRepository ??= new BookRepository(_dbContext);
-    public IGenericRepository<WishList> WishListRepository => _wishListRepository ??= new WishListRepository(_dbContext);
-    public IGenericRepository<WishListItem> WishListItemRepository => _wishListItemRepository ??= new WishListItemRepository(_dbContext);
-    public IGenericRepository<Order> OrderRepository => _orderRepository ??= new OrderRepository(_dbContext);
-    public IGenericRepository<OrderItem> OrderItemRepository => _orderItemRepository ??= new OrderItemRepository(_dbContext);
-    public IGenericRepository<BookReview> BookReviewRepository => _bookReviewRepository ??= new BookReviewRepository(_dbContext);
-    public IGenericRepository<User> UserRepository => _userRepository ??= new UserRepository(_dbContext);
-    public IGenericRepository<Address> AddressRepository => _addressRepository ??= new AddressRepository(_dbContext);
-    
+    private GenericRepository<Author, long>? _authorRepository;
+    private GenericRepository<Publisher, long>? _publisherRepository;
+    private GenericRepository<BookStore, long>? _bookStoreRepository;
+    private GenericRepository<AuthorBookAssociation, long>? _authorBookAssociationRepository;
+    private GenericRepository<InventoryItem, long>? _inventoryItemRepository;
+    private GenericRepository<Book, long>? _bookRepository;
+    private GenericRepository<WishList, long>? _wishListRepository;
+    private GenericRepository<WishListItem, long>? _wishListItemRepository;
+    private GenericRepository<Order, long>? _orderRepository;
+    private GenericRepository<OrderItem, long>? _orderItemRepository;
+    private GenericRepository<User, long>? _userRepository;
+    private GenericRepository<BookReview, long>? _bookReviewRepository;
+    private GenericRepository<Address, long>? _addressRepository;
+
+    public IGenericRepository<Author, long> AuthorRepository => _authorRepository ??= new GenericRepository<Author, long>(_dbContext);
+    public IGenericRepository<Publisher, long> PublisherRepository => _publisherRepository ??= new GenericRepository<Publisher, long>(_dbContext);
+    public IGenericRepository<BookStore, long> BookStoreRepository => _bookStoreRepository ??= new GenericRepository<BookStore, long>(_dbContext);
+    public IGenericRepository<AuthorBookAssociation, long> AuthorBookAssociationRepository => _authorBookAssociationRepository ??= new GenericRepository<AuthorBookAssociation, long>(_dbContext);
+    public IGenericRepository<InventoryItem, long> InventoryItemRepository => _inventoryItemRepository ??= new GenericRepository<InventoryItem, long>(_dbContext);
+    public IGenericRepository<Book, long> BookRepository => _bookRepository ??= new GenericRepository<Book, long>(_dbContext);
+    public IGenericRepository<WishList, long> WishListRepository => _wishListRepository ??= new GenericRepository<WishList, long>(_dbContext);
+    public IGenericRepository<WishListItem, long> WishListItemRepository => _wishListItemRepository ??= new GenericRepository<WishListItem, long>(_dbContext);
+    public IGenericRepository<Order, long> OrderRepository => _orderRepository ??= new GenericRepository<Order, long>(_dbContext);
+    public IGenericRepository<OrderItem, long> OrderItemRepository => _orderItemRepository ??= new GenericRepository<OrderItem, long>(_dbContext);
+    public IGenericRepository<BookReview, long> BookReviewRepository => _bookReviewRepository ??= new GenericRepository<BookReview, long>(_dbContext);
+    public IGenericRepository<User, long> UserRepository => _userRepository ??= new GenericRepository<User, long>(_dbContext);
+    public IGenericRepository<Address, long> AddressRepository => _addressRepository ??= new GenericRepository<Address, long>(_dbContext);
+
     public BookHubUnitOfWork(BookHubDbContext dbContext)
     {
         _dbContext = dbContext;
+    }
+
+    public IGenericRepository<TEntity, TKey> GetRepositoryByEntity<TEntity, TKey>() where TEntity : class
+    {
+        var repository = GetType()
+            .GetProperties()
+            .Where(x => x.PropertyType == typeof(IGenericRepository<TEntity, TKey>))
+            .FirstOrDefault()?
+            .GetValue(this);
+
+        if (repository == null)
+        {
+            throw new RepositoryNotFoundException(typeof(TEntity));
+        }
+        else
+        {
+            return (IGenericRepository<TEntity, TKey>) repository;
+        }
     }
 
     public void Commit()
@@ -52,7 +81,6 @@ public class BookHubUnitOfWork : IUnitOfWork
     public void Dispose()
     {
         Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     protected virtual void Dispose(bool disposing)

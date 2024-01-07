@@ -10,10 +10,6 @@ actor Admin as adm
 actor Manager as mgr
 actor User as usr
 
-usr <|-- mgr
-mgr <|-- adm
-
-
 
 rectangle BookHub {
 note "For simplicity, 'manage' can be considered \n as standard set of CRUD operations." as nt
@@ -29,9 +25,6 @@ usecase (Manage His Book Ratings) as Rate_book
 usecase (Manage Books) as M_book
 }
 
-note "The Admin is allowed to Manage Accounts, \n Orders, etc. of other Users and Managers as well." as adm_note
-adm .. adm_note
-
 usr --> auth
 usr --> M_acc
 usr --> M_ord
@@ -43,5 +36,8 @@ adm --> M_store
 adm --> M_book
 
 mgr --> M_inv
+
+mgr --> auth
+adm --> auth
 
 @enduml

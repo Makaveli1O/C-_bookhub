@@ -2,18 +2,16 @@
 
 namespace Infrastructure.Repository;
 
-public interface IGenericRepository<TEntity> where TEntity : class
+public interface IGenericRepository<TEntity, TKey> where TEntity : class
 {
-    void Add(TEntity entity);
+    public string KeyName { get; }
+    IQueryable<TEntity> AsQueryable();
     Task AddAsync(TEntity entity);
+    Task AddRangeAsync(params TEntity[] entities);
     void Delete(TEntity entity);
     void Update(TEntity entity);
-    TEntity? GetById(long id);
-    Task<TEntity?> GetByIdAsync(long id);
-    IEnumerable<TEntity> GetAll();
-    Task<IEnumerable<TEntity>> GetAllAsync();
-    void SaveChanges();
+    Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter = null, params Expression<Func<TEntity, object>>[] includes);
+    Task<TEntity?> GetSingleAsync(Expression<Func<TEntity, bool>>? filter = null, params Expression<Func<TEntity, object>>[] includes);
+    Task<TEntity?> GetByIdAsync(TKey id, params Expression<Func<TEntity, object>>[] includes);
     Task SaveChangesAsync();
-    Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>>? filter);
-    Task<TEntity?> GetSingleFilteredAsync(Expression<Func<TEntity, bool>>? filter);
 }

@@ -1,54 +1,45 @@
 ﻿using AutoMapper;
-using BookHubWebAPI.Api.User.Create;
-using BookHubWebAPI.Api.User.View;
+using BusinessLayer.DTOs.User.Create;
+using BusinessLayer.DTOs.User.View;
+using BusinessLayer.Facades.Book;
+using BusinessLayer.Facades.User;
 using DataAccessLayer.Models;
+using DataAccessLayer.Models.Account;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Validations;
 
 namespace BookHubWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController : Controller
+public class UserController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
+    private readonly IUserFacade _userFacade;
 
-    public UserController(IUnitOfWork unitOfWork, IMapper mapper)
+    public UserController(IUserFacade bookFacade)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
+        _userFacade = bookFacade;
     }
 
     [HttpGet]
     public async Task<IActionResult> FetchAll()
     {
-        var users = await _unitOfWork.UserRepository.GetAllAsync();
-        return Ok(
-            _mapper.Map <List<GeneralUserViewDto>>(users));
+        return Ok(await _userFacade.FetchAllUsersAsync());
     }
 
     [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> FetchSingle(long id)
     {
-        var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
-
-        return Ok(
-            _mapper.Map<GeneralUserViewDto>(user)
-            );
+        return Ok(await _userFacade.FetchUserAsync(id));
     }
 
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeleteById(long id)
     {
-        var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
-        if (user != null)
-        {
-            _unitOfWork.UserRepository.Delete(user);
-            await _unitOfWork.CommitAsync();
-        }
+        await _userFacade.DeleteUserAsync(id);
         return NoContent();
     }
 
@@ -56,14 +47,10 @@ public class UserController : Controller
     public async Task<IActionResult> CreateUser(CreateUserDto createUserDto) 
     {
         //TODO PW encryption
-        var user = _mapper.Map<User>(createUserDto);
-
-        await _unitOfWork.UserRepository.AddAsync(user);
-        await _unitOfWork.CommitAsync();
-
+        var user = await _userFacade.CreateUserAsync(createUserDto);
         return Created(
               new Uri($"{Request.Path}/{user.Id}", UriKind.Relative),
-              _mapper.Map<GeneralUserViewDto>(user)
+              user
               );
     }
 
@@ -72,19 +59,7 @@ public class UserController : Controller
     public async Task<IActionResult> UpdateUser(long id, CreateUserDto createUserDto)
     {
         //TODO PW encryption stuff
-        var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
-        if (user != null)
-        {
-            user.UserName = createUserDto.UserName ?? user.UserName;
-            user.PasswordHash = createUserDto.PasswordHash ?? user.PasswordHash;
-            user.Salt = createUserDto.Salt ?? user.Salt;
-
-            _unitOfWork.UserRepository.Update(user);
-            await _unitOfWork.CommitAsync();
-        }
-
-        return Ok(
-            _mapper.Map<GeneralUserViewDto>(user)
-            );
+        var user = await _userFacade.UpdateUserAsync(id, createUserDto);
+        return Ok(user);
     }
 }

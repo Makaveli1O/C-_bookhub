@@ -1,29 +1,25 @@
 using BookHubWebAPI.Middleware;
-using DataAccessLayer.Data;
-using Infrastructure.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
+using BookHubWebAPI.Swagger;
 using Microsoft.OpenApi.Models;
+using DataAccessLayer.DependencyInjection;
+using Infrastructure.DependencyInjection;
+using BusinessLayer.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContextFactory<BookHubDbContext>(options =>
-{
-    var folder = Environment.SpecialFolder.LocalApplicationData;
-    var dbPath = Path.Join(Environment.GetFolderPath(folder), "BookHub.db");
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
 
-    options
-        .UseSqlite(
-            $"Data Source={dbPath}",
-            x => x.MigrationsAssembly("DAL.SQLite.Migrations")
-            )
-        .UseLazyLoadingProxies();
-});
-builder.Services.AddScoped<IUnitOfWork, BookHubUnitOfWork>();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.RegisterDALDependencies(configuration);
 
+builder.Services.RegisterInfrastructureDependencies();
+
+builder.Services.RegisterBLDependencies();
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -51,6 +47,13 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+
+    c.OperationFilter<FormatQueryParameterOperationFilter>(
+         "format",
+         "The format of the response",
+         "json",
+         new List<string> {"json", "xml"},
+         false);
 });
 
 builder.Services.AddLogging();
@@ -68,8 +71,11 @@ app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseHttpsRedirection();
 
-
 app.UseMiddleware<TokenAuthenticationMiddleware>();
+
+app.UseMiddleware<XmlResponseConverterMiddleware>();
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseAuthorization();
 
