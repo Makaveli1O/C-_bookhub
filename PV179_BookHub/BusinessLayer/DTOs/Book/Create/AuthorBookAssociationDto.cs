@@ -1,6 +1,6 @@
 ﻿namespace BusinessLayer.DTOs.Book.Create;
 
-public class AuthorAssocDto
+public class AuthorBookAssociationDto
 {
     public long Id { get; set; }
     public bool IsPrimary { get; set; }

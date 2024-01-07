@@ -31,7 +31,7 @@ public class BookFacade : BaseFacade, IBookFacade
         _authorBookAsssociationService = authorBookAsssociationService;
     }
 
-    private static void CheckForMultiplePrimaryAuthors(string title, IEnumerable<AuthorAssocDto>? authorAssocDto)
+    private static void CheckForMultiplePrimaryAuthors(string title, IEnumerable<AuthorBookAssociationDto>? authorAssocDto)
     {
         if (authorAssocDto?.Count(author => author.IsPrimary) > 1)
         {
@@ -39,7 +39,7 @@ public class BookFacade : BaseFacade, IBookFacade
         }
     }
 
-    private static IEnumerable<Tuple<long, bool>> ConvertAuthorAssociationDto(IEnumerable<AuthorAssocDto>? authorAssocDto)
+    private static IEnumerable<Tuple<long, bool>> ConvertAuthorAssociationDto(IEnumerable<AuthorBookAssociationDto>? authorAssocDto)
     {
         return authorAssocDto?
             .Select(author => new Tuple<long, bool>(author.Id, author.IsPrimary)) 
@@ -75,7 +75,7 @@ public class BookFacade : BaseFacade, IBookFacade
             && updateBookDto.PublisherId != book.PublisherId)
         {
             book.PublisherId = (long)updateBookDto.PublisherId;
-            book.Publisher = null;
+            book.Publisher = await _publisherService.FindByIdAsync(book.PublisherId);
         }
 
         book.Title = updateBookDto.Title ?? book.Title;
@@ -90,20 +90,95 @@ public class BookFacade : BaseFacade, IBookFacade
         return _mapper.Map<DetailedBookViewDto>(book);
     }
 
-    public async Task<DetailedBookViewDto> AssignAuthorToBook(long id, long authorId)
+    private static void CheckAuthorBookAssociations(long bookId, 
+        List<AuthorBookAssociationEntity> authorBookAssociations, bool isPrimary, bool force)
+    {
+        bool primaryExist = authorBookAssociations.Any(assoc => assoc.IsPrimary);
+
+        if (isPrimary && primaryExist)
+        {
+            if (!force)
+            {
+                throw new MultiplePrimaryAuthorsException(bookId);
+            }
+            else
+            {
+                authorBookAssociations.ForEach(assoc => assoc.IsPrimary = false);
+            }
+        }
+    }
+
+    private static IEnumerable<AuthorBookAssociationEntity> CheckAndModifyNewAuthorBookAssociations(
+        long bookId, List<AuthorBookAssociationEntity> authorBookAssociations, 
+        AuthorEntity newAuthor, bool isPrimary, bool force)
+    {
+        CheckAuthorBookAssociations(bookId, authorBookAssociations, isPrimary, force);
+
+        authorBookAssociations
+            .Add(new AuthorBookAssociationEntity() 
+            { 
+                Author =  newAuthor, 
+                BookId = bookId,
+                IsPrimary = isPrimary 
+            });
+
+        return authorBookAssociations;
+    }
+
+    public async Task<DetailedBookViewDto> AssignAuthorToBookAsync(long id, AuthorBookAssociationDto authorBookAssociation, bool force = false)
     {
         var book = await _bookService.FindByIdAsync(id);
-        var newAuthor = await _authorService.FindByIdAsync(authorId);
+        var newAuthor = await _authorService.FindByIdAsync(authorBookAssociation.Id);
 
         var authors = book.Authors?.ToList() ?? new List<AuthorEntity>();
 
-        if (authors.Any(auth => auth.Id == authorId))
+        if (authors.Any(auth => auth.Id == authorBookAssociation.Id))
         {
-            throw new AuthorBookAssociationException(id, authorId);
+            throw new AuthorBookAssociationException(id, authorBookAssociation.Id);
+        }
+        book.AuthorBookAssociations = CheckAndModifyNewAuthorBookAssociations(
+            book.Id, book.AuthorBookAssociations?.ToList() ?? new(), newAuthor, 
+            authorBookAssociation.IsPrimary, force);
+
+        await _bookService.UpdateAsync(book);
+
+        return _mapper.Map<DetailedBookViewDto>(book);
+    }
+
+    public async Task UnassignAuthorFromBookAsync(long bookId, long authorId)
+    {
+        var assoc = await _authorBookAsssociationService.FindByBookAndAuthorIdAsync(bookId, authorId);
+        await _authorBookAsssociationService.DeleteAsync(assoc);
+    }
+
+    private static IEnumerable<AuthorBookAssociationEntity> CheckAndModifyExistingAuthorBookAssociations(
+        long bookId, long authorId, List<AuthorBookAssociationEntity> authorBookAssociations, 
+        bool isPrimary, bool force)
+    {
+        CheckAuthorBookAssociations(bookId, authorBookAssociations, isPrimary, force);
+
+        var assoc = authorBookAssociations.FirstOrDefault(x => x.BookId == bookId && x.AuthorId == authorId);
+        if (assoc == null)
+        {
+            throw new NoSuchEntityException<long>(typeof(AuthorBookAssociationEntity));
+        }
+        assoc.IsPrimary = isPrimary;
+
+        return authorBookAssociations;
+    }
+
+    public async Task<DetailedBookViewDto> MakeUnmakeAuthorPrimaryAsync(long bookId, AuthorBookAssociationDto authorBookAssociation, bool force = false)
+    {
+        var book = await _bookService.FindByIdAsync(bookId);
+        var assocs = book.AuthorBookAssociations?.ToList() ?? new();
+        if (assocs.Count == 0)
+        {
+            throw new NoSuchEntityException<long>(typeof(AuthorBookAssociationEntity));
         }
 
-        authors.Add(newAuthor);
-        book.Authors = authors;
+        book.AuthorBookAssociations = CheckAndModifyExistingAuthorBookAssociations(bookId, 
+            authorBookAssociation.Id, assocs, authorBookAssociation.IsPrimary, force);
+
         await _bookService.UpdateAsync(book);
 
         return _mapper.Map<DetailedBookViewDto>(book);

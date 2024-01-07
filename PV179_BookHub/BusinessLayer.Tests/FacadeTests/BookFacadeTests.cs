@@ -54,11 +54,11 @@ public class BookFacadeTests
         var authors = TestDataInitializer.GetTestAuthors().Where(x => authorBookAssociations.Any(y => y.AuthorId == x.Id)).ToList();
         var publisher = TestDataInitializer.GetTestPublishers().First(x => x.Id == book.PublisherId);
 
-        var authorBookAssocDtos = new List<AuthorAssocDto>();
+        var authorBookAssocDtos = new List<AuthorBookAssociationDto>();
         foreach (var author in authors)
         {
             var authorBookAssoc = authorBookAssociations.First(x => x.AuthorId == author.Id);
-            authorBookAssocDtos.Add(new AuthorAssocDto() { Id = author.Id, IsPrimary = authorBookAssoc.IsPrimary });
+            authorBookAssocDtos.Add(new AuthorBookAssociationDto() { Id = author.Id, IsPrimary = authorBookAssoc.IsPrimary });
         }
 
         var bookDto = new CreateBookDto()
@@ -111,7 +111,7 @@ public class BookFacadeTests
             Title = book.Title,
             ISBN = book.ISBN,
             PublisherId = book.PublisherId,
-            AuthorIds = new List<AuthorAssocDto>(),
+            AuthorIds = new List<AuthorBookAssociationDto>(),
             BookGenre = book.BookGenre,
             Description = book.Description,
             Price = book.Price,
@@ -147,7 +147,7 @@ public class BookFacadeTests
             Title = book.Title,
             ISBN = book.ISBN,
             PublisherId = book.PublisherId,
-            AuthorIds = new List<AuthorAssocDto>() { new AuthorAssocDto() { Id = 1, IsPrimary = true} },
+            AuthorIds = new List<AuthorBookAssociationDto>() { new AuthorBookAssociationDto() { Id = 1, IsPrimary = true} },
             BookGenre = book.BookGenre,
             Description = book.Description,
             Price = book.Price,

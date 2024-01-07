@@ -1,4 +1,5 @@
-﻿using Infrastructure.Query;
+﻿using BusinessLayer.Exceptions;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.AuthorBookAssociation;
@@ -27,6 +28,19 @@ public class AuthorBookAsssociationService : GenericService<AuthorBookAssociatio
         await Repository.AddRangeAsync(result.ToArray());
 
         await SaveAsync(save);
+
+        return result;
+    }
+
+    public async Task<AuthorBookAssociationEntity> FindByBookAndAuthorIdAsync(long bookId, long authorId)
+    {
+        var result = await Repository
+            .GetSingleAsync(assoc => assoc.BookId == bookId && assoc.AuthorId == authorId);
+
+        if (result == null)
+        {
+            throw new NoSuchEntityException<long>(typeof(AuthorBookAssociationEntity));
+        }
 
         return result;
     }

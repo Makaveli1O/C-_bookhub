@@ -56,10 +56,25 @@ public class BookController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("{bookId}/{authorId}")]
-    public async Task<IActionResult> AssignAuthorToBook(long bookId, long authorId)
+    [Route("{id}")]
+    public async Task<IActionResult> AssignAuthorToBook(long id, AuthorBookAssociationDto authorBookAssociation, [FromQuery] bool force = false)
     {
-        return Ok(await _bookFacade.AssignAuthorToBook(bookId, authorId));
+        return Ok(await _bookFacade.AssignAuthorToBookAsync(id, authorBookAssociation, force));
+    }
+
+    [HttpDelete]
+    [Route("{bookId}/{authorId}")]
+    public async Task<IActionResult> UnassignAuthorFromBook(long bookId, long authorId)
+    {
+        await _bookFacade.UnassignAuthorFromBookAsync(bookId, authorId);
+        return NoContent();
+    }
+
+    [HttpPatch]
+    [Route("primary/{id}")]
+    public async Task<IActionResult> MakeUnmakeAuthorPrimary(long id, AuthorBookAssociationDto authorBookAssociation, [FromQuery] bool force = false)
+    {
+        return Ok(await _bookFacade.MakeUnmakeAuthorPrimaryAsync(id, authorBookAssociation, force));
     }
 
     [HttpGet]
