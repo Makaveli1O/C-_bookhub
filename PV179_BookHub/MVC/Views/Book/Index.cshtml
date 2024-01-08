@@ -1,7 +1,7 @@
-﻿@using BusinessLayer.DTOs.Address.View;
-@model IEnumerable<DetailedAddressView>
+﻿@using BusinessLayer.DTOs.Book.View;
+@model IEnumerable<GeneralBookViewDto>
 
-<h1>Book Stores</h1>
+<h1>Books</h1>
 
 <p class="text-end">
     @Html.ActionLink("Create New", "Create")
@@ -18,19 +18,19 @@
 <table class="table">
     <tr>
         <th>
-            State
+            Title
         </th>
         <th>
-            City
+            Authors
         </th>
         <th>
-            Street
+            Publisher
         </th>
         <th>
-            Street Number
+            Book Genre
         </th>
         <th>
-            Postal Code
+            Price
         </th>
         <th></th>
     </tr>
@@ -42,19 +42,19 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.State)
+                    @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.City)
+                    @Html.DisplayFor(modelItem => item.Authors)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Street)
+                    @Html.DisplayFor(modelItem => item.Publisher)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StreetNumber)
+                    @Html.DisplayFor(modelItem => item.BookGenre)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PostalCode)
+                    @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
@@ -66,6 +66,6 @@
     }
     else
     {
-        <td colspan="6" class="text-center"><b>No Addresses Availible. Please Add Data By CLicking On The Create Button</b></td>
+        <td colspan="6" class="text-center"><b>No Books Availible. Please Add Data By CLicking On The Create Button</b></td>
     }
 </table>

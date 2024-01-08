@@ -1,21 +1,21 @@
-﻿@using BusinessLayer.DTOs.Address.View;
-@model DetailedAddressView
+﻿@using BusinessLayer.DTOs.Publisher.View;
+@model DetailedPublisherViewDto
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete Address</h1>
+<h1>Delete Publisher</h1>
 <h3>Are you sure you want to delete this?</h3>
 <hr />
 
 <div>
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.State)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.State)
+            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.City)
@@ -24,22 +24,16 @@
             @Html.DisplayFor(model => model.City)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Street)
+            @Html.DisplayNameFor(model => model.Country)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Street)
+            @Html.DisplayFor(model => model.Country)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StreetNumber)
+            @Html.DisplayNameFor(model => model.YearFounded)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StreetNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PostalCode)
+            @Html.DisplayFor(model => model.YearFounded)
         </dd>
     </dl>
 

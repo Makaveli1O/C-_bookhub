@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.Models.Account;
-using DataAccessLayer.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Controllers;

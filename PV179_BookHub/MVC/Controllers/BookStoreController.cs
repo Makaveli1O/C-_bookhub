@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Facades.BookStore;
+using BusinessLayer.Facades.Address;
 using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +10,13 @@ namespace MVC.Controllers;
 public class BookStoreController : Controller
 {
     private readonly IBookStoreFacade _bookStoreFacade;
+    private readonly IAddressFacade _addressFacade;
     private readonly UserManager<LocalIdentityUser> _userManager;
-    // private readonly SignInManager<LocalIdentityUser> _signInManager;
 
-    public BookStoreController(IBookStoreFacade bookStoreFacade, UserManager<LocalIdentityUser> userManager)
+    public BookStoreController(IBookStoreFacade bookStoreFacade, IAddressFacade addressFacade, UserManager<LocalIdentityUser> userManager)
     {
         _bookStoreFacade = bookStoreFacade;
+        _addressFacade = addressFacade;
         _userManager = userManager;
     }
 
@@ -48,6 +50,8 @@ public class BookStoreController : Controller
     public async Task<IActionResult> Edit(int id)
     {
         var bookStoreDto = await _bookStoreFacade.GetBookStore(id);
+        var addresses = await _addressFacade.GetAllAddressesAsync();
+        ViewBag.Addresses = addresses.ToList();
         return View(bookStoreDto);
     }
 

@@ -1,33 +1,32 @@
-﻿using BusinessLayer.Facades.Address;
-using DataAccessLayer.Models.Account;
+﻿using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using BusinessLayer.DTOs.BookStore.Create;
+using BusinessLayer.Facades.Author;
+using BusinessLayer.DTOs.Author.Create;
 
 namespace MVC.Controllers;
 
-public class AddressController : Controller
+public class AuthorController : Controller
 {
-    private readonly IAddressFacade _addressFacade;
+    private readonly IAuthorFacade _authorFacade;
     private readonly UserManager<LocalIdentityUser> _userManager;
-    // private readonly SignInManager<LocalIdentityUser> _signInManager;
 
-    public AddressController(IAddressFacade addressFacade, UserManager<LocalIdentityUser> userManager)
+    public AuthorController(IAuthorFacade authorFacade, UserManager<LocalIdentityUser> userManager)
     {
-        _addressFacade = addressFacade;
+        _authorFacade = authorFacade;
         _userManager = userManager;
     }
 
     public async Task<IActionResult> Index()
     {
-        var bookStores = await _addressFacade.a();
-        return View(bookStores);
+        var authors = await _authorFacade.GetAllAuthorsAsync();
+        return View(authors);
     }
 
     public async Task<IActionResult> Details(int id)
     {
-        var bookStore = await _bookStoreFacade.GetBookStore(id);
-        return View(bookStore);
+        var author = await _authorFacade.FindAuthorByIdAsync(id);
+        return View(author);
     }
 
     public ActionResult Create()
@@ -37,40 +36,40 @@ public class AddressController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateBookStoreDto createBookStoreDto)
+    public async Task<IActionResult> Create(CreateAuthorDto createAuthorDto)
     {
-        await _bookStoreFacade.CreateBookStore(createBookStoreDto);
-        ViewBag.Message = "Book Store Created Successfully";
-        return View(createBookStoreDto);
+        await _authorFacade.CreateAuthorAsync(createAuthorDto);
+        ViewBag.Message = "Author Created Successfully";
+        return View(createAuthorDto);
     }
 
 
     public async Task<IActionResult> Edit(int id)
     {
-        var bookStoreDto = await _bookStoreFacade.GetBookStore(id);
-        return View(bookStoreDto);
+        var author = await _authorFacade.FindAuthorByIdAsync(id);
+        return View(author);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, CreateBookStoreDto updateBookStoreDto)
+    public async Task<IActionResult> Edit(int id, CreateAuthorDto updateAuthorDto)
     {
-        var updated = await _bookStoreFacade.UpdateBookStore(id, updateBookStoreDto);
-        ViewBag.Message = "Book Store Updated Successfully";
+        var updated = await _authorFacade.UpdateAuthorAsync(id, updateAuthorDto);
+        ViewBag.Message = "Author Updated Successfully";
         return View(updated);
     }
 
     public async Task<IActionResult> Delete(int id)
     {
-        var bookStoreDto = await _bookStoreFacade.GetBookStore(id);
-        return View(bookStoreDto);
+        var author = await _authorFacade.FindAuthorByIdAsync(id);
+        return View(author);
     }
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        await _bookStoreFacade.DeleteBookStore(id);
+        await _authorFacade.DeleteAuthorAsync(id);
         return RedirectToAction(nameof(Index));
     }
 
