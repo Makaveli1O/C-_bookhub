@@ -4,6 +4,8 @@ using BusinessLayer.DTOs.User.View;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Order;
+using DataAccessLayer.Models.Publication;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLayer.Facades.User;
 
@@ -14,8 +16,9 @@ public class UserFacade : BaseFacade, IUserFacade
 
     public UserFacade(IMapper mapper,
                       IGenericService<UserEntity, long> userService,
-                      IOrderService orderService)
-        : base(mapper)
+                      IOrderService orderService,
+                      IMemoryCache memoryCache)
+        : base(mapper, memoryCache, "user-")
     {
         _userService = userService;
         _orderService = orderService;
@@ -38,6 +41,7 @@ public class UserFacade : BaseFacade, IUserFacade
         user.PasswordHash = createUserDto.PasswordHash ?? user.PasswordHash;
         user.Salt = createUserDto.Salt ?? user.Salt;
 
+        _memoryCache?.Set(GetMemoryCacheKey(id), user);
         await _userService.UpdateAsync(user);
 
         return _mapper.Map<GeneralUserViewDto>(user);
@@ -52,7 +56,7 @@ public class UserFacade : BaseFacade, IUserFacade
         {
             throw new RemoveErrorException(typeof(UserEntity), typeof(OrderEntity));
         }
-
+        _memoryCache?.Remove(user);
         await _userService.DeleteAsync(user);
     }
 
@@ -64,7 +68,11 @@ public class UserFacade : BaseFacade, IUserFacade
 
     public async Task<GeneralUserViewDto> FetchUserAsync(long id)
     {
-        var user = await _userService.FindByIdAsync(id);
-        return _mapper.Map<GeneralUserViewDto>(user);
+        if (!(_memoryCache?.TryGetValue(GetMemoryCacheKey(id), out var cachedUser) ?? false))
+        {
+            cachedUser = await _userService.FindByIdAsync(id);
+            _memoryCache?.Set(GetMemoryCacheKey(id), cachedUser);
+        }
+        return _mapper.Map<GeneralUserViewDto>(cachedUser);
     }
 }

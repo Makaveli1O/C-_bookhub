@@ -8,7 +8,7 @@ namespace BusinessLayer.Facades.Address;
 public class AddressFacade : BaseFacade, IAddressFacade
 {
     private readonly IGenericService<AddressEntity, long> _addressService;
-    public AddressFacade(IMapper mapper, IGenericService<AddressEntity, long> addressService) : base(mapper)
+    public AddressFacade(IMapper mapper, IGenericService<AddressEntity, long> addressService) : base(mapper, null, null)
     {
         _addressService = addressService;
     }

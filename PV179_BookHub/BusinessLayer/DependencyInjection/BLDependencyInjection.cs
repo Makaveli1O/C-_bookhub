@@ -22,6 +22,7 @@ using DataAccessLayer.Models.Purchasing;
 using Microsoft.Extensions.DependencyInjection;
 using BusinessLayer.Mappers.Enitity;
 using BusinessLayer.Mappers;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLayer.DependencyInjection;
 
@@ -77,9 +78,15 @@ public static class BLDependencyInjection
         services.AddScoped<IBookStoreFacade, BookStoreFacade>();
     }
 
+    private static void RegisterMemoryCatche(IServiceCollection services)
+    {
+        services.AddScoped<IMemoryCache, MemoryCache>();
+    }
+
     public static void RegisterBLDependencies(this IServiceCollection services)
     {
         RegisterMappers(services);
         RegisterServicesAndFacades(services);
+        RegisterMemoryCatche(services);
     }
 }
