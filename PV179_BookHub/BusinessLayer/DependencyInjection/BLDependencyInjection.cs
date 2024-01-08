@@ -22,6 +22,7 @@ using DataAccessLayer.Models.Purchasing;
 using Microsoft.Extensions.DependencyInjection;
 using BusinessLayer.Mappers.Enitity;
 using BusinessLayer.Mappers;
+using BusinessLayer.Services.BookStore;
 using Microsoft.Extensions.Caching.Memory;
 using BusinessLayer.Services.AuthorBookAssociation;
 
@@ -77,7 +78,7 @@ public static class BLDependencyInjection
         services.AddScoped<IBookReviewService, BookReviewService>();
         services.AddScoped<IBookReviewFacade, BookReviewFacade>();
 
-        services.AddScoped<IGenericService<BookStore, long>, GenericService<BookStore, long>>();
+        services.AddScoped<IBookStoreService, BookStoreService>();
         services.AddScoped<IBookStoreFacade, BookStoreFacade>();
     }
 
