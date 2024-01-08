@@ -9,6 +9,7 @@ using BusinessLayer.Services.Book;
 using Infrastructure.Query;
 using Infrastructure.Query.Filters;
 using Infrastructure.Query.Filters.EntityFilters;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLayer.Facades.Book;
 
@@ -19,8 +20,8 @@ public class BookFacade : BaseFacade, IBookFacade
     private readonly IGenericService<PublisherEntity, long> _publisherService;
 
     public BookFacade(IMapper mapper, IGenericService<BookEntity, long> bookService, IAuthorService authorService, 
-        IGenericService<PublisherEntity, long> publisherService)
-        : base(mapper)
+        IGenericService<PublisherEntity, long> publisherService, IMemoryCache memoryCache)
+        : base(mapper, memoryCache, "book-")
     {
         _bookService = bookService;
         _authorService = authorService;
@@ -59,7 +60,9 @@ public class BookFacade : BaseFacade, IBookFacade
         var authors = await _authorService.FetchAllAuthorsByIdsAsync(updateBookDto.AuthorIds);
         book.Authors = authors;
 
+        _memoryCache?.Set(GetMemoryCacheKey(id), book);
         await _bookService.UpdateAsync(book);
+
         return _mapper.Map<DetailedBookViewDto>(book);
     }
 
@@ -100,15 +103,20 @@ public class BookFacade : BaseFacade, IBookFacade
 
     public async Task<DetailedBookViewDto> FindBookByIdAsync(long id)
     {
-        var book = await _bookService.FindByIdAsync(id);
+        if (!(_memoryCache?.TryGetValue(GetMemoryCacheKey(id), out var cachedBook) ?? false))
+        {
+            cachedBook = await _bookService.FindByIdAsync(id);
 
-        return _mapper.Map<DetailedBookViewDto>(book);
+            _memoryCache?.Set(GetMemoryCacheKey(id), cachedBook);
+        }
+
+        return _mapper.Map<DetailedBookViewDto>(cachedBook);
     }
 
     public async Task DeleteBookByIdAsync(long id)
     {
         var book = await _bookService.FindByIdAsync(id);
-
+        _memoryCache?.Remove(book);
         await _bookService.DeleteAsync(book);
     }
 }

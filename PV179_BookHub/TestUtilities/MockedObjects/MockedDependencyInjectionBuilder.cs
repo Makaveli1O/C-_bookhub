@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.DependencyInjection;
 using BusinessLayer.DependencyInjection;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace TestUtilities.MockedObjects;
 

@@ -17,7 +17,7 @@ public class InventoryItemFacade : BaseFacade, IInventoryItemFacade
         IInventoryItemService inventoryItemService,
         IGenericService<BookStoreEntity, long> bookStoreService,
         IGenericService<BookEntity, long> bookService)
-        : base(mapper)
+        : base(mapper, null, null)
     {
         _inventoryItemService = inventoryItemService;
         _bookService = bookService;
