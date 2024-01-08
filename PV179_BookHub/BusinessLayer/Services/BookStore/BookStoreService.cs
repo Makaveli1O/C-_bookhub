@@ -16,7 +16,7 @@ public class BookStoreService : GenericService<BookStoreEntity, long>, IBookStor
         
         if (bookStore == null)
         {
-            throw new NoSuchEntityException<long>(typeof(BookStoreEntity), id);
+            throw new NoSuchEntityException<long>(typeof(BookStoreEntity));
         }
         
         return bookStore;
