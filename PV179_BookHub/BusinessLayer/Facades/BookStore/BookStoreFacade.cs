@@ -2,18 +2,19 @@
 using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
 using BusinessLayer.Services;
+using BusinessLayer.Services.BookStore;
 
 namespace BusinessLayer.Facades.BookStore;
 
 public class BookStoreFacade : BaseFacade, IBookStoreFacade
 {
-    private readonly IGenericService<BookStoreEntity, long> _bookStoreService;
+    private readonly IBookStoreService _bookStoreService;
     private readonly IGenericService<UserEntity, long> _userService;
     private readonly IGenericService<AddressEntity, long> _addressService;
 
     public BookStoreFacade(
         IMapper mapper,
-        IGenericService<BookStoreEntity, long> bookStoreService,
+        IBookStoreService bookStoreService,
         IGenericService<UserEntity, long> userService,
         IGenericService<AddressEntity, long> addressService)
         : base(mapper, null, null)
@@ -31,6 +32,11 @@ public class BookStoreFacade : BaseFacade, IBookStoreFacade
     public async Task<DetailedBookStoreViewDto> GetBookStore(long id)
     {
         return _mapper.Map<DetailedBookStoreViewDto>(await _bookStoreService.FindByIdAsync(id));
+    }
+
+    public async Task<DetailedBookStoreViewDto> GetBookStoreByUserId(long id)
+    {
+        return _mapper.Map<DetailedBookStoreViewDto>(await _bookStoreService.GetBookStoreByUserIdAsync(id));
     }
 
     public async Task<DetailedBookStoreViewDto> CreateBookStore(CreateBookStoreDto createBookStoreDto)

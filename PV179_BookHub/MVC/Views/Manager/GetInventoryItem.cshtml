@@ -1,0 +1,15 @@
+﻿@model BusinessLayer.DTOs.BookStore.View.DetailedInventoryItemViewDto
+
+<h2>Inventory Item Details</h2>
+
+<div>
+    <h3>@Model.Id</h3>
+    <p>Book ID: @Model.BookId</p>
+    <p>Book Store ID: @Model.BookStoreId</p>
+    <p>Count of book in stock: @Model.InStock</p>
+    <p>Last Restock: @Model.LastRestock</p>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "GetAllInventoryItems")
+</div>

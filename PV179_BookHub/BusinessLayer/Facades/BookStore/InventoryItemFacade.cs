@@ -2,6 +2,7 @@
 using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
 using BusinessLayer.Services;
+using BusinessLayer.Services.BookStore;
 using BusinessLayer.Services.InventoryItem;
 
 namespace BusinessLayer.Facades.BookStore;
@@ -10,12 +11,12 @@ public class InventoryItemFacade : BaseFacade, IInventoryItemFacade
 {
     private readonly IInventoryItemService _inventoryItemService;
     private readonly IGenericService<BookEntity, long> _bookService;
-    private readonly IGenericService<BookStoreEntity, long> _bookStoreService;
+    private readonly IBookStoreService _bookStoreService;
 
     public InventoryItemFacade(
         IMapper mapper,
         IInventoryItemService inventoryItemService,
-        IGenericService<BookStoreEntity, long> bookStoreService,
+        IBookStoreService bookStoreService,
         IGenericService<BookEntity, long> bookService)
         : base(mapper, null, null)
     {
@@ -61,5 +62,11 @@ public class InventoryItemFacade : BaseFacade, IInventoryItemFacade
         await _inventoryItemService.UpdateAsync(inventoryItem);
        
         return _mapper.Map<DetailedInventoryItemViewDto>(inventoryItem);
+    }
+    public async Task<IEnumerable<DetailedInventoryItemViewDto>> GetAllInventoryItemsByUserId(long id)
+    {
+        var bookStore = await _bookStoreService.GetBookStoreByUserIdAsync(id);
+
+        return _mapper.Map<IEnumerable<DetailedInventoryItemViewDto>>(await _inventoryItemService.GetInventoryItemsByBookStoreIdAsync(bookStore.Id));
     }
 }

@@ -30,6 +30,21 @@ public class BookStoreController : ControllerBase
         return Ok(await _bookStoreFacade.GetBookStore(id));
     }
 
+    [HttpGet]
+    [Route("User/{id}")]
+    public async Task<IActionResult> GetBookStoreByUserId(long id)
+    {
+        return Ok(await _bookStoreFacade.GetBookStore(id));
+    }
+
+
+    [HttpGet]
+    [Route("BookStoreItem/{id}")]
+    public async Task<IActionResult> GetBookStoreItems(long id)
+    {
+        return Ok(await _inventoryItemFacade.GetAllInventoryItemsByUserId(id));
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateBookStore(CreateBookStoreDto createBookStoreDto)
     {
@@ -45,7 +60,6 @@ public class BookStoreController : ControllerBase
         return Ok(await _bookStoreFacade.UpdateBookStore(id, updateBookStoreDto));
     }
     
-
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeleteBookStore(long id)
@@ -53,7 +67,6 @@ public class BookStoreController : ControllerBase
         await _bookStoreFacade.DeleteBookStore(id);
         return NoContent();
     }
-
 
     [HttpGet]
     [Route("Inventory")]

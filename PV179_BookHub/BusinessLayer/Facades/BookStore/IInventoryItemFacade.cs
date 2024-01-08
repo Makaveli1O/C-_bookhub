@@ -8,6 +8,7 @@ public interface IInventoryItemFacade
     Task<DetailedInventoryItemViewDto> CreateInventoryItem(CreateInventoryItemDto createInventoryItemDto);
     Task<DetailedInventoryItemViewDto> UpdateInventoryItem(long id, CreateInventoryItemDto updateInventoryItemDto);
     Task<IEnumerable<DetailedInventoryItemViewDto>> GetAllInventoryItems();
+    Task<IEnumerable<DetailedInventoryItemViewDto>> GetAllInventoryItemsByUserId(long id);
     Task<DetailedInventoryItemViewDto> GetInventoryItem(long id);
     Task DeleteInventoryItem(long id);
 }
