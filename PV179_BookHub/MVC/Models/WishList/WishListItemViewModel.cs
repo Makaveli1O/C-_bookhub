@@ -7,5 +7,4 @@ public class WishListItemViewModel
     public long Id { get; set; }
     public long WishListId { get; set; }
     public GeneralBookViewDto? Book { get; set; }
-    public uint PreferencePriority { get; set; }
 }

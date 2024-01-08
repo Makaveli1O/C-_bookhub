@@ -111,7 +111,18 @@ public class UserController : Controller
     {
         var wishList = await _wishListFacade.FetchWishListAsync(id);
 
-        return View(wishList.Adapt<WishListUpdateViewModel>());
+        var wishListItems = await _wishListFacade.FetchAllItemsFromWishListAsync(id);
+
+        var availableBooks = await _bookFacade.FetchAllBooksAsync();
+
+        var viewModel = new WishListUpdateViewModel
+        {
+            Description = wishList.Description,
+            WishListItems = wishListItems.Adapt<IEnumerable<WishListItemViewModel>>(),
+            AvailableBooks = availableBooks.Adapt<IEnumerable<WishListAvailableBooksViewModel>>()
+        };
+
+        return View(viewModel);
     }
 
 
@@ -125,14 +136,12 @@ public class UserController : Controller
 
         if (!await IsUserWishListOwner(id))
         {
-            return BadRequest();
+            return Unauthorized();
         }
 
         var wishList = model.Adapt<GeneralWishListViewDto>();
 
         var wishListResult = await _wishListFacade.UpdateWishListAsync(wishList.Id, wishList.Description);
-        //TODO: dropdown for available books to add to wishlist
-
 
         return View(wishListResult);
     }
