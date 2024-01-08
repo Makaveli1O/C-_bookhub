@@ -1,0 +1,36 @@
+﻿@using MVC.Models
+@model MVC.Models.Order.OrderDetailViewModel
+
+<div class="row">
+    <div class="col-8">
+        <h2>Ordered books:</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-4">
+        <div class="mb-3">
+            <h5>Number of books:</h5>
+            <span>@Model.Items.Count</span>
+        </div>
+        <div class="my-3">
+            <h5>Total Price:</h5>
+            <span>@Model.TotalPrice</span>
+        </div>
+    </div>
+</div>

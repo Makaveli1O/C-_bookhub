@@ -1,0 +1,39 @@
+﻿﻿@using MVC.Models.Order
+@model OrderFormModel
+
+@using (Html.BeginForm(ViewBag.IsCreate ? "CreateSubmit" : "EditSubmit", "Order", FormMethod.Post))
+{
+    @Html.HiddenFor(model => Model.Id)
+    @Html.HiddenFor(model => Model.UserId)
+
+    var orderItems = Model.Items.ToList();
+    for (var i = 0; i < orderItems.Count; i++)
+    {
+        @Html.HiddenFor(model => orderItems[i].Book.Id)
+        @Html.HiddenFor(model => orderItems[i].Quantity)
+    }
+
+    <div class="row mb-3">
+        @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "form-label fw-bolder" })
+        <div>
+            @Html.TextBoxFor(model => model.TotalPrice, new { @class = "form-control", type = "text" })
+            @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "test-danger" })
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "form-label fw-bolder" })
+        <div>
+            @Html.DisplayFor(model => model.TotalPrice, new { @class = "form-control disabled", type = "text" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="books-table" class="mb-3 col-8"></div>
+        <div class="col-4">
+            <h5>Finish editing your order:</h5>
+            <button type="submit" class="btn btn-dark">Submit</button>
+            <a class="btn btn-danger" asp-controller="Order" asp-action="Settings">Cancel</a>
+        </div>
+    </div>
+}
