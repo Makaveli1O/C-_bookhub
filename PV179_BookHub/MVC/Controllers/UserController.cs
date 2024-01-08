@@ -59,4 +59,17 @@ public class UserController : Controller
 
         return RedirectToAction("User" ,"BookReview", new { id = user.UserId });
     }
+
+    [HttpGet("CreateOrder")]
+    public async Task<IActionResult> CreateOrder()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return RedirectToAction("Create", "Order", new { userId = user.UserId });
+    }
 }

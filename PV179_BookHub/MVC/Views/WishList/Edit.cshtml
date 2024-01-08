@@ -6,10 +6,10 @@
     <h1>WishList</h1>
 
     <div class="row" style="width: 100%">
-		<label asp-for="Description"></label>
-		<input asp-for="Description" value="@Model.Description" />
-		<span asp-validation-for="Description"></span>
-	</div>
+        <label asp-for="Description"></label>
+        <input asp-for="Description" value="@Model.Description" />
+        <span asp-validation-for="Description"></span>
+    </div>
 
     <div class="row" style="width: 100%">
         <h2>Wish list content:</h2>
@@ -73,12 +73,12 @@
                 if (selectedBookId && selectedBookTitle) {
                     console.log("Adding item");
                     var newItemHtml = `
-                                <li>
-                                    ${selectedBookTitle}
-                                    <input type="hidden" name="newWishListItems" value="${selectedBookId}" />
-                                    <button type="button" class="delete-new-item">Delete</button>
-                                </li>
-                            `;
+                                        <li>
+                                            ${selectedBookTitle}
+                                            <input type="hidden" name="newWishListItems" value="${selectedBookId}" />
+                                            <button type="button" class="delete-new-item">Delete</button>
+                                        </li>
+                                    `;
                     $('#newWishListItems ul').append(newItemHtml);
 
                     $('#selectedBookId').val('');

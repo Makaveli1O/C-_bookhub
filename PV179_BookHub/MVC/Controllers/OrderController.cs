@@ -6,6 +6,7 @@ using MVC.Models.Order;
 using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
+using BusinessLayer.DTOs.Order.View;
 
 namespace MVC.Controllers;
 
@@ -45,27 +46,35 @@ public class OrderController : Controller
         return Json(await _orderFacade.FetchOrdersByUserIdAsync(id));
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create()
+    [HttpGet]
+    [Route("Create/{userId:long}")]
+    public async Task<IActionResult> Create(long userId)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
+		var order = await _orderFacade.CreateOrderAsync(userId);
 
+        var orderDetail = order.Adapt<OrderDetailViewModel>();
+
+		return View("OrderDetail", orderDetail);
+	}
+
+	[HttpGet]
+    [Route("Delete/{orderId:long}")]
+    public async Task<IActionResult> Delete(long orderId)
+    {
         var user = await _userManager.GetUserAsync(User);
 
-        if (user == null)
+        var order = await _orderFacade.FindOrderByIdAsync(orderId);
+
+        if (user == null || order.UserId != user.UserId)
         {
             return Unauthorized();
         }
+        await _orderFacade.DeleteOrderByIdAsync(orderId);
 
-        var order = await _orderFacade.CreateOrderAsync(user.UserId);
-
-        return View("OrderCreateView");
+		return NoContent();
     }
 
-    [Authorize]
+	[Authorize]
     [Route("{id:long}/Cancel")]
     public async Task<IActionResult> Cancel(long id)
     {

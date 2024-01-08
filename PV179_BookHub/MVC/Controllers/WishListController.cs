@@ -57,15 +57,15 @@ public class WishListController : Controller
         return Json(await _wishListFacade.FetchWishListAsync(id));
     }
 
-    [HttpGet("WishListCreate")]
-    public IActionResult WishListCreate()
+    [HttpGet("Create")]
+    public IActionResult Create()
     {
         return View();
     }
 
 
-    [HttpPost("WishListCreate")]
-    public async Task<IActionResult> WishListCreate(WishListCreateViewModel model)
+    [HttpPost("Create")]
+    public async Task<IActionResult> Create(WishListCreateViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -84,12 +84,12 @@ public class WishListController : Controller
 
         var wishListResult = await _wishListFacade.CreateWishListAsync(wishList);
 
-        return RedirectToAction(nameof(WishListEdit), new { id = wishListResult.Id });
+        return RedirectToAction(nameof(Edit), new { id = wishListResult.Id });
 
     }
 
-    [HttpGet("WishListEdit/{id:long}")]
-    public async Task<IActionResult> WishListEdit(long id)
+    [HttpGet("Edit/{id:long}")]
+    public async Task<IActionResult> Edit(long id)
     {
         var wishList = await _wishListFacade.FetchWishListAsync(id);
 
@@ -108,8 +108,8 @@ public class WishListController : Controller
     }
 
 
-    [HttpPost("WishListEdit/{id:long}")]
-    public async Task<IActionResult> WishListEdit(long id, WishListUpdateViewModel model)
+    [HttpPost("Edit/{id:long}")]
+    public async Task<IActionResult> Edit(long id, WishListUpdateViewModel model)
     {
         if (!ModelState.IsValid)
         {
