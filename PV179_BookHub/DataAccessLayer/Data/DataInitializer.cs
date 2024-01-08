@@ -256,121 +256,141 @@ public static class DataInitializer
             {
                 Id = 1,
                 AuthorId = 1,
-                BookId = 1
+                BookId = 1,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 2,
                 AuthorId = 2,
-                BookId = 1
+                BookId = 1,
+                IsPrimary = false
             },
             new AuthorBookAssociation()
             {
                 Id = 3,
                 AuthorId = 3,
-                BookId = 2
+                BookId = 2,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 4,
                 AuthorId = 4,
-                BookId = 3
+                BookId = 3,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 5,
                 AuthorId = 4,
-                BookId = 4
+                BookId = 4,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 6,
                 AuthorId = 4,
-                BookId = 5
+                BookId = 5,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 7,
                 AuthorId = 4,
-                BookId = 6
+                BookId = 6,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 8,
                 AuthorId = 4,
-                BookId = 7
+                BookId = 7,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 9,
                 AuthorId = 4,
-                BookId = 8
+                BookId = 8,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 10,
                 AuthorId = 4,
-                BookId = 9
+                BookId = 9,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 11,
                 AuthorId = 5,
-                BookId = 10
+                BookId = 10,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 12,
                 AuthorId = 5,
-                BookId = 11
+                BookId = 11,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 13,
                 AuthorId = 6,
-                BookId = 12
+                BookId = 12,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 14,
                 AuthorId = 7,
-                BookId = 13
+                BookId = 13,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 15,
                 AuthorId = 8,
-                BookId = 14
+                BookId = 14,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 16,
                 AuthorId = 9,
-                BookId = 15
+                BookId = 15,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 17,
                 AuthorId = 10,
-                BookId = 17
+                BookId = 17,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 18,
                 AuthorId = 11,
-                BookId = 18
+                BookId = 18,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 19,
                 AuthorId = 12,
-                BookId = 19
+                BookId = 19,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 20,
                 AuthorId = 13,
-                BookId = 20
+                BookId = 20,
+                IsPrimary = true
             },
         };
     }

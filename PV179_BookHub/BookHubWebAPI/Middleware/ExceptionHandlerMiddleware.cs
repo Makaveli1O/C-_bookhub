@@ -26,7 +26,8 @@ public class ExceptionHandlerMiddleware
                 break;
             case WrongOrderStateException
             or StockErrorException
-            or AuthorBookAssociationException:
+            or AuthorBookAssociationException
+            or MultiplePrimaryAuthorsException:
                 code = HttpStatusCode.BadRequest;
                 break;
             default:
