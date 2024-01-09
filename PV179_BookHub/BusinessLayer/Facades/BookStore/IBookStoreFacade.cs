@@ -9,5 +9,6 @@ public interface IBookStoreFacade
     Task<DetailedBookStoreViewDto> UpdateBookStore(long id, CreateBookStoreDto updateBookStoreDto);
     Task<IEnumerable<DetailedBookStoreViewDto>> GetAllBookStores();
     Task<DetailedBookStoreViewDto> GetBookStore(long id);
+    Task<DetailedBookStoreViewDto> GetBookStoreByUserId(long id);
     Task DeleteBookStore(long id);
 }

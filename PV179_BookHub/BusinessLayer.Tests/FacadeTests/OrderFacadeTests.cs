@@ -13,6 +13,7 @@ using BusinessLayer.Exceptions;
 using DataAccessLayer.Models.Enums;
 using BusinessLayer.DTOs.Order.Create;
 using BusinessLayer.Services.Book;
+using DataAccessLayer.Models.Publication;
 
 namespace BusinessLayer.Tests.FacadeTests;
 
@@ -23,23 +24,19 @@ public class OrderFacadeTests
     private IGenericService<OrderItem, long> _orderItemServiceMock;
     private IInventoryItemService _inventoryItemServiceMock;
     private IGenericService<User, long> _userServiceMock;
-    private IBookService _bookServiceMock;
+    private IGenericService<Book, long> _bookServiceMock;
 
     public OrderFacadeTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddAutoMapper()
-            .AddServices()
-            .AddFacades()
-            .AddMockedDBContext();
-        
+            .AddInfrastructure()
+            .AddBusinessLayer();
+
         _orderServiceMock = Substitute.For<IOrderService>();
         _orderItemServiceMock = Substitute.For<IGenericService<OrderItem, long>>();
         _inventoryItemServiceMock = Substitute.For<IInventoryItemService>();
         _userServiceMock = Substitute.For<IGenericService<User, long>>();
-        _bookServiceMock = Substitute.For<IBookService>();
+        _bookServiceMock = Substitute.For<IGenericService<Book, long>>();
     }
 
     private ServiceProvider CreateServiceProvider()

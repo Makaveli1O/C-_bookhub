@@ -10,3 +10,4 @@ global using PublisherEntity = DataAccessLayer.Models.Publication.Publisher;
 global using BookEntity = DataAccessLayer.Models.Publication.Book;
 global using OrderEntity = DataAccessLayer.Models.Purchasing.Order;
 global using OrderItemEntity = DataAccessLayer.Models.Purchasing.OrderItem;
+global using AuthorBookAssociationEntity = DataAccessLayer.Models.Publication.AuthorBookAssociation;

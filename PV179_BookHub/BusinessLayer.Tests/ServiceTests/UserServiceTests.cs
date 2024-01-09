@@ -19,10 +19,8 @@ public class UserServiceTests
     public UserServiceTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddServices()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
         _repositoryMock = Substitute.For<IGenericRepository<User, long>>();
         _uowMock = Substitute.For<IUnitOfWork>();

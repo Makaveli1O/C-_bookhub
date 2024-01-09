@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.Facades.Book;
 using BusinessLayer.DTOs.Book.Create;
+using BusinessLayer.DTOs.Book.Update;
 
 namespace MVC.Controllers;
-
 public class BookController : Controller
 {
     private readonly IBookFacade _bookFacade;
@@ -52,7 +52,7 @@ public class BookController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, CreateBookDto updateBookDto)
+    public async Task<IActionResult> Edit(int id, UpdateBookDto updateBookDto)
     {
         var updated = await _bookFacade.UpdateBookAsync(id, updateBookDto);
         ViewBag.Message = "Book Updated Successfully";

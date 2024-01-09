@@ -12,14 +12,15 @@ namespace BusinessLayer.Facades.BookReview;
 public class BookReviewFacade : BaseFacade, IBookReviewFacade
 {
     private readonly IBookReviewService _bookReviewService;
-    private readonly IBookService _bookService;
+    private readonly IGenericService<BookEntity, long> _bookService;
     private readonly IGenericService<UserEntity, long> _userService;
 
     public BookReviewFacade(
         IMapper mapper,
-        IBookService bookService,
-         IGenericService<UserEntity, long> userService,
-        IBookReviewService bookReviewService) : base(mapper)
+        IGenericService<BookEntity, long> bookService,
+        IGenericService<UserEntity, long> userService,
+        IBookReviewService bookReviewService)
+        : base(mapper, null, null)
     {
         _bookReviewService = bookReviewService;
         _bookService = bookService;

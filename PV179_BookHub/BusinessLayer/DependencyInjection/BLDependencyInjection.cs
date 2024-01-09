@@ -7,7 +7,6 @@ using BusinessLayer.Facades.Order;
 using BusinessLayer.Facades.Publisher;
 using BusinessLayer.Facades.User;
 using BusinessLayer.Facades.WishList;
-using BusinessLayer.Mappers;
 using BusinessLayer.Services.Author;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.BookReview;
@@ -21,6 +20,11 @@ using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Purchasing;
 using Microsoft.Extensions.DependencyInjection;
+using BusinessLayer.Mappers.Enitity;
+using BusinessLayer.Mappers;
+using BusinessLayer.Services.BookStore;
+using Microsoft.Extensions.Caching.Memory;
+using BusinessLayer.Services.AuthorBookAssociation;
 
 namespace BusinessLayer.DependencyInjection;
 
@@ -37,6 +41,8 @@ public static class BLDependencyInjection
         services.AddAutoMapper(typeof(WishListItemProfile));
         services.AddAutoMapper(typeof(WishListProfile));
         services.AddAutoMapper(typeof(AuthorBookAssociationProfile));
+
+        services.AddAutoMapper(typeof(QueryParamsProfile));
     }
 
     private static void RegisterServicesAndFacades(IServiceCollection services)
@@ -53,7 +59,9 @@ public static class BLDependencyInjection
         services.AddScoped<IGenericService<Publisher, long>, PublisherService>();
         services.AddScoped<IPublisherFacade, PublisherFacade>();
 
-        services.AddScoped<IBookService, BookService>();
+        services.AddScoped<IAuthorBookAsssociationService, AuthorBookAsssociationService>();
+        
+        services.AddScoped<IGenericService<Book, long>, BookService>();
         services.AddScoped<IBookFacade, BookFacade>();
 
         services.AddScoped<IGenericService<WishList, long>, GenericService<WishList, long>>();
@@ -70,13 +78,19 @@ public static class BLDependencyInjection
         services.AddScoped<IBookReviewService, BookReviewService>();
         services.AddScoped<IBookReviewFacade, BookReviewFacade>();
 
-        services.AddScoped<IGenericService<BookStore, long>, GenericService<BookStore, long>>();
+        services.AddScoped<IBookStoreService, BookStoreService>();
         services.AddScoped<IBookStoreFacade, BookStoreFacade>();
+    }
+
+    private static void RegisterMemoryCache(IServiceCollection services)
+    {
+        services.AddScoped<IMemoryCache, MemoryCache>();
     }
 
     public static void RegisterBLDependencies(this IServiceCollection services)
     {
         RegisterMappers(services);
         RegisterServicesAndFacades(services);
+        RegisterMemoryCache(services);
     }
 }

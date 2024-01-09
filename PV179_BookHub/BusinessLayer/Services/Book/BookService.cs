@@ -1,14 +1,13 @@
 ﻿using BusinessLayer.Exceptions;
-using Infrastructure.NaiveQuery;
-using Infrastructure.NaiveQuery.Filters.EntityFilters;
+using Infrastructure.Query;
+using Infrastructure.Query.Filters;
 using Infrastructure.UnitOfWork;
-
 
 namespace BusinessLayer.Services.Book;
 
-public class BookService : GenericService<BookEntity, long>, IBookService
+public class BookService : GenericService<BookEntity, long>
 {
-    public BookService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    public BookService(IUnitOfWork unitOfWork, IQuery<BookEntity, long> query) : base(unitOfWork, query)
     {
     }
 
@@ -24,28 +23,9 @@ public class BookService : GenericService<BookEntity, long>, IBookService
         return books;
     }
 
-    public async Task<QueryResult<BookEntity>> 
-        FetchFilteredBooksAsync(BookFilter bookFilter, int? pageNumber, int? pageSize, string? sortParam, bool? asc)
+    public override async Task<QueryResult<BookEntity>> FetchFilteredAsync(IFilter<BookEntity> filter, QueryParams queryParams)
     {
-        {
-            QueryBase<BookEntity, long> query =
-                new QueryBase<BookEntity, long>(_unitOfWork)
-                {
-                    Filter = bookFilter,
-                };
-
-            query.CurrentPage = pageNumber ?? query.CurrentPage;
-            query.PageSize = pageSize ?? query.PageSize;
-            query.SortAccordingTo = sortParam ?? query.SortAccordingTo;
-            query.UseAscendingOrder = asc ?? query.UseAscendingOrder;
-
-            query.Include(book => book.Authors, book => book.Publisher);
-            query.Where(query.Filter.CreateExpression());
-            query.Page(query.CurrentPage, query.PageSize);
-            query.SortBy(query.SortAccordingTo, query.UseAscendingOrder);
-
-            return await query.ExecuteAsync();
-        }
+        return await ExecuteQueryAsync(filter, queryParams, book => book.Authors, book => book.Publisher);
     }
 
     public override async Task<BookEntity> FindByIdAsync(long id)
@@ -55,7 +35,8 @@ public class BookService : GenericService<BookEntity, long>, IBookService
                 id, 
                 x => x.Authors, 
                 x => x.Reviews, 
-                x => x.Publisher
+                x => x.Publisher,
+                x => x.AuthorBookAssociations
             );
 
         if (book == null)

@@ -1,10 +1,9 @@
 ﻿using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MVC.Controllers;
 using MVC.Models;
 
-namespace WebMVC.Controllers;
+namespace MVC.Controllers;
 
 public class AccountController : Controller
 {

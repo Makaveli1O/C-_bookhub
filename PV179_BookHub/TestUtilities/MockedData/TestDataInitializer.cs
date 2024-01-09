@@ -109,31 +109,36 @@ public static class TestDataInitializer
             {
                 Id = 1,
                 AuthorId = 1,
-                BookId = 1
+                BookId = 1,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 2,
                 AuthorId = 2,
-                BookId = 1
+                BookId = 1,
+                IsPrimary = false
             },
             new AuthorBookAssociation()
             {
                 Id = 3,
                 AuthorId = 3,
-                BookId = 1
+                BookId = 1,
+                IsPrimary = false
             },
             new AuthorBookAssociation()
             {
                 Id = 4,
                 AuthorId = 1,
-                BookId = 2
+                BookId = 2,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 5,
                 AuthorId = 3,
-                BookId = 3
+                BookId = 3,
+                IsPrimary = true
             }
         };
     }

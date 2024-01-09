@@ -9,6 +9,7 @@ using BusinessLayer.Services.InventoryItem;
 using BusinessLayer.Services.Order;
 
 using DataAccessLayer.Models.Enums;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLayer.Facades.Order;
 
@@ -17,16 +18,17 @@ public class OrderFacade : BaseFacade, IOrderFacade
     private readonly IOrderService _orderService;
     private readonly IGenericService<OrderItemEntity, long> _orderItemService;
     private readonly IGenericService<UserEntity, long> _userService;
-    private readonly IBookService _bookService;
+    private readonly IGenericService<BookEntity, long> _bookService;
     private readonly IInventoryItemService _inventoryItemService;
 
-    public OrderFacade(IMapper mapper, 
-        IOrderService orderService, 
+    public OrderFacade(IMapper mapper,
+        IOrderService orderService,
         IGenericService<OrderItemEntity, long> orderItemService,
-        IGenericService<UserEntity, long> userService, 
-        IBookService bookService,
-        IInventoryItemService inventoryItemService
-        ) : base(mapper)
+        IGenericService<UserEntity, long> userService,
+        IGenericService<BookEntity, long> bookService,
+        IInventoryItemService inventoryItemService,
+        IMemoryCache memoryCache
+        ) : base(mapper, memoryCache, "order-")
     {
         _orderService = orderService;
         _orderItemService = orderItemService;
@@ -95,9 +97,14 @@ public class OrderFacade : BaseFacade, IOrderFacade
 
     public async Task<DetailedOrderViewDto> FindOrderByIdAsync(long id)
     {
-        var order = await _orderService.FindByIdAsync(id);
-        var orderDto = _mapper.Map<DetailedOrderViewDto>(order);
-        orderDto.TotalPrice = CalculateTotalPrice(order.Items);
+        if (!(_memoryCache?.TryGetValue(GetMemoryCacheKey(id), out OrderEntity? cachedOrder) ?? false))
+        {
+           cachedOrder = await _orderService.FindByIdAsync(id);
+           _memoryCache?.Set(GetMemoryCacheKey(id), cachedOrder);
+        }
+       
+        var orderDto = _mapper.Map<DetailedOrderViewDto>(cachedOrder);
+        orderDto.TotalPrice = CalculateTotalPrice(cachedOrder?.Items);
 
         return orderDto;
     }
@@ -116,6 +123,8 @@ public class OrderFacade : BaseFacade, IOrderFacade
             await ReturnStock(order);
         }
         order.State = newState;
+
+        _memoryCache?.Set(GetMemoryCacheKey(id), order);
         await _orderService.UpdateAsync(order);
 
         return order;
@@ -208,7 +217,6 @@ public class OrderFacade : BaseFacade, IOrderFacade
     {
         var orderItem = await _orderItemService.FindByIdAsync(id);
         await AddBookStock(orderItem.BookId, orderItem.BookStoreId, orderItem.Quantity);
-
         await _orderItemService.DeleteAsync(orderItem);
     }
 }

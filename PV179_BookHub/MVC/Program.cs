@@ -5,6 +5,7 @@ using DataAccessLayer.DependencyInjection;
 using Infrastructure.DependencyInjection;
 using BusinessLayer.DependencyInjection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using BookHubWebAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseMiddleware<RequestLoggingMiddleware>("MVC");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -57,14 +60,14 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
 
 using (var scope = app.Services.CreateScope())
 {
     // SampleData.Initialize(scope.ServiceProvider);
-    await CreateRolesAndUsers(scope.ServiceProvider);
+    // await CreateRolesAndUsers(scope.ServiceProvider);
 }
 
 app.Run();

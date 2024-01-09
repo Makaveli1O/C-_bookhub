@@ -1,6 +1,4 @@
-﻿
-
-namespace BusinessLayer.Services.Author;
+﻿namespace BusinessLayer.Services.Author;
 
 public interface IAuthorService : IGenericService<AuthorEntity, long>
 {

@@ -58,6 +58,12 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddLogging();
 
+builder.Services.AddMemoryCache(
+        options => { 
+            options.ExpirationScanFrequency = TimeSpan.FromSeconds(5);
+        }
+    );
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -67,7 +73,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<RequestLoggingMiddleware>();
+app.UseMiddleware<RequestLoggingMiddleware>("API");
 
 app.UseHttpsRedirection();
 

@@ -8,7 +8,7 @@ namespace BusinessLayer.Facades.Author;
 public class AuthorFacade : BaseFacade, IAuthorFacade
 {
     private readonly IAuthorService _authorService;
-    public AuthorFacade(IMapper mapper, IAuthorService authorService) : base(mapper)
+    public AuthorFacade(IMapper mapper, IAuthorService authorService) : base(mapper, null, null)
     {
         _authorService = authorService;
     }

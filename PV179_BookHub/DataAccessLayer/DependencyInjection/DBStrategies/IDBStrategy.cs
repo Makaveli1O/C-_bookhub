@@ -12,5 +12,5 @@ public abstract class IDBStrategy
         Config = configuration;
     }
 
-    public abstract IServiceCollection addDbContext(IServiceCollection services);
+    public abstract IServiceCollection AddDbContext(IServiceCollection services);
 }

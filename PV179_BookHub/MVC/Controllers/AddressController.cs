@@ -1,32 +1,34 @@
-﻿using DataAccessLayer.Models.Account;
+﻿using BusinessLayer.Facades.Address;
+using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using BusinessLayer.Facades.Author;
-using BusinessLayer.DTOs.Author.Create;
+using BusinessLayer.DTOs.Address.Create;
 
 namespace MVC.Controllers;
 
-public class AuthorController : Controller
+public class AddressController : Controller
 {
-    private readonly IAuthorFacade _authorFacade;
+    private readonly IAddressFacade _addressFacade;
     private readonly UserManager<LocalIdentityUser> _userManager;
 
-    public AuthorController(IAuthorFacade authorFacade, UserManager<LocalIdentityUser> userManager)
+    public AddressController(IAddressFacade addressFacade, UserManager<LocalIdentityUser> userManager)
     {
-        _authorFacade = authorFacade;
+        _addressFacade = addressFacade;
         _userManager = userManager;
     }
 
     public async Task<IActionResult> Index()
     {
-        var authors = await _authorFacade.GetAllAuthorsAsync();
-        return View(authors);
+        Console.WriteLine("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        var addresses = await _addressFacade.GetAllAddressesAsync();
+        Console.WriteLine("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        return View(addresses);
     }
 
     public async Task<IActionResult> Details(int id)
     {
-        var author = await _authorFacade.FindAuthorByIdAsync(id);
-        return View(author);
+        var address = await _addressFacade.FindAddressByIdAsync(id);
+        return View(address);
     }
 
     public ActionResult Create()
@@ -36,40 +38,40 @@ public class AuthorController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateAuthorDto createAuthorDto)
+    public async Task<IActionResult> Create(CreateAddressDto createAddressDto)
     {
-        await _authorFacade.CreateAuthorAsync(createAuthorDto);
-        ViewBag.Message = "Author Created Successfully";
-        return View(createAuthorDto);
+        await _addressFacade.CreateAddressAsync(createAddressDto);
+        ViewBag.Message = "Address Created Successfully";
+        return View(createAddressDto);
     }
 
 
     public async Task<IActionResult> Edit(int id)
     {
-        var author = await _authorFacade.FindAuthorByIdAsync(id);
-        return View(author);
+        var addressDto = await _addressFacade.FindAddressByIdAsync(id);
+        return View(addressDto);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, CreateAuthorDto updateAuthorDto)
+    public async Task<IActionResult> Edit(int id, CreateAddressDto updateAddressDto)
     {
-        var updated = await _authorFacade.UpdateAuthorAsync(id, updateAuthorDto);
-        ViewBag.Message = "Author Updated Successfully";
+        var updated = await _addressFacade.UpdateAddressAsync(id, updateAddressDto);
+        ViewBag.Message = "Address Updated Successfully";
         return View(updated);
     }
 
     public async Task<IActionResult> Delete(int id)
     {
-        var author = await _authorFacade.FindAuthorByIdAsync(id);
-        return View(author);
+        var address = await _addressFacade.FindAddressByIdAsync(id);
+        return View(address);
     }
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        await _authorFacade.DeleteAuthorAsync(id);
+        await _addressFacade.DeleteAddressByIdAsync(id);
         return RedirectToAction(nameof(Index));
     }
 

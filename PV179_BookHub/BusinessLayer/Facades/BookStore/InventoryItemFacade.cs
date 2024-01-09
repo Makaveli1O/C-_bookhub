@@ -2,7 +2,7 @@
 using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
 using BusinessLayer.Services;
-using BusinessLayer.Services.Book;
+using BusinessLayer.Services.BookStore;
 using BusinessLayer.Services.InventoryItem;
 
 namespace BusinessLayer.Facades.BookStore;
@@ -10,15 +10,15 @@ namespace BusinessLayer.Facades.BookStore;
 public class InventoryItemFacade : BaseFacade, IInventoryItemFacade
 {
     private readonly IInventoryItemService _inventoryItemService;
-    private readonly IBookService _bookService;
-    private readonly IGenericService<BookStoreEntity, long> _bookStoreService;
+    private readonly IGenericService<BookEntity, long> _bookService;
+    private readonly IBookStoreService _bookStoreService;
 
     public InventoryItemFacade(
         IMapper mapper,
         IInventoryItemService inventoryItemService,
-        IGenericService<BookStoreEntity, long> bookStoreService,
-        IBookService bookService)
-        : base(mapper)
+        IBookStoreService bookStoreService,
+        IGenericService<BookEntity, long> bookService)
+        : base(mapper, null, null)
     {
         _inventoryItemService = inventoryItemService;
         _bookService = bookService;
@@ -62,5 +62,11 @@ public class InventoryItemFacade : BaseFacade, IInventoryItemFacade
         await _inventoryItemService.UpdateAsync(inventoryItem);
        
         return _mapper.Map<DetailedInventoryItemViewDto>(inventoryItem);
+    }
+    public async Task<IEnumerable<DetailedInventoryItemViewDto>> GetAllInventoryItemsByUserId(long id)
+    {
+        var bookStore = await _bookStoreService.GetBookStoreByUserIdAsync(id);
+
+        return _mapper.Map<IEnumerable<DetailedInventoryItemViewDto>>(await _inventoryItemService.GetInventoryItemsByBookStoreIdAsync(bookStore.Id));
     }
 }

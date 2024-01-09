@@ -10,7 +10,7 @@ namespace BusinessLayer.Facades.Publisher
     {
         private readonly IGenericService<PublisherEntity, long> _publisherService;
 
-        public PublisherFacade(IMapper mapper, IGenericService<PublisherEntity, long> publisherService) : base(mapper)
+        public PublisherFacade(IMapper mapper, IGenericService<PublisherEntity, long> publisherService) : base(mapper, null, null)
         {
             _publisherService = publisherService;
         }

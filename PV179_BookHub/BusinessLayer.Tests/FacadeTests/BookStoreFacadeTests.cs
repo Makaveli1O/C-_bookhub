@@ -14,27 +14,24 @@ using TestUtilities.MockedData;
 using BusinessLayer.Facades.BookStore;
 using BusinessLayer.DTOs.BookStore.Create;
 using EntityFrameworkCore.Testing.NSubstitute;
+using BusinessLayer.Services.BookStore;
 
 namespace BusinessLayer.Tests.FacadeTests;
 
 public class BookStoreFacadeTests
 {
     private MockedDependencyInjectionBuilder _serviceProviderBuilder;
-    private IGenericService<BookStore, long> _bookStoreServiceMock;
+    private IBookStoreService _bookStoreServiceMock;
     private IGenericService<User, long> _userServiceMock;
     private IGenericService<Address, long> _addresServiceMock;
 
     public BookStoreFacadeTests()
     {
         _serviceProviderBuilder = new MockedDependencyInjectionBuilder()
-            .AddUnitOfWork()
-            .AddRepositories()
-            .AddAutoMapper()
-            .AddServices()
-            .AddFacades()
-            .AddMockedDBContext();
+            .AddInfrastructure()
+            .AddBusinessLayer();
 
-        _bookStoreServiceMock = Substitute.For<IGenericService<BookStore, long>>();
+        _bookStoreServiceMock = Substitute.For<IBookStoreService>();
         _userServiceMock = Substitute.For<IGenericService<User, long>>();
         _addresServiceMock = Substitute.For <IGenericService<Address, long>>();
     }
