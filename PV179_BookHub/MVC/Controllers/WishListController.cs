@@ -95,7 +95,7 @@ public class WishListController : Controller
 
     [HttpGet("{id:long}/Edit")]
     public async Task<IActionResult> Edit(long id)
-    {   //tu potrebujem dostat WishListItems do modelu ktory sa posle do metody nizsie
+    {
         var wishList = await _wishListFacade.FetchWishListAsync(id);
 
         var wishListItems = await _wishListFacade.FetchAllItemsFromWishListAsync(id);
