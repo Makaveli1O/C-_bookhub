@@ -1,9 +1,10 @@
 ﻿using System.Xml.Linq;
 using Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace BookHubWebAPI.Middleware;
+namespace BusinessLayer.Middleware;
 
 public class XmlResponseConverterMiddleware
 {
@@ -40,7 +41,7 @@ public class XmlResponseConverterMiddleware
 
         if (modifiedResponse == null)
         {
-            throw new XmlResponseConverterMiddlewareExcaption("Unable to convert JSON response to XML.");
+            throw new XmlResponseConverterMiddlewareException("Unable to convert JSON response to XML.");
         }
 
         context.Response.Body = originalBodyStream;

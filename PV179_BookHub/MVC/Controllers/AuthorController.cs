@@ -19,8 +19,8 @@ public class AuthorController : Controller
 
     public async Task<IActionResult> Index()
     {
-        // var authors = await _authorFacade.GetAllAuthorsAsync();
-        return View(null);
+        var authors = await _authorFacade.GetAllAuthorsAsync();
+        return View(authors);
     }
 
     public async Task<IActionResult> Details(int id)

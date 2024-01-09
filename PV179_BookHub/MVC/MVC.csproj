@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	<ProjectReference Include="..\BookHubWebAPI\BookHubWebAPI.csproj" />
 	<ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
     <ProjectReference Include="..\DALMSSql.Migrations\DAL.MSSql.Migrations.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />

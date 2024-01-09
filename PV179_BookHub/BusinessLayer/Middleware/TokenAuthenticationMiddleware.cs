@@ -1,4 +1,7 @@
-﻿namespace BookHubWebAPI.Middleware
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+
+namespace BusinessLayer.Middleware
 {
     public class TokenAuthenticationMiddleware
     {

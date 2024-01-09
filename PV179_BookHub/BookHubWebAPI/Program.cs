@@ -1,9 +1,9 @@
-using BookHubWebAPI.Middleware;
 using BookHubWebAPI.Swagger;
 using Microsoft.OpenApi.Models;
 using DataAccessLayer.DependencyInjection;
 using Infrastructure.DependencyInjection;
 using BusinessLayer.DependencyInjection;
+using BusinessLayer.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 

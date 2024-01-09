@@ -5,7 +5,7 @@ using DataAccessLayer.DependencyInjection;
 using Infrastructure.DependencyInjection;
 using BusinessLayer.DependencyInjection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using BookHubWebAPI.Middleware;
+using BusinessLayer.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +62,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
+
 
 
 using (var scope = app.Services.CreateScope())
