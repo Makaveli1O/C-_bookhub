@@ -40,7 +40,7 @@ public class OrderController : Controller
     }
 
     [HttpGet("User/{id:long}")]
-    [Authorize]
+    //[Authorize]
     public async Task<JsonResult> SingleUserOrders(long id)
     {
         return Json(await _orderFacade.FetchOrdersByUserIdAsync(id));
@@ -74,7 +74,7 @@ public class OrderController : Controller
 		return NoContent();
     }
 
-	[Authorize]
+	//[Authorize]
     [Route("{id:long}/Cancel")]
     public async Task<IActionResult> Cancel(long id)
     {

@@ -55,22 +55,8 @@ public class WishListController : Controller
         return Json(model, _jsonSerializerOptions);
     }
 
-    [HttpGet("MyWishList")]
-    public async Task<IActionResult> FetchMyWisList()
-    {
-        var user = await _userManager.GetUserAsync(User);
-
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-
-        return RedirectToAction(nameof(SingleUserWishList), new { id = user.UserId });
-    }
-
     [HttpGet("{id:long}/WishList")]
-    [Authorize]
+    //[Authorize]
     public async Task<JsonResult> SingleUserWishList(long id)
     {
         return Json(await _wishListFacade.FetchWishListAsync(id));

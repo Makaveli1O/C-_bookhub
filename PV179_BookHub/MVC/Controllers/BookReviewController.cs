@@ -25,7 +25,7 @@ public class BookReviewController : Controller
     }
 
     [HttpGet("User/{id:long}")]
-    [AllowAnonymous]
+    //[AllowAnonymous]
     public async Task<JsonResult> SingleUserBookReviews(long id)
     {
         return Json(await _bookReviewFacade.FindUserReviewsAsync(id));
