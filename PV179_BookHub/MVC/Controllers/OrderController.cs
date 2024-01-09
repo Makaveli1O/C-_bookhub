@@ -3,24 +3,37 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Mapster;
 using MVC.Models.Order;
-using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
-using BusinessLayer.DTOs.Order.View;
+using BusinessLayer.Facades.BookStore;
+using BusinessLayer.DTOs.Book.View;
+using BusinessLayer.Facades.Book;
+using BusinessLayer.DTOs.Order.Create;
 
 namespace MVC.Controllers;
 
-[Route("Orders")]
+[Route("Order")]
 public class OrderController : Controller
 {
     private readonly IOrderFacade _orderFacade;
     private readonly UserManager<LocalIdentityUser> _userManager;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
+    private readonly IBookStoreFacade _bookStoreFacade;
+    private readonly IInventoryItemFacade _inventoryItemFacade;
+    private readonly IBookFacade _bookFacade;
 
-    public OrderController(IOrderFacade orderFacade, UserManager<LocalIdentityUser> userManager)
+    public OrderController(
+        IOrderFacade orderFacade,
+        IBookStoreFacade bookStoreFacade,
+        IInventoryItemFacade inventoryItemFacade,
+        IBookFacade bookFacade,
+        UserManager<LocalIdentityUser> userManager)
     {
+        _bookStoreFacade = bookStoreFacade;
         _orderFacade = orderFacade;
+        _inventoryItemFacade = inventoryItemFacade;
         _userManager = userManager;
+        _bookFacade = bookFacade;
         _jsonSerializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -29,7 +42,7 @@ public class OrderController : Controller
 
     [Route("{id:long}/Detail")]
     [HttpGet]
-    public async Task<JsonResult> OrderDetail(long id)
+    public async Task<JsonResult> Detail(long id)
     {
         //would be nicer if we had DetailedOrderItem here instead of the General one
         var order = await _orderFacade.FindOrderByIdAsync(id);
@@ -46,18 +59,111 @@ public class OrderController : Controller
         return Json(await _orderFacade.FetchOrdersByUserIdAsync(id));
     }
 
-    [HttpGet]
-    [Route("Create/{userId:long}")]
+    [HttpGet("Create")]
+    public async Task<IActionResult> CreateSelf()
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        var orderCreateResult = await _orderFacade.CreateOrderAsync(user.UserId);
+
+        return RedirectToAction(nameof(Edit), new { id = orderCreateResult.Id });
+
+    }
+   
+    [HttpPost("Create/{userId:long}")]
     public async Task<IActionResult> Create(long userId)
     {
-		var order = await _orderFacade.CreateOrderAsync(userId);
+        var user = await _userManager.GetUserAsync(User);
 
-        var orderDetail = order.Adapt<OrderDetailViewModel>();
+        if (user == null)
+        {
+            return Unauthorized();
+        }
 
-		return View("OrderDetail", orderDetail);
-	}
+        var orderCreateResult = await _orderFacade.CreateOrderAsync(userId);
 
-	[HttpGet]
+        return RedirectToAction(nameof(Edit), new { id = orderCreateResult.Id });
+
+    }
+
+    [HttpGet("{id:long}/Edit")]
+    public async Task<IActionResult> Edit(long id)
+    {
+        var orderItems = await _orderFacade.FetchAllItemsFromOrderAsync(id);
+
+        var availableBookIds = await _inventoryItemFacade.GetAllInventoryItems();
+
+        var bookStores = await _bookStoreFacade.GetAllBookStores();
+
+
+        List<DetailedBookViewDto> availableBooks = new List<DetailedBookViewDto>();
+        foreach (var book in availableBookIds)
+        {
+            availableBooks.Add(await _bookFacade.FindBookByIdAsync(book.BookId));
+        }
+
+        var viewModel = new OrderEditViewModel
+        {
+            
+            OrderItems = orderItems.Adapt<IList<OrderItemViewModel>>(),
+            AvailableBooks = availableBooks.Adapt<IList<OrderAvailableBooksViewModel>>(),
+            AvailableBookStores = bookStores.Adapt<IList<OrderBookStoresViewModel>>(),
+        };
+
+        return View(viewModel);
+
+    }
+
+
+    [HttpPost("{orderId:long}/Edit")]
+    public async Task<IActionResult> Edit(long orderId, OrderEditViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine($"Model Error: {error.ErrorMessage}");
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            Unauthorized();
+        }
+
+
+        List<CreateOrderItemDto> createDtos = new List<CreateOrderItemDto>();
+        foreach(var newOrderItem in model.AddedOrderItems)
+        {
+            var createOrderItemDto = new CreateOrderItemDto
+            {
+                BookId = newOrderItem,
+                BookStoreId = model.SelectedBookStore,
+            };
+
+            var createdOrderItem = await _orderFacade.CreateOrderItem(orderId, createOrderItemDto);
+            var orderItem = createdOrderItem.Adapt<OrderItemViewModel>();
+            model.OrderItems.Add(orderItem);
+        }
+
+        return RedirectToAction(nameof(Detail), new { id = orderId });
+    }
+
+    [HttpGet]
     [Route("Delete/{orderId:long}")]
     public async Task<IActionResult> Delete(long orderId)
     {
@@ -71,7 +177,7 @@ public class OrderController : Controller
         }
         await _orderFacade.DeleteOrderByIdAsync(orderId);
 
-		return NoContent();
+		return Ok();
     }
 
 	//[Authorize]
@@ -91,8 +197,50 @@ public class OrderController : Controller
             Unauthorized();
         }
 
-        var cancelStatus = await _orderFacade.CancelOrderAsync(id);
+        await _orderFacade.CancelOrderAsync(id);
 
-        return View("OrderCancel", cancelStatus);
+        return Ok();
+    }
+
+    [Route("{id:long}/Pay")]
+    public async Task<IActionResult> Pay(long id)
+    {
+        var order = await _orderFacade.FindOrderByIdAsync(id);
+
+        if (order.State != DataAccessLayer.Models.Enums.OrderState.Created)
+        {
+            BadRequest();
+        }
+
+        var user = await _userManager.GetUserAsync(User);
+        if (order.UserId != user.UserId)
+        {
+            Unauthorized();
+        }
+
+        await _orderFacade.PayForOrderAsync(id);
+
+        return Ok();
+    }
+
+    [Route("{id:long}/Refund")]
+    public async Task<IActionResult> Refund(long id)
+    {
+        var order = await _orderFacade.FindOrderByIdAsync(id);
+
+        if (order.State != DataAccessLayer.Models.Enums.OrderState.Paid)
+        {
+            BadRequest();
+        }
+
+        var user = await _userManager.GetUserAsync(User);
+        if (order.UserId != user.UserId)
+        {
+            Unauthorized();
+        }
+
+        await _orderFacade.RefundOrderAsync(id);
+
+        return Ok();
     }
 }
