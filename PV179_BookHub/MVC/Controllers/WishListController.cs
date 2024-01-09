@@ -9,6 +9,7 @@ using MVC.Models.WishList;
 using System.Text.Json;
 using Mapster;
 using BusinessLayer.Facades.Book;
+using MVC.Models.Order;
 
 namespace MVC.Controllers;
 
@@ -34,6 +35,24 @@ public class WishListController : Controller
         {
             WriteIndented = true,
         };
+    }
+
+    [HttpGet("{id:long}/Detail")]
+    public async Task<JsonResult> Detail(long id)
+    {
+        var wishListItems = await _wishListFacade.FetchAllItemsFromWishListAsync(id);
+        var wishList = await _wishListFacade.FetchWishListAsync(id);
+
+        var model = new WishListDetailViewModel
+        {
+            Id = wishList.Id,
+            UserId = wishList.UserId,
+            CreatedAt = wishList.CreatedAt,
+            Description = wishList.Description,
+            Items = wishListItems
+        };
+
+        return Json(model, _jsonSerializerOptions);
     }
 
     [HttpGet("MyWishList")]
@@ -88,7 +107,7 @@ public class WishListController : Controller
 
     }
 
-    [HttpGet("Edit/{id:long}")]
+    [HttpGet("{id:long}/Edit")]
     public async Task<IActionResult> Edit(long id)
     {   //tu potrebujem dostat WishListItems do modelu ktory sa posle do metody nizsie
         var wishList = await _wishListFacade.FetchWishListAsync(id);
@@ -100,20 +119,25 @@ public class WishListController : Controller
         var viewModel = new WishListUpdateViewModel
         {
             Description = wishList.Description,
-            WishListItems = wishListItems.Adapt<IEnumerable<WishListItemViewModel>>(),
-            AvailableBooks = availableBooks.Adapt<IEnumerable<WishListAvailableBooksViewModel>>()
+            WishListItems = wishListItems.Adapt<IList<WishListItemViewModel>>(),
+            AvailableBooks = availableBooks.Adapt<IList<WishListAvailableBooksViewModel>>()
         };
 
         return View(viewModel);
     }
 
 
-    [HttpPost("Edit/{id:long}")]
+    [HttpPost("{id:long}/Edit")]
     public async Task<IActionResult> Edit(long id, WishListUpdateViewModel model)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest();
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine($"Model Error: {error.ErrorMessage}");
+            }
+
+            return BadRequest(ModelState);
         }
 
         if (!await IsUserWishListOwner(id))
@@ -121,11 +145,28 @@ public class WishListController : Controller
             return Unauthorized();
         }
 
-        var wishList = model.Adapt<GeneralWishListViewDto>();
+        //update description
+        await _wishListFacade.UpdateWishListAsync(id, model.Description);
 
-        var wishListResult = await _wishListFacade.UpdateWishListAsync(wishList.Id, wishList.Description);
+        //remove books from wishlist
+        foreach(var bookId in model.RemovedBooks)
+        {
+            await _wishListFacade.DeleteWishListItemAsync(bookId);
+        }
 
-        return View(wishListResult);
+        //add books to the wishlist
+        foreach(var bookId in model.AddedBooks)
+        {
+            var createWishListItemDto = new CreateWishListItemDto
+            {
+                WishListId = id,
+                BookId = bookId
+            };
+
+            await _wishListFacade.CreateWishListItemAsync(createWishListItemDto);
+        }
+
+        return RedirectToAction(nameof(Detail), new { id });
     }
 
     private async Task<bool> IsUserWishListOwner(long wishListId)

@@ -3,7 +3,7 @@
 
 @using (Html.BeginForm("Edit", "WishList", FormMethod.Post))
 {
-    <h1>WishList</h1>
+    <h2>WishList</h2>
 
     <div class="row" style="width: 100%">
         <label asp-for="Description"></label>
@@ -11,79 +11,51 @@
         <span asp-validation-for="Description"></span>
     </div>
 
-    <div class="row" style="width: 100%">
-        <h2>Wish list content:</h2>
-        <div>
-            @if (Model.WishListItems.Count() != 0)
-            {
-                <table>
-                    <thead>
+    <div class="row" style="width: 80%">
+        <h4>Wish List content:</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Book Title</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for (int i = 0; i < Model.WishListItems.Count; i++)
+                    {
                         <tr>
-                            <th>Book Title</th>
-                            <th>Action</th>
+                            <td>
+                                @Model.WishListItems[i].Id
+                            </td>
+                            <td>
+                                @Model.WishListItems[i].Book.Title
+                            </td>
+                            <td>
+                                <input type="checkbox" name="RemovedBooks" value="@Model.WishListItems[i].Id" />
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.WishListItems)
-                        {
-                            <tr>
-                                <td>
-                                    <input asp-for="@item.Book.Title" readonly />
-                                </td>
-                                <td>
-                                    <input asp-for="@item.Id" />
-                                    <input asp-for="@item.WishListId" />
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <p>No items in the wishlist.</p>
-            }
-        </div>
+                    }
+                </tbody>
+            </table>
+    </div>
 
-        <div id="newWishListItems">
-            <b>Add Item to wishlist</b>
-
-            @Html.DropDownList("selectedBookId", new SelectList(Model.AvailableBooks, "Id", "Title"), "Select a Book", new { @class = "form-control" })
-
-            <button type="button" id="addNewItem">Add Item</button>
+    <div class="row" style="width: 100%; height : 200px">
+        <h4>Add books to the wishlist</h4>
+        <div class="row" style="width: 100%; height: 100%">
+            <fieldset style="height: 100%">
+            @Html.ListBoxFor(
+                model => model.AddedBooks,
+                new MultiSelectList(Model.AvailableBooks, "Id", "Title", Model.AddedBooks),
+                new { @class = "form-control", style= "height: 100%" }
+            )
+            </fieldset>
         </div>
     </div>
 
-    <button type="submit">Update my WishList</button>
-}
+    <input type="hidden" id="WishListItems" name="WishListItems" />
+    <input type="hidden" id="AvailableBooks" name="AvailableBooks" />
 
-@section scripts {
-    <script>
-        $(document).ready(function () {
-            $('.delete-item').click(function () {
-                var itemId = $(this).data('item-id');
-                console.log('Deleting item with ID: ' + itemId);
-                $(this).closest('tr').remove();
-            });
 
-            $('#addNewItem').click(function () {
-                var selectedBookId = $('#selectedBookId').val();
-                var selectedBookTitle = $('#selectedBookId option:selected').text();
-
-                if (selectedBookId && selectedBookTitle) {
-                    console.log("Adding item");
-                    var newItemHtml = `
-                                        <li>
-                                            ${selectedBookTitle}
-                                            <input type="hidden" name="newWishListItems" value="${selectedBookId}" />
-                                            <button type="button" class="delete-new-item">Delete</button>
-                                        </li>
-                                    `;
-                    $('#newWishListItems ul').append(newItemHtml);
-
-                    $('#selectedBookId').val('');
-                }
-            });
-        });
-    </script>
+    <button type="submit" style="margin-top:50px">Submit</button>
 }
