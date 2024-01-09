@@ -2,6 +2,7 @@
 using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.DTOs.Order.Create;
 using BusinessLayer.DTOs.Order.View;
+using BusinessLayer.DTOs.WishList.View;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
@@ -213,7 +214,13 @@ public class OrderFacade : BaseFacade, IOrderFacade
         return orderItemDto;
     }
 
-    public async Task DeleteOrderItemByIdAsync(long id)
+	public async Task<IEnumerable<DetailedOrderItemViewDto>> FetchAllItemsFromOrderAsync(long orderId)
+	{
+		var order = await _orderService.FindByIdAsync(orderId);
+		return _mapper.Map<List<DetailedOrderItemViewDto>>(order?.Items);
+	}
+
+	public async Task DeleteOrderItemByIdAsync(long id)
     {
         var orderItem = await _orderItemService.FindByIdAsync(id);
         await AddBookStock(orderItem.BookId, orderItem.BookStoreId, orderItem.Quantity);
