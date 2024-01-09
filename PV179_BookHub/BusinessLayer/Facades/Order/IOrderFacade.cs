@@ -15,4 +15,5 @@ public interface IOrderFacade
     Task<DetailedOrderItemViewDto> CreateOrderItem(long orderId, CreateOrderItemDto createOrderItemDto);
     Task<DetailedOrderItemViewDto> FindOrderItemByIdAsync(long id);
     Task DeleteOrderItemByIdAsync(long id);
+    Task<IEnumerable<DetailedOrderItemViewDto>> FetchAllItemsFromOrderAsync(long orderId);
 }
