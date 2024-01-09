@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MVC.Controllers;
 
-
 [Route("User")]
 public class UserController : Controller
 {
@@ -20,10 +19,9 @@ public class UserController : Controller
     public async Task<IActionResult> Index()
     {
         var users = await _userManager.Users.ToListAsync();
-        return View();
+        return View(users);
     }
 
-        return View(users);
     [HttpGet("MyWishList")]
     public async Task<IActionResult> FetchMyWisList()
     {
