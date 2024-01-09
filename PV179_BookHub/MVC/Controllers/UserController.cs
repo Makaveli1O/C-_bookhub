@@ -44,7 +44,7 @@ public class UserController : Controller
             return NotFound();
         }
 
-        return RedirectToAction("User", "Orders", new {id = user.UserId });
+        return RedirectToAction("User", "Order", new {id = user.UserId });
     }
 
     [HttpGet("MyReviews")]
