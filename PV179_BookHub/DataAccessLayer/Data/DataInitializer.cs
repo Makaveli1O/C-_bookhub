@@ -4,6 +4,7 @@ using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Purchasing;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
@@ -63,6 +64,48 @@ public static class DataInitializer
             .HasData(orders);
         modelBuilder.Entity<OrderItem>()
             .HasData(orderItems);
+
+        SeedUsersAndRoles(modelBuilder, users);
+    }
+
+    public static void SeedUsersAndRoles(this ModelBuilder builder, IEnumerable<User> defautUsers)
+    {
+        List<IdentityRole> roles = new List<IdentityRole>() {
+            new IdentityRole(UserRole.Admin.ToString()),
+            new IdentityRole(UserRole.Manager.ToString()),
+            new IdentityRole(UserRole.User.ToString())
+        };
+        builder.Entity<IdentityRole>().HasData(roles);
+
+
+        var passwordHasher = new PasswordHasher<LocalIdentityUser>();
+        List<LocalIdentityUser> users = new List<LocalIdentityUser>();
+        foreach (var user in defautUsers)
+        {
+            var localUser = new LocalIdentityUser
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                Email = user.UserName + "@mail.com",
+            };
+            localUser.PasswordHash = passwordHasher.HashPassword(localUser, "password");
+            users.Add(localUser);
+        }
+        builder.Entity<LocalIdentityUser>().HasData(users);
+
+        List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>();
+        foreach (var user in users)
+        {
+            if (user.User != null)
+            {
+                userRoles.Add(new IdentityUserRole<string>
+                {
+                    UserId = user.Id,
+                    RoleId = roles.First(q => q.Name == user.User?.Role.ToString()).Id
+                });
+            }
+        }
+        builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
     }
 
     private static List<Publisher> PreparePublisherModels()
