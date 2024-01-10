@@ -1,8 +1,10 @@
 ﻿using BusinessLayer.Exceptions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text.Json;
 
-namespace BookHubWebAPI.Middleware;
+namespace BusinessLayer.Middleware;
 
 public class ExceptionHandlerMiddleware
 {
@@ -21,8 +23,8 @@ public class ExceptionHandlerMiddleware
         switch (exception)
         {
             case NoSuchEntityException<long>
-            or NoSuchEntityException<IEnumerable<long>>:            
-                code = HttpStatusCode.NotFound; 
+            or NoSuchEntityException<IEnumerable<long>>:
+                code = HttpStatusCode.NotFound;
                 break;
             case WrongOrderStateException
             or StockErrorException

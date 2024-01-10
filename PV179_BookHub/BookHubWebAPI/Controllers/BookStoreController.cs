@@ -59,7 +59,7 @@ public class BookStoreController : ControllerBase
     {
         return Ok(await _bookStoreFacade.UpdateBookStore(id, updateBookStoreDto));
     }
-    
+
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeleteBookStore(long id)

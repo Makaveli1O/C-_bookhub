@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace MVC.Controllers;
-
 
 [Route("User")]
 public class UserController : Controller
@@ -16,9 +16,10 @@ public class UserController : Controller
         _userManager = userManager;
     }
     
-    public ActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var users = await _userManager.Users.ToListAsync();
+        return View(users);
     }
 
     [HttpGet("MyWishList")]

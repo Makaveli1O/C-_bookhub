@@ -1,13 +1,6 @@
-﻿using AutoMapper;
-using BusinessLayer.DTOs.User.Create;
-using BusinessLayer.DTOs.User.View;
-using BusinessLayer.Facades.Book;
+﻿using BusinessLayer.DTOs.User.Create;
 using BusinessLayer.Facades.User;
-using DataAccessLayer.Models;
-using DataAccessLayer.Models.Account;
-using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Validations;
 
 namespace BookHubWebAPI.Controllers;
 

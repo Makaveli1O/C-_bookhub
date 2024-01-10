@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using DataAccessLayer.Models.Account
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<LocalIdentityUser> SignInManager
+@inject UserManager<LocalIdentityUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,13 +28,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="BookStore" asp-action="Index">BookStores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Address" asp-action="Index">Addresses</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="Index">Authors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Publisher" asp-action="Index">Publishers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Books</a>
                         </li>
                         @* @if (User.IsInRole("Manager")) *@
                         <li class="nav-item">
@@ -37,6 +51,17 @@
                         </li>
                     </ul>
                 </div>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                        <a class="nav-link disabled">Hello @UserManager.GetUserName(User)!</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Log off</a>
+                }
+                else
+                {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                }
             </div>
         </nav>
     </header>

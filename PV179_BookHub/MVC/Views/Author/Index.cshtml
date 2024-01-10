@@ -1,7 +1,11 @@
-﻿@using DataAccessLayer.Models.Account;
-@model IEnumerable<LocalIdentityUser>
+﻿@using BusinessLayer.DTOs.Author.View;
+@model IEnumerable<GeneralAuthorViewDto>
 
-<h1>Users</h1>
+<h1>Authors</h1>
+
+<p class="text-end">
+    @Html.ActionLink("Create New", "Create")
+</p>
 
 @if (ViewBag.Message != null)
 {
@@ -14,13 +18,7 @@
 <table class="table">
     <tr>
         <th>
-            ID
-        </th>
-        <th>
-            UserName
-        </th>
-        <th>
-            Email
+            Name
         </th>
         <th></th>
     </tr>
@@ -32,13 +30,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
@@ -50,6 +42,6 @@
     }
     else
     {
-        <td colspan="4" class="text-center"><b>No Users. Please Add Data By CLicking On The Create Button</b></td>
-}
+        <td colspan="2" class="text-center"><b>No Addresses Availible. Please Add Data By CLicking On The Create Button</b></td>
+    }
 </table>

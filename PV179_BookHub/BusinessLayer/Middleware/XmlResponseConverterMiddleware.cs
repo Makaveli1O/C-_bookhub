@@ -1,9 +1,10 @@
 ﻿using System.Xml.Linq;
 using Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace BookHubWebAPI.Middleware;
+namespace BusinessLayer.Middleware;
 
 public class XmlResponseConverterMiddleware
 {
