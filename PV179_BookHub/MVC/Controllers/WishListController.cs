@@ -9,7 +9,6 @@ using MVC.Models.WishList;
 using System.Text.Json;
 using Mapster;
 using BusinessLayer.Facades.Book;
-using MVC.Models.Order;
 
 namespace MVC.Controllers;
 
@@ -55,11 +54,10 @@ public class WishListController : Controller
         return Json(model, _jsonSerializerOptions);
     }
 
-    [HttpGet("{id:long}/WishList")]
-    //[Authorize]
-    public async Task<JsonResult> SingleUserWishList(long id)
+    [HttpGet("User/{userId:long}")]
+    public async Task<JsonResult> SingleUserWishList(long userId)
     {
-        return Json(await _wishListFacade.FetchWishListAsync(id));
+        return Json(await _wishListFacade.FetchAllByUserIdAsync(userId));
     }
 
     [HttpGet("Create")]

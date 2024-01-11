@@ -4,19 +4,23 @@ using BusinessLayer.DTOs.WishList.Create;
 using BusinessLayer.DTOs.WishList.View;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Book;
+using BusinessLayer.Services.WishList;
 using DataAccessLayer.Models.Publication;
+using Infrastructure.Query;
+using Infrastructure.Query.Filters.EntityFilters;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLayer.Facades.WishList;
 
 public class WishListFacade : BaseFacade, IWishListFacade
 {
-    private readonly IGenericService<WishListEntity, long> _wishListService;
+    private readonly IWishListService _wishListService;
     private readonly IGenericService<WishListItemEntity, long> _wishListItemService;
     private readonly IGenericService<BookEntity, long> _bookService;
 
     public WishListFacade(IMapper mapper,
-                          IGenericService<WishListEntity, long> wishListService,
+                          IWishListService wishListService,
                           IGenericService<WishListItemEntity, long> wishListItemService,
                           IGenericService<BookEntity, long> bookService,
                           IMemoryCache memoryCache)
@@ -115,5 +119,10 @@ public class WishListFacade : BaseFacade, IWishListFacade
         }
 
         return _mapper.Map<GeneralWishListViewDto>(cachedWishList);
+    }
+
+    public async Task<IEnumerable<GeneralWishListViewDto>> FetchAllByUserIdAsync(long userId)
+    {
+        return _mapper.Map<IEnumerable<GeneralWishListViewDto>>(await _wishListService.FetchAllByUserIdAsync(userId));
     }
 }
