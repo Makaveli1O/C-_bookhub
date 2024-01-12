@@ -101,24 +101,24 @@ public class OrderController : Controller
     {
         var orderItems = await _orderFacade.FetchAllItemsFromOrderAsync(id);
 
-        var availableBookIds = await _inventoryItemFacade.GetAllInventoryItems();
+        var availableBooks = await _inventoryItemFacade.GetAllInventoryItems();
 
         var bookStores = await _bookStoreFacade.GetAllBookStores();
 
-
-        List<DetailedBookViewDto> availableBooks = new List<DetailedBookViewDto>();
-        foreach (var book in availableBookIds)
-        {
-            availableBooks.Add(await _bookFacade.FindBookByIdAsync(book.BookId));
-        }
-
+        // mapping
         var viewModel = new OrderEditViewModel
         {
-            
             OrderItems = orderItems.Adapt<IList<OrderItemViewModel>>(),
             AvailableBooks = availableBooks.Adapt<IList<OrderAvailableBooksViewModel>>(),
             AvailableBookStores = bookStores.Adapt<IList<OrderBookStoresViewModel>>(),
         };
+        // more mappping
+        for(int i = 0; i < viewModel.AvailableBooks.Count(); i++)
+        {
+            DetailedBookViewDto detailedBookView = await _bookFacade.FindBookByIdAsync(viewModel.AvailableBooks[i].BookId);
+            viewModel.AvailableBooks[i].Price = detailedBookView.Price;
+            viewModel.AvailableBooks[i].Title = detailedBookView.Title;
+        }
 
         return View(viewModel);
 
@@ -145,22 +145,33 @@ public class OrderController : Controller
             Unauthorized();
         }
 
+        AddSelectedItems(model.AddedItems, model.SelectedBookStore, orderId);
 
-        List<CreateOrderItemDto> createDtos = new List<CreateOrderItemDto>();
-        foreach(var newOrderItem in model.AddedOrderItems)
+        RemoveSelectedItems(model.RemovedOrderItems);
+
+        return RedirectToAction(nameof(Detail), new { id = orderId });
+    }
+
+    private async void AddSelectedItems(Dictionary<int, uint> itemIdsToAdd, int bookStore, long orderId)
+    {
+        foreach (var (bookId, quantity) in itemIdsToAdd)
         {
             var createOrderItemDto = new CreateOrderItemDto
             {
-                BookId = newOrderItem,
-                BookStoreId = model.SelectedBookStore,
+                BookId = bookId,
+                BookStoreId = bookStore,
+                Quantity = quantity
             };
-
-            var createdOrderItem = await _orderFacade.CreateOrderItem(orderId, createOrderItemDto);
-            var orderItem = createdOrderItem.Adapt<OrderItemViewModel>();
-            model.OrderItems.Add(orderItem);
+            await _orderFacade.CreateOrderItem(orderId, createOrderItemDto);
         }
+    }
 
-        return RedirectToAction(nameof(Detail), new { id = orderId });
+    private async void RemoveSelectedItems(List<int> itemIdsToDelete)
+    {
+        foreach (var itemId in itemIdsToDelete)
+        {
+            await _orderFacade.DeleteOrderItemByIdAsync(itemId);
+        }
     }
 
     [HttpGet]

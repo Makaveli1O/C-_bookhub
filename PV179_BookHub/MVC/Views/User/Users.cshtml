@@ -42,7 +42,7 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Detail", new { id = item.UserId }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>
@@ -51,5 +51,5 @@
     else
     {
         <td colspan="4" class="text-center"><b>No Users. Please Add Data By CLicking On The Create Button</b></td>
-}
+    }
 </table>
