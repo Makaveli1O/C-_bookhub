@@ -15,5 +15,5 @@ public interface IWishListFacade
     Task<IEnumerable<GeneralWishListItemViewDto>> FetchAllItemsFromWishListAsync(long wishListId);
     Task<GeneralWishListItemViewDto> FetchSingleItemFromWishListAsync(long itemId);
     Task<GeneralWishListViewDto> FetchWishListAsync(long id);
-
+    Task<IEnumerable<GeneralWishListViewDto>> FetchAllByUserIdAsync(long userId);
 }

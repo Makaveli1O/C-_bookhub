@@ -25,6 +25,7 @@ using BusinessLayer.Mappers;
 using BusinessLayer.Services.BookStore;
 using Microsoft.Extensions.Caching.Memory;
 using BusinessLayer.Services.AuthorBookAssociation;
+using BusinessLayer.Services.WishList;
 
 namespace BusinessLayer.DependencyInjection;
 
@@ -64,7 +65,7 @@ public static class BLDependencyInjection
         services.AddScoped<IGenericService<Book, long>, BookService>();
         services.AddScoped<IBookFacade, BookFacade>();
 
-        services.AddScoped<IGenericService<WishList, long>, GenericService<WishList, long>>();
+        services.AddScoped<IWishListService, WishListService>();
         services.AddScoped<IGenericService<WishListItem, long>, GenericService<WishListItem, long>>();
         services.AddScoped<IWishListFacade, WishListFacade>();
 

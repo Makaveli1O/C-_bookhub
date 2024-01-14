@@ -1,7 +1,10 @@
-﻿using DataAccessLayer.Models.Account;
+﻿using BusinessLayer.Facades.User;
+using DataAccessLayer.Models.Account;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MVC.Models.User;
 
 namespace MVC.Controllers;
 
@@ -9,13 +12,43 @@ namespace MVC.Controllers;
 public class UserController : Controller
 {
     private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly IUserFacade _userFacade;
 
-    public UserController(UserManager<LocalIdentityUser> userManager)
+    public UserController(UserManager<LocalIdentityUser> userManager, IUserFacade userFacade)
     {
         _userManager = userManager;
+        _userFacade = userFacade;
     }
     
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
+    {
+        return RedirectToAction(nameof(Users));
+    }
+
+    [HttpGet("MyProfile")]
+    public async Task<IActionResult> MyProfile()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return RedirectToAction(nameof(Detail), new { id = user.UserId });
+    }
+
+    [HttpGet("{id:long}/Detail")]
+    public async Task<IActionResult> Detail(long id)
+    {
+        var user = await _userFacade.FetchUserAsync(id);
+        UserDetailViewModel userDetail = user.Adapt<UserDetailViewModel>();
+
+        return View(userDetail);
+    }
+
+    [HttpGet("Users")]
+    public async Task<IActionResult> Users()
     {
         var users = await _userManager.Users.ToListAsync();
         return View(users);
@@ -31,7 +64,7 @@ public class UserController : Controller
             return NotFound();
         }
 
-        return RedirectToAction("SingleUserWishList", "WishList", new { id = user.UserId });
+        return RedirectToAction("User", "WishList", new { id = user.UserId });
     }
 
     [HttpGet("MyOrders")]

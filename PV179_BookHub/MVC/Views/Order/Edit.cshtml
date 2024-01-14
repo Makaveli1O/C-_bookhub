@@ -6,7 +6,7 @@
     @using (Html.BeginForm("Edit", "Order", FormMethod.Post, new { id = "form" }))
     {
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <div class="mb-4">
                     <h2>Specify Order</h2>
                 </div>
@@ -14,20 +14,21 @@
                 <div class="mb-4">
                     <h5>Select bookstore</h5>
                     @Html.DropDownListFor(
-                model => model.SelectedBookStore,
-                new SelectList(Model.AvailableBookStores, "Id", "Name"),
-                new { @class = "form-control" }
-                )
+                        model => model.SelectedBookStore,
+                        new SelectList(Model.AvailableBookStores, "Id", "Name"),
+                        new { @class = "form-control", id = "bookstoreDropdown"}
+                    )
                 </div>
 
                 <div class="mb-4">
                     <h4>Add books to the order</h4>
                     <div style="max-height: 200px; overflow-y: auto;">
+                        <h6 id="noBooksTitle" class="text-warning">No available books in this bookstore</h6>
                         @Html.ListBoxFor(
-                    model => model.AddedOrderItems,
-                    new MultiSelectList(Model.AvailableBooks, "Id", "Title"),
-                    new { @class = "form-control" }
-                    )
+                            model => model.AddedOrderItems,
+                            new MultiSelectList(Enumerable.Empty<SelectListItem>(), "Id", "Title"),
+                            new { @class = "form-control", id = "booksListBox" }
+                        )
                     </div>
                     <button type="button" id="addSelectedBooks" class="btn btn-primary mt-2">Add Selected Books</button>
                     <div id="orderItemsContainer" style="margin-top: 10px;">
@@ -36,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="mb-4">
                     <h4>Order content:</h4>
                     <table class="table">
@@ -45,6 +46,7 @@
                                 <th>Id</th>
                                 <th>Book Title</th>
                                 <th>Quantity</th>
+                                <th>Price</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
@@ -54,7 +56,8 @@
                                 <tr>
                                     <td>@Model.OrderItems[i].Id</td>
                                     <td>@Model.OrderItems[i].Book.Title</td>
-                                    <td><input type="number" name="OrderItems[@i].Quantity" value="@Model.OrderItems[i].Quantity" min="1" /></td>
+                                    <td>@Model.OrderItems[i].Quantity</td>
+                                    <td>@Model.OrderItems[i].Price</td>
                                     <td><input type="checkbox" name="RemovedOrderItems" value="@Model.OrderItems[i].Id" /></td>
                                 </tr>
                             }
@@ -74,10 +77,69 @@
 </div>
 
 <script>
-    //zatial nefunguje dynamicke pridavanie quantity
     $(document).ready(function () {
+
+        // Initial load
+        filterBooks();
+
+        // Handle change event of the dropdown
+        $('#bookstoreDropdown').change(function () {
+            filterBooks();
+        });
+
+        function filterBooks() {
+            var selectedBookstore = $('#bookstoreDropdown').val();
+            var booksListBox = $('#booksListBox');
+            var noBooksTitle = $('#noBooksTitle');
+
+            booksListBox.empty();
+
+            // Add filtered options
+            @foreach (var book in Model.AvailableBooks)
+            {
+                <text>
+                    if ('@book.BookStoreId' === selectedBookstore) {
+                        var optionText = htmlDecode(`${'@book.Title'} - ${'@book.Price.ToString("C")'}`);
+                        booksListBox.append($('<option>', {
+                            value: '@book.BookId',
+                            text: optionText
+                        }, '</option>'));
+                    }
+                </text>
+            }
+
+            handleVisibility(selectedBookstore)
+        }
+
+        function handleVisibility(selectedBookstore) {
+            var count = 0;
+            @for (int i = 0; i < Model.AvailableBooks.Count(); i++)
+            {
+                <text>
+                        if ('@Model.AvailableBooks[i].BookStoreId' == selectedBookstore) {
+                            count++;
+                        }
+                </text>
+            }
+
+            var noBooksTitle = $('#noBooksTitle');
+            var booksListBox = $('#booksListBox');
+
+            if (count == 0) {
+                noBooksTitle.removeClass("d-none");
+                booksListBox.addClass("d-none");
+            } else {
+                noBooksTitle.addClass("d-none");
+                booksListBox.removeClass("d-none");
+            }
+        }
+
+        function htmlDecode(text) {
+            return $("<div/>").html(text).text();
+        }
+
         $('#addSelectedBooks').click(function () {
-            var selectedBooksList = $('#AddedOrderItems');
+            var selectedBooksList = $('#booksListBox');
             var orderItemsContainer = $('#orderItemsContainer');
 
             orderItemsContainer.html('');
@@ -88,11 +150,18 @@
 
                 var quantity = parseInt($('#quantity_' + bookId).val()) || 1;
 
+                var hiddenInputId = 'addedItemId_' + bookId;
+
                 orderItemsContainer.append('<div class="row">' +
-                    '<input type="hidden" name="AddedItems[' + bookId + ']" value="1" />' +
+                    '<input id = ' + hiddenInputId + ' type="hidden" name="AddedItems[' + bookId + ']" value="1" />' +
                     '<div class="col-md-6">' + bookTitle + '</div>' +
                     '<div class="col-md-3"><input type="number" id="quantity_' + bookId + '" name="AddedItems[' + bookId + ']" value= "1" min="1" /></div>' +
                     '</div>');
+
+                $('#quantity_' + bookId).on('change', function () {
+                    var newQuantity = parseInt($(this).val()) || 1;
+                    $('#' + hiddenInputId).val(newQuantity);
+                });
             });
         });
     });
