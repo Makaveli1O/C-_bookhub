@@ -1,51 +1,61 @@
-﻿@using BusinessLayer.DTOs.BookStore.View;
-@model DetailedBookStoreViewDto
-
-@{
-    ViewData["Title"] = "Edit";
-}
+﻿@using BusinessLayer.DTOs.BookStore.Create;
+@using BusinessLayer.DTOs.Address.View;
+@using BusinessLayer.DTOs.User.View;
+@model CreateBookStoreDto
 
 <h1>Edit Book Store</h1>
 <hr />
-
-@if (ViewBag.Message != null)
-{
-    <p class="alert alert-success" role="alert">
-        @ViewBag.Message
-    </p>
-}
 
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group my-2">
-                <label asp-for="Name" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-          
-            <div class="form-group my-2">
-                <label asp-for="ManagerId" class="control-label"></label>
-                <input asp-for="ManagerId" class="form-control" />
+            </div> 
+            <div class="mb-3">
+                <label asp-for="ManagerId" class="form-label"></label>
+                @Html.DropDownListFor(m => m.ManagerId,
+                    new SelectList(
+                         from mngr in ((List<GeneralUserViewDto>)ViewBag.Managers)
+                         select new
+                         {
+                             mngr.Id,
+                             mngr.UserName
+                         },
+                         "Id",
+                         "UserName"),
+                    new { @class = "form-select" })
                 <span asp-validation-for="ManagerId" class="text-danger"></span>
             </div>
-            <div class="form-group my-2">
-                <label asp-for="AddressId" class="control-label">Addres</label>
-                @Html.DropDownList("AddressId", new SelectList(ViewBag.Addresses, "Id", "City"))
+            <div class="mb-3">
+                <label asp-for="AddressId" class="form-label">Address</label>
+                @Html.DropDownListFor(m => m.AddressId,
+                    new SelectList(
+                         from addr in ((List<GeneralAddressView>)ViewBag.Addresses)
+                        select new
+                            {
+                                AddressId = addr.Id,
+                                FullAddress = string.Format("{0}, {1}, {2}", addr.Street, addr.City, addr.State)
+                            },
+                        "AddressId",
+                        "FullAddress"),
+                    new { @class = "form-select" })
+                <span asp-validation-for="AddressId" class="text-danger"></span>
             </div>
-            <div class="form-group my-2">
-                <label asp-for="PhoneNumber" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="PhoneNumber" class="form-label"></label>
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="form-group my-2">
-                <label asp-for="Email" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group my-2">
+            <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" /> |
                 <a asp-action="Index">Back to List</a>
             </div>

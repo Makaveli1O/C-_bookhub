@@ -4,7 +4,6 @@ using BusinessLayer.DTOs.User.View;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Order;
-using DataAccessLayer.Models.Publication;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLayer.Facades.User;
@@ -38,8 +37,6 @@ public class UserFacade : BaseFacade, IUserFacade
         var user = await _userService.FindByIdAsync(id);
 
         user.UserName = createUserDto.UserName ?? user.UserName;
-        user.PasswordHash = createUserDto.PasswordHash ?? user.PasswordHash;
-        user.Salt = createUserDto.Salt ?? user.Salt;
 
         _memoryCache?.Set(GetMemoryCacheKey(id), user);
         await _userService.UpdateAsync(user);

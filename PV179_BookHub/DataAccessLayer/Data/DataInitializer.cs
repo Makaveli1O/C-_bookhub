@@ -70,16 +70,19 @@ public static class DataInitializer
 
     public static void SeedUsersAndRoles(this ModelBuilder builder, IEnumerable<User> defautUsers)
     {
-        List<IdentityRole> roles = new List<IdentityRole>() {
-            new IdentityRole(UserRole.Admin.ToString()),
-            new IdentityRole(UserRole.Manager.ToString()),
-            new IdentityRole(UserRole.User.ToString())
-        };
-        builder.Entity<IdentityRole>().HasData(roles);
+        var adminRole = new IdentityRole(UserRole.Admin.ToString());
+        adminRole.NormalizedName = adminRole.Name!.ToUpper();
+        var managerRole = new IdentityRole(UserRole.Manager.ToString());
+        managerRole.NormalizedName = managerRole.Name!.ToUpper();
+        var userRole = new IdentityRole(UserRole.User.ToString());
+        userRole.NormalizedName = userRole.Name!.ToUpper();
 
+        List<IdentityRole> roles = new List<IdentityRole>() { adminRole, managerRole, userRole };
+        builder.Entity<IdentityRole>().HasData(roles);
 
         var passwordHasher = new PasswordHasher<LocalIdentityUser>();
         List<LocalIdentityUser> users = new List<LocalIdentityUser>();
+
         foreach (var user in defautUsers)
         {
             var localUser = new LocalIdentityUser
@@ -88,22 +91,22 @@ public static class DataInitializer
                 UserName = user.UserName,
                 Email = user.UserName + "@mail.com",
             };
+            localUser.NormalizedUserName = localUser.UserName.ToUpper();
+            localUser.NormalizedEmail = localUser.Email.ToUpper();
             localUser.PasswordHash = passwordHasher.HashPassword(localUser, "password");
             users.Add(localUser);
         }
         builder.Entity<LocalIdentityUser>().HasData(users);
 
+
         List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>();
         foreach (var user in users)
         {
-            if (user.User != null)
+            userRoles.Add(new IdentityUserRole<string>
             {
-                userRoles.Add(new IdentityUserRole<string>
-                {
-                    UserId = user.Id,
-                    RoleId = roles.First(q => q.Name == user.User?.Role.ToString()).Id
-                });
-            }
+                UserId = user.Id,
+                RoleId = roles.First(q => q.Name == defautUsers.First(u => user.UserId == u.Id).Role.ToString()).Id
+            });
         }
         builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
     }
@@ -669,137 +672,103 @@ public static class DataInitializer
             {
                 Id = 1,
                 UserName = "Housemaster111",
-                PasswordHash = "954b39223c4cfd375e5b41ef79cdbe5cacaf9176",
-                Salt = "8y4z6E",
-                Role = UserRole.Admin
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 2,
-                UserName = "olivia.johnson@gmail.com",
-                PasswordHash = "b5d66e00c0673d769f25c9919756341d34162cef",
-                Salt = "3M9r1N",
+                UserName = "olivia.johnson",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 3,
                 UserName = "liamthereaded",
-                PasswordHash = "fd3a0c6a60faa4f9e487f04e153f17919219bcbc",
-                Salt = "ab7x9D",
-                Role = UserRole.User
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 4,
-                UserName = "emily_j",
-                PasswordHash = "319f1f56edd200d17f693ee08180db1a8367be87",
-                Salt = "aA8f9B",
-                Role = UserRole.User
+                UserName = "emily_in_paris",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 5,
                 UserName = "booklover88",
-                PasswordHash = "3b0e9558746f94f4fc36e307e5d78e86a37c6cca",
-                Salt = "7K6p2h",
-                Role = UserRole.User
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 6,
-                UserName = "maplewoodhighschool@edu.com",
-                PasswordHash = "67df5688eeff6daee952323aac4626a3c80f15c6",
-                Salt = "1F5a3G",
-                Role = UserRole.User
+                UserName = "maplewoodhighschool",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 7,
-                UserName = "Ethan Parker",
-                PasswordHash = "34b18f3e9b6795760e5246ce3fe534c53c9ecc6a",
-                Salt = "fffA34",
-                Role = UserRole.User
+                UserName = "PeterParker",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 8,
                 UserName = "codingWizard42",
-                PasswordHash = "2c4e2bcbb76a1125e3ed5a075ad850b8317f8dca",
-                Salt = "9W2u1T",
-                Role = UserRole.User
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 9,
                 UserName = "bookworm",
-                PasswordHash = "71a3b4d4e831e1a365ef1924ac2d05c8b64f7ad4",
-                Salt = "7D1x4C",
-                Role = UserRole.User
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 10,
                 UserName = "22avidReader22",
-                PasswordHash = "3e08d29af755dd663110b04c7c4136a98b4309a6",
-                Salt = "2M3v8N",
-                Role = UserRole.User
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 11,
                 UserName = "programmingGuru",
-                PasswordHash = "9b6039d84c9e6a08f7e7c810161c4b9aa2e6b1a3",
-                Salt = "5P1t8R",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 12,
                 UserName = "mysteryFanatic",
-                PasswordHash = "9ef6ec5ec7f6101e0e37d680d41cb6c1a8b15a39",
-                Salt = "0G8j6L",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 13,
                 UserName = "techEnthusiast",
-                PasswordHash = "6a0b488fdb654fca6f366126b2a7c3a3ce2b93ff",
-                Salt = "2R1n3T",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 14,
                 UserName = "foodLover88",
-                PasswordHash = "524bfcf1ff68e8d6f7684819469329c2723e7d91",
-                Salt = "4K6q8p",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 15,
-                UserName = "John the Ripper",
-                PasswordHash = "319ffa6d3266e2e2c6306348b91289d1a838b2ea",
-                Salt = "3D6g3B",
+                UserName = "john_the_ipper",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 16,
-                UserName = "Samuel Johnson",
-                PasswordHash = "6f8625099e98e6e0c810ba0979db55c36961f7a2",
-                Salt = "1E5v3H",
+                UserName = "samuel_ackson",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 17,
-                UserName = "joe11@yahoo.com",
-                PasswordHash = "53dcbf0fb77f0d16fa8f682d30a0f5c18c5f5db0",
-                Salt = "2P5n4H",
-                Role = UserRole.User
+                UserName = "admin",
+                Role = UserRole.Admin
             },
         };
     }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using DataAccessLayer.DependencyInjection;
 using Infrastructure.DependencyInjection;
 using BusinessLayer.DependencyInjection;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BusinessLayer.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +30,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
     options.Password.RequiredLength = 6;
+    options.Password.RequireDigit = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
 });
 
 builder.Services.ConfigureApplicationCookie(options =>

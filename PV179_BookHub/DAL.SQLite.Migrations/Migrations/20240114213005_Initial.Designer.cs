@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.SQLite.Migrations.Migrations
 {
     [DbContext(typeof(BookHubDbContext))]
-    [Migration("20231118195915_AuthorPublisherNewData")]
-    partial class AuthorPublisherNewData
+    [Migration("20240114213005_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -276,16 +276,8 @@ namespace DAL.SQLite.Migrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Salt")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -300,138 +292,104 @@ namespace DAL.SQLite.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            PasswordHash = "954b39223c4cfd375e5b41ef79cdbe5cacaf9176",
-                            Role = 2,
-                            Salt = "8y4z6E",
+                            Role = 1,
                             UserName = "Housemaster111"
                         },
                         new
                         {
                             Id = 2L,
-                            PasswordHash = "b5d66e00c0673d769f25c9919756341d34162cef",
                             Role = 1,
-                            Salt = "3M9r1N",
-                            UserName = "olivia.johnson@gmail.com"
+                            UserName = "olivia.johnson"
                         },
                         new
                         {
                             Id = 3L,
-                            PasswordHash = "fd3a0c6a60faa4f9e487f04e153f17919219bcbc",
-                            Role = 0,
-                            Salt = "ab7x9D",
+                            Role = 1,
                             UserName = "liamthereaded"
                         },
                         new
                         {
                             Id = 4L,
-                            PasswordHash = "319f1f56edd200d17f693ee08180db1a8367be87",
-                            Role = 0,
-                            Salt = "aA8f9B",
-                            UserName = "emily_j"
+                            Role = 1,
+                            UserName = "emily_in_paris"
                         },
                         new
                         {
                             Id = 5L,
-                            PasswordHash = "3b0e9558746f94f4fc36e307e5d78e86a37c6cca",
-                            Role = 0,
-                            Salt = "7K6p2h",
+                            Role = 1,
                             UserName = "booklover88"
                         },
                         new
                         {
                             Id = 6L,
-                            PasswordHash = "67df5688eeff6daee952323aac4626a3c80f15c6",
-                            Role = 0,
-                            Salt = "1F5a3G",
-                            UserName = "maplewoodhighschool@edu.com"
+                            Role = 1,
+                            UserName = "maplewoodhighschool"
                         },
                         new
                         {
                             Id = 7L,
-                            PasswordHash = "34b18f3e9b6795760e5246ce3fe534c53c9ecc6a",
-                            Role = 0,
-                            Salt = "fffA34",
-                            UserName = "Ethan Parker"
+                            Role = 1,
+                            UserName = "PeterParker"
                         },
                         new
                         {
                             Id = 8L,
-                            PasswordHash = "2c4e2bcbb76a1125e3ed5a075ad850b8317f8dca",
-                            Role = 0,
-                            Salt = "9W2u1T",
+                            Role = 1,
                             UserName = "codingWizard42"
                         },
                         new
                         {
                             Id = 9L,
-                            PasswordHash = "71a3b4d4e831e1a365ef1924ac2d05c8b64f7ad4",
-                            Role = 0,
-                            Salt = "7D1x4C",
+                            Role = 1,
                             UserName = "bookworm"
                         },
                         new
                         {
                             Id = 10L,
-                            PasswordHash = "3e08d29af755dd663110b04c7c4136a98b4309a6",
-                            Role = 0,
-                            Salt = "2M3v8N",
+                            Role = 1,
                             UserName = "22avidReader22"
                         },
                         new
                         {
                             Id = 11L,
-                            PasswordHash = "9b6039d84c9e6a08f7e7c810161c4b9aa2e6b1a3",
                             Role = 0,
-                            Salt = "5P1t8R",
                             UserName = "programmingGuru"
                         },
                         new
                         {
                             Id = 12L,
-                            PasswordHash = "9ef6ec5ec7f6101e0e37d680d41cb6c1a8b15a39",
                             Role = 0,
-                            Salt = "0G8j6L",
                             UserName = "mysteryFanatic"
                         },
                         new
                         {
                             Id = 13L,
-                            PasswordHash = "6a0b488fdb654fca6f366126b2a7c3a3ce2b93ff",
                             Role = 0,
-                            Salt = "2R1n3T",
                             UserName = "techEnthusiast"
                         },
                         new
                         {
                             Id = 14L,
-                            PasswordHash = "524bfcf1ff68e8d6f7684819469329c2723e7d91",
                             Role = 0,
-                            Salt = "4K6q8p",
                             UserName = "foodLover88"
                         },
                         new
                         {
                             Id = 15L,
-                            PasswordHash = "319ffa6d3266e2e2c6306348b91289d1a838b2ea",
                             Role = 0,
-                            Salt = "3D6g3B",
-                            UserName = "John the Ripper"
+                            UserName = "john_the_ipper"
                         },
                         new
                         {
                             Id = 16L,
-                            PasswordHash = "6f8625099e98e6e0c810ba0979db55c36961f7a2",
                             Role = 0,
-                            Salt = "1E5v3H",
-                            UserName = "Samuel Johnson"
+                            UserName = "samuel_ackson"
                         },
                         new
                         {
                             Id = 17L,
-                            PasswordHash = "53dcbf0fb77f0d16fa8f682d30a0f5c18c5f5db0",
-                            Role = 0,
-                            Salt = "2P5n4H",
-                            UserName = "joe11@yahoo.com"
+                            Role = 2,
+                            UserName = "admin"
                         });
                 });
 
@@ -453,7 +411,7 @@ namespace DAL.SQLite.Migrations.Migrations
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Street")
@@ -1555,35 +1513,35 @@ namespace DAL.SQLite.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9374),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(529),
                             Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.",
                             UserId = 1L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9422),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(609),
                             Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.",
                             UserId = 2L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9424),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(612),
                             Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!",
                             UserId = 3L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9426),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(614),
                             Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!",
                             UserId = 4L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9428),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(616),
                             Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.",
                             UserId = 5L
                         });
@@ -1598,7 +1556,7 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Property<long>("BookId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<uint>("PreferencePriorty")
+                    b.Property<uint>("PreferencePriority")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("WishListId")
@@ -1617,56 +1575,56 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 1L,
                             BookId = 1L,
-                            PreferencePriorty = 1u,
+                            PreferencePriority = 1u,
                             WishListId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             BookId = 2L,
-                            PreferencePriorty = 1u,
+                            PreferencePriority = 1u,
                             WishListId = 2L
                         },
                         new
                         {
                             Id = 3L,
                             BookId = 18L,
-                            PreferencePriorty = 2u,
+                            PreferencePriority = 2u,
                             WishListId = 2L
                         },
                         new
                         {
                             Id = 4L,
                             BookId = 3L,
-                            PreferencePriorty = 1u,
+                            PreferencePriority = 1u,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 5L,
                             BookId = 4L,
-                            PreferencePriorty = 2u,
+                            PreferencePriority = 2u,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 6L,
                             BookId = 5L,
-                            PreferencePriorty = 0u,
+                            PreferencePriority = 0u,
                             WishListId = 3L
                         },
                         new
                         {
                             Id = 7L,
                             BookId = 6L,
-                            PreferencePriorty = 1u,
+                            PreferencePriority = 1u,
                             WishListId = 4L
                         },
                         new
                         {
                             Id = 8L,
                             BookId = 7L,
-                            PreferencePriorty = 1u,
+                            PreferencePriority = 1u,
                             WishListId = 5L
                         });
                 });
@@ -1781,6 +1739,9 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Property<long>("BookId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
@@ -1794,121 +1755,141 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 1L,
                             AuthorId = 1L,
-                            BookId = 1L
+                            BookId = 1L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 2L,
                             AuthorId = 2L,
-                            BookId = 1L
+                            BookId = 1L,
+                            IsPrimary = false
                         },
                         new
                         {
                             Id = 3L,
                             AuthorId = 3L,
-                            BookId = 2L
+                            BookId = 2L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 4L,
                             AuthorId = 4L,
-                            BookId = 3L
+                            BookId = 3L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 5L,
                             AuthorId = 4L,
-                            BookId = 4L
+                            BookId = 4L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 6L,
                             AuthorId = 4L,
-                            BookId = 5L
+                            BookId = 5L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 7L,
                             AuthorId = 4L,
-                            BookId = 6L
+                            BookId = 6L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 8L,
                             AuthorId = 4L,
-                            BookId = 7L
+                            BookId = 7L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 9L,
                             AuthorId = 4L,
-                            BookId = 8L
+                            BookId = 8L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 10L,
                             AuthorId = 4L,
-                            BookId = 9L
+                            BookId = 9L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 11L,
                             AuthorId = 5L,
-                            BookId = 10L
+                            BookId = 10L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 12L,
                             AuthorId = 5L,
-                            BookId = 11L
+                            BookId = 11L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 13L,
                             AuthorId = 6L,
-                            BookId = 12L
+                            BookId = 12L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 14L,
                             AuthorId = 7L,
-                            BookId = 13L
+                            BookId = 13L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 15L,
                             AuthorId = 8L,
-                            BookId = 14L
+                            BookId = 14L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 16L,
                             AuthorId = 9L,
-                            BookId = 15L
+                            BookId = 15L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 17L,
                             AuthorId = 10L,
-                            BookId = 17L
+                            BookId = 17L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 18L,
                             AuthorId = 11L,
-                            BookId = 18L
+                            BookId = 18L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 19L,
                             AuthorId = 12L,
-                            BookId = 19L
+                            BookId = 19L,
+                            IsPrimary = true
                         },
                         new
                         {
                             Id = 20L,
                             AuthorId = 13L,
-                            BookId = 20L
+                            BookId = 20L,
+                            IsPrimary = true
                         });
                 });
 
@@ -2169,7 +2150,7 @@ namespace DAL.SQLite.Migrations.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("YearFounded")
+                    b.Property<ushort>("YearFounded")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -2183,7 +2164,7 @@ namespace DAL.SQLite.Migrations.Migrations
                             City = "London",
                             Country = "United Kingdom",
                             Name = "CreateSpace Independent Publishing Platform",
-                            YearFounded = 2008
+                            YearFounded = (ushort)2008
                         },
                         new
                         {
@@ -2191,7 +2172,7 @@ namespace DAL.SQLite.Migrations.Migrations
                             City = "London",
                             Country = "United Kingdom",
                             Name = "Packt Publishing",
-                            YearFounded = 2003
+                            YearFounded = (ushort)2003
                         },
                         new
                         {
@@ -2199,14 +2180,14 @@ namespace DAL.SQLite.Migrations.Migrations
                             City = "New York",
                             Country = "United States",
                             Name = "Scholastic",
-                            YearFounded = 1995
+                            YearFounded = (ushort)1995
                         },
                         new
                         {
                             Id = 4L,
                             Country = "France",
                             Name = "Next door Publishing",
-                            YearFounded = 2022
+                            YearFounded = (ushort)2022
                         },
                         new
                         {
@@ -2214,7 +2195,7 @@ namespace DAL.SQLite.Migrations.Migrations
                             City = "Nove Zamky",
                             Country = "Slovakia",
                             Name = "Matej K.",
-                            YearFounded = 2020
+                            YearFounded = (ushort)2020
                         },
                         new
                         {
@@ -2222,7 +2203,7 @@ namespace DAL.SQLite.Migrations.Migrations
                             City = "Los Angeles",
                             Country = "United States",
                             Name = "World Wide Publishing",
-                            YearFounded = 2005
+                            YearFounded = (ushort)2005
                         },
                         new
                         {
@@ -2230,13 +2211,13 @@ namespace DAL.SQLite.Migrations.Migrations
                             City = "Mark",
                             Country = "Zuckerbergland",
                             Name = "Facebook Publishing Company",
-                            YearFounded = 890
+                            YearFounded = (ushort)890
                         },
                         new
                         {
                             Id = 8L,
                             Name = "Hachette UK",
-                            YearFounded = 1989
+                            YearFounded = (ushort)1989
                         },
                         new
                         {
@@ -2244,7 +2225,7 @@ namespace DAL.SQLite.Migrations.Migrations
                             City = "Tokyo",
                             Country = "Japan",
                             Name = "Horizon Publications",
-                            YearFounded = 2013
+                            YearFounded = (ushort)2013
                         },
                         new
                         {
@@ -2252,14 +2233,14 @@ namespace DAL.SQLite.Migrations.Migrations
                             City = "Berlin",
                             Country = "Germany",
                             Name = "Enigma Press",
-                            YearFounded = 1942
+                            YearFounded = (ushort)1942
                         },
                         new
                         {
                             Id = 11L,
                             Country = "Ireland",
                             Name = "Addison-Wesley Professional",
-                            YearFounded = 2018
+                            YearFounded = (ushort)2018
                         },
                         new
                         {
@@ -2267,7 +2248,7 @@ namespace DAL.SQLite.Migrations.Migrations
                             City = "Las Vegas",
                             Country = "United States",
                             Name = "DC Comics",
-                            YearFounded = 2010
+                            YearFounded = (ushort)2010
                         });
                 });
 
@@ -2283,9 +2264,6 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("REAL");
-
                     b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
 
@@ -2299,129 +2277,113 @@ namespace DAL.SQLite.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9444),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(639),
                             State = 3,
-                            TotalPrice = 0.0,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9448),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(651),
                             State = 0,
-                            TotalPrice = 6.7999999999999998,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9451),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(654),
                             State = 0,
-                            TotalPrice = 13.1,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9453),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(660),
                             State = 2,
-                            TotalPrice = 11.99,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9455),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(663),
                             State = 1,
-                            TotalPrice = 111.90000000000001,
                             UserId = 6L
                         },
                         new
                         {
                             Id = 6L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9458),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(670),
                             State = 1,
-                            TotalPrice = 60.799999999999997,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 7L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9460),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(672),
                             State = 3,
-                            TotalPrice = 0.0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 8L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9462),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(675),
                             State = 3,
-                            TotalPrice = 0.0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 9L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9464),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(677),
                             State = 0,
-                            TotalPrice = 0.0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 10L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9467),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(680),
                             State = 1,
-                            TotalPrice = 747.60000000000002,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 11L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9469),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(714),
                             State = 1,
-                            TotalPrice = 80.019999999999996,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 12L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9471),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(717),
                             State = 0,
-                            TotalPrice = 45.990000000000002,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 13L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9473),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(720),
                             State = 0,
-                            TotalPrice = 0.0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 14L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9475),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(722),
                             State = 3,
-                            TotalPrice = 240.09,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 15L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9477),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(725),
                             State = 1,
-                            TotalPrice = 0.5,
                             UserId = 15L
                         },
                         new
                         {
                             Id = 16L,
-                            CreatedAt = new DateTime(2023, 11, 18, 20, 59, 15, 439, DateTimeKind.Local).AddTicks(9480),
+                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(727),
                             State = 1,
-                            TotalPrice = 24.989999999999998,
                             UserId = 15L
                         });
                 });
@@ -2667,6 +2629,616 @@ namespace DAL.SQLite.Migrations.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad91e7c3-e544-4087-a661-0e5af1e69bc3",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = "d4e24154-7f04-4ab4-a903-7f1697e34df4",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "c4f2e8a8-3879-4c64-afd2-465396218f5e",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "6edc1bd4-676f-4f2e-98c5-e1f777bf1917",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "38af2f22-852a-4277-aff1-dac5ed58bc8b",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "c09fa3c9-7ddf-4c0b-9db9-1b3ccde2922d",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "f8ae106d-5578-4b47-b16d-12da1153d0be",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "8ad463c6-0e8d-4267-9544-e9da8d16db89",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "67a545ea-5107-456e-8cf6-93a3d9f10612",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "51a24170-f3a4-4137-9b8f-e1232a62f925",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "16f0fb39-cbd0-4264-900f-e94f57c07f20",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "f7f74bdf-fbd2-4896-8d1f-972233e5c4f5",
+                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                        },
+                        new
+                        {
+                            UserId = "a95cf4f2-f5d4-4e60-b107-903642c53ef1",
+                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                        },
+                        new
+                        {
+                            UserId = "5c88336b-8744-4bfa-b741-f0adaa0bddc3",
+                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                        },
+                        new
+                        {
+                            UserId = "519b8c84-be71-44bb-9ebc-ff3e327aa2d5",
+                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                        },
+                        new
+                        {
+                            UserId = "bff12893-18ee-49f1-a063-b7a4c722b265",
+                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                        },
+                        new
+                        {
+                            UserId = "afe86238-8e5e-4f0e-841f-e47dec7f6c24",
+                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                        },
+                        new
+                        {
+                            UserId = "76cab806-9f8e-4956-83d2-dbde8f43b39b",
+                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                        },
+                        new
+                        {
+                            UserId = "0afb91aa-9fb2-4171-ab18-9f237a7a0501",
+                            RoleId = "ad91e7c3-e544-4087-a661-0e5af1e69bc3"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Account.LocalIdentityUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("UserId");
+
+                    b.HasDiscriminator().HasValue("LocalIdentityUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c4f2e8a8-3879-4c64-afd2-465396218f5e",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e9824871-0970-42a8-9ffe-ba6ccb221f16",
+                            Email = "Housemaster111@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HOUSEMASTER111@MAIL.COM",
+                            NormalizedUserName = "HOUSEMASTER111",
+                            PasswordHash = "AQAAAAIAAYagAAAAENrN2vhrJNzq8M84BzWsDOK25WRagmr5gT7jUSDl8X7Ae8qsQlHFTddDE3rhkA6fyQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5634a3ba-4f2b-4ed8-9010-bcea35cba9d7",
+                            TwoFactorEnabled = false,
+                            UserName = "Housemaster111",
+                            UserId = 1L
+                        },
+                        new
+                        {
+                            Id = "6edc1bd4-676f-4f2e-98c5-e1f777bf1917",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "404fb22a-ce69-46aa-9a30-5cbfa5659722",
+                            Email = "olivia.johnson@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "OLIVIA.JOHNSON@MAIL.COM",
+                            NormalizedUserName = "OLIVIA.JOHNSON",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEhyrkIilrnW/mQIMP2i3weXlVU7kCKTuVQYw8nZbheOnssXGGGHUXC+WsF1UGntbw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a7630b57-942e-4ef3-9d17-b893c7dea072",
+                            TwoFactorEnabled = false,
+                            UserName = "olivia.johnson",
+                            UserId = 2L
+                        },
+                        new
+                        {
+                            Id = "38af2f22-852a-4277-aff1-dac5ed58bc8b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c447af02-6747-425b-9c0f-1ca9460b0f42",
+                            Email = "liamthereaded@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "LIAMTHEREADED@MAIL.COM",
+                            NormalizedUserName = "LIAMTHEREADED",
+                            PasswordHash = "AQAAAAIAAYagAAAAECC4tGqn8/L1B+FJ4500PVCA0XU1jqjpAMYvflEqE1il9asr/44GnFc6G+p45PAyKA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "92333125-d614-4957-86a0-a15d17a4f461",
+                            TwoFactorEnabled = false,
+                            UserName = "liamthereaded",
+                            UserId = 3L
+                        },
+                        new
+                        {
+                            Id = "c09fa3c9-7ddf-4c0b-9db9-1b3ccde2922d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ea98d5cf-2ddd-41c2-8568-dce6c77225d1",
+                            Email = "emily_in_paris@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMILY_IN_PARIS@MAIL.COM",
+                            NormalizedUserName = "EMILY_IN_PARIS",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGPYE3O5a54FKF7oISCKim6ouJ7BK9D959ZzajHApqossaAYulqYyOEFnXKRyLmC7Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ac051f08-71f4-4e3a-abbe-1400a4308463",
+                            TwoFactorEnabled = false,
+                            UserName = "emily_in_paris",
+                            UserId = 4L
+                        },
+                        new
+                        {
+                            Id = "f8ae106d-5578-4b47-b16d-12da1153d0be",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "901a0c92-7357-410c-b713-0fce4a249bd2",
+                            Email = "booklover88@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BOOKLOVER88@MAIL.COM",
+                            NormalizedUserName = "BOOKLOVER88",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPb+iSYscLQZhOm5H9rtsvz3+bS+OMttxZhoP7xMmAvhxx4EuD19yI4VPII6EXqD0w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "aa77d154-7eff-419b-8d49-d62d0377af6b",
+                            TwoFactorEnabled = false,
+                            UserName = "booklover88",
+                            UserId = 5L
+                        },
+                        new
+                        {
+                            Id = "8ad463c6-0e8d-4267-9544-e9da8d16db89",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5120da2d-77f8-49ad-8267-22dcdcb02c54",
+                            Email = "maplewoodhighschool@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MAPLEWOODHIGHSCHOOL@MAIL.COM",
+                            NormalizedUserName = "MAPLEWOODHIGHSCHOOL",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEYC43sOhlFZ32W0XOrJ5FiR8wKMmPdGtRv7o/ybUeoTHCrLY/Gzdf4b2YnB+Z5yFA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "136bf094-5c02-4cb4-a2ac-87d69da41fc1",
+                            TwoFactorEnabled = false,
+                            UserName = "maplewoodhighschool",
+                            UserId = 6L
+                        },
+                        new
+                        {
+                            Id = "67a545ea-5107-456e-8cf6-93a3d9f10612",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5768dc87-967b-4425-b849-2a7d2e6a8f3b",
+                            Email = "PeterParker@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PETERPARKER@MAIL.COM",
+                            NormalizedUserName = "PETERPARKER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEpQYx00Pmv2/E5pFIZt7is/iYXLl7LU21KjN0Ex8BmHJlS8wpHvP0VKr1Gt5aoB0Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "00328cdd-f9ed-4093-824c-6128ca02b79f",
+                            TwoFactorEnabled = false,
+                            UserName = "PeterParker",
+                            UserId = 7L
+                        },
+                        new
+                        {
+                            Id = "51a24170-f3a4-4137-9b8f-e1232a62f925",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a534f83a-cffa-416d-b338-e7dd5e9d2195",
+                            Email = "codingWizard42@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CODINGWIZARD42@MAIL.COM",
+                            NormalizedUserName = "CODINGWIZARD42",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAPEXjgbujoVQVdFtt49HdE1vFELWs4nC+42EolNT785EDJkbqm0SRRMc/VbpgjkuA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "514b6f61-ee87-45a7-9a1b-d4d144a3088b",
+                            TwoFactorEnabled = false,
+                            UserName = "codingWizard42",
+                            UserId = 8L
+                        },
+                        new
+                        {
+                            Id = "16f0fb39-cbd0-4264-900f-e94f57c07f20",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "27cf9fc9-0473-44f6-a41e-6e214961bac8",
+                            Email = "bookworm@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BOOKWORM@MAIL.COM",
+                            NormalizedUserName = "BOOKWORM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELAlEvjh0XVIQHOV/4nrZXidR/wpTDuIs9gPKf5lH6+UPWfQ5H9WvNRLA95O16eqFQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "52fe8c84-883e-4ddc-afe6-d56f9989f2da",
+                            TwoFactorEnabled = false,
+                            UserName = "bookworm",
+                            UserId = 9L
+                        },
+                        new
+                        {
+                            Id = "f7f74bdf-fbd2-4896-8d1f-972233e5c4f5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c987af43-49b1-4eb1-9b70-4998465b91a9",
+                            Email = "22avidReader22@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "22AVIDREADER22@MAIL.COM",
+                            NormalizedUserName = "22AVIDREADER22",
+                            PasswordHash = "AQAAAAIAAYagAAAAENf7yQ5zki84Llly0v6OSHU6ITg0BhsjFRrIc19X8Y0P/9gs0pg1xViwLYTIVnLG/A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ace5807e-0134-47fb-adb9-665929249375",
+                            TwoFactorEnabled = false,
+                            UserName = "22avidReader22",
+                            UserId = 10L
+                        },
+                        new
+                        {
+                            Id = "a95cf4f2-f5d4-4e60-b107-903642c53ef1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "32f8f578-2af0-4554-8351-2b51c05bbf1f",
+                            Email = "programmingGuru@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PROGRAMMINGGURU@MAIL.COM",
+                            NormalizedUserName = "PROGRAMMINGGURU",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBmENgxlPVO/rU6PA0hxx/wW5w3p8Aa/U3X0lsq9/FjblCmKCwo4mbHItzTdcCm08A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "dd92c330-6b54-4e8f-af5d-481d0beaca98",
+                            TwoFactorEnabled = false,
+                            UserName = "programmingGuru",
+                            UserId = 11L
+                        },
+                        new
+                        {
+                            Id = "5c88336b-8744-4bfa-b741-f0adaa0bddc3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2446c4d5-b3d4-418c-8242-e31f6bb30152",
+                            Email = "mysteryFanatic@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MYSTERYFANATIC@MAIL.COM",
+                            NormalizedUserName = "MYSTERYFANATIC",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEUrGrcxStT3TZr7uiPZ4OhvdlZARcrROZuriD3PhDjGozEDh8xkd3S3ttaz+KHwPw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "839beaab-8091-4821-9098-acb03bcb89b8",
+                            TwoFactorEnabled = false,
+                            UserName = "mysteryFanatic",
+                            UserId = 12L
+                        },
+                        new
+                        {
+                            Id = "519b8c84-be71-44bb-9ebc-ff3e327aa2d5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70464f51-0f6e-4d8a-bd30-1139ee34741e",
+                            Email = "techEnthusiast@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TECHENTHUSIAST@MAIL.COM",
+                            NormalizedUserName = "TECHENTHUSIAST",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJWiGqrYdieVMJHnEcQ6YtdgXMwR5tqte5llBcr+adG8arPHQLbZ/SL74Cd8PUjKZw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "cffe846b-f020-465f-a1b9-baf090f9d153",
+                            TwoFactorEnabled = false,
+                            UserName = "techEnthusiast",
+                            UserId = 13L
+                        },
+                        new
+                        {
+                            Id = "bff12893-18ee-49f1-a063-b7a4c722b265",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "df7947f2-e4c8-4e64-8188-1ca29a45a797",
+                            Email = "foodLover88@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FOODLOVER88@MAIL.COM",
+                            NormalizedUserName = "FOODLOVER88",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJmEmdd6sIYaHGZeo6Yy2c9fypXMViunqCQu8CNFH6WTQXfX6FD3Y/1wTIbAMf/GkA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a252ac23-9775-4528-bd4f-a9dea2838a5c",
+                            TwoFactorEnabled = false,
+                            UserName = "foodLover88",
+                            UserId = 14L
+                        },
+                        new
+                        {
+                            Id = "afe86238-8e5e-4f0e-841f-e47dec7f6c24",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "81231057-98c7-4e91-bd70-12a135b801c3",
+                            Email = "john_the_ipper@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JOHN_THE_IPPER@MAIL.COM",
+                            NormalizedUserName = "JOHN_THE_IPPER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFBAxWw6hE4aTjWBmeIMwACJcsW4FCmTGHTpiyRrrNEpkeE0RUQeCReXstbiV7qrBA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "22ec7d83-a170-4a37-a09a-6774cacab29e",
+                            TwoFactorEnabled = false,
+                            UserName = "john_the_ipper",
+                            UserId = 15L
+                        },
+                        new
+                        {
+                            Id = "76cab806-9f8e-4956-83d2-dbde8f43b39b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "4ab1c66f-d9ce-43c5-9d39-5797b983d75c",
+                            Email = "samuel_ackson@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SAMUEL_ACKSON@MAIL.COM",
+                            NormalizedUserName = "SAMUEL_ACKSON",
+                            PasswordHash = "AQAAAAIAAYagAAAAELG8gOawXevETjxrU9GJ08kPOjTG0PY+bwI9m/zVUgCiCD8DkPUkLN4RhdiBHOrFVQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "827d1873-824e-49dd-9741-9bcbe01eba0d",
+                            TwoFactorEnabled = false,
+                            UserName = "samuel_ackson",
+                            UserId = 16L
+                        },
+                        new
+                        {
+                            Id = "0afb91aa-9fb2-4171-ab18-9f237a7a0501",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "062b799b-88f3-43d7-8583-444e69d71cdd",
+                            Email = "admin@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@MAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJfCvpz1ouv5LbCEbQ6pqSOhFgMZ+miDyejjcoW0NCUzeEcXZW4fAUeqA6vKI6Q2dA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6f61eaa1-8ab0-4879-9a8f-25eb49bdfded",
+                            TwoFactorEnabled = false,
+                            UserName = "admin",
+                            UserId = 17L
+                        });
+                });
+
             modelBuilder.Entity("DataAccessLayer.Models.Account.BookReview", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
@@ -2697,7 +3269,7 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.HasOne("DataAccessLayer.Models.Account.User", "Manager")
                         .WithOne("BookStore")
                         .HasForeignKey("DataAccessLayer.Models.Logistics.BookStore", "ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Address");
@@ -2716,7 +3288,7 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.HasOne("DataAccessLayer.Models.Logistics.BookStore", "BookStore")
                         .WithMany("InventoryItems")
                         .HasForeignKey("BookStoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
@@ -2757,15 +3329,15 @@ namespace DAL.SQLite.Migrations.Migrations
             modelBuilder.Entity("DataAccessLayer.Models.Publication.AuthorBookAssociation", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.Publication.Author", "Author")
-                        .WithMany()
+                        .WithMany("AuthorBookAssociations")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
-                        .WithMany()
+                        .WithMany("AuthorBookAssociations")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -2778,7 +3350,7 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.HasOne("DataAccessLayer.Models.Publication.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Publisher");
@@ -2800,13 +3372,13 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.HasOne("DataAccessLayer.Models.Publication.Book", "Book")
                         .WithMany("OrderItems")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DataAccessLayer.Models.Logistics.BookStore", "BookStore")
                         .WithMany("OrderItems")
                         .HasForeignKey("BookStoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DataAccessLayer.Models.Purchasing.Order", "Order")
@@ -2820,6 +3392,68 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Navigation("BookStore");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Account.LocalIdentityUser", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Account.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Account.User", b =>
@@ -2850,8 +3484,15 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Navigation("WishListItems");
                 });
 
+            modelBuilder.Entity("DataAccessLayer.Models.Publication.Author", b =>
+                {
+                    b.Navigation("AuthorBookAssociations");
+                });
+
             modelBuilder.Entity("DataAccessLayer.Models.Publication.Book", b =>
                 {
+                    b.Navigation("AuthorBookAssociations");
+
                     b.Navigation("InventoryItems");
 
                     b.Navigation("OrderItems");

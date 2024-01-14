@@ -10,5 +10,6 @@ public class AddressProfile : Profile
     {
         CreateMap<CreateAddressDto, AddressEntity>();
         CreateMap<AddressEntity, DetailedAddressView>();
+        CreateMap<AddressEntity, GeneralAddressView>();
     }
 }

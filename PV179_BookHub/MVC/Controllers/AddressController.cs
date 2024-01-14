@@ -19,9 +19,7 @@ public class AddressController : Controller
 
     public async Task<IActionResult> Index()
     {
-        Console.WriteLine("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
         var addresses = await _addressFacade.GetAllAddressesAsync();
-        Console.WriteLine("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
         return View(addresses);
     }
 

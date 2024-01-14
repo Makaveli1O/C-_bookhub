@@ -151,24 +151,18 @@ public static class TestDataInitializer
             {
                 Id = 1,
                 UserName = "JackTheRipper",
-                PasswordHash = "954b39223c4cfd375e5b41ef79cdbe5cacaf9176",
-                Salt = "8y4z6E",
                 Role = UserRole.Admin
             },
             new User
             {
                 Id = 2,
                 UserName = "olivia.johnson@gmail.com",
-                PasswordHash = "b5d66e00c0673d769f25c9919756341d34162cef",
-                Salt = "3M9r1N",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 3,
                 UserName = "liamthereaded",
-                PasswordHash = "fd3a0c6a60faa4f9e487f04e153f17919219bcbc",
-                Salt = "ab7x9D",
                 Role = UserRole.User
             }
         };

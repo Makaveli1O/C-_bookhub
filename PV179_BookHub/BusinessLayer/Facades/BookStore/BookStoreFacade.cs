@@ -24,9 +24,9 @@ public class BookStoreFacade : BaseFacade, IBookStoreFacade
         _addressService = addressService;
     }
 
-    public async Task<IEnumerable<DetailedBookStoreViewDto>> GetAllBookStores()
+    public async Task<IEnumerable<GeneralBookStoreViewDto>> GetAllBookStores()
     {
-        return _mapper.Map<List<DetailedBookStoreViewDto>>(await _bookStoreService.FetchAllAsync());
+        return _mapper.Map<List<GeneralBookStoreViewDto>>(await _bookStoreService.FetchAllAsync());
     }
 
     public async Task<DetailedBookStoreViewDto> GetBookStore(long id)

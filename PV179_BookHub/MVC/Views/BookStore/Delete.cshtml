@@ -1,10 +1,6 @@
 ﻿@using BusinessLayer.DTOs.BookStore.View;
 @model DetailedBookStoreViewDto
 
-@{
-    ViewData["Title"] = "Delete";
-}
-
 <h1>Delete Book Store</h1>
 <h3>Are you sure you want to delete this?</h3>
 <hr />
@@ -12,25 +8,25 @@
 <div>
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            Name
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressId)
+            @Html.DisplayNameFor(model => model.Address)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddressId)
+            @($"{Model.Address.Street} {Model.Address.StreetNumber}, {Model.Address.City} {Model.Address.PostalCode}, {Model.Address.State}")
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ManagerId)
+            @Html.DisplayNameFor(model => model.Manager)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ManagerId)
+            @($"{Model.Manager.UserName}")
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            Phone Number
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PhoneNumber)
