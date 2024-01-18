@@ -1,6 +1,10 @@
-﻿using DataAccessLayer.Models.Account;
+﻿using BusinessLayer.DTOs.BookStore.Create;
+using BusinessLayer.DTOs.User.View;
+using DataAccessLayer.Models.Account;
+using DataAccessLayer.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MVC.Models;
 
 namespace MVC.Controllers;
@@ -32,18 +36,16 @@ public class AccountController : Controller
                 ModelState.AddModelError(string.Empty, "Email is already in use.");
                 return View(model);
             }
-
+            
             var user = new LocalIdentityUser
             {
-                UserName = model.Email,
+                UserName = model.Email.Split("@")[0],
                 Email = model.Email,
                 User = new User
                 {
                     // For now we just set these dummy values. some fields will be
                     // removed from User once we fully integrate with identity framework.
-                    UserName = model.Email,
-                    PasswordHash = "sha2blabla...",
-                    Salt = "d27gr9f3y3hhf"
+                    UserName = model.Email.Split("@")[0]
                 }
             };
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -74,13 +76,13 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(LoginSuccess), nameof(AccountController).Replace("Controller", ""));
             }
-
             ModelState.AddModelError(String.Empty, "Invalid login attempt.");
         }
 
@@ -97,5 +99,47 @@ public class AccountController : Controller
     {
         return View();
     }
+
+    public async Task<IActionResult> ResetPassword(string id, bool success)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null) 
+        {
+            return RedirectToAction("Index", "User");
+        }
+        ViewBag.UserName = user.UserName;
+        if (success) { 
+            ViewBag.Message = "Password Successfully Changed!";
+        }
+        return View();
+    }
+
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ResetPassword(string id, ResetPasswordViewModel changePasswordViewModel)
+    {
+        var res = false;
+        var user = await _userManager.FindByIdAsync(id);
+        if (user != null && ModelState.IsValid)
+        {
+            ViewBag.UserName = user.UserName;
+            string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, changePasswordViewModel.Password);
+            res = result.Succeeded;
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(ResetPassword), new { id, success = res });
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(String.Empty, error.Description);
+            }
+        }
+        return View(changePasswordViewModel);
+
+    }
+
 }
 

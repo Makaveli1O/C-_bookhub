@@ -18,6 +18,11 @@ public class AddressFacade : BaseFacade, IAddressFacade
         return _mapper.Map<IEnumerable<DetailedAddressView>>(await _addressService.FetchAllAsync());
     }
 
+    public async Task<IEnumerable<GeneralAddressView>> GetAvailableAddressesForBookStoreAsync(long? bookStoreId)
+    {
+        return _mapper.Map<IEnumerable<GeneralAddressView>>((await _addressService.FetchAllAsync()).Where(addr => addr.BookStore == null || addr.BookStore.Id == bookStoreId));
+    }
+
     public async Task<DetailedAddressView> CreateAddressAsync(CreateAddressDto createAddressDto)
     {
         var address = _mapper.Map<AddressEntity>(createAddressDto);

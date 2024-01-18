@@ -44,8 +44,6 @@ public class UserFacadeTests
         var createUser = new CreateUserDto()
         {
             UserName = user.UserName,
-            Salt = user.Salt,
-            PasswordHash = user.PasswordHash
         };
 
         _userServiceMock.CreateAsync(Arg.Any<User>()).Returns(user);
@@ -73,8 +71,6 @@ public class UserFacadeTests
         var updateUserDto = new CreateUserDto()
         {
             UserName = user.UserName,
-            PasswordHash= user.PasswordHash,
-            Salt = user.Salt
         };
 
         _userServiceMock.UpdateAsync(Arg.Any<User>()).Returns(user);
@@ -104,8 +100,6 @@ public class UserFacadeTests
         var updateUserDto = new CreateUserDto()
         {
             UserName = user.UserName,
-            PasswordHash = user.PasswordHash,
-            Salt = user.Salt
         };
 
         _userServiceMock.FindByIdAsync(Arg.Any<long>()).Throws(new NoSuchEntityException<long>(typeof(User), user.Id));

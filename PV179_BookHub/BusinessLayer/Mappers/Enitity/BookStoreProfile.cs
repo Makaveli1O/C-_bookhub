@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
-using DataAccessLayer.Models;
-using DataAccessLayer.Models.Logistics;
 
 namespace BusinessLayer.Mappers.Enitity;
 public class BookStoreProfile : Profile
@@ -11,6 +9,8 @@ public class BookStoreProfile : Profile
     {
         CreateMap<CreateBookStoreDto, BookStoreEntity>();
         CreateMap<BookStoreEntity, DetailedBookStoreViewDto>();
+        CreateMap<BookStoreEntity, GeneralBookStoreViewDto>();
+        CreateMap<DetailedBookStoreViewDto, CreateBookStoreDto>();
 
         CreateMap<CreateInventoryItemDto, InventoryItemEntity>();
         CreateMap<InventoryItemEntity, DetailedInventoryItemViewDto>();

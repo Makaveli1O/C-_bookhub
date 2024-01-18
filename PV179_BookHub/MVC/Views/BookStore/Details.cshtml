@@ -8,28 +8,35 @@
 <h1>Book Store Details</h1>
 <hr />
 
+@if (ViewBag.Message != null)
+{
+<p class="alert alert-success" role="alert">
+    @ViewBag.Message
+</p>
+}
+
 <div>
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            Name
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressId)
+            @Html.DisplayNameFor(model => model.Address)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddressId)
+            @($"{Model.Address.Street} {Model.Address.StreetNumber}, {Model.Address.City} {Model.Address.PostalCode}, {Model.Address.State}")
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ManagerId)
+            @Html.DisplayNameFor(model => model.Manager)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ManagerId)
+            @($"{Model.Manager.UserName}")
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            Phone Number
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PhoneNumber)
@@ -43,6 +50,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" }) |
+    @Html.ActionLink("Back to List", "Index", new {}, new { @class = "link-primary" })
 </div>
