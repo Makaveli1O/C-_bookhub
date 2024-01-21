@@ -48,13 +48,8 @@ public class BookController : Controller
     {
         var filter = _mapper.Map<BookFilterDto>(model);
         var result = await _bookFacade.FetchFilteredBooksAsync(filter);
-        var viewModel = new FilteredBooksModel()
-        {
-            Books = result.Books,
-            PageNumber = result.PageNumber,
-            SearchBooksModel = model,
-            TotalPages = 100
-        };
+        var viewModel = _mapper.Map<FilteredBooksModel>(result);
+        viewModel.SearchBooksModel = model;
 
         return View(viewModel);
     }

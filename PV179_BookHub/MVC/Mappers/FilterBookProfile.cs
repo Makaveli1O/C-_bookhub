@@ -14,5 +14,9 @@ public class FilterBookProfile : Profile
                         .MapFrom(y => 
                             y.SortParameter == BookSortParam.None ? null : y.SortParameter.ToString())
                     );
+
+        CreateMap<BookFilterResultDto, FilteredBooksModel>()
+            .ForMember(x => x.TotalPages,
+                opt => opt.MapFrom(y => (int)Math.Ceiling((double)y.TotalItemsCount / y.PageSize)));
     }
 }

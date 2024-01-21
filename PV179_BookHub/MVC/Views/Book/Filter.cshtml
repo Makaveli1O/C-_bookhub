@@ -74,12 +74,23 @@
     }
 </table>
 
-<div class="pagination">
-    @for (int i = 1; i <= Model.TotalPages; i++)
-    {
-        <a asp-action="Filter"
-           asp-route-PageNumber="@i"
-           asp-route-CONTAINS_Title="@Model.SearchBooksModel.CONTAINS_Title"
-           class="@(i == Model.PageNumber ? "active" : "")">@($" {i}, ")</a>
-    }
-</div>
+@if (Model != null)
+{
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="Filter"
+               asp-route-PageNumber="@i"
+               asp-route-CONTAINS_Title="@Model.SearchBooksModel.CONTAINS_Title"
+               asp-route-Author="@Model.SearchBooksModel.Author"
+               asp-route-Publisher="@Model.SearchBooksModel.Publisher"
+               asp-route-CONTAINS_Description="@Model.SearchBooksModel.CONTAINS_Description"
+               asp-route-BookGenre="@Model.SearchBooksModel.BookGenre"
+               asp-route-GE_Price="@Model.SearchBooksModel.GE_Price"
+               asp-route-LE_Price="@Model.SearchBooksModel.LE_Price"
+               asp-route-SortParameter="@Model.SearchBooksModel.SortParameter"
+               asp-route-SortAscending="@Model.SearchBooksModel.SortAscending"
+               class="@(i == Model.PageNumber ? "active" : "")">@($" {i}, ")</a>
+        }
+    </div>
+}
