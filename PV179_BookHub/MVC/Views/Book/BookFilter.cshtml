@@ -1,0 +1,19 @@
+﻿@model MVC.Models.Book.SearchBooksModel
+
+<form asp-action="Filter" asp-controller="Book" method="get">
+    <input type="text" name="CONTAINS_Title" placeholder="Title" />
+    <input type="text" name="Author" placeholder="Author" />
+    <input type="text" name="Publisher" placeholder="Publisher" />
+    <input type="text" name="CONTAINS_Description" placeholder="Description" />
+    <select asp-for="BookGenre" asp-items="Html.GetEnumSelectList<DataAccessLayer.Models.Enums.BookGenre>()"></select>
+    <input type="number" name="GE_Price" placeholder="Min Price" />
+    <input type="number" name="LE_Price" placeholder="Max Price" />
+
+    <select asp-for="SortParameter" asp-items="Html.GetEnumSelectList<MVC.Models.Book.BookSortParam>()"></select>
+    <label class="control-label" for="">
+        @Html.CheckBoxFor(model => model.SortAscending, false)
+        Sort Ascending
+    </label>
+
+    <button type="submit">Search</button>
+</form>

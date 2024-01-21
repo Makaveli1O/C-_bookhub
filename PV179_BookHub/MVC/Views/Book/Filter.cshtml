@@ -1,0 +1,85 @@
+﻿@model MVC.Models.Book.FilteredBooksModel
+
+<h1>Books</h1>
+
+<p class="text-end">
+    <a class="link-success" asp-action="Create">Create New</a>
+</p>
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+@{
+    await Html.RenderPartialAsync("BookFilter", new MVC.Models.Book.SearchBooksModel());
+}
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Main Author
+        </th>
+        <th>
+            Publisher
+        </th>
+        <th>
+            Book Genre
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+    </tr>
+
+
+    @if (Model != null && Model.Books.Count() > 0)
+    {
+        foreach (var item in Model.Books)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookGenre)
+                </td>
+                <td>
+                    @(item.Price + " EUR")
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "link-primary" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-danger" })
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <td colspan="6" class="text-center"><b>No Books Availible. Please Add Data By Clicking On The Create Button</b></td>
+    }
+</table>
+
+<div class="pagination">
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a asp-action="Filter"
+           asp-route-PageNumber="@i"
+           asp-route-CONTAINS_Title="@Model.SearchBooksModel.CONTAINS_Title"
+           class="@(i == Model.PageNumber ? "active" : "")">@($" {i}, ")</a>
+    }
+</div>

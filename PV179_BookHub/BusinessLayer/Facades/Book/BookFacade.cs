@@ -191,13 +191,13 @@ public class BookFacade : BaseFacade, IBookFacade
         return _mapper.Map<List<GeneralBookViewDto>>(books);
     }
 
-    public async Task<IEnumerable<GeneralBookViewDto>> FetchFilteredBooksAsync(BookFilterDto bookFilterDto)
+    public async Task<BookFilterResultDto> FetchFilteredBooksAsync(BookFilterDto bookFilterDto)
     {
         var queryResult = await _bookService
             .FetchFilteredAsync(_mapper.Map<BookFilter>(bookFilterDto), 
                                 _mapper.Map<QueryParams>(bookFilterDto));
 
-        return _mapper.Map<List<GeneralBookViewDto>>(queryResult.Items);
+        return _mapper.Map<BookFilterResultDto>(queryResult);
     }
 
     public async Task<DetailedBookViewDto> FindBookByIdAsync(long id)

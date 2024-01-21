@@ -11,7 +11,7 @@ using DataAccessLayer.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using MVC.Models.Book;
-using Microsoft.AspNetCore.Http.HttpResults;
+using BusinessLayer.DTOs.Book.Filter;
 
 namespace MVC.Controllers;
 
@@ -31,6 +31,7 @@ public class BookController : Controller
         _publisherFacade = publisherFacade;
         _authorFacade = authorFacade;
         _userManager = userManager;
+        _mapper = mapper;
     }
 
     [AllowAnonymous]
@@ -38,6 +39,24 @@ public class BookController : Controller
     {
         var books = await _bookFacade.FetchAllBooksAsync();
         return View(books);
+    }
+
+
+    [HttpGet]
+    [Route("filter")]
+    public async Task<IActionResult> Filter(SearchBooksModel model)
+    {
+        var filter = _mapper.Map<BookFilterDto>(model);
+        var result = await _bookFacade.FetchFilteredBooksAsync(filter);
+        var viewModel = new FilteredBooksModel()
+        {
+            Books = result.Books,
+            PageNumber = result.PageNumber,
+            SearchBooksModel = model,
+            TotalPages = 100
+        };
+
+        return View(viewModel);
     }
 
     [AllowAnonymous]

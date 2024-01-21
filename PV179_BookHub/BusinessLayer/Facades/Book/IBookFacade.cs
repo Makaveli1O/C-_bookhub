@@ -13,7 +13,7 @@ public interface IBookFacade
     Task UnassignAuthorFromBookAsync(long bookId, long authorId);
     Task<DetailedBookViewDto> MakeUnmakeAuthorPrimaryAsync(long bookId, AuthorBookAssociationDto authorBookAssociation, bool force = false);
     Task<IEnumerable<GeneralBookViewDto>> FetchAllBooksAsync();
-    Task<IEnumerable<GeneralBookViewDto>> FetchFilteredBooksAsync(BookFilterDto bookFilterDto);
+    Task<BookFilterResultDto> FetchFilteredBooksAsync(BookFilterDto bookFilterDto);
     Task<DetailedBookViewDto> FindBookByIdAsync(long id);
     Task DeleteBookByIdAsync(long id);
 }

@@ -33,7 +33,7 @@ public class QueryBase<TEntity, TKey> : IQuery<TEntity, TKey> where TEntity : cl
             Items = result,
             PageSize = QueryParams.PageSize,
             PagingEnabled = true,
-            RequestedPageNumber = QueryParams.PageNumber
+            PageNumber = QueryParams.PageNumber
         };
 
         return queryResult;
