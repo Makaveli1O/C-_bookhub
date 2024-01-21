@@ -16,9 +16,9 @@ public class BookStoreController : Controller
     private readonly IMapper _mapper;
     private readonly IBookStoreFacade _bookStoreFacade;
     private readonly IAddressFacade _addressFacade;
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
 
-    public BookStoreController(IMapper mapper, IBookStoreFacade bookStoreFacade, IAddressFacade addressFacade, UserManager<LocalIdentityUser> userManager)
+    public BookStoreController(IMapper mapper, IBookStoreFacade bookStoreFacade, IAddressFacade addressFacade, UserManager<User> userManager)
     {
         _mapper = mapper;
         _bookStoreFacade = bookStoreFacade;
@@ -47,7 +47,7 @@ public class BookStoreController : Controller
         var addresses = await _addressFacade.GetAvailableAddressesForBookStoreAsync(null);
         var managers = await _userManager.GetUsersInRoleAsync(UserRole.Manager.ToString());
         var availableManagers = _mapper.Map<IEnumerable<GeneralUserViewDto>>(
-            managers.Where(u => u.User?.BookStore == null)); // possible optimization?? delegate to layer bellow??
+            managers.Where(u => u.BookStore == null)); // possible optimization?? delegate to layer bellow??
 
         ViewBag.Addresses = addresses.ToList();
         ViewBag.Managers = availableManagers.ToList();
@@ -71,7 +71,7 @@ public class BookStoreController : Controller
         var addresses = await _addressFacade.GetAvailableAddressesForBookStoreAsync(id);
         var managers = await _userManager.GetUsersInRoleAsync(UserRole.Manager.ToString());
         var availableManagers = _mapper.Map<IEnumerable<GeneralUserViewDto>>(
-            managers.Where(u => u.User?.BookStore == null || u.User.BookStore.Id == id)); // possible optimization?? delegate to layer bellow??
+            managers.Where(u => u.BookStore == null || u.BookStore.Id == id)); // possible optimization?? delegate to layer bellow??
 
         ViewBag.Addresses = addresses.ToList();
         ViewBag.Managers = availableManagers.ToList();

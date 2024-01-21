@@ -34,7 +34,8 @@ namespace DAL.SQLite.Migrations.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
@@ -42,6 +43,33 @@ namespace DAL.SQLite.Migrations.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Role = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,26 +103,12 @@ namespace DAL.SQLite.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserName = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Role = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<string>(type: "TEXT", nullable: false),
+                    RoleId = table.Column<long>(type: "INTEGER", nullable: false),
                     ClaimType = table.Column<string>(type: "TEXT", nullable: true),
                     ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -105,6 +119,161 @@ namespace DAL.SQLite.Migrations.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
+                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
+                    ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
+                    RoleId = table.Column<long>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
+                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Value = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookStores",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    AddressId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ManagerId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookStores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookStores_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookStores_AspNetUsers_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    State = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WishList",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WishList", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WishList_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -131,109 +300,6 @@ namespace DAL.SQLite.Migrations.Migrations
                         principalTable: "Publishers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
-                    UserId = table.Column<long>(type: "INTEGER", nullable: true),
-                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookStores",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    AddressId = table.Column<long>(type: "INTEGER", nullable: false),
-                    ManagerId = table.Column<long>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookStores", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BookStores_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BookStores_Users_ManagerId",
-                        column: x => x.ManagerId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    State = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WishList",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WishList", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_WishList_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -278,100 +344,15 @@ namespace DAL.SQLite.Migrations.Migrations
                 {
                     table.PrimaryKey("PK_BookReviews", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_BookReviews_AspNetUsers_ReviewerId",
+                        column: x => x.ReviewerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_BookReviews_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BookReviews_Users_ReviewerId",
-                        column: x => x.ReviewerId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
-                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    RoleId = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Value = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -489,9 +470,33 @@ namespace DAL.SQLite.Migrations.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", null, "Manager", "MANAGER" },
-                    { "ad91e7c3-e544-4087-a661-0e5af1e69bc3", null, "Admin", "ADMIN" },
-                    { "d4e24154-7f04-4ab4-a903-7f1697e34df4", null, "User", "USER" }
+                    { 1L, null, "Admin", "ADMIN" },
+                    { 2L, null, "Manager", "MANAGER" },
+                    { 3L, null, "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { 1L, 0, "d774b5d1-3000-4b45-b26c-374c82712234", "Housemaster111@mail.com", false, false, null, "HOUSEMASTER111@MAIL.COM", "HOUSEMASTER111", "AQAAAAIAAYagAAAAEJik/E7/27st2OqzMh6Z0yM5qESp2sY8C8EhJLZQogdBCxbKzHMdykVel4E0ImRJfg==", null, false, 1, "adf6f6ba-d554-4cab-b5e8-49ef141a6f0a", false, "Housemaster111" },
+                    { 2L, 0, "e0815b1b-6e1a-457f-a478-c7863401dcbe", "olivia.johnson@mail.com", false, false, null, "OLIVIA.JOHNSON@MAIL.COM", "OLIVIA.JOHNSON", "AQAAAAIAAYagAAAAEGsalV3ODfUHVXhXXrDsfCuCrckNZU0fObU10dRN+gnY6pUe/I/Xw/Y3eGiWfvxNSg==", null, false, 1, "1c26f552-8453-4282-b08e-720d4e2b47a7", false, "olivia.johnson" },
+                    { 3L, 0, "09a2e96d-ba79-4912-8e9f-7ab7cfc58c7f", "liamthereaded@mail.com", false, false, null, "LIAMTHEREADED@MAIL.COM", "LIAMTHEREADED", "AQAAAAIAAYagAAAAEIaS/SHkG7SbzXhEQNgfBZ8QeOcMMjkyByzqtxziglzFWM+zUKon/BXj5p9/x+AAxA==", null, false, 1, "245e9841-2f06-4563-b388-263cec054f0c", false, "liamthereaded" },
+                    { 4L, 0, "6a2d6701-c2ac-4063-9f32-4ccb133912ea", "emily_in_paris@mail.com", false, false, null, "EMILY_IN_PARIS@MAIL.COM", "EMILY_IN_PARIS", "AQAAAAIAAYagAAAAEPDpW7HTaJpe6VuQ090HG9m67ZVnJCSrrWzsdtkdRmA+E4qM5QGxsfK2m9xf8EVdeA==", null, false, 1, "6b7233e5-4b5b-4698-96d3-caf2261b860d", false, "emily_in_paris" },
+                    { 5L, 0, "34bebbe7-676f-4a5a-843e-8acb191b6734", "booklover88@mail.com", false, false, null, "BOOKLOVER88@MAIL.COM", "BOOKLOVER88", "AQAAAAIAAYagAAAAEH+3Sl+/qwNJMa1kM7c++uNKpcWAHA7CXh63UWaGBbzHy+HYSOyXWdJYMMJymwjIzQ==", null, false, 1, "fe64fcdd-9444-4752-bf49-a4aed116d508", false, "booklover88" },
+                    { 6L, 0, "930db17b-7017-4de3-a735-3ad195a1866e", "maplewoodhighschool@mail.com", false, false, null, "MAPLEWOODHIGHSCHOOL@MAIL.COM", "MAPLEWOODHIGHSCHOOL", "AQAAAAIAAYagAAAAEPsKi/YSPCNE/slTgrnfEO2YAyKMyyrsG+e2ugUD8qqCxI/6DMl/vHavJUA0vP5TmQ==", null, false, 1, "2c8ac353-fdf2-4f81-bacb-d5155ba850f4", false, "maplewoodhighschool" },
+                    { 7L, 0, "1ea4f8e6-5d35-4848-bf41-a39a6165eaf3", "PeterParker@mail.com", false, false, null, "PETERPARKER@MAIL.COM", "PETERPARKER", "AQAAAAIAAYagAAAAEFV28e/kBC+SpkUg32e3WsaS7H9jHVS17rz4w73AixvaMar3EUYR1hX+rMHElTtEzQ==", null, false, 1, "1554020a-8d25-4aac-8093-9bb56cb60d29", false, "PeterParker" },
+                    { 8L, 0, "be8bca92-456d-4743-923b-4854a12b6a3d", "codingWizard42@mail.com", false, false, null, "CODINGWIZARD42@MAIL.COM", "CODINGWIZARD42", "AQAAAAIAAYagAAAAEJ6gEpaSNWFE6/OPUTqTVXvSCunRI0JdKr1qijeWX7mICPillvPQ9eQfub9bakUsaA==", null, false, 1, "fd0ff1a7-df57-48cb-a06e-21490bd95447", false, "codingWizard42" },
+                    { 9L, 0, "26ac980d-9ed4-454c-8a40-17bd1ce2e979", "bookworm@mail.com", false, false, null, "BOOKWORM@MAIL.COM", "BOOKWORM", "AQAAAAIAAYagAAAAEAZLaIwTMgFOwXAsY4iFBYfA5QW3xi1rFVE/cvV4zbvPBR6uQBcRvqpfihlSM6sZ4Q==", null, false, 1, "76091424-87ac-4b96-9d66-bbae0836f5f8", false, "bookworm" },
+                    { 10L, 0, "bf27f269-4571-4213-99f6-fb18a90d8c5d", "22avidReader22@mail.com", false, false, null, "22AVIDREADER22@MAIL.COM", "22AVIDREADER22", "AQAAAAIAAYagAAAAEGIZojJSceyCPaDaKXDKAogALacz+VWvMfdDPBuH7LBgXUIye+zvMDO0ahjCVbByLA==", null, false, 1, "19087edf-5612-4fed-9d20-86dd21721dd9", false, "22avidReader22" },
+                    { 11L, 0, "c6d0adb0-2bd6-4520-a374-0148ccdd695a", "programmingGuru@mail.com", false, false, null, "PROGRAMMINGGURU@MAIL.COM", "PROGRAMMINGGURU", "AQAAAAIAAYagAAAAEAe3YnfXlKJMBI38wXbFnEBSQdNISgYttBmbEH57d0LgT/doaeOhPsCvhcUWOQ2j1A==", null, false, 0, "e53b5afc-fc8d-4f9f-84e7-8adce7bbc123", false, "programmingGuru" },
+                    { 12L, 0, "76850147-af17-481a-9ad1-1e5daaa9c18e", "mysteryFanatic@mail.com", false, false, null, "MYSTERYFANATIC@MAIL.COM", "MYSTERYFANATIC", "AQAAAAIAAYagAAAAEJNB8GPUk0bC6MMHAyvcbHLr/G6+46MU542irpO5KSpQvy53HFT+KR0vEkSFL+d+Gg==", null, false, 0, "4f09fed0-c9c5-45d0-ba4c-6f2b0b54b9fd", false, "mysteryFanatic" },
+                    { 13L, 0, "67cdf78c-2b42-408a-a9f1-a17545da0389", "techEnthusiast@mail.com", false, false, null, "TECHENTHUSIAST@MAIL.COM", "TECHENTHUSIAST", "AQAAAAIAAYagAAAAEL3p0z/QqXL6KVdIsZ7hgD5kJa81lpD2LCuMpGxVK6COXjuIfb9d2h+KTS0x4Qmkpg==", null, false, 0, "aaa1b776-4853-4a0c-b9b1-5030a20578d4", false, "techEnthusiast" },
+                    { 14L, 0, "60304257-ed13-4379-b074-aef6235d13b1", "foodLover88@mail.com", false, false, null, "FOODLOVER88@MAIL.COM", "FOODLOVER88", "AQAAAAIAAYagAAAAEENU7oTsmXvFT1g+Ul28Dxyr1JkBIuphwU/McpdnNZWFYKGs2/2irNLxtqNTmczU2Q==", null, false, 0, "46de1eaf-a4a6-4a20-b2cd-57d43053d7e3", false, "foodLover88" },
+                    { 15L, 0, "cb7c3e28-f2be-442e-8f54-4bc4f5e8f6cc", "john_the_ipper@mail.com", false, false, null, "JOHN_THE_IPPER@MAIL.COM", "JOHN_THE_IPPER", "AQAAAAIAAYagAAAAENxa6OECjHxESmDHe/aMniqZrkkuQbx2AiOmmis7aee9bSLR0Gx3qeDDdXORnPJ+qw==", null, false, 0, "f23e405c-3bb3-45e8-be6c-0fe437dfed1d", false, "john_the_ipper" },
+                    { 16L, 0, "3e96d897-02f3-4668-ace9-a82dedaeeb25", "samuel_ackson@mail.com", false, false, null, "SAMUEL_ACKSON@MAIL.COM", "SAMUEL_ACKSON", "AQAAAAIAAYagAAAAEKJ04OHd/+07McldennpOt9UpEHmKfZL+Z+UF20eDTPXpZIWzezZRpGL89/aS0d3lg==", null, false, 0, "ff9e46c9-af44-45b9-af0a-7e6f036b58d3", false, "samuel_ackson" },
+                    { 17L, 0, "2cd357d2-5b60-4537-ad50-7b69110ee359", "admin@mail.com", false, false, null, "ADMIN@MAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEHAA+qnHnSWl/rLgcW+C5vaQF/0yxiFN6i0HoFg4oKfnQN4qWxiw9dg0t6w6QcXKug==", null, false, 2, "a444afae-feab-4d13-835b-c5a5eae107ba", false, "admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -534,51 +539,27 @@ namespace DAL.SQLite.Migrations.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Role", "UserName" },
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, 1, "Housemaster111" },
-                    { 2L, 1, "olivia.johnson" },
-                    { 3L, 1, "liamthereaded" },
-                    { 4L, 1, "emily_in_paris" },
-                    { 5L, 1, "booklover88" },
-                    { 6L, 1, "maplewoodhighschool" },
-                    { 7L, 1, "PeterParker" },
-                    { 8L, 1, "codingWizard42" },
-                    { 9L, 1, "bookworm" },
-                    { 10L, 1, "22avidReader22" },
-                    { 11L, 0, "programmingGuru" },
-                    { 12L, 0, "mysteryFanatic" },
-                    { 13L, 0, "techEnthusiast" },
-                    { 14L, 0, "foodLover88" },
-                    { 15L, 0, "john_the_ipper" },
-                    { 16L, 0, "samuel_ackson" },
-                    { 17L, 2, "admin" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserId", "UserName" },
-                values: new object[,]
-                {
-                    { "0afb91aa-9fb2-4171-ab18-9f237a7a0501", 0, "062b799b-88f3-43d7-8583-444e69d71cdd", "LocalIdentityUser", "admin@mail.com", false, false, null, "ADMIN@MAIL.COM", "ADMIN", "AQAAAAIAAYagAAAAEJfCvpz1ouv5LbCEbQ6pqSOhFgMZ+miDyejjcoW0NCUzeEcXZW4fAUeqA6vKI6Q2dA==", null, false, "6f61eaa1-8ab0-4879-9a8f-25eb49bdfded", false, 17L, "admin" },
-                    { "16f0fb39-cbd0-4264-900f-e94f57c07f20", 0, "27cf9fc9-0473-44f6-a41e-6e214961bac8", "LocalIdentityUser", "bookworm@mail.com", false, false, null, "BOOKWORM@MAIL.COM", "BOOKWORM", "AQAAAAIAAYagAAAAELAlEvjh0XVIQHOV/4nrZXidR/wpTDuIs9gPKf5lH6+UPWfQ5H9WvNRLA95O16eqFQ==", null, false, "52fe8c84-883e-4ddc-afe6-d56f9989f2da", false, 9L, "bookworm" },
-                    { "38af2f22-852a-4277-aff1-dac5ed58bc8b", 0, "c447af02-6747-425b-9c0f-1ca9460b0f42", "LocalIdentityUser", "liamthereaded@mail.com", false, false, null, "LIAMTHEREADED@MAIL.COM", "LIAMTHEREADED", "AQAAAAIAAYagAAAAECC4tGqn8/L1B+FJ4500PVCA0XU1jqjpAMYvflEqE1il9asr/44GnFc6G+p45PAyKA==", null, false, "92333125-d614-4957-86a0-a15d17a4f461", false, 3L, "liamthereaded" },
-                    { "519b8c84-be71-44bb-9ebc-ff3e327aa2d5", 0, "70464f51-0f6e-4d8a-bd30-1139ee34741e", "LocalIdentityUser", "techEnthusiast@mail.com", false, false, null, "TECHENTHUSIAST@MAIL.COM", "TECHENTHUSIAST", "AQAAAAIAAYagAAAAEJWiGqrYdieVMJHnEcQ6YtdgXMwR5tqte5llBcr+adG8arPHQLbZ/SL74Cd8PUjKZw==", null, false, "cffe846b-f020-465f-a1b9-baf090f9d153", false, 13L, "techEnthusiast" },
-                    { "51a24170-f3a4-4137-9b8f-e1232a62f925", 0, "a534f83a-cffa-416d-b338-e7dd5e9d2195", "LocalIdentityUser", "codingWizard42@mail.com", false, false, null, "CODINGWIZARD42@MAIL.COM", "CODINGWIZARD42", "AQAAAAIAAYagAAAAEAPEXjgbujoVQVdFtt49HdE1vFELWs4nC+42EolNT785EDJkbqm0SRRMc/VbpgjkuA==", null, false, "514b6f61-ee87-45a7-9a1b-d4d144a3088b", false, 8L, "codingWizard42" },
-                    { "5c88336b-8744-4bfa-b741-f0adaa0bddc3", 0, "2446c4d5-b3d4-418c-8242-e31f6bb30152", "LocalIdentityUser", "mysteryFanatic@mail.com", false, false, null, "MYSTERYFANATIC@MAIL.COM", "MYSTERYFANATIC", "AQAAAAIAAYagAAAAEEUrGrcxStT3TZr7uiPZ4OhvdlZARcrROZuriD3PhDjGozEDh8xkd3S3ttaz+KHwPw==", null, false, "839beaab-8091-4821-9098-acb03bcb89b8", false, 12L, "mysteryFanatic" },
-                    { "67a545ea-5107-456e-8cf6-93a3d9f10612", 0, "5768dc87-967b-4425-b849-2a7d2e6a8f3b", "LocalIdentityUser", "PeterParker@mail.com", false, false, null, "PETERPARKER@MAIL.COM", "PETERPARKER", "AQAAAAIAAYagAAAAEEpQYx00Pmv2/E5pFIZt7is/iYXLl7LU21KjN0Ex8BmHJlS8wpHvP0VKr1Gt5aoB0Q==", null, false, "00328cdd-f9ed-4093-824c-6128ca02b79f", false, 7L, "PeterParker" },
-                    { "6edc1bd4-676f-4f2e-98c5-e1f777bf1917", 0, "404fb22a-ce69-46aa-9a30-5cbfa5659722", "LocalIdentityUser", "olivia.johnson@mail.com", false, false, null, "OLIVIA.JOHNSON@MAIL.COM", "OLIVIA.JOHNSON", "AQAAAAIAAYagAAAAEEhyrkIilrnW/mQIMP2i3weXlVU7kCKTuVQYw8nZbheOnssXGGGHUXC+WsF1UGntbw==", null, false, "a7630b57-942e-4ef3-9d17-b893c7dea072", false, 2L, "olivia.johnson" },
-                    { "76cab806-9f8e-4956-83d2-dbde8f43b39b", 0, "4ab1c66f-d9ce-43c5-9d39-5797b983d75c", "LocalIdentityUser", "samuel_ackson@mail.com", false, false, null, "SAMUEL_ACKSON@MAIL.COM", "SAMUEL_ACKSON", "AQAAAAIAAYagAAAAELG8gOawXevETjxrU9GJ08kPOjTG0PY+bwI9m/zVUgCiCD8DkPUkLN4RhdiBHOrFVQ==", null, false, "827d1873-824e-49dd-9741-9bcbe01eba0d", false, 16L, "samuel_ackson" },
-                    { "8ad463c6-0e8d-4267-9544-e9da8d16db89", 0, "5120da2d-77f8-49ad-8267-22dcdcb02c54", "LocalIdentityUser", "maplewoodhighschool@mail.com", false, false, null, "MAPLEWOODHIGHSCHOOL@MAIL.COM", "MAPLEWOODHIGHSCHOOL", "AQAAAAIAAYagAAAAEEYC43sOhlFZ32W0XOrJ5FiR8wKMmPdGtRv7o/ybUeoTHCrLY/Gzdf4b2YnB+Z5yFA==", null, false, "136bf094-5c02-4cb4-a2ac-87d69da41fc1", false, 6L, "maplewoodhighschool" },
-                    { "a95cf4f2-f5d4-4e60-b107-903642c53ef1", 0, "32f8f578-2af0-4554-8351-2b51c05bbf1f", "LocalIdentityUser", "programmingGuru@mail.com", false, false, null, "PROGRAMMINGGURU@MAIL.COM", "PROGRAMMINGGURU", "AQAAAAIAAYagAAAAEBmENgxlPVO/rU6PA0hxx/wW5w3p8Aa/U3X0lsq9/FjblCmKCwo4mbHItzTdcCm08A==", null, false, "dd92c330-6b54-4e8f-af5d-481d0beaca98", false, 11L, "programmingGuru" },
-                    { "afe86238-8e5e-4f0e-841f-e47dec7f6c24", 0, "81231057-98c7-4e91-bd70-12a135b801c3", "LocalIdentityUser", "john_the_ipper@mail.com", false, false, null, "JOHN_THE_IPPER@MAIL.COM", "JOHN_THE_IPPER", "AQAAAAIAAYagAAAAEFBAxWw6hE4aTjWBmeIMwACJcsW4FCmTGHTpiyRrrNEpkeE0RUQeCReXstbiV7qrBA==", null, false, "22ec7d83-a170-4a37-a09a-6774cacab29e", false, 15L, "john_the_ipper" },
-                    { "bff12893-18ee-49f1-a063-b7a4c722b265", 0, "df7947f2-e4c8-4e64-8188-1ca29a45a797", "LocalIdentityUser", "foodLover88@mail.com", false, false, null, "FOODLOVER88@MAIL.COM", "FOODLOVER88", "AQAAAAIAAYagAAAAEJmEmdd6sIYaHGZeo6Yy2c9fypXMViunqCQu8CNFH6WTQXfX6FD3Y/1wTIbAMf/GkA==", null, false, "a252ac23-9775-4528-bd4f-a9dea2838a5c", false, 14L, "foodLover88" },
-                    { "c09fa3c9-7ddf-4c0b-9db9-1b3ccde2922d", 0, "ea98d5cf-2ddd-41c2-8568-dce6c77225d1", "LocalIdentityUser", "emily_in_paris@mail.com", false, false, null, "EMILY_IN_PARIS@MAIL.COM", "EMILY_IN_PARIS", "AQAAAAIAAYagAAAAEGPYE3O5a54FKF7oISCKim6ouJ7BK9D959ZzajHApqossaAYulqYyOEFnXKRyLmC7Q==", null, false, "ac051f08-71f4-4e3a-abbe-1400a4308463", false, 4L, "emily_in_paris" },
-                    { "c4f2e8a8-3879-4c64-afd2-465396218f5e", 0, "e9824871-0970-42a8-9ffe-ba6ccb221f16", "LocalIdentityUser", "Housemaster111@mail.com", false, false, null, "HOUSEMASTER111@MAIL.COM", "HOUSEMASTER111", "AQAAAAIAAYagAAAAENrN2vhrJNzq8M84BzWsDOK25WRagmr5gT7jUSDl8X7Ae8qsQlHFTddDE3rhkA6fyQ==", null, false, "5634a3ba-4f2b-4ed8-9010-bcea35cba9d7", false, 1L, "Housemaster111" },
-                    { "f7f74bdf-fbd2-4896-8d1f-972233e5c4f5", 0, "c987af43-49b1-4eb1-9b70-4998465b91a9", "LocalIdentityUser", "22avidReader22@mail.com", false, false, null, "22AVIDREADER22@MAIL.COM", "22AVIDREADER22", "AQAAAAIAAYagAAAAENf7yQ5zki84Llly0v6OSHU6ITg0BhsjFRrIc19X8Y0P/9gs0pg1xViwLYTIVnLG/A==", null, false, "ace5807e-0134-47fb-adb9-665929249375", false, 10L, "22avidReader22" },
-                    { "f8ae106d-5578-4b47-b16d-12da1153d0be", 0, "901a0c92-7357-410c-b713-0fce4a249bd2", "LocalIdentityUser", "booklover88@mail.com", false, false, null, "BOOKLOVER88@MAIL.COM", "BOOKLOVER88", "AQAAAAIAAYagAAAAEPb+iSYscLQZhOm5H9rtsvz3+bS+OMttxZhoP7xMmAvhxx4EuD19yI4VPII6EXqD0w==", null, false, "aa77d154-7eff-419b-8d49-d62d0377af6b", false, 5L, "booklover88" }
+                    { 2L, 1L },
+                    { 2L, 2L },
+                    { 2L, 3L },
+                    { 2L, 4L },
+                    { 2L, 5L },
+                    { 2L, 6L },
+                    { 2L, 7L },
+                    { 2L, 8L },
+                    { 2L, 9L },
+                    { 2L, 10L },
+                    { 3L, 11L },
+                    { 3L, 12L },
+                    { 3L, 13L },
+                    { 3L, 14L },
+                    { 3L, 15L },
+                    { 3L, 16L },
+                    { 1L, 17L }
                 });
 
             migrationBuilder.InsertData(
@@ -630,22 +611,22 @@ namespace DAL.SQLite.Migrations.Migrations
                 columns: new[] { "Id", "CreatedAt", "State", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(639), 3, 4L },
-                    { 2L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(651), 0, 4L },
-                    { 3L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(654), 0, 5L },
-                    { 4L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(660), 2, 5L },
-                    { 5L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(663), 1, 6L },
-                    { 6L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(670), 1, 7L },
-                    { 7L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(672), 3, 7L },
-                    { 8L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(675), 3, 7L },
-                    { 9L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(677), 0, 7L },
-                    { 10L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(680), 1, 8L },
-                    { 11L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(714), 1, 8L },
-                    { 12L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(717), 0, 8L },
-                    { 13L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(720), 0, 8L },
-                    { 14L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(722), 3, 8L },
-                    { 15L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(725), 1, 15L },
-                    { 16L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(727), 1, 15L }
+                    { 1L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9917), 3, 4L },
+                    { 2L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9927), 0, 4L },
+                    { 3L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9930), 0, 5L },
+                    { 4L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9935), 2, 5L },
+                    { 5L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9937), 1, 6L },
+                    { 6L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9943), 1, 7L },
+                    { 7L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9967), 3, 7L },
+                    { 8L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9970), 3, 7L },
+                    { 9L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9973), 0, 7L },
+                    { 10L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9979), 1, 8L },
+                    { 11L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9994), 1, 8L },
+                    { 12L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9997), 0, 8L },
+                    { 13L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9999), 0, 8L },
+                    { 14L, new DateTime(2024, 1, 21, 15, 48, 21, 311, DateTimeKind.Local).AddTicks(2), 3, 8L },
+                    { 15L, new DateTime(2024, 1, 21, 15, 48, 21, 311, DateTimeKind.Local).AddTicks(5), 1, 15L },
+                    { 16L, new DateTime(2024, 1, 21, 15, 48, 21, 311, DateTimeKind.Local).AddTicks(7), 1, 15L }
                 });
 
             migrationBuilder.InsertData(
@@ -653,35 +634,11 @@ namespace DAL.SQLite.Migrations.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(529), "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.", 1L },
-                    { 2L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(609), "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.", 2L },
-                    { 3L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(612), "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!", 3L },
-                    { 4L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(614), "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!", 4L },
-                    { 5L, new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(616), "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.", 5L }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { "ad91e7c3-e544-4087-a661-0e5af1e69bc3", "0afb91aa-9fb2-4171-ab18-9f237a7a0501" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "16f0fb39-cbd0-4264-900f-e94f57c07f20" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "38af2f22-852a-4277-aff1-dac5ed58bc8b" },
-                    { "d4e24154-7f04-4ab4-a903-7f1697e34df4", "519b8c84-be71-44bb-9ebc-ff3e327aa2d5" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "51a24170-f3a4-4137-9b8f-e1232a62f925" },
-                    { "d4e24154-7f04-4ab4-a903-7f1697e34df4", "5c88336b-8744-4bfa-b741-f0adaa0bddc3" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "67a545ea-5107-456e-8cf6-93a3d9f10612" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "6edc1bd4-676f-4f2e-98c5-e1f777bf1917" },
-                    { "d4e24154-7f04-4ab4-a903-7f1697e34df4", "76cab806-9f8e-4956-83d2-dbde8f43b39b" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "8ad463c6-0e8d-4267-9544-e9da8d16db89" },
-                    { "d4e24154-7f04-4ab4-a903-7f1697e34df4", "a95cf4f2-f5d4-4e60-b107-903642c53ef1" },
-                    { "d4e24154-7f04-4ab4-a903-7f1697e34df4", "afe86238-8e5e-4f0e-841f-e47dec7f6c24" },
-                    { "d4e24154-7f04-4ab4-a903-7f1697e34df4", "bff12893-18ee-49f1-a063-b7a4c722b265" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "c09fa3c9-7ddf-4c0b-9db9-1b3ccde2922d" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "c4f2e8a8-3879-4c64-afd2-465396218f5e" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "f7f74bdf-fbd2-4896-8d1f-972233e5c4f5" },
-                    { "6f6375de-9a1d-4cd6-8218-ae7c55d2c838", "f8ae106d-5578-4b47-b16d-12da1153d0be" }
+                    { 1L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9845), "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.", 1L },
+                    { 2L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9895), "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.", 2L },
+                    { 3L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9897), "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!", 3L },
+                    { 4L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9900), "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!", 4L },
+                    { 5L, new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9903), "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.", 5L }
                 });
 
             migrationBuilder.InsertData(
@@ -929,11 +886,6 @@ namespace DAL.SQLite.Migrations.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_UserId",
-                table: "AspNetUsers",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -1059,9 +1011,6 @@ namespace DAL.SQLite.Migrations.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Authors");
 
             migrationBuilder.DropTable(
@@ -1083,7 +1032,7 @@ namespace DAL.SQLite.Migrations.Migrations
                 name: "Publishers");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "AspNetUsers");
         }
     }
 }

@@ -11,10 +11,10 @@ namespace MVC.Controllers;
 public class BookReviewController : Controller
 {
     private readonly IBookReviewFacade _bookReviewFacade;
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-    public BookReviewController(IBookReviewFacade bookReviewFacade, UserManager<LocalIdentityUser> userManager)
+    public BookReviewController(IBookReviewFacade bookReviewFacade, UserManager<User> userManager)
     {
         _bookReviewFacade = bookReviewFacade;
         _userManager = userManager;

@@ -3,12 +3,13 @@ using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Purchasing;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
 
-public class BookHubDbContext :  IdentityDbContext
+public class BookHubDbContext : IdentityDbContext<User, IdentityRole<long>, long>
 {
     public DbSet<BookStore> BookStores { get; set; }
     public DbSet<InventoryItem> InventoryItems { get; set; }
@@ -17,14 +18,11 @@ public class BookHubDbContext :  IdentityDbContext
     public DbSet<WishListItem> WishListItem { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
-    public DbSet<User> Users { get; set; }
     public DbSet<BookReview> BookReviews { get; set; }
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Publisher> Publishers { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<AuthorBookAssociation> AuthorBookAssociations { get; set; }
-    public virtual DbSet<LocalIdentityUser> IdentityUsers { get; set; }
-
 
 
     public BookHubDbContext(DbContextOptions<BookHubDbContext> options) : base(options)

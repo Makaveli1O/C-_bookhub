@@ -22,7 +22,7 @@ builder.Services.RegisterBLDependencies();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddIdentity<LocalIdentityUser, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole<long>>()
     .AddEntityFrameworkStores<BookHubDbContext>()
     .AddDefaultTokenProviders();
 

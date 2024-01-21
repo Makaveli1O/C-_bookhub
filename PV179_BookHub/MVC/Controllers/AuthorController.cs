@@ -9,9 +9,9 @@ namespace MVC.Controllers;
 public class AuthorController : Controller
 {
     private readonly IAuthorFacade _authorFacade;
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
 
-    public AuthorController(IAuthorFacade authorFacade, UserManager<LocalIdentityUser> userManager)
+    public AuthorController(IAuthorFacade authorFacade, UserManager<User> userManager)
     {
         _authorFacade = authorFacade;
         _userManager = userManager;

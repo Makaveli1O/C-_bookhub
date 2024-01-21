@@ -6,6 +6,7 @@ using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Purchasing;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace DataAccessLayer.Data;
 
@@ -17,10 +18,9 @@ public static class DataInitializer
         var publishers = PreparePublisherModels();
         var books = PrepareBookModels();
         var authorBooksAssociations = PrepareAuthorBooksAssociationsModels();
-        
+
         var users = PrepareUserModels();
         var bookReviews = PrepareBookReviews();
-
 
         var addresses = PrepareAddressModels();
         var bookStores = PrepareBookStoreModels();
@@ -41,10 +41,7 @@ public static class DataInitializer
             .HasData(books);
         modelBuilder.Entity<AuthorBookAssociation>()
             .HasData(authorBooksAssociations);
-        
 
-        modelBuilder.Entity<User>()
-            .HasData(users);
         modelBuilder.Entity<BookReview>()
             .HasData(bookReviews);
 
@@ -68,47 +65,54 @@ public static class DataInitializer
         SeedUsersAndRoles(modelBuilder, users);
     }
 
-    public static void SeedUsersAndRoles(this ModelBuilder builder, IEnumerable<User> defautUsers)
+    public static void SeedUsersAndRoles(this ModelBuilder builder, IEnumerable<User> defaultUsers)
     {
-        var adminRole = new IdentityRole(UserRole.Admin.ToString());
-        adminRole.NormalizedName = adminRole.Name!.ToUpper();
-        var managerRole = new IdentityRole(UserRole.Manager.ToString());
-        managerRole.NormalizedName = managerRole.Name!.ToUpper();
-        var userRole = new IdentityRole(UserRole.User.ToString());
-        userRole.NormalizedName = userRole.Name!.ToUpper();
-
-        List<IdentityRole> roles = new List<IdentityRole>() { adminRole, managerRole, userRole };
-        builder.Entity<IdentityRole>().HasData(roles);
-
-        var passwordHasher = new PasswordHasher<LocalIdentityUser>();
-        List<LocalIdentityUser> users = new List<LocalIdentityUser>();
-
-        foreach (var user in defautUsers)
+        var roles = new List<IdentityRole<long>>()
         {
-            var localUser = new LocalIdentityUser
-            {
-                UserId = user.Id,
-                UserName = user.UserName,
-                Email = user.UserName + "@mail.com",
-            };
-            localUser.NormalizedUserName = localUser.UserName.ToUpper();
-            localUser.NormalizedEmail = localUser.Email.ToUpper();
-            localUser.PasswordHash = passwordHasher.HashPassword(localUser, "password");
-            users.Add(localUser);
+           new IdentityRole<long>()
+           {
+                Id = 1,
+                Name = UserRole.Admin.ToString(),
+                NormalizedName = UserRole.Admin.ToString().ToUpper()
+           },
+           new IdentityRole<long>()
+           {
+                Id = 2,
+                Name = UserRole.Manager.ToString(),
+                NormalizedName = UserRole.Manager.ToString().ToUpper()
+           },
+           new IdentityRole<long>()
+           {
+                Id = 3,
+                Name = UserRole.User.ToString(),
+                NormalizedName = UserRole.User.ToString().ToUpper()
+           },
+        };
+        builder.Entity<IdentityRole<long>>().HasData(roles);
+
+
+        var passwordHasher = new PasswordHasher<User>();
+        foreach (var user in defaultUsers)
+        {
+            user.Email = user.UserName + "@mail.com";
+            user.NormalizedUserName = user.UserName?.ToUpper();
+            user.NormalizedEmail = user.Email.ToUpper();
+            user.PasswordHash = passwordHasher.HashPassword(user, "password");
+            user.SecurityStamp = Guid.NewGuid().ToString();
         }
-        builder.Entity<LocalIdentityUser>().HasData(users);
+        builder.Entity<User>().HasData(defaultUsers);
 
 
-        List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>();
-        foreach (var user in users)
+        List<IdentityUserRole<long>> userRoles = new List<IdentityUserRole<long>>();
+        foreach (var user in defaultUsers)
         {
-            userRoles.Add(new IdentityUserRole<string>
+            userRoles.Add(new IdentityUserRole<long>
             {
                 UserId = user.Id,
-                RoleId = roles.First(q => q.Name == defautUsers.First(u => user.UserId == u.Id).Role.ToString()).Id
+                RoleId = roles.First(q => q.Name == defaultUsers.First(u => user.Id == u.Id).Role.ToString()).Id
             });
         }
-        builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
+        builder.Entity<IdentityUserRole<long>>().HasData(userRoles);
     }
 
     private static List<Publisher> PreparePublisherModels()
@@ -130,7 +134,6 @@ public static class DataInitializer
                 City = "London",
                 Country = "United Kingdom",
                 YearFounded = 2003
-
             },
             new Publisher()
             {
@@ -1037,11 +1040,11 @@ public static class DataInitializer
             }
         };
     }
-    
+
     private static List<WishList> PrepareWishListModels()
     {
         return new List<WishList>()
-        { 
+        {
             new WishList
             {
                 Id = 1,
@@ -1079,7 +1082,7 @@ public static class DataInitializer
     {
         return new List<WishListItem>()
         {
-            new WishListItem 
+            new WishListItem
             {
                 Id = 1,
                 WishListId = 1,
@@ -1212,7 +1215,7 @@ public static class DataInitializer
             {
                 Id = 12,
                 UserId = 8,
-                State = OrderState.Created  
+                State = OrderState.Created
             },
             new Order
             {

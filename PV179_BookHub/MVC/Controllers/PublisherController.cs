@@ -9,9 +9,9 @@ namespace MVC.Controllers;
 public class PublisherController : Controller
 {
     private readonly IPublisherFacade _publisherFacade;
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
 
-    public PublisherController(IPublisherFacade publisherFacade, UserManager<LocalIdentityUser> userManager)
+    public PublisherController(IPublisherFacade publisherFacade, UserManager<User> userManager)
     {
         _publisherFacade = publisherFacade;
         _userManager = userManager;

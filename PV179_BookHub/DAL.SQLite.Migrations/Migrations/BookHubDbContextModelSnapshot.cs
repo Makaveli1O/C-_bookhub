@@ -273,119 +273,355 @@ namespace DAL.SQLite.Migrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(100)
+                        .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d774b5d1-3000-4b45-b26c-374c82712234",
+                            Email = "Housemaster111@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HOUSEMASTER111@MAIL.COM",
+                            NormalizedUserName = "HOUSEMASTER111",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJik/E7/27st2OqzMh6Z0yM5qESp2sY8C8EhJLZQogdBCxbKzHMdykVel4E0ImRJfg==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "adf6f6ba-d554-4cab-b5e8-49ef141a6f0a",
+                            TwoFactorEnabled = false,
                             UserName = "Housemaster111"
                         },
                         new
                         {
                             Id = 2L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e0815b1b-6e1a-457f-a478-c7863401dcbe",
+                            Email = "olivia.johnson@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "OLIVIA.JOHNSON@MAIL.COM",
+                            NormalizedUserName = "OLIVIA.JOHNSON",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGsalV3ODfUHVXhXXrDsfCuCrckNZU0fObU10dRN+gnY6pUe/I/Xw/Y3eGiWfvxNSg==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "1c26f552-8453-4282-b08e-720d4e2b47a7",
+                            TwoFactorEnabled = false,
                             UserName = "olivia.johnson"
                         },
                         new
                         {
                             Id = 3L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "09a2e96d-ba79-4912-8e9f-7ab7cfc58c7f",
+                            Email = "liamthereaded@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "LIAMTHEREADED@MAIL.COM",
+                            NormalizedUserName = "LIAMTHEREADED",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIaS/SHkG7SbzXhEQNgfBZ8QeOcMMjkyByzqtxziglzFWM+zUKon/BXj5p9/x+AAxA==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "245e9841-2f06-4563-b388-263cec054f0c",
+                            TwoFactorEnabled = false,
                             UserName = "liamthereaded"
                         },
                         new
                         {
                             Id = 4L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "6a2d6701-c2ac-4063-9f32-4ccb133912ea",
+                            Email = "emily_in_paris@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMILY_IN_PARIS@MAIL.COM",
+                            NormalizedUserName = "EMILY_IN_PARIS",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPDpW7HTaJpe6VuQ090HG9m67ZVnJCSrrWzsdtkdRmA+E4qM5QGxsfK2m9xf8EVdeA==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "6b7233e5-4b5b-4698-96d3-caf2261b860d",
+                            TwoFactorEnabled = false,
                             UserName = "emily_in_paris"
                         },
                         new
                         {
                             Id = 5L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "34bebbe7-676f-4a5a-843e-8acb191b6734",
+                            Email = "booklover88@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BOOKLOVER88@MAIL.COM",
+                            NormalizedUserName = "BOOKLOVER88",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH+3Sl+/qwNJMa1kM7c++uNKpcWAHA7CXh63UWaGBbzHy+HYSOyXWdJYMMJymwjIzQ==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "fe64fcdd-9444-4752-bf49-a4aed116d508",
+                            TwoFactorEnabled = false,
                             UserName = "booklover88"
                         },
                         new
                         {
                             Id = 6L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "930db17b-7017-4de3-a735-3ad195a1866e",
+                            Email = "maplewoodhighschool@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MAPLEWOODHIGHSCHOOL@MAIL.COM",
+                            NormalizedUserName = "MAPLEWOODHIGHSCHOOL",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPsKi/YSPCNE/slTgrnfEO2YAyKMyyrsG+e2ugUD8qqCxI/6DMl/vHavJUA0vP5TmQ==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "2c8ac353-fdf2-4f81-bacb-d5155ba850f4",
+                            TwoFactorEnabled = false,
                             UserName = "maplewoodhighschool"
                         },
                         new
                         {
                             Id = 7L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1ea4f8e6-5d35-4848-bf41-a39a6165eaf3",
+                            Email = "PeterParker@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PETERPARKER@MAIL.COM",
+                            NormalizedUserName = "PETERPARKER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFV28e/kBC+SpkUg32e3WsaS7H9jHVS17rz4w73AixvaMar3EUYR1hX+rMHElTtEzQ==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "1554020a-8d25-4aac-8093-9bb56cb60d29",
+                            TwoFactorEnabled = false,
                             UserName = "PeterParker"
                         },
                         new
                         {
                             Id = 8L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "be8bca92-456d-4743-923b-4854a12b6a3d",
+                            Email = "codingWizard42@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CODINGWIZARD42@MAIL.COM",
+                            NormalizedUserName = "CODINGWIZARD42",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ6gEpaSNWFE6/OPUTqTVXvSCunRI0JdKr1qijeWX7mICPillvPQ9eQfub9bakUsaA==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "fd0ff1a7-df57-48cb-a06e-21490bd95447",
+                            TwoFactorEnabled = false,
                             UserName = "codingWizard42"
                         },
                         new
                         {
                             Id = 9L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "26ac980d-9ed4-454c-8a40-17bd1ce2e979",
+                            Email = "bookworm@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BOOKWORM@MAIL.COM",
+                            NormalizedUserName = "BOOKWORM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAZLaIwTMgFOwXAsY4iFBYfA5QW3xi1rFVE/cvV4zbvPBR6uQBcRvqpfihlSM6sZ4Q==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "76091424-87ac-4b96-9d66-bbae0836f5f8",
+                            TwoFactorEnabled = false,
                             UserName = "bookworm"
                         },
                         new
                         {
                             Id = 10L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bf27f269-4571-4213-99f6-fb18a90d8c5d",
+                            Email = "22avidReader22@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "22AVIDREADER22@MAIL.COM",
+                            NormalizedUserName = "22AVIDREADER22",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGIZojJSceyCPaDaKXDKAogALacz+VWvMfdDPBuH7LBgXUIye+zvMDO0ahjCVbByLA==",
+                            PhoneNumberConfirmed = false,
                             Role = 1,
+                            SecurityStamp = "19087edf-5612-4fed-9d20-86dd21721dd9",
+                            TwoFactorEnabled = false,
                             UserName = "22avidReader22"
                         },
                         new
                         {
                             Id = 11L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c6d0adb0-2bd6-4520-a374-0148ccdd695a",
+                            Email = "programmingGuru@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PROGRAMMINGGURU@MAIL.COM",
+                            NormalizedUserName = "PROGRAMMINGGURU",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAe3YnfXlKJMBI38wXbFnEBSQdNISgYttBmbEH57d0LgT/doaeOhPsCvhcUWOQ2j1A==",
+                            PhoneNumberConfirmed = false,
                             Role = 0,
+                            SecurityStamp = "e53b5afc-fc8d-4f9f-84e7-8adce7bbc123",
+                            TwoFactorEnabled = false,
                             UserName = "programmingGuru"
                         },
                         new
                         {
                             Id = 12L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "76850147-af17-481a-9ad1-1e5daaa9c18e",
+                            Email = "mysteryFanatic@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MYSTERYFANATIC@MAIL.COM",
+                            NormalizedUserName = "MYSTERYFANATIC",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJNB8GPUk0bC6MMHAyvcbHLr/G6+46MU542irpO5KSpQvy53HFT+KR0vEkSFL+d+Gg==",
+                            PhoneNumberConfirmed = false,
                             Role = 0,
+                            SecurityStamp = "4f09fed0-c9c5-45d0-ba4c-6f2b0b54b9fd",
+                            TwoFactorEnabled = false,
                             UserName = "mysteryFanatic"
                         },
                         new
                         {
                             Id = 13L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "67cdf78c-2b42-408a-a9f1-a17545da0389",
+                            Email = "techEnthusiast@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TECHENTHUSIAST@MAIL.COM",
+                            NormalizedUserName = "TECHENTHUSIAST",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL3p0z/QqXL6KVdIsZ7hgD5kJa81lpD2LCuMpGxVK6COXjuIfb9d2h+KTS0x4Qmkpg==",
+                            PhoneNumberConfirmed = false,
                             Role = 0,
+                            SecurityStamp = "aaa1b776-4853-4a0c-b9b1-5030a20578d4",
+                            TwoFactorEnabled = false,
                             UserName = "techEnthusiast"
                         },
                         new
                         {
                             Id = 14L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "60304257-ed13-4379-b074-aef6235d13b1",
+                            Email = "foodLover88@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FOODLOVER88@MAIL.COM",
+                            NormalizedUserName = "FOODLOVER88",
+                            PasswordHash = "AQAAAAIAAYagAAAAEENU7oTsmXvFT1g+Ul28Dxyr1JkBIuphwU/McpdnNZWFYKGs2/2irNLxtqNTmczU2Q==",
+                            PhoneNumberConfirmed = false,
                             Role = 0,
+                            SecurityStamp = "46de1eaf-a4a6-4a20-b2cd-57d43053d7e3",
+                            TwoFactorEnabled = false,
                             UserName = "foodLover88"
                         },
                         new
                         {
                             Id = 15L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "cb7c3e28-f2be-442e-8f54-4bc4f5e8f6cc",
+                            Email = "john_the_ipper@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JOHN_THE_IPPER@MAIL.COM",
+                            NormalizedUserName = "JOHN_THE_IPPER",
+                            PasswordHash = "AQAAAAIAAYagAAAAENxa6OECjHxESmDHe/aMniqZrkkuQbx2AiOmmis7aee9bSLR0Gx3qeDDdXORnPJ+qw==",
+                            PhoneNumberConfirmed = false,
                             Role = 0,
+                            SecurityStamp = "f23e405c-3bb3-45e8-be6c-0fe437dfed1d",
+                            TwoFactorEnabled = false,
                             UserName = "john_the_ipper"
                         },
                         new
                         {
                             Id = 16L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3e96d897-02f3-4668-ace9-a82dedaeeb25",
+                            Email = "samuel_ackson@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SAMUEL_ACKSON@MAIL.COM",
+                            NormalizedUserName = "SAMUEL_ACKSON",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKJ04OHd/+07McldennpOt9UpEHmKfZL+Z+UF20eDTPXpZIWzezZRpGL89/aS0d3lg==",
+                            PhoneNumberConfirmed = false,
                             Role = 0,
+                            SecurityStamp = "ff9e46c9-af44-45b9-af0a-7e6f036b58d3",
+                            TwoFactorEnabled = false,
                             UserName = "samuel_ackson"
                         },
                         new
                         {
                             Id = 17L,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2cd357d2-5b60-4537-ad50-7b69110ee359",
+                            Email = "admin@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@MAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHAA+qnHnSWl/rLgcW+C5vaQF/0yxiFN6i0HoFg4oKfnQN4qWxiw9dg0t6w6QcXKug==",
+                            PhoneNumberConfirmed = false,
                             Role = 2,
+                            SecurityStamp = "a444afae-feab-4d13-835b-c5a5eae107ba",
+                            TwoFactorEnabled = false,
                             UserName = "admin"
                         });
                 });
@@ -1510,35 +1746,35 @@ namespace DAL.SQLite.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(529),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9845),
                             Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.",
                             UserId = 1L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(609),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9895),
                             Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.",
                             UserId = 2L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(612),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9897),
                             Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!",
                             UserId = 3L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(614),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9900),
                             Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!",
                             UserId = 4L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(616),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9903),
                             Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.",
                             UserId = 5L
                         });
@@ -2274,112 +2510,112 @@ namespace DAL.SQLite.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(639),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9917),
                             State = 3,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(651),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9927),
                             State = 0,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(654),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9930),
                             State = 0,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(660),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9935),
                             State = 2,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(663),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9937),
                             State = 1,
                             UserId = 6L
                         },
                         new
                         {
                             Id = 6L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(670),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9943),
                             State = 1,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 7L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(672),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9967),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 8L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(675),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9970),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 9L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(677),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9973),
                             State = 0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 10L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(680),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9979),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 11L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(714),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9994),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 12L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(717),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9997),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 13L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(720),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9999),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 14L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(722),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 311, DateTimeKind.Local).AddTicks(2),
                             State = 3,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 15L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(725),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 311, DateTimeKind.Local).AddTicks(5),
                             State = 1,
                             UserId = 15L
                         },
                         new
                         {
                             Id = 16L,
-                            CreatedAt = new DateTime(2024, 1, 14, 22, 30, 4, 200, DateTimeKind.Local).AddTicks(727),
+                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 311, DateTimeKind.Local).AddTicks(7),
                             State = 1,
                             UserId = 15L
                         });
@@ -2626,10 +2862,11 @@ namespace DAL.SQLite.Migrations.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -2654,25 +2891,25 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ad91e7c3-e544-4087-a661-0e5af1e69bc3",
+                            Id = 1L,
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838",
+                            Id = 2L,
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "d4e24154-7f04-4ab4-a903-7f1697e34df4",
+                            Id = 3L,
                             Name = "User",
                             NormalizedName = "USER"
                         });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2684,9 +2921,8 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<long>("RoleId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -2695,79 +2931,7 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
-
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2779,9 +2943,8 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -2790,7 +2953,7 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("TEXT");
@@ -2801,9 +2964,8 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -2812,13 +2974,13 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("RoleId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -2829,95 +2991,95 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "c4f2e8a8-3879-4c64-afd2-465396218f5e",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 1L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "6edc1bd4-676f-4f2e-98c5-e1f777bf1917",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 2L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "38af2f22-852a-4277-aff1-dac5ed58bc8b",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 3L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "c09fa3c9-7ddf-4c0b-9db9-1b3ccde2922d",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 4L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "f8ae106d-5578-4b47-b16d-12da1153d0be",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 5L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "8ad463c6-0e8d-4267-9544-e9da8d16db89",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 6L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "67a545ea-5107-456e-8cf6-93a3d9f10612",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 7L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "51a24170-f3a4-4137-9b8f-e1232a62f925",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 8L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "16f0fb39-cbd0-4264-900f-e94f57c07f20",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 9L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "f7f74bdf-fbd2-4896-8d1f-972233e5c4f5",
-                            RoleId = "6f6375de-9a1d-4cd6-8218-ae7c55d2c838"
+                            UserId = 10L,
+                            RoleId = 2L
                         },
                         new
                         {
-                            UserId = "a95cf4f2-f5d4-4e60-b107-903642c53ef1",
-                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                            UserId = 11L,
+                            RoleId = 3L
                         },
                         new
                         {
-                            UserId = "5c88336b-8744-4bfa-b741-f0adaa0bddc3",
-                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                            UserId = 12L,
+                            RoleId = 3L
                         },
                         new
                         {
-                            UserId = "519b8c84-be71-44bb-9ebc-ff3e327aa2d5",
-                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                            UserId = 13L,
+                            RoleId = 3L
                         },
                         new
                         {
-                            UserId = "bff12893-18ee-49f1-a063-b7a4c722b265",
-                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                            UserId = 14L,
+                            RoleId = 3L
                         },
                         new
                         {
-                            UserId = "afe86238-8e5e-4f0e-841f-e47dec7f6c24",
-                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                            UserId = 15L,
+                            RoleId = 3L
                         },
                         new
                         {
-                            UserId = "76cab806-9f8e-4956-83d2-dbde8f43b39b",
-                            RoleId = "d4e24154-7f04-4ab4-a903-7f1697e34df4"
+                            UserId = 16L,
+                            RoleId = 3L
                         },
                         new
                         {
-                            UserId = "0afb91aa-9fb2-4171-ab18-9f237a7a0501",
-                            RoleId = "ad91e7c3-e544-4087-a661-0e5af1e69bc3"
+                            UserId = 17L,
+                            RoleId = 1L
                         });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("TEXT");
@@ -2931,309 +3093,6 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Account.LocalIdentityUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasIndex("UserId");
-
-                    b.HasDiscriminator().HasValue("LocalIdentityUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c4f2e8a8-3879-4c64-afd2-465396218f5e",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "e9824871-0970-42a8-9ffe-ba6ccb221f16",
-                            Email = "Housemaster111@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "HOUSEMASTER111@MAIL.COM",
-                            NormalizedUserName = "HOUSEMASTER111",
-                            PasswordHash = "AQAAAAIAAYagAAAAENrN2vhrJNzq8M84BzWsDOK25WRagmr5gT7jUSDl8X7Ae8qsQlHFTddDE3rhkA6fyQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "5634a3ba-4f2b-4ed8-9010-bcea35cba9d7",
-                            TwoFactorEnabled = false,
-                            UserName = "Housemaster111",
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = "6edc1bd4-676f-4f2e-98c5-e1f777bf1917",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "404fb22a-ce69-46aa-9a30-5cbfa5659722",
-                            Email = "olivia.johnson@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "OLIVIA.JOHNSON@MAIL.COM",
-                            NormalizedUserName = "OLIVIA.JOHNSON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEhyrkIilrnW/mQIMP2i3weXlVU7kCKTuVQYw8nZbheOnssXGGGHUXC+WsF1UGntbw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "a7630b57-942e-4ef3-9d17-b893c7dea072",
-                            TwoFactorEnabled = false,
-                            UserName = "olivia.johnson",
-                            UserId = 2L
-                        },
-                        new
-                        {
-                            Id = "38af2f22-852a-4277-aff1-dac5ed58bc8b",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c447af02-6747-425b-9c0f-1ca9460b0f42",
-                            Email = "liamthereaded@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "LIAMTHEREADED@MAIL.COM",
-                            NormalizedUserName = "LIAMTHEREADED",
-                            PasswordHash = "AQAAAAIAAYagAAAAECC4tGqn8/L1B+FJ4500PVCA0XU1jqjpAMYvflEqE1il9asr/44GnFc6G+p45PAyKA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "92333125-d614-4957-86a0-a15d17a4f461",
-                            TwoFactorEnabled = false,
-                            UserName = "liamthereaded",
-                            UserId = 3L
-                        },
-                        new
-                        {
-                            Id = "c09fa3c9-7ddf-4c0b-9db9-1b3ccde2922d",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "ea98d5cf-2ddd-41c2-8568-dce6c77225d1",
-                            Email = "emily_in_paris@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "EMILY_IN_PARIS@MAIL.COM",
-                            NormalizedUserName = "EMILY_IN_PARIS",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGPYE3O5a54FKF7oISCKim6ouJ7BK9D959ZzajHApqossaAYulqYyOEFnXKRyLmC7Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "ac051f08-71f4-4e3a-abbe-1400a4308463",
-                            TwoFactorEnabled = false,
-                            UserName = "emily_in_paris",
-                            UserId = 4L
-                        },
-                        new
-                        {
-                            Id = "f8ae106d-5578-4b47-b16d-12da1153d0be",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "901a0c92-7357-410c-b713-0fce4a249bd2",
-                            Email = "booklover88@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "BOOKLOVER88@MAIL.COM",
-                            NormalizedUserName = "BOOKLOVER88",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPb+iSYscLQZhOm5H9rtsvz3+bS+OMttxZhoP7xMmAvhxx4EuD19yI4VPII6EXqD0w==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "aa77d154-7eff-419b-8d49-d62d0377af6b",
-                            TwoFactorEnabled = false,
-                            UserName = "booklover88",
-                            UserId = 5L
-                        },
-                        new
-                        {
-                            Id = "8ad463c6-0e8d-4267-9544-e9da8d16db89",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5120da2d-77f8-49ad-8267-22dcdcb02c54",
-                            Email = "maplewoodhighschool@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "MAPLEWOODHIGHSCHOOL@MAIL.COM",
-                            NormalizedUserName = "MAPLEWOODHIGHSCHOOL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEYC43sOhlFZ32W0XOrJ5FiR8wKMmPdGtRv7o/ybUeoTHCrLY/Gzdf4b2YnB+Z5yFA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "136bf094-5c02-4cb4-a2ac-87d69da41fc1",
-                            TwoFactorEnabled = false,
-                            UserName = "maplewoodhighschool",
-                            UserId = 6L
-                        },
-                        new
-                        {
-                            Id = "67a545ea-5107-456e-8cf6-93a3d9f10612",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5768dc87-967b-4425-b849-2a7d2e6a8f3b",
-                            Email = "PeterParker@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "PETERPARKER@MAIL.COM",
-                            NormalizedUserName = "PETERPARKER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEpQYx00Pmv2/E5pFIZt7is/iYXLl7LU21KjN0Ex8BmHJlS8wpHvP0VKr1Gt5aoB0Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "00328cdd-f9ed-4093-824c-6128ca02b79f",
-                            TwoFactorEnabled = false,
-                            UserName = "PeterParker",
-                            UserId = 7L
-                        },
-                        new
-                        {
-                            Id = "51a24170-f3a4-4137-9b8f-e1232a62f925",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "a534f83a-cffa-416d-b338-e7dd5e9d2195",
-                            Email = "codingWizard42@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "CODINGWIZARD42@MAIL.COM",
-                            NormalizedUserName = "CODINGWIZARD42",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAPEXjgbujoVQVdFtt49HdE1vFELWs4nC+42EolNT785EDJkbqm0SRRMc/VbpgjkuA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "514b6f61-ee87-45a7-9a1b-d4d144a3088b",
-                            TwoFactorEnabled = false,
-                            UserName = "codingWizard42",
-                            UserId = 8L
-                        },
-                        new
-                        {
-                            Id = "16f0fb39-cbd0-4264-900f-e94f57c07f20",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "27cf9fc9-0473-44f6-a41e-6e214961bac8",
-                            Email = "bookworm@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "BOOKWORM@MAIL.COM",
-                            NormalizedUserName = "BOOKWORM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELAlEvjh0XVIQHOV/4nrZXidR/wpTDuIs9gPKf5lH6+UPWfQ5H9WvNRLA95O16eqFQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "52fe8c84-883e-4ddc-afe6-d56f9989f2da",
-                            TwoFactorEnabled = false,
-                            UserName = "bookworm",
-                            UserId = 9L
-                        },
-                        new
-                        {
-                            Id = "f7f74bdf-fbd2-4896-8d1f-972233e5c4f5",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c987af43-49b1-4eb1-9b70-4998465b91a9",
-                            Email = "22avidReader22@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "22AVIDREADER22@MAIL.COM",
-                            NormalizedUserName = "22AVIDREADER22",
-                            PasswordHash = "AQAAAAIAAYagAAAAENf7yQ5zki84Llly0v6OSHU6ITg0BhsjFRrIc19X8Y0P/9gs0pg1xViwLYTIVnLG/A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "ace5807e-0134-47fb-adb9-665929249375",
-                            TwoFactorEnabled = false,
-                            UserName = "22avidReader22",
-                            UserId = 10L
-                        },
-                        new
-                        {
-                            Id = "a95cf4f2-f5d4-4e60-b107-903642c53ef1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "32f8f578-2af0-4554-8351-2b51c05bbf1f",
-                            Email = "programmingGuru@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "PROGRAMMINGGURU@MAIL.COM",
-                            NormalizedUserName = "PROGRAMMINGGURU",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBmENgxlPVO/rU6PA0hxx/wW5w3p8Aa/U3X0lsq9/FjblCmKCwo4mbHItzTdcCm08A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "dd92c330-6b54-4e8f-af5d-481d0beaca98",
-                            TwoFactorEnabled = false,
-                            UserName = "programmingGuru",
-                            UserId = 11L
-                        },
-                        new
-                        {
-                            Id = "5c88336b-8744-4bfa-b741-f0adaa0bddc3",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "2446c4d5-b3d4-418c-8242-e31f6bb30152",
-                            Email = "mysteryFanatic@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "MYSTERYFANATIC@MAIL.COM",
-                            NormalizedUserName = "MYSTERYFANATIC",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEUrGrcxStT3TZr7uiPZ4OhvdlZARcrROZuriD3PhDjGozEDh8xkd3S3ttaz+KHwPw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "839beaab-8091-4821-9098-acb03bcb89b8",
-                            TwoFactorEnabled = false,
-                            UserName = "mysteryFanatic",
-                            UserId = 12L
-                        },
-                        new
-                        {
-                            Id = "519b8c84-be71-44bb-9ebc-ff3e327aa2d5",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "70464f51-0f6e-4d8a-bd30-1139ee34741e",
-                            Email = "techEnthusiast@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "TECHENTHUSIAST@MAIL.COM",
-                            NormalizedUserName = "TECHENTHUSIAST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJWiGqrYdieVMJHnEcQ6YtdgXMwR5tqte5llBcr+adG8arPHQLbZ/SL74Cd8PUjKZw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "cffe846b-f020-465f-a1b9-baf090f9d153",
-                            TwoFactorEnabled = false,
-                            UserName = "techEnthusiast",
-                            UserId = 13L
-                        },
-                        new
-                        {
-                            Id = "bff12893-18ee-49f1-a063-b7a4c722b265",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "df7947f2-e4c8-4e64-8188-1ca29a45a797",
-                            Email = "foodLover88@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "FOODLOVER88@MAIL.COM",
-                            NormalizedUserName = "FOODLOVER88",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJmEmdd6sIYaHGZeo6Yy2c9fypXMViunqCQu8CNFH6WTQXfX6FD3Y/1wTIbAMf/GkA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "a252ac23-9775-4528-bd4f-a9dea2838a5c",
-                            TwoFactorEnabled = false,
-                            UserName = "foodLover88",
-                            UserId = 14L
-                        },
-                        new
-                        {
-                            Id = "afe86238-8e5e-4f0e-841f-e47dec7f6c24",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "81231057-98c7-4e91-bd70-12a135b801c3",
-                            Email = "john_the_ipper@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "JOHN_THE_IPPER@MAIL.COM",
-                            NormalizedUserName = "JOHN_THE_IPPER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFBAxWw6hE4aTjWBmeIMwACJcsW4FCmTGHTpiyRrrNEpkeE0RUQeCReXstbiV7qrBA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "22ec7d83-a170-4a37-a09a-6774cacab29e",
-                            TwoFactorEnabled = false,
-                            UserName = "john_the_ipper",
-                            UserId = 15L
-                        },
-                        new
-                        {
-                            Id = "76cab806-9f8e-4956-83d2-dbde8f43b39b",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "4ab1c66f-d9ce-43c5-9d39-5797b983d75c",
-                            Email = "samuel_ackson@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "SAMUEL_ACKSON@MAIL.COM",
-                            NormalizedUserName = "SAMUEL_ACKSON",
-                            PasswordHash = "AQAAAAIAAYagAAAAELG8gOawXevETjxrU9GJ08kPOjTG0PY+bwI9m/zVUgCiCD8DkPUkLN4RhdiBHOrFVQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "827d1873-824e-49dd-9741-9bcbe01eba0d",
-                            TwoFactorEnabled = false,
-                            UserName = "samuel_ackson",
-                            UserId = 16L
-                        },
-                        new
-                        {
-                            Id = "0afb91aa-9fb2-4171-ab18-9f237a7a0501",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "062b799b-88f3-43d7-8583-444e69d71cdd",
-                            Email = "admin@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@MAIL.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJfCvpz1ouv5LbCEbQ6pqSOhFgMZ+miDyejjcoW0NCUzeEcXZW4fAUeqA6vKI6Q2dA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "6f61eaa1-8ab0-4879-9a8f-25eb49bdfded",
-                            TwoFactorEnabled = false,
-                            UserName = "admin",
-                            UserId = 17L
-                        });
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Account.BookReview", b =>
@@ -3391,66 +3250,55 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("DataAccessLayer.Models.Account.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("DataAccessLayer.Models.Account.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("DataAccessLayer.Models.Account.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("DataAccessLayer.Models.Account.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Account.LocalIdentityUser", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Account.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Account.User", b =>

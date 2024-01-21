@@ -3,15 +3,17 @@ using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.DTOs.Address.Create;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class AddressController : Controller
 {
     private readonly IAddressFacade _addressFacade;
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
 
-    public AddressController(IAddressFacade addressFacade, UserManager<LocalIdentityUser> userManager)
+    public AddressController(IAddressFacade addressFacade, UserManager<User> userManager)
     {
         _addressFacade = addressFacade;
         _userManager = userManager;

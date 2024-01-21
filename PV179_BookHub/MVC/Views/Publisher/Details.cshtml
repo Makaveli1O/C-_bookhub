@@ -1,12 +1,9 @@
 ﻿@using BusinessLayer.DTOs.Publisher.View;
 @model DetailedPublisherViewDto
 
-@{
-    ViewData["Title"] = "Details";
-}
-
 <h1>Publisher Details</h1>
 <hr />
+
 <div>
     <dl class="row">
         <dt class="col-sm-2">
@@ -28,7 +25,7 @@
             @Html.DisplayFor(model => model.Country)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.YearFounded)
+            Year Founded
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.YearFounded)

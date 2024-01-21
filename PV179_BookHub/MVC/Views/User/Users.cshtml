@@ -1,7 +1,13 @@
 ﻿@using DataAccessLayer.Models.Account;
-@model IEnumerable<LocalIdentityUser>
+@using DataAccessLayer.Models.Enums;
+@model IEnumerable<User>
 
 <h1>Users</h1>
+
+<p class="text-end">
+    @Html.ActionLink("New Manager Account", "RegisterManager", "Account", new {}, new { @class = "link-success" })
+</p>
+
 
 @if (ViewBag.Message != null)
 {
@@ -44,10 +50,11 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.Role)
+                    @Html.DisplayFor(modelItem => item.Role)
                 </td>
-                <td>
+                <td class="text-end">
                     @Html.ActionLink("Reset Password", "ResetPassword", "Account", new { id = item.Id }, new { @class = "link-warning" })
+                    @Html.ActionLink("Delete Account", "DeleteAccount", "Account", new { id = item.Id }, new { @class = "link-danger" })
                 </td>
             </tr>
         }
