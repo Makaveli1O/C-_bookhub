@@ -1,8 +1,16 @@
 ﻿@using BusinessLayer.DTOs.Book.View;
+@using DataAccessLayer.Models.Enums
 @model DetailedBookViewDto
 
 <h1>Book Details</h1>
 <hr />
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
 
 <div>
     <dl class="row">
@@ -78,7 +86,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-heading@(item.Id)">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse@(item.Id)" aria-expanded="true" aria-controls="panelsStayOpen-collapse@(item.Id)">
-                                    "<strong>@(item.Reviewer?.UserName)</strong>" gave a rating: "<strong>@(item.Rating)</strong>"
+                                    "<strong>@(item.Reviewer?.Name)</strong>" gave a rating: "<strong>@(item.Rating)</strong>"
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapse@(item.Id)" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading@(item.Id)">
@@ -96,6 +104,10 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" }) |
+    @if (User.IsInRole(UserRoles.Admin))
+    {
+        @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" })
+        <span>|</span>
+    }
     @Html.ActionLink("Back to List", "Index", new { }, new { @class = "link-primary" })
 </div>

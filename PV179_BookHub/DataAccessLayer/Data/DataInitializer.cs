@@ -675,102 +675,119 @@ public static class DataInitializer
             {
                 Id = 1,
                 UserName = "Housemaster111",
+                Name = "Danihel Ismael",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 2,
                 UserName = "olivia.johnson",
+                Name = "Prisca Toni",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 3,
                 UserName = "liamthereaded",
+                Name = "Danihel Ismael",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 4,
                 UserName = "emily_in_paris",
+                Name = "Giancarlo Elianna",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 5,
                 UserName = "booklover88",
+                Name = "Linda Sebastian",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 6,
                 UserName = "maplewoodhighschool",
+                Name = "Jan Laura",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 7,
                 UserName = "PeterParker",
+                Name = "Jarmil Cyril",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 8,
                 UserName = "codingWizard42",
+                Name = "Samuel Leona",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 9,
                 UserName = "bookworm",
+                Name = "Regina Kveta",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 10,
                 UserName = "22avidReader22",
+                Name = "Zorka Matej",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 11,
                 UserName = "programmingGuru",
+                Name = "Addie Pena",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 12,
                 UserName = "mysteryFanatic",
+                Name = "Lukas Crosby",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 13,
                 UserName = "techEnthusiast",
+                Name = "Nataniel Reid",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 14,
                 UserName = "foodLover88",
+                Name = "Allan Moran",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 15,
                 UserName = "john_the_ipper",
+                Name = "Arnold Rosales",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 16,
                 UserName = "samuel_ackson",
+                Name = "Pearl Williamson",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 17,
                 UserName = "admin",
+                Name = "Tia Kirby",
                 Role = UserRole.Admin
             },
         };
@@ -796,7 +813,7 @@ public static class DataInitializer
             new Book
             {
                 Id = 2,
-                Title = "Modern CMake for C++: Discover a better approach to building, testing, and packaging your software",
+                Title = "Modern CMake for C++.",
                 ISBN = "978-1801070058",
                 PublisherId = 2,
                 BookGenre = Models.Enums.BookGenre.Programming,
@@ -967,7 +984,7 @@ public static class DataInitializer
             new Book
             {
                 Id = 15,
-                Title = "Elemental: How the Periodic Table Can Now Explain (Nearly) Everything",
+                Title = "Elemental: How the Periodic Table Can Everything",
                 ISBN = "936-7213567800",
                 PublisherId = 8,
                 BookGenre = Models.Enums.BookGenre.Science,

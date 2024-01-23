@@ -1,12 +1,17 @@
 ﻿@using BusinessLayer.DTOs.Author.View;
+@using DataAccessLayer.Models.Enums
 @model DetailedAuthorViewDto
-
-@{
-    ViewData["Title"] = "Details";
-}
 
 <h1>Author Details</h1>
 <hr />
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
 <div>
     <dl class="row">
         <dt class="col-sm-2">
@@ -24,6 +29,10 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" }) |
+    @if (User.IsInRole(UserRoles.Admin))
+    {
+        @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" })
+        <span>|</span>
+    }
     @Html.ActionLink("Back to List", "Index", new { }, new { @class = "link-primary" })
 </div>

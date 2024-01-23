@@ -1,8 +1,16 @@
 ﻿@using BusinessLayer.DTOs.Publisher.View;
+@using DataAccessLayer.Models.Enums
 @model DetailedPublisherViewDto
 
 <h1>Publisher Details</h1>
 <hr />
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
 
 <div>
     <dl class="row">
@@ -33,6 +41,10 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" }) |
+    @if (User.IsInRole(UserRoles.Admin))
+    {
+        @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" })
+        <span>|</span>
+    }
     @Html.ActionLink("Back to List", "Index", new { }, new { @class = "link-primary" })
 </div>

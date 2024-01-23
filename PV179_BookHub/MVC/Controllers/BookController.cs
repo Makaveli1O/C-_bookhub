@@ -7,33 +7,47 @@ using BusinessLayer.Facades.Author;
 using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.Update;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using DataAccessLayer.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using MVC.Models.Book;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace MVC.Controllers;
+
+[Authorize(Roles = UserRoles.Admin)]
 public class BookController : Controller
 {
+    private readonly IMapper _mapper;
     private readonly IBookFacade _bookFacade;
     private readonly IPublisherFacade _publisherFacade;
     private readonly IAuthorFacade _authorFacade;
     private readonly UserManager<User> _userManager;
 
-    public BookController(IBookFacade bookFacade, IAuthorFacade authorFacade, IPublisherFacade publisherFacade, UserManager<User> userManager)
+    public BookController(IMapper mapper, IBookFacade bookFacade, IAuthorFacade authorFacade, IPublisherFacade publisherFacade, UserManager<User> userManager)
     {
+        _mapper = mapper;
         _bookFacade = bookFacade;
         _publisherFacade = publisherFacade;
         _authorFacade = authorFacade;
         _userManager = userManager;
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
         var books = await _bookFacade.FetchAllBooksAsync();
         return View(books);
     }
 
-    public async Task<IActionResult> Details(int id)
+    [AllowAnonymous]
+    public async Task<IActionResult> Details(int id, bool updated)
     {
         var book = await _bookFacade.FindBookByIdAsync(id);
+        if (updated)
+        {
+            ViewBag.Message = "Book Saved Successfully";
+        }
         return View(book);
     }
 
@@ -47,18 +61,44 @@ public class BookController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateBookDto createBookDto)
+    public async Task<IActionResult> Create(CreateBookModel createBookModel)
     {
-        await _bookFacade.CreateBookAsync(createBookDto);
-        ViewBag.Message = "Book Created Successfully";
-        return View(createBookDto);
+        // avoiding mapper here because creating this mapping would introduce dependency of BL on MVC. 
+        var dto = new CreateBookDto()
+        {
+            Title = createBookModel.Title,
+            ISBN = createBookModel.ISBN,
+            PublisherId = createBookModel.PublisherId,
+            BookGenre = createBookModel.BookGenre,
+            Description = createBookModel.Description,
+            Price = createBookModel.Price,
+            AuthorIds = new List<AuthorBookAssociationDto>()
+        };
+        var found = false;
+        if (createBookModel.AuthorIds != null)
+        {
+            foreach (var id in createBookModel.AuthorIds)
+            {
+                dto.AuthorIds = dto.AuthorIds.Append(new AuthorBookAssociationDto() { Id = id, IsPrimary = (id == createBookModel.PrimaryAuthorId) });
+                found = found || id == createBookModel.PrimaryAuthorId;
+            }
+        }
+        if (!found)
+        {
+            dto.AuthorIds = dto.AuthorIds.Append(new AuthorBookAssociationDto() { Id = createBookModel.PrimaryAuthorId, IsPrimary = true });
+        }
+
+        var created = await _bookFacade.CreateBookAsync(dto);
+        return RedirectToAction(nameof(Details), new { created.Id, updated = true });
+
     }
 
 
     public async Task<IActionResult> Edit(int id)
     {
         var book = await _bookFacade.FindBookByIdAsync(id);
-        return View(book);
+        ViewBag.Publishers = new SelectList((await _publisherFacade.GetAllPublishersAsync()).ToList(), "Id", "Name");
+        return View(_mapper.Map<UpdateBookDto>(book));
     }
 
     [HttpPost]
@@ -66,8 +106,8 @@ public class BookController : Controller
     public async Task<IActionResult> Edit(int id, UpdateBookDto updateBookDto)
     {
         var updated = await _bookFacade.UpdateBookAsync(id, updateBookDto);
-        ViewBag.Message = "Book Updated Successfully";
-        return View(updated);
+        return RedirectToAction(nameof(Details), new { id, updated = true });
+
     }
 
     public async Task<IActionResult> Delete(int id)

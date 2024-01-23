@@ -24,7 +24,7 @@ public class ManagerController : Controller
         _bookStoreFacade = bookStoreFacade;
         _userManager = userManager;
     }
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
         return RedirectToAction(nameof(GetAllInventoryItems));
     }
@@ -51,7 +51,7 @@ public class ManagerController : Controller
     
     [HttpGet]
     [Route("NewInventoryItem")]
-    public async Task<IActionResult> CreateInventoryItem()
+    public IActionResult CreateInventoryItem()
     {
         return View();
     }

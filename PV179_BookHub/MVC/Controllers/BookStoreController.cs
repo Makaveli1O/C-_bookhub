@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.DTOs.BookStore.Create;
 using DataAccessLayer.Models.Enums;
-using BusinessLayer.DTOs.Address.View;
 using BusinessLayer.DTOs.User.View;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers;
 
+[Authorize(Roles = UserRoles.Admin)]
 public class BookStoreController : Controller
 {
     private readonly IMapper _mapper;
@@ -26,18 +27,20 @@ public class BookStoreController : Controller
         _userManager = userManager;
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
         var bookStores = await _bookStoreFacade.GetAllBookStores();
         return View(bookStores);
     }
 
-    public async Task<IActionResult> Details(int id, bool updatedFlag)
+    [AllowAnonymous]
+    public async Task<IActionResult> Details(int id, bool updated)
     {
         var bookStore = await _bookStoreFacade.GetBookStore(id);
-        if (updatedFlag)
+        if (updated)
         {
-            ViewBag.Message = "Book Store Saved Successfully";
+            ViewBag.Message = "Bookstore Saved Successfully";
         }
         return View(bookStore);
     }
@@ -60,7 +63,7 @@ public class BookStoreController : Controller
     public async Task<IActionResult> Create(CreateBookStoreDto createBookStoreDto)
     {
         var created  = await _bookStoreFacade.CreateBookStore(createBookStoreDto);
-        return RedirectToAction(nameof(Details), new { created.Id, updatedFlag = true });
+        return RedirectToAction(nameof(Details), new { created.Id, updated = true });
     }
 
 
@@ -83,7 +86,7 @@ public class BookStoreController : Controller
     public async Task<IActionResult> Edit(int id, CreateBookStoreDto updateBookStoreDto)
     {
         var updated = await _bookStoreFacade.UpdateBookStore(id, updateBookStoreDto);
-        return RedirectToAction(nameof(Details), new { id, updatedFlag = true });
+        return RedirectToAction(nameof(Details), new { id, updated = true });
     }
 
     public async Task<IActionResult> Delete(int id)

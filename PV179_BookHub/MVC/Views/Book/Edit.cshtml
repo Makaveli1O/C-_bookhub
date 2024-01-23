@@ -1,17 +1,11 @@
-﻿@using BusinessLayer.DTOs.Book.Create;
+﻿@using BusinessLayer.DTOs.Book.Update;
 @using BusinessLayer.DTOs.Publisher.View;
+@using DataAccessLayer.Models.Enums
 
-@model CreateBookDto
+@model UpdateBookDto
 
-<h1>Edit Address</h1>
+<h1>Edit Book</h1>
 <hr />
-
-@if (ViewBag.Message != null)
-{
-    <p class="alert alert-success" role="alert">
-        @ViewBag.Message
-    </p>
-}
 
 <div class="row">
     <div class="col-md-4">
@@ -29,27 +23,17 @@
             </div>
             <div class="mb-3">
                 <label asp-for="PublisherId" class="form-label">Publisher</label>
-                @Html.DropDownListFor(m => m.PublisherId,
-                    new SelectList(
-                         from pblrs in ((List<GeneralPublisherViewDto>)ViewBag.Publishers)
-                         select new
-                         {
-                             pblrs.Id,
-                             pblrs.Name
-                         },
-                         "Id",
-                         "Name"),
-                    new { @class = "form-select" })
+                <select asp-for="PublisherId" asp-items="ViewBag.Publishers" class="form-select"></select>
                 <span asp-validation-for="PublisherId" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="BookGenre" class="form-label"></label>
-                <input asp-for="BookGenre" class="form-control" />
+                <select asp-for="BookGenre" asp-items="Html.GetEnumSelectList<BookGenre>()" class="form-select"></select>
                 <span asp-validation-for="BookGenre" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Description" class="form-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="mb-3">
@@ -60,6 +44,7 @@
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" /> |
                 <a asp-action="Index">Back to List</a>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             </div>
         </form>
     </div>

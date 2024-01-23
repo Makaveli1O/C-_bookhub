@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.SQLite.Migrations.Migrations
 {
     [DbContext(typeof(BookHubDbContext))]
-    [Migration("20240121144822_Initial")]
+    [Migration("20240123210914_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -296,6 +296,11 @@ namespace DAL.SQLite.Migrations.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
@@ -342,16 +347,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 1L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d774b5d1-3000-4b45-b26c-374c82712234",
+                            ConcurrencyStamp = "50a5a1d9-53b9-4a15-904c-bd0fea41690a",
                             Email = "Housemaster111@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Danihel Ismael",
                             NormalizedEmail = "HOUSEMASTER111@MAIL.COM",
                             NormalizedUserName = "HOUSEMASTER111",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJik/E7/27st2OqzMh6Z0yM5qESp2sY8C8EhJLZQogdBCxbKzHMdykVel4E0ImRJfg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA1nhwfHIp4YCVIurRw3WseL5mulxLGk8WraQe4fHGaRxMoLvaXx41UYkDf6szcbbw==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "adf6f6ba-d554-4cab-b5e8-49ef141a6f0a",
+                            SecurityStamp = "bb330594-e8c0-4bc0-9f40-bf7058261d90",
                             TwoFactorEnabled = false,
                             UserName = "Housemaster111"
                         },
@@ -359,16 +365,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 2L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e0815b1b-6e1a-457f-a478-c7863401dcbe",
+                            ConcurrencyStamp = "faf36fc4-d28b-46ad-9c1c-15e6d718bf3b",
                             Email = "olivia.johnson@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Prisca Toni",
                             NormalizedEmail = "OLIVIA.JOHNSON@MAIL.COM",
                             NormalizedUserName = "OLIVIA.JOHNSON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGsalV3ODfUHVXhXXrDsfCuCrckNZU0fObU10dRN+gnY6pUe/I/Xw/Y3eGiWfvxNSg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAvtiUaMDCCi8m7bPTUlI32Guc+oMnHiKmhvYdXjz/M1pdAGpuag+MrSZtzbDreHdA==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "1c26f552-8453-4282-b08e-720d4e2b47a7",
+                            SecurityStamp = "d9dadc7b-7490-4fb2-9aee-a4718cc753d7",
                             TwoFactorEnabled = false,
                             UserName = "olivia.johnson"
                         },
@@ -376,16 +383,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 3L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "09a2e96d-ba79-4912-8e9f-7ab7cfc58c7f",
+                            ConcurrencyStamp = "b17dbd36-4e76-4896-9999-41ee108258b4",
                             Email = "liamthereaded@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Danihel Ismael",
                             NormalizedEmail = "LIAMTHEREADED@MAIL.COM",
                             NormalizedUserName = "LIAMTHEREADED",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIaS/SHkG7SbzXhEQNgfBZ8QeOcMMjkyByzqtxziglzFWM+zUKon/BXj5p9/x+AAxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF8vBjqpJySflCWyMg/d5lnYY1d8o1tXt5vys5nkYlgIDnBqNJIpa1QSobMZsYDU8A==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "245e9841-2f06-4563-b388-263cec054f0c",
+                            SecurityStamp = "ca9cb049-4772-455d-a862-0330d66c69ed",
                             TwoFactorEnabled = false,
                             UserName = "liamthereaded"
                         },
@@ -393,16 +401,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 4L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6a2d6701-c2ac-4063-9f32-4ccb133912ea",
+                            ConcurrencyStamp = "a1e51e6b-eec9-43a3-ac33-4a5250d7a1fd",
                             Email = "emily_in_paris@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Giancarlo Elianna",
                             NormalizedEmail = "EMILY_IN_PARIS@MAIL.COM",
                             NormalizedUserName = "EMILY_IN_PARIS",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPDpW7HTaJpe6VuQ090HG9m67ZVnJCSrrWzsdtkdRmA+E4qM5QGxsfK2m9xf8EVdeA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF/JG+8GQYSCnyYNhnptPREcWCHb/QCM1LPTQpawcg2WTtG3FIH5nfiuKDy11Gf7lg==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "6b7233e5-4b5b-4698-96d3-caf2261b860d",
+                            SecurityStamp = "401e01c2-17ea-48f7-86ab-6ee534ae740c",
                             TwoFactorEnabled = false,
                             UserName = "emily_in_paris"
                         },
@@ -410,16 +419,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 5L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "34bebbe7-676f-4a5a-843e-8acb191b6734",
+                            ConcurrencyStamp = "151156c8-cfa4-420d-b252-b369442294f2",
                             Email = "booklover88@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Linda Sebastian",
                             NormalizedEmail = "BOOKLOVER88@MAIL.COM",
                             NormalizedUserName = "BOOKLOVER88",
-                            PasswordHash = "AQAAAAIAAYagAAAAEH+3Sl+/qwNJMa1kM7c++uNKpcWAHA7CXh63UWaGBbzHy+HYSOyXWdJYMMJymwjIzQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOJ86HE4ZkKEPjv5rMtL7SiY65gWceyc4U/wMIpxo6lSI+ryjiJ9v/4JLizJlxcg1A==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "fe64fcdd-9444-4752-bf49-a4aed116d508",
+                            SecurityStamp = "992d325d-7422-4323-b10b-4a483d808d75",
                             TwoFactorEnabled = false,
                             UserName = "booklover88"
                         },
@@ -427,16 +437,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 6L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "930db17b-7017-4de3-a735-3ad195a1866e",
+                            ConcurrencyStamp = "d0d09cd5-e45f-448c-ab54-63d65e0cd551",
                             Email = "maplewoodhighschool@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Jan Laura",
                             NormalizedEmail = "MAPLEWOODHIGHSCHOOL@MAIL.COM",
                             NormalizedUserName = "MAPLEWOODHIGHSCHOOL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPsKi/YSPCNE/slTgrnfEO2YAyKMyyrsG+e2ugUD8qqCxI/6DMl/vHavJUA0vP5TmQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPon0toQSqS+pWPH8NWoevcgbjne+RWdE4R9Ju62QPQOPa45i0U0oToGEm9/OoXUXg==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "2c8ac353-fdf2-4f81-bacb-d5155ba850f4",
+                            SecurityStamp = "97274a0b-4a90-4d45-916f-ce98fae695cd",
                             TwoFactorEnabled = false,
                             UserName = "maplewoodhighschool"
                         },
@@ -444,16 +455,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 7L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1ea4f8e6-5d35-4848-bf41-a39a6165eaf3",
+                            ConcurrencyStamp = "8cb72e54-962f-4200-9b81-b24924359e4e",
                             Email = "PeterParker@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Jarmil Cyril",
                             NormalizedEmail = "PETERPARKER@MAIL.COM",
                             NormalizedUserName = "PETERPARKER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFV28e/kBC+SpkUg32e3WsaS7H9jHVS17rz4w73AixvaMar3EUYR1hX+rMHElTtEzQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBVDoJJCU90WviXCrQXFybvjsgJERYfhi6B6ePRwIrVQxHMsehTyFhj84EQUbFMfIA==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "1554020a-8d25-4aac-8093-9bb56cb60d29",
+                            SecurityStamp = "1f76853c-ad61-480f-a233-625a2db321a8",
                             TwoFactorEnabled = false,
                             UserName = "PeterParker"
                         },
@@ -461,16 +473,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 8L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "be8bca92-456d-4743-923b-4854a12b6a3d",
+                            ConcurrencyStamp = "94377df3-929e-488e-a407-452cbf0ace6c",
                             Email = "codingWizard42@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Samuel Leona",
                             NormalizedEmail = "CODINGWIZARD42@MAIL.COM",
                             NormalizedUserName = "CODINGWIZARD42",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ6gEpaSNWFE6/OPUTqTVXvSCunRI0JdKr1qijeWX7mICPillvPQ9eQfub9bakUsaA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHfpxEbZ0ITi9SrDs9aO41SNhf5cSyQz28wHiFfN6wNE9vDDXRDIeHhNteZDWh4KJw==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "fd0ff1a7-df57-48cb-a06e-21490bd95447",
+                            SecurityStamp = "ee14bbc8-f8bf-45fb-9e05-3c9cd37c787c",
                             TwoFactorEnabled = false,
                             UserName = "codingWizard42"
                         },
@@ -478,16 +491,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 9L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "26ac980d-9ed4-454c-8a40-17bd1ce2e979",
+                            ConcurrencyStamp = "e7250e29-b7ca-414f-a106-594055c1c406",
                             Email = "bookworm@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Regina Kveta",
                             NormalizedEmail = "BOOKWORM@MAIL.COM",
                             NormalizedUserName = "BOOKWORM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAZLaIwTMgFOwXAsY4iFBYfA5QW3xi1rFVE/cvV4zbvPBR6uQBcRvqpfihlSM6sZ4Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELH7+UgYvur5KMqRdyJp420KLs/PQk7xtcLg9xlihJmrV8EoFk9DH4D8V4EP/I8bxA==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "76091424-87ac-4b96-9d66-bbae0836f5f8",
+                            SecurityStamp = "4b43adaa-c227-4773-8df4-901cfab7e2d6",
                             TwoFactorEnabled = false,
                             UserName = "bookworm"
                         },
@@ -495,16 +509,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 10L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bf27f269-4571-4213-99f6-fb18a90d8c5d",
+                            ConcurrencyStamp = "8a00c2d1-ca06-49c3-9f6f-e96b65eefaca",
                             Email = "22avidReader22@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Zorka Matej",
                             NormalizedEmail = "22AVIDREADER22@MAIL.COM",
                             NormalizedUserName = "22AVIDREADER22",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGIZojJSceyCPaDaKXDKAogALacz+VWvMfdDPBuH7LBgXUIye+zvMDO0ahjCVbByLA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJHxmuEpT0XGVuh/xclaBSxYRVQ4TYAF+BtT5+COQlV/2DW40cSnKAh2Bc3JijczhQ==",
                             PhoneNumberConfirmed = false,
                             Role = 1,
-                            SecurityStamp = "19087edf-5612-4fed-9d20-86dd21721dd9",
+                            SecurityStamp = "3cd1fd88-09bc-451c-9f54-91986cd92a9f",
                             TwoFactorEnabled = false,
                             UserName = "22avidReader22"
                         },
@@ -512,16 +527,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 11L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c6d0adb0-2bd6-4520-a374-0148ccdd695a",
+                            ConcurrencyStamp = "9f4d2e62-f516-4b4d-85d5-bd0af36b5742",
                             Email = "programmingGuru@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Addie Pena",
                             NormalizedEmail = "PROGRAMMINGGURU@MAIL.COM",
                             NormalizedUserName = "PROGRAMMINGGURU",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAe3YnfXlKJMBI38wXbFnEBSQdNISgYttBmbEH57d0LgT/doaeOhPsCvhcUWOQ2j1A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIYCXGjWIXjyvx8Ec7XIHj21GfkD1JHpR/f6uk+v8N2Pl51JUurgOj7azOZzKu497g==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "e53b5afc-fc8d-4f9f-84e7-8adce7bbc123",
+                            SecurityStamp = "71e273d4-859b-4207-803e-90258cb7f28c",
                             TwoFactorEnabled = false,
                             UserName = "programmingGuru"
                         },
@@ -529,16 +545,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 12L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "76850147-af17-481a-9ad1-1e5daaa9c18e",
+                            ConcurrencyStamp = "6c848288-ad8f-41dc-91ed-2d8c3acc7ed8",
                             Email = "mysteryFanatic@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Lukas Crosby",
                             NormalizedEmail = "MYSTERYFANATIC@MAIL.COM",
                             NormalizedUserName = "MYSTERYFANATIC",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJNB8GPUk0bC6MMHAyvcbHLr/G6+46MU542irpO5KSpQvy53HFT+KR0vEkSFL+d+Gg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOaPHXijJNeA2X8QtpbnUsyG/s9nKICnDKZ4ZT+b6on6alMBtBioUDNvz6Apsvm9vg==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "4f09fed0-c9c5-45d0-ba4c-6f2b0b54b9fd",
+                            SecurityStamp = "ca67f6a1-a66e-4d10-ab5f-467918ef10e5",
                             TwoFactorEnabled = false,
                             UserName = "mysteryFanatic"
                         },
@@ -546,16 +563,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 13L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "67cdf78c-2b42-408a-a9f1-a17545da0389",
+                            ConcurrencyStamp = "fcc9764f-2b06-4db1-b9ee-e1a898f06eb5",
                             Email = "techEnthusiast@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Nataniel Reid",
                             NormalizedEmail = "TECHENTHUSIAST@MAIL.COM",
                             NormalizedUserName = "TECHENTHUSIAST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEL3p0z/QqXL6KVdIsZ7hgD5kJa81lpD2LCuMpGxVK6COXjuIfb9d2h+KTS0x4Qmkpg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHYRfVVACxTtaOwQey6UdQGvRYarrYaSG39EBp6h77D6cedy30WzVf5po2WuJDM4eg==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "aaa1b776-4853-4a0c-b9b1-5030a20578d4",
+                            SecurityStamp = "efc2f57d-f470-4700-8007-a178a91e100c",
                             TwoFactorEnabled = false,
                             UserName = "techEnthusiast"
                         },
@@ -563,16 +581,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 14L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "60304257-ed13-4379-b074-aef6235d13b1",
+                            ConcurrencyStamp = "260b6639-35d0-407d-8f71-e2305c4f9eae",
                             Email = "foodLover88@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Allan Moran",
                             NormalizedEmail = "FOODLOVER88@MAIL.COM",
                             NormalizedUserName = "FOODLOVER88",
-                            PasswordHash = "AQAAAAIAAYagAAAAEENU7oTsmXvFT1g+Ul28Dxyr1JkBIuphwU/McpdnNZWFYKGs2/2irNLxtqNTmczU2Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHiQdvo9wlf1eTpwlq90kIrH1Dk0so+iAyDOu1kPCn3rDpHiHFARS9HwETWvDMXo8Q==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "46de1eaf-a4a6-4a20-b2cd-57d43053d7e3",
+                            SecurityStamp = "e3616500-32dc-4707-87db-794ee41c69d7",
                             TwoFactorEnabled = false,
                             UserName = "foodLover88"
                         },
@@ -580,16 +599,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 15L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cb7c3e28-f2be-442e-8f54-4bc4f5e8f6cc",
+                            ConcurrencyStamp = "8372082e-dfa8-416a-9735-7126f4a72a70",
                             Email = "john_the_ipper@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Arnold Rosales",
                             NormalizedEmail = "JOHN_THE_IPPER@MAIL.COM",
                             NormalizedUserName = "JOHN_THE_IPPER",
-                            PasswordHash = "AQAAAAIAAYagAAAAENxa6OECjHxESmDHe/aMniqZrkkuQbx2AiOmmis7aee9bSLR0Gx3qeDDdXORnPJ+qw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI4a/PJuCdgRg2MLTW4AOMlvAhJzC0+/xzkJbwaITEvcvyFAkSI87SiBjy/fpfgefg==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "f23e405c-3bb3-45e8-be6c-0fe437dfed1d",
+                            SecurityStamp = "1b12ad25-b11a-4dfc-95a3-a97e08918c6a",
                             TwoFactorEnabled = false,
                             UserName = "john_the_ipper"
                         },
@@ -597,16 +617,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 16L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3e96d897-02f3-4668-ace9-a82dedaeeb25",
+                            ConcurrencyStamp = "638a3bec-8003-426f-861c-7b053704d921",
                             Email = "samuel_ackson@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Pearl Williamson",
                             NormalizedEmail = "SAMUEL_ACKSON@MAIL.COM",
                             NormalizedUserName = "SAMUEL_ACKSON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKJ04OHd/+07McldennpOt9UpEHmKfZL+Z+UF20eDTPXpZIWzezZRpGL89/aS0d3lg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECrluyVVfuQ4l+SIZU1QPleuPgefDM9PYDPLiklJKin8Vovxhf4gTKa0UFucryqgvA==",
                             PhoneNumberConfirmed = false,
                             Role = 0,
-                            SecurityStamp = "ff9e46c9-af44-45b9-af0a-7e6f036b58d3",
+                            SecurityStamp = "0cc12024-f9bd-45a1-bec9-37ec03cd95f1",
                             TwoFactorEnabled = false,
                             UserName = "samuel_ackson"
                         },
@@ -614,16 +635,17 @@ namespace DAL.SQLite.Migrations.Migrations
                         {
                             Id = 17L,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2cd357d2-5b60-4537-ad50-7b69110ee359",
+                            ConcurrencyStamp = "da729487-67fc-4a84-ab6b-81b738448a86",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            Name = "Tia Kirby",
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHAA+qnHnSWl/rLgcW+C5vaQF/0yxiFN6i0HoFg4oKfnQN4qWxiw9dg0t6w6QcXKug==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELKonfLXnx3K3jydRjf1y35p8NldKf/opJ9Ovpz9q4Qa2Ce9ejB0gBPPKgqa/a0pxA==",
                             PhoneNumberConfirmed = false,
                             Role = 2,
-                            SecurityStamp = "a444afae-feab-4d13-835b-c5a5eae107ba",
+                            SecurityStamp = "9cc5bda0-ea7a-4e6d-a6df-eec671f431f6",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -1749,35 +1771,35 @@ namespace DAL.SQLite.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9845),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9104),
                             Description = "I'd love to add 'Learn C# in One Day and Learn It Well' by Jamie Chan to my collection. It seems like a concise guide to quickly grasp the concepts of C#.",
                             UserId = 1L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9895),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9217),
                             Description = "The 'Modern CMake for C++' book by Rafal Swidzinski has caught my attention. I've heard it offers a fresh perspective on building and packaging software efficiently.",
                             UserId = 2L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9897),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9225),
                             Description = "I've been thoroughly enjoying the Harry Potter series. Next on my list are 'Harry Potter and the Chamber of Secrets', 'Harry Potter and the Prisoner of Azkaban', and 'Harry Potter and the Goblet of Fire'. Each one promises more exciting adventures and mysteries at Hogwarts. Can't wait to dive into them!",
                             UserId = 3L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9900),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9233),
                             Description = "Moving away from fantasy, the mystery novel 'Behind the real door' by Jack Sparknotes has been suggested to me. The concept of secrets behind a door sounds like a thrilling read!",
                             UserId = 4L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9903),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9240),
                             Description = "I'm eager to delve deeper into Batman's lore. 'Batman: Year One' by Frank Miller sounds captivating with its raw and gritty reinterpretation of Batman's origin. I'm also intrigued by 'Batman the Killing Joke: The Deluxe Edition' by Alan Moore. The intense rivalry and the blurred line between Batman and Joker have always fascinated me. Both these masterpieces are must-haves for my collection.",
                             UserId = 5L
                         });
@@ -2183,7 +2205,7 @@ namespace DAL.SQLite.Migrations.Migrations
                             ISBN = "978-1801070058",
                             Price = 35.990000000000002,
                             PublisherId = 2L,
-                            Title = "Modern CMake for C++: Discover a better approach to building, testing, and packaging your software"
+                            Title = "Modern CMake for C++."
                         },
                         new
                         {
@@ -2313,7 +2335,7 @@ namespace DAL.SQLite.Migrations.Migrations
                             ISBN = "936-7213567800",
                             Price = 9.9900000000000002,
                             PublisherId = 8L,
-                            Title = "Elemental: How the Periodic Table Can Now Explain (Nearly) Everything"
+                            Title = "Elemental: How the Periodic Table Can Everything"
                         },
                         new
                         {
@@ -2513,112 +2535,112 @@ namespace DAL.SQLite.Migrations.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9917),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9331),
                             State = 3,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9927),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9357),
                             State = 0,
                             UserId = 4L
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9930),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9366),
                             State = 0,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9935),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9380),
                             State = 2,
                             UserId = 5L
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9937),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9387),
                             State = 1,
                             UserId = 6L
                         },
                         new
                         {
                             Id = 6L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9943),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9402),
                             State = 1,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 7L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9967),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9414),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 8L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9970),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9422),
                             State = 3,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 9L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9973),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9430),
                             State = 0,
                             UserId = 7L
                         },
                         new
                         {
                             Id = 10L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9979),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9440),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 11L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9994),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9473),
                             State = 1,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 12L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9997),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9482),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 13L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 310, DateTimeKind.Local).AddTicks(9999),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9498),
                             State = 0,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 14L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 311, DateTimeKind.Local).AddTicks(2),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9507),
                             State = 3,
                             UserId = 8L
                         },
                         new
                         {
                             Id = 15L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 311, DateTimeKind.Local).AddTicks(5),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9514),
                             State = 1,
                             UserId = 15L
                         },
                         new
                         {
                             Id = 16L,
-                            CreatedAt = new DateTime(2024, 1, 21, 15, 48, 21, 311, DateTimeKind.Local).AddTicks(7),
+                            CreatedAt = new DateTime(2024, 1, 23, 22, 9, 11, 503, DateTimeKind.Local).AddTicks(9522),
                             State = 1,
                             UserId = 15L
                         });

@@ -3,7 +3,7 @@
 @using BusinessLayer.DTOs.User.View;
 @model CreateBookStoreDto
 
-<h1>Create Book Store</h1>
+<h1>Create Bookstore</h1>
 <hr />
 
 <div class="row">
@@ -23,7 +23,7 @@
                          select new
                          {
                              mngr.Id,
-                             mngr.UserName
+                             mngr.Name
                          },
                          "Id",
                          "UserName"),
@@ -58,6 +58,7 @@
             <div class="mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" /> |
                 <a asp-action="Index">Back to List</a>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             </div>
         </form>
     </div>

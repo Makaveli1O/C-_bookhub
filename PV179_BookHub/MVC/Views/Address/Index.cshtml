@@ -49,8 +49,8 @@
                     @Html.DisplayFor(modelItem => item.PostalCode)
                 </td>
                 <td class="text-end">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "link-primary" }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-danger" })
                 </td>
             </tr>
@@ -58,6 +58,6 @@
     }
     else
     {
-        <td colspan="6" class="text-center"><b>No Addresses Availible. Please Add Data By CLicking On The Create Button</b></td>
+        <td colspan="6" class="text-center"><b>No Addresses Availible.</b></td>
     }
 </table>

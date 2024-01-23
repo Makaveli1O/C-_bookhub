@@ -1,11 +1,13 @@
 ﻿using DataAccessLayer.Models.Account;
 using DataAccessLayer.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 
 namespace MVC.Controllers;
 
+[Authorize(Roles = UserRoles.Admin)]
 public class AccountController : Controller
 {
     private readonly UserManager<User> _userManager;
@@ -17,11 +19,13 @@ public class AccountController : Controller
         _signInManager = signInManager;
     }
 
+    [AllowAnonymous]
     public IActionResult Register()
     {
         return View();
     }
 
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
@@ -36,7 +40,8 @@ public class AccountController : Controller
             
             var user = new User
             {
-                UserName = model.Email.Split("@")[0],
+                Name = model.Name,
+                UserName = model.UserName,
                 Email = model.Email,
                 Role = UserRole.User
             };
@@ -62,12 +67,13 @@ public class AccountController : Controller
         return View(model);
     }
 
-
+    [AllowAnonymous]
     public IActionResult Login()
     {
         return View();
     }
 
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
@@ -78,7 +84,7 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(LoginSuccess), nameof(AccountController).Replace("Controller", ""));
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
             }
             ModelState.AddModelError(String.Empty, "Invalid login attempt.");
         }
@@ -86,15 +92,11 @@ public class AccountController : Controller
         return View(model);
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
         return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
-    }
-
-    public IActionResult LoginSuccess()
-    {
-        return View();
     }
 
     public async Task<IActionResult> ResetPassword(string id, bool success)
@@ -154,7 +156,8 @@ public class AccountController : Controller
             }
             var user = new User
             {
-                UserName = model.Email.Split("@")[0],
+                Name = model.Name,
+                UserName = model.UserName,
                 Email = model.Email,
                 Role = UserRole.Manager
             };
@@ -163,7 +166,7 @@ public class AccountController : Controller
 
             if (result.Succeeded && roleResult.Succeeded)
             {
-                return RedirectToAction(nameof(Login), nameof(AccountController).Replace("Controller", ""));
+                return RedirectToAction("Users", "User", new { success = true });
             }
             foreach (var error in result.Errors)
             {
@@ -174,7 +177,6 @@ public class AccountController : Controller
                 ModelState.AddModelError(string.Empty, error.Description);
             }
         }
-
         return View(model);
     }
 
@@ -183,7 +185,7 @@ public class AccountController : Controller
         var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("Users", "User");
         }
         ViewBag.UserName = user.UserName;
         return View();
@@ -199,7 +201,7 @@ public class AccountController : Controller
             var result = await _userManager.DeleteAsync(user);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "User");
+                return RedirectToAction("Users", "User", new { success = true });
             }
             foreach (var error in result.Errors)
             {

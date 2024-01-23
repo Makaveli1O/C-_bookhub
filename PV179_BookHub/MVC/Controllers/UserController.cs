@@ -48,9 +48,13 @@ public class UserController : Controller
     }
 
     [HttpGet("Users")]
-    public async Task<IActionResult> Users()
+    public async Task<IActionResult> Users(bool success)
     {
         var users = await _userManager.Users.ToListAsync();
+        if (success)
+        {
+            ViewBag.Message = "Operation was successful.";
+        }
         return View(users);
     }
 

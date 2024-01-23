@@ -1,21 +1,10 @@
-﻿@using BusinessLayer.DTOs.Book.Create;
-@using BusinessLayer.DTOs.Publisher.View;
+﻿@using BusinessLayer.DTOs.Publisher.View;
 @using DataAccessLayer.Models.Enums
-@model CreateBookDto
-
-@{
-    ViewData["Title"] = "Create";
-}
+@using MVC.Models.Book
+@model CreateBookModel
 
 <h1>Create Book</h1>
 <hr />
-
-@if (ViewBag.Message != null)
-{
-    <p class="alert alert-success" role="alert">
-        @ViewBag.Message
-    </p>
-}
 
 <div class="row">
     <div class="col-md-4">
@@ -36,7 +25,11 @@
                 <select asp-for="PublisherId" asp-items="ViewBag.Publishers" class="form-select"></select>
                 <span asp-validation-for="PublisherId" class="text-danger"></span>
             </div>
-
+            <div class="mb-3">
+                <label asp-for="PrimaryAuthorId" class="form-label">Primary Author</label>
+                <select asp-for="PrimaryAuthorId" asp-items="ViewBag.Authors" class="form-select"></select>
+                <span asp-validation-for="PrimaryAuthorId" class="text-danger"></span>
+            </div>
             <div class="mb-3">
                 <label asp-for="AuthorIds" class="form-label">Co-Authors</label>
                 <select asp-for="AuthorIds" asp-items="ViewBag.Authors" class="form-select"></select>
@@ -61,6 +54,7 @@
             <div class="mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" /> |
                 <a asp-action="Index">Back to List</a>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             </div>
         </form>
     </div>

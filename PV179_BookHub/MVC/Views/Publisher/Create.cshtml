@@ -1,19 +1,8 @@
 ﻿@using BusinessLayer.DTOs.Publisher.Create;
 @model CreatePublisherDto
 
-@{
-    ViewData["Title"] = "Create";
-}
-
 <h1>Create Publisher</h1>
 <hr />
-
-@if (ViewBag.Message != null)
-{
-    <p class="alert alert-success" role="alert">
-        @ViewBag.Message
-    </p>
-}
 
 <div class="row">
     <div class="col-md-4">
@@ -42,6 +31,7 @@
             <div class="mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" /> |
                 <a asp-action="Index">Back to List</a>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             </div>
         </form>
     </div>

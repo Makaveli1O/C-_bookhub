@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.DTOs.Address.Create;
 using Microsoft.AspNetCore.Authorization;
+using DataAccessLayer.Models.Enums;
 
 namespace MVC.Controllers;
 
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = UserRoles.Admin)]
 public class AddressController : Controller
 {
     private readonly IAddressFacade _addressFacade;
@@ -25,9 +26,13 @@ public class AddressController : Controller
         return View(addresses);
     }
 
-    public async Task<IActionResult> Details(int id)
+    public async Task<IActionResult> Details(int id, bool updated)
     {
         var address = await _addressFacade.FindAddressByIdAsync(id);
+        if (updated)
+        {
+            ViewBag.Message = "Address Saved Successfully";
+        }
         return View(address);
     }
 
@@ -40,9 +45,8 @@ public class AddressController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateAddressDto createAddressDto)
     {
-        await _addressFacade.CreateAddressAsync(createAddressDto);
-        ViewBag.Message = "Address Created Successfully";
-        return View(createAddressDto);
+        var created = await _addressFacade.CreateAddressAsync(createAddressDto);
+        return RedirectToAction(nameof(Details), new { created.Id, updated = true });
     }
 
 
@@ -57,8 +61,7 @@ public class AddressController : Controller
     public async Task<IActionResult> Edit(int id, CreateAddressDto updateAddressDto)
     {
         var updated = await _addressFacade.UpdateAddressAsync(id, updateAddressDto);
-        ViewBag.Message = "Address Updated Successfully";
-        return View(updated);
+        return RedirectToAction(nameof(Details), new { id, updated = true });
     }
 
     public async Task<IActionResult> Delete(int id)
