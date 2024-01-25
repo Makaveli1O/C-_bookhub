@@ -2,6 +2,6 @@
 
 public static class PagingParameters
 {
-    public static int defaultPageNumber = 1;
-    public static int defaultPageSize = 20;
+    public const int defaultPageNumber = 1;
+    public const int defaultPageSize = 20;
 }
