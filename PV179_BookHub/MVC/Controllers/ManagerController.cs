@@ -14,17 +14,17 @@ public class ManagerController : Controller
 {
     private readonly IInventoryItemFacade _inventoryItemFacade;
     private readonly IBookStoreFacade _bookStoreFacade;
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
 
     public ManagerController(IInventoryItemFacade inventoryItemFacade,
                              IBookStoreFacade bookStoreFacade,
-                             UserManager<LocalIdentityUser> userManager)
+                             UserManager<User> userManager)
     {
         _inventoryItemFacade = inventoryItemFacade;
         _bookStoreFacade = bookStoreFacade;
         _userManager = userManager;
     }
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
         return RedirectToAction(nameof(GetAllInventoryItems));
     }
@@ -39,7 +39,7 @@ public class ManagerController : Controller
             return Unauthorized();
         }
 
-        return View(await _inventoryItemFacade.GetAllInventoryItemsByUserId(user.User.Id)); // or UserID
+        return View(await _inventoryItemFacade.GetAllInventoryItemsByUserId(user.Id)); // or UserID
     }
 
     [HttpGet]
@@ -51,7 +51,7 @@ public class ManagerController : Controller
     
     [HttpGet]
     [Route("NewInventoryItem")]
-    public async Task<IActionResult> CreateInventoryItem()
+    public IActionResult CreateInventoryItem()
     {
         return View();
     }
@@ -71,7 +71,7 @@ public class ManagerController : Controller
             return Unauthorized();
         }
 
-        var bookStore = await _bookStoreFacade.GetBookStoreByUserId(user.User.Id); // or UserID
+        var bookStore = await _bookStoreFacade.GetBookStoreByUserId(user.Id); // or UserID
         model.BookStoreId = bookStore.Id;
         
         var createdInventoryItem = await _inventoryItemFacade.CreateInventoryItem(model.Adapt<CreateInventoryItemDto>());

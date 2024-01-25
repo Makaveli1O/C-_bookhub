@@ -12,9 +12,9 @@ namespace BusinessLayer.Mappers.Enitity
         {
             CreateMap<CreateUserDto, UserEntity>();
             CreateMap<UserEntity, GeneralUserViewDto>();
-            CreateMap<LocalIdentityUser, GeneralUserViewDto>()
+            CreateMap<User, GeneralUserViewDto>()
                 .ForMember(m => m.UserName, u => u.MapFrom(m => m.UserName))
-                .ForMember(m => m.Id, u => u.MapFrom(m => m.User!.Id));
+                .ForMember(m => m.Id, u => u.MapFrom(m => m.Id));
         }
     }
 }

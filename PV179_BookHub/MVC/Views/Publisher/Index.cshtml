@@ -1,11 +1,13 @@
 ﻿@using BusinessLayer.DTOs.Publisher.View;
+@using DataAccessLayer.Models.Enums
 @model IEnumerable<GeneralPublisherViewDto>
 
 <h1>Publishers</h1>
 
-<p class="text-end">
-    <a class="link-success" asp-action="Create">Create New</a>
-</p>
+@if (User.IsInRole(UserRoles.Admin))
+{
+    <p class="text-end"><a class="link-success" asp-action="Create">Create New</a></p>
+}
 
 @if (ViewBag.Message != null)
 {
@@ -32,17 +34,21 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "link-primary" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-danger" })
+                <td class="text-end">
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "link-primary" })
+                    @if (User.IsInRole(UserRoles.Admin))
+                    {
+                        <span>|</span>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" })
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-danger" })
+                    }
                 </td>
             </tr>
         }
     }
     else
     {
-        <td colspan="2" class="text-center"><b>No Publishers Availible. Please Add Data By CLicking On The Create Button</b></td>
+        <td colspan="2" class="text-center"><b>No Publishers Availible.</b></td>
     }
 </table>

@@ -151,18 +151,21 @@ public static class TestDataInitializer
             {
                 Id = 1,
                 UserName = "JackTheRipper",
+                Name = "Jack Ripper",
                 Role = UserRole.Admin
             },
             new User
             {
                 Id = 2,
                 UserName = "olivia.johnson@gmail.com",
+                Name = "Olivia Johnson",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 3,
                 UserName = "liamthereaded",
+                Name = "Liam Threreded",
                 Role = UserRole.User
             }
         };

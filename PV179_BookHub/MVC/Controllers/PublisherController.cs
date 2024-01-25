@@ -3,29 +3,39 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.Facades.Publisher;
 using BusinessLayer.DTOs.Publisher.Create;
+using DataAccessLayer.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace MVC.Controllers;
 
+[Authorize(Roles = UserRoles.Admin)]
 public class PublisherController : Controller
 {
     private readonly IPublisherFacade _publisherFacade;
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
 
-    public PublisherController(IPublisherFacade publisherFacade, UserManager<LocalIdentityUser> userManager)
+    public PublisherController(IPublisherFacade publisherFacade, UserManager<User> userManager)
     {
         _publisherFacade = publisherFacade;
         _userManager = userManager;
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
         var publishers = await _publisherFacade.GetAllPublishersAsync();
         return View(publishers);
     }
 
-    public async Task<IActionResult> Details(int id)
+    [AllowAnonymous]
+    public async Task<IActionResult> Details(int id, bool updated)
     {
         var publisher = await _publisherFacade.FindPublisherByIdAsync(id);
+        if (updated)
+        {
+            ViewBag.Message = "Publisher Saved Successfully";
+        }
         return View(publisher);
     }
 
@@ -38,9 +48,8 @@ public class PublisherController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreatePublisherDto createPublisherDto)
     {
-        await _publisherFacade.CreatePublisherAsync(createPublisherDto);
-        ViewBag.Message = "Publisher Created Successfully";
-        return View(createPublisherDto);
+        var created = await _publisherFacade.CreatePublisherAsync(createPublisherDto);
+        return RedirectToAction(nameof(Details), new { created.Id, updated = true });
     }
 
 
@@ -55,8 +64,7 @@ public class PublisherController : Controller
     public async Task<IActionResult> Edit(int id, CreatePublisherDto updatePublisherDto)
     {
         var updated = await _publisherFacade.UpdatePublisherAsync(id, updatePublisherDto);
-        ViewBag.Message = "Publisher Updated Successfully";
-        return View(updated);
+        return RedirectToAction(nameof(Details), new { id, updated = true });
     }
 
     public async Task<IActionResult> Delete(int id)

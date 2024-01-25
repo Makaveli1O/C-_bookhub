@@ -18,5 +18,5 @@ public class DetailedBookViewDto
     public BookGenre BookGenre { get; set; }
     public string Description { get; set; } = string.Empty;
     public double Price { get; set; }
-    public IEnumerable<GeneralBookReviewViewDto>? Reviews { get; set; }
+    public IEnumerable<DetailedBookReviewViewDto>? Reviews { get; set; }
 }

@@ -3,29 +3,38 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.Facades.Author;
 using BusinessLayer.DTOs.Author.Create;
+using DataAccessLayer.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers;
 
+[Authorize(Roles = UserRoles.Admin)]
 public class AuthorController : Controller
 {
     private readonly IAuthorFacade _authorFacade;
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
 
-    public AuthorController(IAuthorFacade authorFacade, UserManager<LocalIdentityUser> userManager)
+    public AuthorController(IAuthorFacade authorFacade, UserManager<User> userManager)
     {
         _authorFacade = authorFacade;
         _userManager = userManager;
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
         var authors = await _authorFacade.GetAllAuthorsAsync();
         return View(authors);
     }
 
-    public async Task<IActionResult> Details(int id)
+    [AllowAnonymous]
+    public async Task<IActionResult> Details(int id, bool updated)
     {
         var author = await _authorFacade.FindAuthorByIdAsync(id);
+        if (updated)
+        {
+            ViewBag.Message = "Author Saved Successfully";
+        }
         return View(author);
     }
 
@@ -38,9 +47,8 @@ public class AuthorController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateAuthorDto createAuthorDto)
     {
-        await _authorFacade.CreateAuthorAsync(createAuthorDto);
-        ViewBag.Message = "Author Created Successfully";
-        return View(createAuthorDto);
+        var created = await _authorFacade.CreateAuthorAsync(createAuthorDto);
+        return RedirectToAction(nameof(Details), new { created.Id, updated = true });
     }
 
 
@@ -55,8 +63,7 @@ public class AuthorController : Controller
     public async Task<IActionResult> Edit(int id, CreateAuthorDto updateAuthorDto)
     {
         var updated = await _authorFacade.UpdateAuthorAsync(id, updateAuthorDto);
-        ViewBag.Message = "Author Updated Successfully";
-        return View(updated);
+        return RedirectToAction(nameof(Details), new { id, updated = true });
     }
 
     public async Task<IActionResult> Delete(int id)

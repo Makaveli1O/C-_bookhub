@@ -1,12 +1,17 @@
 ﻿@using BusinessLayer.DTOs.Publisher.View;
+@using DataAccessLayer.Models.Enums
 @model DetailedPublisherViewDto
-
-@{
-    ViewData["Title"] = "Details";
-}
 
 <h1>Publisher Details</h1>
 <hr />
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
 <div>
     <dl class="row">
         <dt class="col-sm-2">
@@ -28,7 +33,7 @@
             @Html.DisplayFor(model => model.Country)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.YearFounded)
+            Year Founded
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.YearFounded)
@@ -36,6 +41,10 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" }) |
+    @if (User.IsInRole(UserRoles.Admin))
+    {
+        @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" })
+        <span>|</span>
+    }
     @Html.ActionLink("Back to List", "Index", new { }, new { @class = "link-primary" })
 </div>

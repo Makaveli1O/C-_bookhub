@@ -1,13 +1,13 @@
 ﻿@model RegisterViewModel
 
-<h1>Register</h1>
+<h1>Register Manager</h1>
 <hr />
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Register" method="post">
+        <form asp-action="RegisterManager" method="post">
             <div class="mb-3">
-                <label asp-for="Name" class="form-label">Real Name</label>
+                <label asp-for="Name" class="form-label">Manager Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name"></span>
             </div>
@@ -32,7 +32,8 @@
                 <span asp-validation-for="ConfirmPassword"></span>
             </div>
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn btn-primary">Register Manager</button> |
+                <a asp-controller="User" asp-action="Index">Back to List</a>
                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             </div>
         </form>

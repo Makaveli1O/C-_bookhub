@@ -15,13 +15,13 @@ namespace MVC.Controllers;
 [Route("WishList")]
 public class WishListController : Controller
 {
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
     private readonly IWishListFacade _wishListFacade;
     private readonly IBookFacade _bookFacade;
 
     public WishListController(
-        UserManager<LocalIdentityUser> userManager,
+        UserManager<User> userManager,
         IWishListFacade wishListFacade,
         IBookFacade bookFacade
         )
@@ -83,7 +83,7 @@ public class WishListController : Controller
         }
 
         var wishList = model.Adapt<CreateWishListDto>();
-        wishList.UserId = user.UserId;
+        wishList.UserId = user.Id;
 
         var wishListResult = await _wishListFacade.CreateWishListAsync(wishList);
 
@@ -164,6 +164,6 @@ public class WishListController : Controller
 
         var wishList = await _wishListFacade.FetchWishListAsync(wishListId);
 
-        return wishList.UserId == user.UserId;
+        return wishList.UserId == user.Id;
     }
 }

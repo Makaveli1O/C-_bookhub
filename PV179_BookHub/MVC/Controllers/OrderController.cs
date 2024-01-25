@@ -16,7 +16,7 @@ namespace MVC.Controllers;
 public class OrderController : Controller
 {
     private readonly IOrderFacade _orderFacade;
-    private readonly UserManager<LocalIdentityUser> _userManager;
+    private readonly UserManager<User> _userManager;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
     private readonly IBookStoreFacade _bookStoreFacade;
     private readonly IInventoryItemFacade _inventoryItemFacade;
@@ -27,7 +27,7 @@ public class OrderController : Controller
         IBookStoreFacade bookStoreFacade,
         IInventoryItemFacade inventoryItemFacade,
         IBookFacade bookFacade,
-        UserManager<LocalIdentityUser> userManager)
+        UserManager<User> userManager)
     {
         _bookStoreFacade = bookStoreFacade;
         _orderFacade = orderFacade;
@@ -74,7 +74,7 @@ public class OrderController : Controller
             return Unauthorized();
         }
 
-        var orderCreateResult = await _orderFacade.CreateOrderAsync(user.UserId);
+        var orderCreateResult = await _orderFacade.CreateOrderAsync(user.Id);
 
         return RedirectToAction(nameof(Edit), new { id = orderCreateResult.Id });
 
@@ -182,7 +182,7 @@ public class OrderController : Controller
 
         var order = await _orderFacade.FindOrderByIdAsync(orderId);
 
-        if (user == null || order.UserId != user.UserId)
+        if (user == null || order.UserId != user.Id)
         {
             return Unauthorized();
         }
@@ -203,7 +203,7 @@ public class OrderController : Controller
         }
 
         var user = await _userManager.GetUserAsync(User);
-        if(order.UserId != user.UserId)
+        if(order.UserId != user.Id)
         {
             Unauthorized();
         }
@@ -224,7 +224,7 @@ public class OrderController : Controller
         }
 
         var user = await _userManager.GetUserAsync(User);
-        if (order.UserId != user.UserId)
+        if (order.UserId != user.Id)
         {
             Unauthorized();
         }
@@ -245,7 +245,7 @@ public class OrderController : Controller
         }
 
         var user = await _userManager.GetUserAsync(User);
-        if (order.UserId != user.UserId)
+        if (order.UserId != user.Id)
         {
             Unauthorized();
         }
