@@ -5,7 +5,7 @@ using DataAccessLayer.DependencyInjection;
 using Infrastructure.DependencyInjection;
 using BusinessLayer.DependencyInjection;
 using BusinessLayer.Middleware;
-using MVC.Mappers;
+using MVC.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +20,7 @@ builder.Services.RegisterInfrastructureDependencies();
 
 builder.Services.RegisterBLDependencies();
 
-builder.Services.AddAutoMapper(typeof(FilterBookProfile));
+builder.Services.RegiterMVCDependencies();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -8,7 +8,7 @@ public class FilterBookProfile : Profile
 {
     public FilterBookProfile()
     {
-        CreateMap<SearchBooksModel, BookFilterDto>()
+        CreateMap<BookSearchModel, BookFilterDto>()
             .ForMember(x => x.SortParameter, 
                     opt => opt
                         .MapFrom(y => 

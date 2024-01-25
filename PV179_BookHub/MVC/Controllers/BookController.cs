@@ -31,25 +31,18 @@ public class BookController : Controller
         _publisherFacade = publisherFacade;
         _authorFacade = authorFacade;
         _userManager = userManager;
-        _mapper = mapper;
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index()
-    {
-        var books = await _bookFacade.FetchAllBooksAsync();
-        return View(books);
-    }
 
-
-    [HttpGet]
-    [Route("filter")]
-    public async Task<IActionResult> Filter(SearchBooksModel model)
+    public async Task<IActionResult> Index(BookSearchModel bookSearchModel)
     {
-        var filter = _mapper.Map<BookFilterDto>(model);
-        var result = await _bookFacade.FetchFilteredBooksAsync(filter);
+        var result = await _bookFacade
+            .FetchFilteredBooksAsync(
+                _mapper.Map<BookFilterDto>(bookSearchModel)
+            );
         var viewModel = _mapper.Map<FilteredBooksModel>(result);
-        viewModel.SearchBooksModel = model;
+        viewModel.SearchBooksModel = bookSearchModel;
 
         return View(viewModel);
     }

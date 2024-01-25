@@ -1,6 +1,7 @@
 ﻿@using BusinessLayer.DTOs.Book.View;
-@using DataAccessLayer.Models.Enums
-@model IEnumerable<GeneralBookViewDto>
+@using DataAccessLayer.Models.Enums;
+@model MVC.Models.Book.FilteredBooksModel
+
 
 <h1>Books</h1>
 
@@ -15,6 +16,11 @@
         @ViewBag.Message
     </p>
 }
+
+@{
+    await Html.RenderPartialAsync("BookSearch", Model.SearchBooksModel ?? new MVC.Models.Book.BookSearchModel());
+}
+
 
 
 <table class="table">
@@ -38,9 +44,9 @@
     </tr>
 
 
-    @if (Model != null && Model.Count() > 0)
+    @if (Model != null && Model.Books.Count() > 0)
     {
-        foreach (var item in Model)
+        foreach (var item in Model.Books)
         {
             <tr>
                 <td>
@@ -73,6 +79,28 @@
     }
     else
     {
-        <td colspan="6" class="text-center"><b>No Books Availible.</b></td>
+        <td colspan="6" class="text-center"><b>No Books Availible. Please Add Data By Clicking On The Create Button</b></td>
+
     }
 </table>
+
+@if (Model != null)
+{
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="Index"
+               asp-route-PageNumber="@i"
+               asp-route-CONTAINS_Title="@Model.SearchBooksModel?.CONTAINS_Title"
+               asp-route-Author="@Model.SearchBooksModel?.Author"
+               asp-route-Publisher="@Model.SearchBooksModel?.Publisher"
+               asp-route-CONTAINS_Description="@Model.SearchBooksModel?.CONTAINS_Description"
+               asp-route-BookGenre="@Model.SearchBooksModel?.BookGenre"
+               asp-route-GE_Price="@Model.SearchBooksModel?.GE_Price"
+               asp-route-LE_Price="@Model.SearchBooksModel?.LE_Price"
+               asp-route-SortParameter="@Model.SearchBooksModel?.SortParameter"
+               asp-route-SortAscending="@Model.SearchBooksModel?.SortAscending"
+               class="@(i == Model.PageNumber ? "active" : "")">@($" {i}{(i == Model.TotalPages ? string.Empty : ',')} ")</a>
+        }
+    </div>
+}
