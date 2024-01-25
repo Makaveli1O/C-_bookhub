@@ -6,7 +6,6 @@ using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Purchasing;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 
 namespace DataAccessLayer.Data;
 
@@ -539,7 +538,7 @@ public static class DataInitializer
         new BookReview
         {
             Id = 12,
-            BookId = 12,
+            BookId = 13,
             ReviewerId = 4,
             Description = "I found 'Culinary Delights' to be underwhelming. The recipes were basic, and I was expecting more innovative dishes.",
             Rating = Rating.Poor
