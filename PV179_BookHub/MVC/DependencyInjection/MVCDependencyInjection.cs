@@ -8,5 +8,6 @@ public static class MVCDependencyInjection
     {
         services.AddAutoMapper(typeof(FilterBookProfile));
         services.AddAutoMapper(typeof(FilterAuthorProfile));
+        services.AddAutoMapper(typeof(FilterPublisherProfile));
     }
 }

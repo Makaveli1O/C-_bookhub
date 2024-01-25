@@ -2,7 +2,7 @@
 
 namespace MVC.Models.Base;
 
-public class BaseSearchModel<TEnum>
+public abstract class BaseSearchModel<TEnum>
 {
     public TEnum? SortParameter { get; set; }
     public bool SortAscending { get; set; }

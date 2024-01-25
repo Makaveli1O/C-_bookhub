@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using BusinessLayer.DTOs.BaseFilter;
 using BusinessLayer.DTOs.Publisher.Create;
+using BusinessLayer.DTOs.Publisher.Filter;
 using BusinessLayer.DTOs.Publisher.View;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
+using Infrastructure.Query.Filters.EntityFilters;
+using Infrastructure.Query;
 
 namespace BusinessLayer.Facades.Publisher
 {
@@ -32,6 +36,15 @@ namespace BusinessLayer.Facades.Publisher
             }
 
             await _publisherService.DeleteAsync(publisher);
+        }
+
+        public async Task<FilterResultDto<GeneralPublisherViewDto>> FetchFilteredPublishersAsync(PublisherFilterDto publisherFilterDto)
+        {
+            var queryResult = await _publisherService
+                .FetchFilteredAsync(_mapper.Map<PublisherFilter>(publisherFilterDto),
+                        _mapper.Map<QueryParams>(publisherFilterDto));
+
+            return _mapper.Map<FilterResultDto<GeneralPublisherViewDto>>(queryResult);
         }
 
         public async Task<DetailedPublisherViewDto> FindPublisherByIdAsync(long id)
