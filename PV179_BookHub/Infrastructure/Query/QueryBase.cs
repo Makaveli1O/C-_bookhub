@@ -8,8 +8,6 @@ namespace Infrastructure.Query;
 
 public class QueryBase<TEntity, TKey> : IQuery<TEntity, TKey> where TEntity : class
 {
-    private static int _defaultPageSize = 20;
-    private static int _defaultPageNumber = 1;
     private IQueryable<TEntity> _query;
 
     public IUnitOfWork UnitOfWork {  get; set; }
@@ -32,9 +30,9 @@ public class QueryBase<TEntity, TKey> : IQuery<TEntity, TKey> where TEntity : cl
         var queryResult = new QueryResult<TEntity>()
         {
             Items = result,
-            PageSize = QueryParams?.PageSize ?? _defaultPageSize,
+            PageSize = QueryParams?.PageSize ?? PagingParameters.defaultPageSize,
             PagingEnabled = true,
-            PageNumber = QueryParams?.PageNumber ?? _defaultPageNumber
+            PageNumber = QueryParams?.PageNumber ?? PagingParameters.defaultPageNumber
         };
 
         return queryResult;

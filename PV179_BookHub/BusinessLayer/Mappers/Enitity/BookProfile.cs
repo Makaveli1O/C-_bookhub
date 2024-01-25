@@ -37,6 +37,17 @@ public class BookProfile : Profile
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
         CreateMap<DetailedBookViewDto, UpdateBookDto>();
+
+        CreateMap<QueryResult<BookEntity>, BookFilterResultDto>()
+            .ForMember(
+                x => x.Books, 
+                opts => opts
+                    .MapFrom(y => y.Items)
+                )
+            .ForMember(
+                x => x.TotalPages,
+                opt => opt
+                    .MapFrom(y => (int)Math.Ceiling((double)y.TotalItemsCount / y.PageSize)));
     }
 
     private static AuthorEntity? ExtractPrimaryAuthor(BookEntity bookEntity)

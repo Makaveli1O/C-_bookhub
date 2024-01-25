@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models.Enums;
+using Infrastructure.Query;
 
 namespace MVC.Models.Book;
 
@@ -15,6 +16,6 @@ public class BookSearchModel
     public BookSortParam? SortParameter { get; set; }
     public bool SortAscending { get; set; }
 
-    public int? PageNumber { get; set; } = 1;
-    public int? PageSize { get; set; } = 20;
+    public int? PageNumber { get; set; } = PagingParameters.defaultPageNumber;
+    public int? PageSize { get; set; } = PagingParameters.defaultPageSize;
 }
