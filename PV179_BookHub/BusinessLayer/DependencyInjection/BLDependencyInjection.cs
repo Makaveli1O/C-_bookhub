@@ -81,6 +81,8 @@ public static class BLDependencyInjection
 
         services.AddScoped<IBookStoreService, BookStoreService>();
         services.AddScoped<IBookStoreFacade, BookStoreFacade>();
+
+        services.AddScoped<IBookRecommendationFacade, BookRecommendationFacade>();
     }
 
     private static void RegisterMemoryCache(IServiceCollection services)
