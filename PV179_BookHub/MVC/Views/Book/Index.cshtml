@@ -1,7 +1,8 @@
 ﻿@using BusinessLayer.DTOs.Book.View;
 @using DataAccessLayer.Models.Enums;
-@model MVC.Models.Book.FilteredBooksModel
-
+﻿@using MVC.Models.Base;
+@using MVC.Models.Book;
+@model GenericFilteredModel<BookSearchModel, GeneralBookViewDto>
 
 <h1>Books</h1>
 
@@ -18,7 +19,7 @@
 }
 
 @{
-    await Html.RenderPartialAsync("BookSearch", Model.SearchBooksModel ?? new MVC.Models.Book.BookSearchModel());
+    await Html.RenderPartialAsync("BookSearch", Model.SearchModel ?? new BookSearchModel());
 }
 
 
@@ -44,9 +45,9 @@
     </tr>
 
 
-    @if (Model != null && Model.Books.Count() > 0)
+    @if (Model != null && Model.Items.Count() > 0)
     {
-        foreach (var item in Model.Books)
+        foreach (var item in Model.Items)
         {
             <tr>
                 <td>
@@ -79,7 +80,7 @@
     }
     else
     {
-        <td colspan="6" class="text-center"><b>No Books Availible. Please Add Data By Clicking On The Create Button</b></td>
+        <td colspan="6" class="text-center"><b>No Books Availible.</b></td>
 
     }
 </table>
@@ -91,15 +92,15 @@
         {
             <a asp-action="Index"
                asp-route-PageNumber="@i"
-               asp-route-CONTAINS_Title="@Model.SearchBooksModel?.CONTAINS_Title"
-               asp-route-Author="@Model.SearchBooksModel?.Author"
-               asp-route-Publisher="@Model.SearchBooksModel?.Publisher"
-               asp-route-CONTAINS_Description="@Model.SearchBooksModel?.CONTAINS_Description"
-               asp-route-BookGenre="@Model.SearchBooksModel?.BookGenre"
-               asp-route-GE_Price="@Model.SearchBooksModel?.GE_Price"
-               asp-route-LE_Price="@Model.SearchBooksModel?.LE_Price"
-               asp-route-SortParameter="@Model.SearchBooksModel?.SortParameter"
-               asp-route-SortAscending="@Model.SearchBooksModel?.SortAscending"
+               asp-route-CONTAINS_Title="@Model.SearchModel?.CONTAINS_Title"
+               asp-route-Author="@Model.SearchModel?.Author"
+               asp-route-Publisher="@Model.SearchModel?.Publisher"
+               asp-route-CONTAINS_Description="@Model.SearchModel?.CONTAINS_Description"
+               asp-route-BookGenre="@Model.SearchModel?.BookGenre"
+               asp-route-GE_Price="@Model.SearchModel?.GE_Price"
+               asp-route-LE_Price="@Model.SearchModel?.LE_Price"
+               asp-route-SortParameter="@Model.SearchModel?.SortParameter"
+               asp-route-SortAscending="@Model.SearchModel?.SortAscending"
                class="@(i == Model.PageNumber ? "active" : "")">@($" {i}{(i == Model.TotalPages ? string.Empty : ',')} ")</a>
         }
     </div>

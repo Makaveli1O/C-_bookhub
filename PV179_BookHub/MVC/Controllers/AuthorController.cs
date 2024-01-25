@@ -5,6 +5,11 @@ using BusinessLayer.Facades.Author;
 using BusinessLayer.DTOs.Author.Create;
 using DataAccessLayer.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
+using MVC.Models.Author;
+using AutoMapper;
+using BusinessLayer.DTOs.Author.Filter;
+using MVC.Models.Base;
+using BusinessLayer.DTOs.Author.View;
 
 namespace MVC.Controllers;
 
@@ -13,18 +18,27 @@ public class AuthorController : Controller
 {
     private readonly IAuthorFacade _authorFacade;
     private readonly UserManager<User> _userManager;
+    private readonly IMapper _mapper;
 
-    public AuthorController(IAuthorFacade authorFacade, UserManager<User> userManager)
+    public AuthorController(IAuthorFacade authorFacade, UserManager<User> userManager, IMapper mapper)
     {
         _authorFacade = authorFacade;
         _userManager = userManager;
+        _mapper = mapper;
     }
 
     [AllowAnonymous]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(AuthorSearchModel authorSearchModel)
     {
-        var authors = await _authorFacade.GetAllAuthorsAsync();
-        return View(authors);
+        var result = await _authorFacade
+            .FetchFilteredAuthorsAsync(
+                _mapper.Map<AuthorFilterDto>(authorSearchModel)
+            );
+
+        var viewModel = _mapper.Map<GenericFilteredModel<AuthorSearchModel, GeneralAuthorViewDto>>(result);
+        viewModel.SearchModel = authorSearchModel;
+
+        return View(viewModel);
     }
 
     [AllowAnonymous]

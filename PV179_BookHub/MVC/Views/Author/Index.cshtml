@@ -1,6 +1,8 @@
 ﻿@using BusinessLayer.DTOs.Author.View;
 @using DataAccessLayer.Models.Enums
-@model IEnumerable<GeneralAuthorViewDto>
+@using MVC.Models.Base;
+@using MVC.Models.Author;
+@model GenericFilteredModel<AuthorSearchModel, GeneralAuthorViewDto>
 
 <h1>Authors</h1>
 
@@ -16,6 +18,10 @@
     </p>
 }
 
+@{
+    await Html.RenderPartialAsync("AuthorSearch", Model.SearchModel ?? new AuthorSearchModel());
+}
+
 
 <table class="table">
     <tr>
@@ -26,9 +32,9 @@
     </tr>
 
 
-    @if (Model != null && Model.Count() > 0)
+    @if (Model != null && Model.Items.Count() > 0)
     {
-        foreach (var item in Model)
+        foreach (var item in Model.Items)
         {
             <tr>
                 <td>
@@ -49,6 +55,22 @@
     }
     else
     {
-        <td colspan="2" class="text-center"><b>No Addresses Availible.</b></td>
+        <td colspan="2" class="text-center"><b>No Authors Availible.</b></td>
     }
 </table>
+
+@if (Model != null)
+{
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="Index"
+               asp-route-PageNumber="@i"
+               asp-route-CONTAINS_Name="@Model.SearchModel?.CONTAINS_Name"
+               asp-route-CONTAINS_Biography="@Model.SearchModel?.CONTAINS_Biography"
+               asp-route-SortParameter="@Model.SearchModel?.SortParameter"
+               asp-route-SortAscending="@Model.SearchModel?.SortAscending"
+               class="@(i == Model.PageNumber ? "active" : "")">@($" {i}{(i == Model.TotalPages ? string.Empty : ',')} ")</a>
+        }
+    </div>
+}

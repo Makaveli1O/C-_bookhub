@@ -1,4 +1,6 @@
-﻿@model MVC.Models.Book.BookSearchModel
+﻿@using MVC.Models.Book;
+@using DataAccessLayer.Models.Enums;
+@model BookSearchModel
 
 <form asp-action="Index" asp-controller="Book" method="get">
     <input type="text" name="CONTAINS_Title" placeholder="Title" />
@@ -6,11 +8,11 @@
     <input type="text" name="Publisher" placeholder="Publisher" />
     <input type="text" name="CONTAINS_Description" placeholder="Description" />
     <input type="text" name="CONTAINS_ISBN" placeholder="ISBN" />
-    <select asp-for="BookGenre" asp-items="Html.GetEnumSelectList<DataAccessLayer.Models.Enums.BookGenre>()"></select>
+    <select asp-for="BookGenre" asp-items="Html.GetEnumSelectList<BookGenre>()"></select>
     <input type="number" name="GE_Price" placeholder="Min Price" />
     <input type="number" name="LE_Price" placeholder="Max Price" />
 
-    <select asp-for="SortParameter" asp-items="Html.GetEnumSelectList<MVC.Models.Book.BookSortParam>()"></select>
+    <select asp-for="SortParameter" asp-items="Html.GetEnumSelectList<BookSortParam>()"></select>
     <label class="control-label" for="">
         @Html.CheckBoxFor(model => model.SortAscending, false)
         Sort Ascending

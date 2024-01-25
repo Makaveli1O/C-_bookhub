@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.DTOs.Author.Create;
+using BusinessLayer.DTOs.Author.Filter;
 using BusinessLayer.Facades.Author;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,5 +53,13 @@ public class AuthorController : ControllerBase
     {
         await _authorFacade.DeleteAuthorAsync(id);
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("filter")]
+    public async Task<IActionResult> FetchAuthorsByFilters([FromQuery] AuthorFilterDto authorFilterDto)
+    {
+        var authors = await _authorFacade.FetchFilteredAuthorsAsync(authorFilterDto);
+        return Ok(authors);
     }
 }

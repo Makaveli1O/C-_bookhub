@@ -3,7 +3,6 @@ using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.Filter;
 using BusinessLayer.DTOs.Book.Update;
 using BusinessLayer.DTOs.Book.View;
-using Infrastructure.Query;
 using Infrastructure.Query.Filters.EntityFilters;
 
 namespace BusinessLayer.Mappers.Enitity;
@@ -13,6 +12,7 @@ public class BookProfile : Profile
     public BookProfile()
     {
         CreateMap<CreateBookDto, BookEntity>();
+        CreateMap<DetailedBookViewDto, UpdateBookDto>();
 
         CreateMap<BookEntity, GeneralBookViewDto>()
             .ForMember(
@@ -34,20 +34,7 @@ public class BookProfile : Profile
                     ));
 
         CreateMap<BookFilterDto, BookFilter>()
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-
-        CreateMap<DetailedBookViewDto, UpdateBookDto>();
-
-        CreateMap<QueryResult<BookEntity>, BookFilterResultDto>()
-            .ForMember(
-                x => x.Books, 
-                opts => opts
-                    .MapFrom(y => y.Items)
-                )
-            .ForMember(
-                x => x.TotalPages,
-                opt => opt
-                    .MapFrom(y => (int)Math.Ceiling((double)y.TotalItemsCount / y.PageSize)));
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null)); 
     }
 
     private static AuthorEntity? ExtractPrimaryAuthor(BookEntity bookEntity)

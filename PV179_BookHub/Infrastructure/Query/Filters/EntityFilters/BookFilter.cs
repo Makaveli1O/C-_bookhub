@@ -5,10 +5,6 @@ namespace Infrastructure.Query.Filters.EntityFilters;
 
 public class BookFilter : FilterBase<Book>
 {
-    public BookFilter() : base()
-    {
-    }
-
     protected override void SetUpSpecialLambdaExpressions()
     {
         _lambdaDictionary.Add("Author", source => source.Authors.Any(author => author.Name.Contains(Author)));

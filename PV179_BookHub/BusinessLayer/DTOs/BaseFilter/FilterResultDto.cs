@@ -1,13 +1,11 @@
-﻿using BusinessLayer.DTOs.Book.View;
+﻿namespace BusinessLayer.DTOs.BaseFilter;
 
-namespace BusinessLayer.DTOs.Book.Filter;
-
-public class BookFilterResultDto
+public class FilterResultDto<TEntityDto>
 {
     public long TotalItemsCount { get; set; }
     public int TotalPages { get; set; }
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
-    public IList<GeneralBookViewDto> Books { get; set; } = new List<GeneralBookViewDto>();
+    public IEnumerable<TEntityDto> Items { get; set; } = new List<TEntityDto>();
     public bool PagingEnabled { get; set; }
 }

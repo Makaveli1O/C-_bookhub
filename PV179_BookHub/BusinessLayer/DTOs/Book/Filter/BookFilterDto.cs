@@ -1,8 +1,9 @@
-﻿using DataAccessLayer.Models.Enums;
+﻿using BusinessLayer.DTOs.BaseFilter;
+using DataAccessLayer.Models.Enums;
 
 namespace BusinessLayer.DTOs.Book.Filter;
 
-public class BookFilterDto : BaseFilterDto
+public class BookFilterDto : FilterDto
 {
     public string? CONTAINS_Title { get; set; }
     public string? Author { get; set; }

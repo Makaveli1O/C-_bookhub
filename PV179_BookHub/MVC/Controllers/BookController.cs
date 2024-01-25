@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using MVC.Models.Book;
 using BusinessLayer.DTOs.Book.Filter;
+using MVC.Models.Base;
+using BusinessLayer.DTOs.Book.View;
 
 namespace MVC.Controllers;
 
@@ -41,8 +43,8 @@ public class BookController : Controller
             .FetchFilteredBooksAsync(
                 _mapper.Map<BookFilterDto>(bookSearchModel)
             );
-        var viewModel = _mapper.Map<FilteredBooksModel>(result);
-        viewModel.SearchBooksModel = bookSearchModel;
+        var viewModel = _mapper.Map<GenericFilteredModel<BookSearchModel, GeneralBookViewDto>>(result);
+        viewModel.SearchModel = bookSearchModel;
 
         return View(viewModel);
     }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessLayer.DTOs.BaseFilter;
 using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.Filter;
 using BusinessLayer.DTOs.Book.Update;
@@ -191,13 +192,13 @@ public class BookFacade : BaseFacade, IBookFacade
         return _mapper.Map<List<GeneralBookViewDto>>(books);
     }
 
-    public async Task<BookFilterResultDto> FetchFilteredBooksAsync(BookFilterDto bookFilterDto)
+    public async Task<FilterResultDto<GeneralBookViewDto>> FetchFilteredBooksAsync(BookFilterDto bookFilterDto)
     {
         var queryResult = await _bookService
             .FetchFilteredAsync(_mapper.Map<BookFilter>(bookFilterDto), 
                                 _mapper.Map<QueryParams>(bookFilterDto));
 
-        return _mapper.Map<BookFilterResultDto>(queryResult);
+        return _mapper.Map<FilterResultDto<GeneralBookViewDto>>(queryResult);
     }
 
     public async Task<DetailedBookViewDto> FindBookByIdAsync(long id)
