@@ -17,7 +17,7 @@ public class UserController : Controller
     private readonly IBookRecommendationFacade _bookRecommendationFacade;
     private readonly IMapper _mapper;
 
-    public UserController(UserManager<LocalIdentityUser> userManager, IUserFacade userFacade, IBookRecommendationFacade bookRecommendationFacade, IMapper mapper)
+    public UserController(UserManager<User> userManager, IUserFacade userFacade, IBookRecommendationFacade bookRecommendationFacade, IMapper mapper)
     {
         _userManager = userManager;
         _userFacade = userFacade;
@@ -74,7 +74,7 @@ public class UserController : Controller
             return NotFound();
         }
 
-        return RedirectToAction("User", "WishList", new { id = user.UserId });
+        return RedirectToAction("User", "WishList", new { id = user.Id });
     }
 
     [HttpGet("MyOrders")]
@@ -87,7 +87,7 @@ public class UserController : Controller
             return NotFound();
         }
 
-        return RedirectToAction("User", "Order", new {id = user.UserId });
+        return RedirectToAction("User", "Order", new {id = user.Id });
     }
 
     [HttpGet("MyReviews")]
@@ -100,7 +100,7 @@ public class UserController : Controller
             return NotFound();
         }
 
-        return RedirectToAction("User" ,"BookReview", new { id = user.UserId });
+        return RedirectToAction("User" ,"BookReview", new { id = user.Id });
     }
 
     [HttpGet("CreateOrder")]
@@ -113,6 +113,6 @@ public class UserController : Controller
             return NotFound();
         }
 
-        return RedirectToAction("Create", "Order", new { userId = user.UserId });
+        return RedirectToAction("Create", "Order", new { userId = user.Id });
     }
 }

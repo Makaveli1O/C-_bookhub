@@ -105,7 +105,7 @@ public class OrderController : Controller
             Unauthorized();
         }
 
-        var order = await _orderFacade.CreateOrderAsync(user.UserId);
+        var order = await _orderFacade.CreateOrderAsync(user.Id);
 
         AddSelectedItems(model.AddedItems, model.SelectedBookStore, order.Id);
 
@@ -222,7 +222,7 @@ public class OrderController : Controller
         }
 
         var user = await _userManager.GetUserAsync(User);
-        if(order.UserId != user.UserId)
+        if(order.UserId != user.Id)
         {
             Unauthorized();
         }
