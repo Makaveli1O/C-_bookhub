@@ -58,9 +58,12 @@ public class OrderController : Controller
 
     [HttpGet("User/{id:long}")]
     //[Authorize]
-    public async Task<JsonResult> SingleUserOrders(long id)
+    public async Task<IActionResult> SingleUserOrders(long id)
     {
-        return Json(await _orderFacade.FetchOrdersByUserIdAsync(id));
+        var orders = await _orderFacade.FetchOrdersByUserIdAsync(id);
+        var orderViewModels = orders.ToList();
+
+        return View(orderViewModels);
     }
 
     [HttpGet("Create")]
@@ -226,7 +229,10 @@ public class OrderController : Controller
 
         await _orderFacade.CancelOrderAsync(id);
 
-        return Ok();
+        var viewModel = order.Adapt<CancelViewModel>();
+
+        
+        return View("Cancel", viewModel);
     }
 
     [Route("{id:long}/Pay")]
