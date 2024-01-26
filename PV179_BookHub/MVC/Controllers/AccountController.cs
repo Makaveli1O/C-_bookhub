@@ -80,13 +80,23 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError(String.Empty, "Invalid username or password.");
+                return View(model);
+            }
+
             var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
             }
-            ModelState.AddModelError(String.Empty, "Invalid login attempt.");
+            else
+            {
+                ModelState.AddModelError(String.Empty, "Invalid username or password.");
+            }
         }
 
         return View(model);
