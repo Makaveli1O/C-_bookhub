@@ -47,13 +47,13 @@ public class OrderController : Controller
 
     [Route("{id:long}/Detail")]
     [HttpGet]
-    public async Task<JsonResult> Detail(long id)
+    public async Task<IActionResult> Detail(long id)
     {
         var order = await _orderFacade.FindOrderByIdAsync(id);
 
         var model = _mapper.Map<OrderDetailViewModel>(order);
 
-        return Json(model, _jsonSerializerOptions);
+        return View(model);
     }
 
     [HttpGet("User/{id:long}")]
@@ -232,7 +232,7 @@ public class OrderController : Controller
         var viewModel = order.Adapt<CancelViewModel>();
 
         
-        return View("Cancel", viewModel);
+        return View(viewModel);
     }
 
     [Route("{id:long}/Pay")]
@@ -253,7 +253,9 @@ public class OrderController : Controller
 
         await _orderFacade.PayForOrderAsync(id);
 
-        return Ok();
+        var viewModel = order.Adapt<OrderPaymentViewModel>();
+
+        return View(viewModel);
     }
 
     [Route("{id:long}/Refund")]
@@ -274,6 +276,9 @@ public class OrderController : Controller
 
         await _orderFacade.RefundOrderAsync(id);
 
-        return Ok();
+        var viewModel = order.Adapt<OrderRefundViewModel>();
+
+        return View(viewModel);
     }
+
 }

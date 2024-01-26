@@ -2,7 +2,7 @@
 
 namespace MVC.Models.Order;
 
-public class CancelViewModel
+public class OrderPaymentViewModel
 {
     public long UserId { get; set; }
     public long Id { get; set; }

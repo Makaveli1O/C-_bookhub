@@ -18,6 +18,7 @@
             <th>Created At</th>
             <th>Total Price</th>
             <th>Order State</th>
+            <th>Detail</th>
             <th>Cancel</th>
             <th>Edit</th>
         </tr>
@@ -30,10 +31,15 @@
                 <td>@order.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
                 <td>@order.TotalPrice.ToString("C")</td>
                 <td>@order.State</td>
+                <td><a class="text-info" href="@Url.Action("Detail", "Order", new { id = order.Id })">View</a></td>
                 <td>
-                    @if (order.State == DataAccessLayer.Models.Enums.OrderState.Paid || order.State == DataAccessLayer.Models.Enums.OrderState.Created)
+                    @if (order.State == DataAccessLayer.Models.Enums.OrderState.Created)
                     {
                         <a class="text-danger" href="@Url.Action("Cancel", "Order", new { id = order.Id })">Cancel</a>
+                    }
+                    @if (order.State == DataAccessLayer.Models.Enums.OrderState.Paid)
+                    {
+                        <a class="text-danger" href="@Url.Action("Refund", "Order", new { id = order.Id })">Refund</a>
                     }
                 </td>
                 <td>
