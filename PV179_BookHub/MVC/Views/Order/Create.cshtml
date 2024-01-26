@@ -1,14 +1,14 @@
 ﻿@using MVC.Models.Order
-@model MVC.Models.Order.OrderEditViewModel
+@model MVC.Models.Order.OrderCreateViewModel
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <div class="container">
-    @using (Html.BeginForm("Edit", "Order", FormMethod.Post, new { id = "form" }))
+    @using (Html.BeginForm("Create", "Order", FormMethod.Post, new { id = "form" }))
     {
         <div class="row">
             <div class="col-md-7">
                 <div class="mb-4">
-                    <h2>Specify Order</h2>
+                    <h2>Create new order</h2>
                 </div>
 
                 <div class="mb-4">
@@ -32,37 +32,11 @@
                     </div>
                     <button type="button" id="addSelectedBooks" class="btn btn-primary mt-2">Add Selected Books</button>
                     <div id="orderItemsContainer" style="margin-top: 10px;">
-                       
                     </div>
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                <div class="mb-4">
-                    <h4>Order content:</h4>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Book Title</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.OrderItems.Count; i++)
-                            {
-                                <tr>
-                                    <td>@Model.OrderItems[i].Id</td>
-                                    <td>@Model.OrderItems[i].Book.Title</td>
-                                    <td>@Model.OrderItems[i].Quantity</td>
-                                    <td>@Model.OrderItems[i].Price</td>
-                                    <td><input type="checkbox" name="RemovedOrderItems" value="@Model.OrderItems[i].Id" /></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <div class="mb-4">
+                        <h5>Overall Price:</h5>
+                        <p class="text-danger" id="overallPrice">0.00 €</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,9 +54,11 @@
     $(document).ready(function () {
 
         filterBooks();
+        updateOverallPrice(); 
 
         $('#bookstoreDropdown').change(function () {
             filterBooks();
+            updateOverallPrice();
         });
 
         function filterBooks() {
@@ -95,17 +71,18 @@
             @foreach (var book in Model.AvailableBooks)
             {
                 <text>
-                    if ('@book.BookStoreId' === selectedBookstore) {
-                        var optionText = htmlDecode(`${'@book.Title'} - ${'@book.Price.ToString("C")'}`);
-                        booksListBox.append($('<option>', {
-                            value: '@book.BookId',
-                            text: optionText
-                        }, '</option>'));
-                    }
+                        if ('@book.BookStoreId' === selectedBookstore) {
+                            var optionText = htmlDecode(`${'@book.Title'} - ${'@book.Price.ToString("C")'}`);
+                            booksListBox.append($('<option>', {
+                                value: '@book.BookId',
+                                'data-price': '@book.Price',
+                                text: optionText
+                            }, '</option>'));
+                        }
                 </text>
             }
 
-            handleVisibility(selectedBookstore)
+            handleVisibility(selectedBookstore);
         }
 
         function handleVisibility(selectedBookstore) {
@@ -150,7 +127,7 @@
                 var hiddenInputId = 'addedItemId_' + bookId;
 
                 orderItemsContainer.append('<div class="row">' +
-                    '<input id = ' + hiddenInputId + ' type="hidden" name="AddedItems[' + bookId + ']" value="1" />' +
+                    '<input id=' + hiddenInputId + ' type="hidden" name="AddedItems[' + bookId + ']" value="1" />' +
                     '<div class="col-md-6">' + bookTitle + '</div>' +
                     '<div class="col-md-3"><input type="number" id="quantity_' + bookId + '" name="AddedItems[' + bookId + ']" value= "1" min="1" /></div>' +
                     '</div>');
@@ -158,9 +135,26 @@
                 $('#quantity_' + bookId).on('change', function () {
                     var newQuantity = parseInt($(this).val()) || 1;
                     $('#' + hiddenInputId).val(newQuantity);
+                    updateOverallPrice();
                 });
             });
+
+            updateOverallPrice();
         });
+
+        function updateOverallPrice() {
+            var totalOverallPrice = 0;
+            $('#orderItemsContainer').find(':input[type="number"]').each(function (index, input) {
+                var bookId = input.id.replace('quantity_', '');
+                var quantity = parseInt($(input).val()) || 1;
+                var priceString = $('#booksListBox option[value="' + bookId + '"]').data('price');
+                priceString = priceString.replace(',', '.');
+                var price = parseFloat(priceString) || 0;
+
+                totalOverallPrice += quantity * price;
+            });
+            $('#overallPrice').text('$' + totalOverallPrice);
+        }
     });
 </script>
 

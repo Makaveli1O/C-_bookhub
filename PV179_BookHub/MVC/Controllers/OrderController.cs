@@ -8,6 +8,7 @@ using BusinessLayer.Facades.BookStore;
 using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.Facades.Book;
 using BusinessLayer.DTOs.Order.Create;
+using DataAccessLayer.Models.Purchasing;
 using AutoMapper;
 
 namespace MVC.Controllers;
@@ -48,7 +49,6 @@ public class OrderController : Controller
     [HttpGet]
     public async Task<JsonResult> Detail(long id)
     {
-        //would be nicer if we had DetailedOrderItem here instead of the General one
         var order = await _orderFacade.FindOrderByIdAsync(id);
 
         var model = _mapper.Map<OrderDetailViewModel>(order);
@@ -64,7 +64,31 @@ public class OrderController : Controller
     }
 
     [HttpGet("Create")]
-    public async Task<IActionResult> CreateSelf()
+    public async Task<IActionResult> Create()
+    {
+        var availableBooks = await _inventoryItemFacade.GetAllInventoryItems();
+
+        var bookStores = await _bookStoreFacade.GetAllBookStores();
+
+        var viewModel = new OrderCreateViewModel
+        {
+            OrderItems = new List<OrderItemViewModel>(),
+            AvailableBooks = availableBooks.Adapt<IList<OrderAvailableBooksViewModel>>(),
+            AvailableBookStores = bookStores.Adapt<IList<OrderBookStoresViewModel>>(),
+        };
+        
+        for (int i = 0; i < viewModel.AvailableBooks.Count(); i++)
+        {
+            DetailedBookViewDto detailedBookView = await _bookFacade.FindBookByIdAsync(viewModel.AvailableBooks[i].BookId);
+            viewModel.AvailableBooks[i].Price = detailedBookView.Price;
+            viewModel.AvailableBooks[i].Title = detailedBookView.Title;
+        }
+
+        return View(viewModel);
+    }
+   
+    [HttpPost("Create")]
+    public async Task<IActionResult> Create(OrderCreateViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -75,28 +99,16 @@ public class OrderController : Controller
 
         if (user == null)
         {
-            return Unauthorized();
+            Unauthorized();
         }
 
-        var orderCreateResult = await _orderFacade.CreateOrderAsync(user.Id);
+        var order = await _orderFacade.CreateOrderAsync(user.UserId);
 
-        return RedirectToAction(nameof(Edit), new { id = orderCreateResult.Id });
+        AddSelectedItems(model.AddedItems, model.SelectedBookStore, order.Id);
 
-    }
-   
-    [HttpPost("Create/{userId:long}")]
-    public async Task<IActionResult> Create(long userId)
-    {
-        var user = await _userManager.GetUserAsync(User);
+        RemoveSelectedItems(model.RemovedOrderItems);
 
-        if (user == null)
-        {
-            return Unauthorized();
-        }
-
-        var orderCreateResult = await _orderFacade.CreateOrderAsync(userId);
-
-        return RedirectToAction(nameof(Edit), new { id = orderCreateResult.Id });
+        return RedirectToAction(nameof(Detail), new { id = order.Id });
 
     }
 
@@ -207,7 +219,7 @@ public class OrderController : Controller
         }
 
         var user = await _userManager.GetUserAsync(User);
-        if(order.UserId != user.Id)
+        if(order.UserId != user.UserId)
         {
             Unauthorized();
         }
