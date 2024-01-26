@@ -5,11 +5,13 @@ using MVC.Models.InventoryItem;
 using Mapster;
 using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using DataAccessLayer.Models.Enums;
 
 namespace MVC.Controllers;
 
 [Route("Manager")]
-//[Authorize(Roles = "Manager")]
+[Authorize(Roles = UserRoles.Manager)]
 public class ManagerController : Controller
 {
     private readonly IInventoryItemFacade _inventoryItemFacade;
