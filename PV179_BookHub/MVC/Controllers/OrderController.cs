@@ -102,7 +102,7 @@ public class OrderController : Controller
 
         if (user == null)
         {
-            Unauthorized();
+            return Unauthorized();
         }
 
         var order = await _orderFacade.CreateOrderAsync(user.Id);

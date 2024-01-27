@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using BusinessLayer.DTOs.Author.View;
-using BusinessLayer.DTOs.Book.Create;
-using BusinessLayer.DTOs.Book.Filter;
 using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.DTOs.BookRecommendation.View;
 using BusinessLayer.Services.Order;
@@ -78,7 +75,6 @@ public class BookRecommendationFacade : BaseFacade, IBookRecommendationFacade
                 if (userProfile.PreferredAuthors.Contains(book.Author.Id))
                 {
                     recommendedBooks.Add(book);
-                    continue;
                 }
             }
         }
