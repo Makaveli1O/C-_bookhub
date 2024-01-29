@@ -1,6 +1,4 @@
-﻿using DataAccessLayer.Models.Account;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.Facades.Publisher;
 using BusinessLayer.DTOs.Publisher.Create;
 using DataAccessLayer.Models.Enums;

@@ -2,7 +2,6 @@
 using BusinessLayer.Facades.BookStore;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models.InventoryItem;
-using Mapster;
 using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
