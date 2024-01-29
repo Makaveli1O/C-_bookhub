@@ -5,6 +5,7 @@ using DataAccessLayer.DependencyInjection;
 using Infrastructure.DependencyInjection;
 using BusinessLayer.DependencyInjection;
 using BusinessLayer.Middleware;
+using MVC.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ builder.Services.RegisterDALDependencies(configuration);
 builder.Services.RegisterInfrastructureDependencies();
 
 builder.Services.RegisterBLDependencies();
+
+builder.Services.RegiterMVCDependencies();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

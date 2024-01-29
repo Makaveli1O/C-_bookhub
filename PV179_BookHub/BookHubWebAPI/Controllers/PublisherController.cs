@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.DTOs.Publisher.Create;
+using BusinessLayer.DTOs.Publisher.Filter;
 using BusinessLayer.Facades.Publisher;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,5 +53,13 @@ public class PublisherController : ControllerBase
     {
         await _publisherFacade.DeletePublisherAsync(id);
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("filter")]
+    public async Task<IActionResult> FetchPublishersByFilters([FromQuery] PublisherFilterDto publisherFilterDto)
+    {
+        var publishers = await _publisherFacade.FetchFilteredPublishersAsync(publisherFilterDto);
+        return Ok(publishers);
     }
 }

@@ -43,7 +43,7 @@ public static class BLDependencyInjection
         services.AddAutoMapper(typeof(WishListProfile));
         services.AddAutoMapper(typeof(AuthorBookAssociationProfile));
 
-        services.AddAutoMapper(typeof(QueryParamsProfile));
+        services.AddAutoMapper(typeof(QueryMappingProfile));
     }
 
     private static void RegisterServicesAndFacades(IServiceCollection services)

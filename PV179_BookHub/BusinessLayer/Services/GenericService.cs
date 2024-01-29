@@ -45,17 +45,23 @@ public class GenericService<TEntity, TKey> : BaseService, IGenericService<TEntit
         Query.Filter = filter;
         Query.QueryParams = queryParams;
 
+        Query
+            .Where(Query.Filter.CreateExpression());
+
+        var totalCount = await Query.CountTotalAsync();
+
         if (includes != null)
         {
             Query.Include(includes);
         }
 
-        Query
-            .Where(Query.Filter.CreateExpression())
-            .Page(Query.QueryParams.PageNumber, Query.QueryParams.PageSize)
-            .SortBy(Query.QueryParams.SortParameter, Query.QueryParams.SortAscending);
+        var result = await Query
+                        .Page(Query.QueryParams.PageNumber, Query.QueryParams.PageSize)
+                        .SortBy(Query.QueryParams.SortParameter, Query.QueryParams.SortAscending)
+                        .ExecuteAsync();
+        result.TotalItemsCount = totalCount;
 
-        return await Query.ExecuteAsync();
+        return result;
     }
 
     public virtual async Task<QueryResult<TEntity>> FetchFilteredAsync(IFilter<TEntity> filter, QueryParams queryParams)

@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using BusinessLayer.DTOs.Author.Create;
+using BusinessLayer.DTOs.Author.Filter;
 using BusinessLayer.DTOs.Author.View;
+using BusinessLayer.DTOs.BaseFilter;
 using BusinessLayer.Services.Author;
+using Infrastructure.Query;
+using Infrastructure.Query.Filters.EntityFilters;
 
 namespace BusinessLayer.Facades.Author;
 
@@ -27,6 +31,15 @@ public class AuthorFacade : BaseFacade, IAuthorFacade
         var author = await _authorService.FindByIdAsync(id);
 
         await _authorService.DeleteAsync(author);
+    }
+
+    public async Task<FilterResultDto<GeneralAuthorViewDto>> FetchFilteredAuthorsAsync(AuthorFilterDto authorFilterDto)
+    {
+        var queryResult = await _authorService
+            .FetchFilteredAsync(_mapper.Map<AuthorFilter>(authorFilterDto),
+                                _mapper.Map<QueryParams>(authorFilterDto));
+
+        return _mapper.Map<FilterResultDto<GeneralAuthorViewDto>>(queryResult);
     }
 
     public async Task<DetailedAuthorViewDto> FindAuthorByIdAsync(long id)

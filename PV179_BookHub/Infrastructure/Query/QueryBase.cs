@@ -29,14 +29,18 @@ public class QueryBase<TEntity, TKey> : IQuery<TEntity, TKey> where TEntity : cl
 
         var queryResult = new QueryResult<TEntity>()
         {
-            TotalItemsCount = result.Count(),
             Items = result,
-            PageSize = QueryParams.PageSize,
+            PageSize = QueryParams?.PageSize ?? PagingParameters.defaultPageSize,
             PagingEnabled = true,
-            RequestedPageNumber = QueryParams.PageNumber
+            PageNumber = QueryParams?.PageNumber ?? PagingParameters.defaultPageNumber
         };
 
         return queryResult;
+    }
+
+    public async Task<int> CountTotalAsync()
+    {
+        return await _query.CountAsync();
     }
 
     public IQuery<TEntity, TKey> Page(int pageToFetch, int pageSize)

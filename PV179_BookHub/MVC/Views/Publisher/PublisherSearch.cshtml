@@ -1,0 +1,18 @@
+﻿@using MVC.Models.Publisher;
+@model PublisherSearchModel
+
+<form asp-action="Index" asp-controller="Publisher" method="get">
+    <input type="text" name="CONTAINS_Name" placeholder="Name" />
+    <input type="text" name="CONTAINS_City" placeholder="City" />
+    <input type="text" name="CONTAINS_Country" placeholder="Country" />
+    <input type="number" name="GE_YearFounded" placeholder="Min Year Founded" />
+    <input type="number" name="LE_YearFounded" placeholder="Max Year Founded" />
+
+    <select asp-for="SortParameter" asp-items="Html.GetEnumSelectList<PublisherSortParameters>()"></select>
+    <label class="control-label" for="">
+        @Html.CheckBoxFor(model => model.SortAscending, false)
+        Sort Ascending
+    </label>
+
+    <button type="submit">Search</button>
+</form>

@@ -1,0 +1,15 @@
+﻿@using MVC.Models.Author;
+@model AuthorSearchModel
+
+<form asp-action="Index" asp-controller="Author" method="get">
+    <input type="text" name="CONTAINS_Name" placeholder="Name" />
+    <input type="text" name="CONTAINS_Biography" placeholder="Biography" />
+
+    <select asp-for="SortParameter" asp-items="Html.GetEnumSelectList<AuthorSortParameters>()"></select>
+    <label class="control-label" for="">
+        @Html.CheckBoxFor(model => model.SortAscending, false)
+        Sort Ascending
+    </label>
+
+    <button type="submit">Search</button>
+</form>

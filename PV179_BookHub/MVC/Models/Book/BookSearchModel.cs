@@ -1,9 +1,9 @@
-﻿using BusinessLayer.DTOs.BaseFilter;
-using DataAccessLayer.Models.Enums;
+﻿using DataAccessLayer.Models.Enums;
+using MVC.Models.Base;
 
-namespace BusinessLayer.DTOs.Book.Filter;
+namespace MVC.Models.Book;
 
-public class BookFilterDto : FilterDto
+public class BookSearchModel : BaseSearchModel<BookSortParam>
 {
     public string? CONTAINS_Title { get; set; }
     public string? Author { get; set; }

@@ -25,7 +25,10 @@ public class BookService : GenericService<BookEntity, long>
 
     public override async Task<QueryResult<BookEntity>> FetchFilteredAsync(IFilter<BookEntity> filter, QueryParams queryParams)
     {
-        return await ExecuteQueryAsync(filter, queryParams, book => book.Authors, book => book.Publisher);
+        return await ExecuteQueryAsync(filter, queryParams, 
+            book => book.Authors, 
+            book => book.Publisher,
+            book => book.AuthorBookAssociations);
     }
 
     public override async Task<BookEntity> FindByIdAsync(long id)

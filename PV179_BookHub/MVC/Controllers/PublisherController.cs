@@ -5,7 +5,11 @@ using BusinessLayer.Facades.Publisher;
 using BusinessLayer.DTOs.Publisher.Create;
 using DataAccessLayer.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
+using AutoMapper;
+using MVC.Models.Publisher;
+using BusinessLayer.DTOs.Publisher.Filter;
+using MVC.Models.Base;
+using BusinessLayer.DTOs.Publisher.View;
 
 namespace MVC.Controllers;
 
@@ -14,18 +18,28 @@ public class PublisherController : Controller
 {
     private readonly IPublisherFacade _publisherFacade;
     private readonly UserManager<User> _userManager;
+    private readonly IMapper _mapper;
 
-    public PublisherController(IPublisherFacade publisherFacade, UserManager<User> userManager)
+    public PublisherController(IPublisherFacade publisherFacade, UserManager<User> userManager, IMapper mapper)
     {
         _publisherFacade = publisherFacade;
         _userManager = userManager;
+        _mapper = mapper;
     }
 
+
     [AllowAnonymous]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(PublisherSearchModel publisherSearchModel)
     {
-        var publishers = await _publisherFacade.GetAllPublishersAsync();
-        return View(publishers);
+        var result = await _publisherFacade
+            .FetchFilteredPublishersAsync(
+                _mapper.Map<PublisherFilterDto>(publisherSearchModel)
+                );
+
+        var viewModel = _mapper.Map<GenericFilteredModel<PublisherSearchModel, GeneralPublisherViewDto>>(result);
+        viewModel.SearchModel = publisherSearchModel;
+
+        return View(viewModel);
     }
 
     [AllowAnonymous]

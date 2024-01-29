@@ -12,6 +12,7 @@ public class BookProfile : Profile
     public BookProfile()
     {
         CreateMap<CreateBookDto, BookEntity>();
+        CreateMap<DetailedBookViewDto, UpdateBookDto>();
 
         CreateMap<BookEntity, GeneralBookViewDto>()
             .ForMember(
@@ -33,10 +34,7 @@ public class BookProfile : Profile
                     ));
 
         CreateMap<BookFilterDto, BookFilter>()
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-
-        CreateMap<DetailedBookViewDto, UpdateBookDto>();
-
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null)); 
     }
 
     private static AuthorEntity? ExtractPrimaryAuthor(BookEntity bookEntity)
