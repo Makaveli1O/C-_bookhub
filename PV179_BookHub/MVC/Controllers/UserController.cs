@@ -1,6 +1,6 @@
-﻿using BusinessLayer.Facades.User;
+﻿using AutoMapper;
+using BusinessLayer.Facades.User;
 using DataAccessLayer.Models.Account;
-using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +13,13 @@ public class UserController : Controller
 {
     private readonly UserManager<User> _userManager;
     private readonly IUserFacade _userFacade;
+    private readonly IMapper _mapper;
 
-    public UserController(UserManager<User> userManager, IUserFacade userFacade)
+    public UserController(UserManager<User> userManager, IUserFacade userFacade, IMapper mapper)
     {
         _userManager = userManager;
         _userFacade = userFacade;
+        _mapper = mapper;
     }
     
     public IActionResult Index()
@@ -42,7 +44,7 @@ public class UserController : Controller
     public async Task<IActionResult> Detail(long id)
     {
         var user = await _userFacade.FetchUserAsync(id);
-        UserDetailViewModel userDetail = user.Adapt<UserDetailViewModel>();
+        UserDetailViewModel userDetail = _mapper.Map<UserDetailViewModel>(user);
 
         return View(userDetail);
     }

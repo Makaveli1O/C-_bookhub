@@ -1,14 +1,12 @@
 ﻿using BusinessLayer.DTOs.WishList.Create;
-using BusinessLayer.DTOs.WishList.View;
 using BusinessLayer.Facades.WishList;
 using DataAccessLayer.Models.Account;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models.WishList;
 using System.Text.Json;
-using Mapster;
 using BusinessLayer.Facades.Book;
+using AutoMapper;
 
 namespace MVC.Controllers;
 
@@ -19,16 +17,19 @@ public class WishListController : Controller
     private readonly JsonSerializerOptions _jsonSerializerOptions;
     private readonly IWishListFacade _wishListFacade;
     private readonly IBookFacade _bookFacade;
+    private readonly IMapper _mapper;
 
     public WishListController(
         UserManager<User> userManager,
         IWishListFacade wishListFacade,
-        IBookFacade bookFacade
+        IBookFacade bookFacade,
+        IMapper mapper
         )
     {
         _userManager = userManager;
         _wishListFacade = wishListFacade;
         _bookFacade = bookFacade;
+        _mapper = mapper;
 
         _jsonSerializerOptions = new JsonSerializerOptions
         {
@@ -82,7 +83,7 @@ public class WishListController : Controller
             return Unauthorized();
         }
 
-        var wishList = model.Adapt<CreateWishListDto>();
+        var wishList = _mapper.Map<CreateWishListDto>(model);
         wishList.UserId = user.Id;
 
         var wishListResult = await _wishListFacade.CreateWishListAsync(wishList);
@@ -103,8 +104,8 @@ public class WishListController : Controller
         var viewModel = new WishListUpdateViewModel
         {
             Description = wishList.Description,
-            WishListItems = wishListItems.Adapt<IList<WishListItemViewModel>>(),
-            AvailableBooks = availableBooks.Adapt<IList<WishListAvailableBooksViewModel>>()
+            WishListItems = _mapper.Map<IList<WishListItemViewModel>>(wishListItems),
+            AvailableBooks =_mapper.Map<IList<WishListAvailableBooksViewModel>>(availableBooks)
         };
 
         return View(viewModel);

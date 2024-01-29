@@ -1,6 +1,4 @@
 ﻿using BusinessLayer.Facades.Address;
-using DataAccessLayer.Models.Account;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.DTOs.Address.Create;
 using Microsoft.AspNetCore.Authorization;
@@ -12,12 +10,10 @@ namespace MVC.Controllers;
 public class AddressController : Controller
 {
     private readonly IAddressFacade _addressFacade;
-    private readonly UserManager<User> _userManager;
 
-    public AddressController(IAddressFacade addressFacade, UserManager<User> userManager)
+    public AddressController(IAddressFacade addressFacade)
     {
         _addressFacade = addressFacade;
-        _userManager = userManager;
     }
 
     public async Task<IActionResult> Index()

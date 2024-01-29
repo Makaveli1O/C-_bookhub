@@ -7,6 +7,7 @@ using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using DataAccessLayer.Models.Enums;
+using AutoMapper;
 
 namespace MVC.Controllers;
 
@@ -17,14 +18,17 @@ public class ManagerController : Controller
     private readonly IInventoryItemFacade _inventoryItemFacade;
     private readonly IBookStoreFacade _bookStoreFacade;
     private readonly UserManager<User> _userManager;
+    private readonly IMapper _mapper;
 
     public ManagerController(IInventoryItemFacade inventoryItemFacade,
                              IBookStoreFacade bookStoreFacade,
-                             UserManager<User> userManager)
+                             UserManager<User> userManager,
+                             IMapper mapper)
     {
         _inventoryItemFacade = inventoryItemFacade;
         _bookStoreFacade = bookStoreFacade;
         _userManager = userManager;
+        _mapper = mapper;
     }
     public IActionResult Index()
     {
@@ -76,9 +80,9 @@ public class ManagerController : Controller
         var bookStore = await _bookStoreFacade.GetBookStoreByUserId(user.Id); // or UserID
         model.BookStoreId = bookStore.Id;
         
-        var createdInventoryItem = await _inventoryItemFacade.CreateInventoryItem(model.Adapt<CreateInventoryItemDto>());
+        var createdInventoryItem = await _inventoryItemFacade.CreateInventoryItem(_mapper.Map<CreateInventoryItemDto>(model));
 
-        return View(createdInventoryItem.Adapt<InventoryItemCreateViewModel>());
+        return View(_mapper.Map<InventoryItemCreateViewModel>(createdInventoryItem));
     }
 
     [HttpGet]
@@ -86,7 +90,7 @@ public class ManagerController : Controller
     public async Task<IActionResult> UpdateInventoryItem(long id)
     {
         var inventoryItems = await _inventoryItemFacade.GetInventoryItem(id);
-        return View(inventoryItems.Adapt<InventoryItemCreateViewModel>());
+        return View(_mapper.Map<InventoryItemCreateViewModel>(inventoryItems));
     }
 
     [HttpPost]
@@ -98,9 +102,9 @@ public class ManagerController : Controller
             return BadRequest(ModelState);
         }
 
-        var updatedInventoryItem = await _inventoryItemFacade.UpdateInventoryItem(id, model.Adapt<CreateInventoryItemDto>());
+        var updatedInventoryItem = await _inventoryItemFacade.UpdateInventoryItem(id, _mapper.Map<CreateInventoryItemDto>(model));
         
-        return View(updatedInventoryItem.Adapt<InventoryItemCreateViewModel>());
+        return View(_mapper.Map<InventoryItemCreateViewModel>(updatedInventoryItem));
     }
 
     [HttpPost]

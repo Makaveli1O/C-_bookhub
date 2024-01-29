@@ -83,7 +83,7 @@ public class AccountController : Controller
 
             if (user == null)
             {
-                ModelState.AddModelError(String.Empty, "Invalid username or password.");
+                ModelState.AddModelError(string.Empty, "Invalid username or password.");
                 return View(model);
             }
 
@@ -95,7 +95,7 @@ public class AccountController : Controller
             }
             else
             {
-                ModelState.AddModelError(String.Empty, "Invalid username or password.");
+                ModelState.AddModelError(string.Empty, "Invalid username or password.");
             }
         }
 
@@ -141,7 +141,7 @@ public class AccountController : Controller
             }
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(String.Empty, error.Description);
+                ModelState.AddModelError(string.Empty, error.Description);
             }
         }
         return View(changePasswordViewModel);
@@ -215,7 +215,7 @@ public class AccountController : Controller
             }
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(String.Empty, error.Description);
+                ModelState.AddModelError(string.Empty, error.Description);
             }
         }
         return View();

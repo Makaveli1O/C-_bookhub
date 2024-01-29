@@ -17,13 +17,11 @@ namespace MVC.Controllers;
 public class PublisherController : Controller
 {
     private readonly IPublisherFacade _publisherFacade;
-    private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
 
-    public PublisherController(IPublisherFacade publisherFacade, UserManager<User> userManager, IMapper mapper)
+    public PublisherController(IPublisherFacade publisherFacade, IMapper mapper)
     {
         _publisherFacade = publisherFacade;
-        _userManager = userManager;
         _mapper = mapper;
     }
 
