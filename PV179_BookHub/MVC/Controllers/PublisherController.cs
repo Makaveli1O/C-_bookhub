@@ -1,6 +1,4 @@
-﻿using DataAccessLayer.Models.Account;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.Facades.Publisher;
 using BusinessLayer.DTOs.Publisher.Create;
 using DataAccessLayer.Models.Enums;
@@ -17,13 +15,11 @@ namespace MVC.Controllers;
 public class PublisherController : Controller
 {
     private readonly IPublisherFacade _publisherFacade;
-    private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
 
-    public PublisherController(IPublisherFacade publisherFacade, UserManager<User> userManager, IMapper mapper)
+    public PublisherController(IPublisherFacade publisherFacade, IMapper mapper)
     {
         _publisherFacade = publisherFacade;
-        _userManager = userManager;
         _mapper = mapper;
     }
 

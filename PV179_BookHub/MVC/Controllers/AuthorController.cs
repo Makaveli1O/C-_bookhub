@@ -1,6 +1,4 @@
-﻿using DataAccessLayer.Models.Account;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.Facades.Author;
 using BusinessLayer.DTOs.Author.Create;
 using DataAccessLayer.Models.Enums;
@@ -17,13 +15,11 @@ namespace MVC.Controllers;
 public class AuthorController : Controller
 {
     private readonly IAuthorFacade _authorFacade;
-    private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
 
-    public AuthorController(IAuthorFacade authorFacade, UserManager<User> userManager, IMapper mapper)
+    public AuthorController(IAuthorFacade authorFacade, IMapper mapper)
     {
         _authorFacade = authorFacade;
-        _userManager = userManager;
         _mapper = mapper;
     }
 

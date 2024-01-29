@@ -1,6 +1,4 @@
-﻿using DataAccessLayer.Models.Account;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.Facades.Book;
 using BusinessLayer.Facades.Publisher;
 using BusinessLayer.Facades.Author;
@@ -24,15 +22,13 @@ public class BookController : Controller
     private readonly IBookFacade _bookFacade;
     private readonly IPublisherFacade _publisherFacade;
     private readonly IAuthorFacade _authorFacade;
-    private readonly UserManager<User> _userManager;
 
-    public BookController(IMapper mapper, IBookFacade bookFacade, IAuthorFacade authorFacade, IPublisherFacade publisherFacade, UserManager<User> userManager)
+    public BookController(IMapper mapper, IBookFacade bookFacade, IAuthorFacade authorFacade, IPublisherFacade publisherFacade)
     {
         _mapper = mapper;
         _bookFacade = bookFacade;
         _publisherFacade = publisherFacade;
         _authorFacade = authorFacade;
-        _userManager = userManager;
     }
 
     [AllowAnonymous]

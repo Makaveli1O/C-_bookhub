@@ -1,7 +1,6 @@
 ﻿using BusinessLayer.Facades.Order;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using Mapster;
 using MVC.Models.Order;
 using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +8,7 @@ using BusinessLayer.Facades.BookStore;
 using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.Facades.Book;
 using BusinessLayer.DTOs.Order.Create;
+using AutoMapper;
 
 namespace MVC.Controllers;
 
@@ -21,19 +21,23 @@ public class OrderController : Controller
     private readonly IBookStoreFacade _bookStoreFacade;
     private readonly IInventoryItemFacade _inventoryItemFacade;
     private readonly IBookFacade _bookFacade;
+    private readonly IMapper _mapper;
 
     public OrderController(
         IOrderFacade orderFacade,
         IBookStoreFacade bookStoreFacade,
         IInventoryItemFacade inventoryItemFacade,
         IBookFacade bookFacade,
-        UserManager<User> userManager)
+        UserManager<User> userManager,
+        IMapper mapper)
     {
         _bookStoreFacade = bookStoreFacade;
         _orderFacade = orderFacade;
         _inventoryItemFacade = inventoryItemFacade;
         _userManager = userManager;
         _bookFacade = bookFacade;
+        _mapper = mapper;
+
         _jsonSerializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -47,7 +51,7 @@ public class OrderController : Controller
         //would be nicer if we had DetailedOrderItem here instead of the General one
         var order = await _orderFacade.FindOrderByIdAsync(id);
 
-        var model = order.Adapt<OrderDetailViewModel>();
+        var model = _mapper.Map<OrderDetailViewModel>(order);
 
         return Json(model, _jsonSerializerOptions);
     }
@@ -108,9 +112,9 @@ public class OrderController : Controller
         // mapping
         var viewModel = new OrderEditViewModel
         {
-            OrderItems = orderItems.Adapt<IList<OrderItemViewModel>>(),
-            AvailableBooks = availableBooks.Adapt<IList<OrderAvailableBooksViewModel>>(),
-            AvailableBookStores = bookStores.Adapt<IList<OrderBookStoresViewModel>>(),
+            OrderItems = _mapper.Map<IList<OrderItemViewModel>>(orderItems),
+            AvailableBooks = _mapper.Map<IList<OrderAvailableBooksViewModel>>(availableBooks),
+            AvailableBookStores = _mapper.Map<IList<OrderBookStoresViewModel>>(bookStores),
         };
         // more mappping
         for(int i = 0; i < viewModel.AvailableBooks.Count(); i++)
