@@ -1,11 +1,16 @@
-﻿using BusinessLayer.Facades.Book;
+﻿using BusinessLayer.DTOs.BookReview.Create;
+using BusinessLayer.DTOs.BookReview.Update;
+using BusinessLayer.DTOs.BookReview.View;
+using BusinessLayer.Facades.Book;
 using BusinessLayer.Facades.BookReview;
+using BusinessLayer.Facades.BookStore;
 using BusinessLayer.Facades.User;
 using DataAccessLayer.Models.Account;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using MVC.Models.BookReview;
 
 namespace MVC.Controllers;
@@ -16,18 +21,21 @@ public class BookReviewController : Controller
     private readonly IBookReviewFacade _bookReviewFacade;
     private readonly IBookFacade _bookFacade;
     private readonly IUserFacade _userFacade;
+    private readonly IInventoryItemFacade _inventoryItemFacade;
     private readonly UserManager<User> _userManager;
 
     public BookReviewController(
         IBookReviewFacade bookReviewFacade,
         IBookFacade bookFacade,
         IUserFacade userFacade,
+        IInventoryItemFacade inventoryItemFacade,
         UserManager<User> userManager
         )
     {
         _bookReviewFacade = bookReviewFacade;
         _bookFacade = bookFacade;
         _userFacade = userFacade;
+        _inventoryItemFacade = inventoryItemFacade;
         _userManager = userManager;
     }
 
@@ -63,8 +71,98 @@ public class BookReviewController : Controller
             model.Add(modelElement);
         }
 
-        
-
         return View(model);
+    }
+
+    [HttpGet("Create")]
+    public async Task<IActionResult> Create()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        var availableBooks = await _inventoryItemFacade.GetUniqueInventoryItems();
+
+
+        var viewModel = new BookReviewCreateViewModel
+        {
+            ReviewerId = user.Id
+        };
+
+        foreach (var book in availableBooks)
+        {
+            var bookTitle = (await _bookFacade.FindBookByIdAsync(book.Id))?.Title;
+
+            if (bookTitle != null)
+            {
+                viewModel.AvailableBooks.Add(
+                    new BookReviewAvailableBooksViewModel
+                    {
+                        BookId = book.Id,
+                        Title = bookTitle
+                    }
+                );
+            }
+        }
+
+        return View(viewModel);
+    }
+
+    [HttpPost("Create")]
+    public async Task<IActionResult> Create(BookReviewCreateViewModel model)
+    {
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var createBookReviewDto = model.Adapt<CreateBookReviewDto>();
+        createBookReviewDto.BookId = model.SelectedBook;
+
+        var bookView = await _bookReviewFacade.CreateBookReview(createBookReviewDto);
+
+        return View("Detail" ,bookView.Adapt<GeneralBookReviewViewDto>());
+    }
+
+    [HttpGet("Edit/{id:long}")]
+    public async Task<IActionResult> Edit(long id)
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        var bookReview = _bookReviewFacade.FindBookReviewsAsync(id);
+        if (bookReview == null)
+        {
+            return NotFound();
+        }
+
+        var model = bookReview.Adapt<BookReviewEditViewModel>();
+        model.UserId = user.Id;
+        return View(model);
+    }
+
+    [HttpPost("Edit")]
+    public async Task<IActionResult> Edit(BookReviewEditViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var updateDto = model.Adapt<UpdateBookReviewDto>();
+
+        var generalViewDto = await _bookReviewFacade.UpdateBookReview(model.UserId, updateDto);
+
+        var modelView = generalViewDto.Adapt<GeneralBookReviewViewDto>();
+
+        return View("Detail", modelView);
     }
 }
