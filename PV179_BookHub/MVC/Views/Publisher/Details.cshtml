@@ -40,6 +40,40 @@
         </dd>
     </dl>
 </div>
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            ISBN
+        </th>
+        <th></th>
+    </tr>
+
+
+    @if (Model != null && Model.Books.Count() > 0)
+    {
+        foreach (var item in Model.Books)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISBN)
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <td colspan="6" class="text-center"><b>No Books Availible.</b></td>
+
+    }
+</table>
+
 <div>
     @if (User.IsInRole(UserRoles.Admin))
     {

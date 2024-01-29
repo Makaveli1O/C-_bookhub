@@ -26,4 +26,20 @@ public class AuthorService : GenericService<AuthorEntity, long>, IAuthorService
 
         return authors;
     }
+
+    public override async Task<AuthorEntity> FindByIdAsync(long id)
+    {
+        var book = await Repository
+            .GetByIdAsync(
+                id,
+                x => x.Books
+            );
+
+        if (book == null)
+        {
+            throw new NoSuchEntityException<long>(typeof(BookEntity), id);
+        }
+
+        return book;
+    }
 }
