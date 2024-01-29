@@ -1,6 +1,6 @@
-﻿@using BusinessLayer.DTOs.Publisher.View;
+﻿@using MVC.Models.Publisher;
 @using DataAccessLayer.Models.Enums
-@model DetailedPublisherViewDto
+@model PublisherDetailViewModel;
 
 <h1>Publisher Details</h1>
 <hr />
@@ -69,7 +69,7 @@
     }
     else
     {
-        <td colspan="6" class="text-center"><b>No Books Availible.</b></td>
+        <td colspan="2" class="text-center"><b>No Books Availible.</b></td>
 
     }
 </table>

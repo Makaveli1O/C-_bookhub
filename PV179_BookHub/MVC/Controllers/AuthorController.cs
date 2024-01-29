@@ -45,7 +45,7 @@ public class AuthorController : Controller
         {
             ViewBag.Message = "Author Saved Successfully";
         }
-        return View(author);
+        return View(_mapper.Map<AuthorDetailViewModel>(author));
     }
 
     public ActionResult Create()
