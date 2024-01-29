@@ -138,7 +138,7 @@ public class BookReviewController : Controller
             return Unauthorized();
         }
 
-        var bookReview = _bookReviewFacade.FindBookReviewsAsync(id);
+        var bookReview = await _bookReviewFacade.FindBookReviewsAsync(id);
         if (bookReview == null)
         {
             return NotFound();
@@ -146,7 +146,7 @@ public class BookReviewController : Controller
 
         var model = bookReview.Adapt<BookReviewEditViewModel>();
         model.UserId = user.Id;
-        return View(model);
+        return View("Edit", model);
     }
 
     [HttpPost("Edit")]
