@@ -6,6 +6,7 @@ using Infrastructure.DependencyInjection;
 using BusinessLayer.DependencyInjection;
 using BusinessLayer.Middleware;
 using MVC.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 
 var app = builder.Build();
+
+if (Convert.ToBoolean(configuration.GetSection("ApplyMigrations").Value))
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<BookHubDbContext>();
+        db.Database.Migrate();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

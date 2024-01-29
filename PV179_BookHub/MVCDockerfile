@@ -1,0 +1,30 @@
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+EXPOSE 80
+VOLUME /app/data
+
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+COPY ["MVC/MVC.csproj", "MVC/"]
+COPY ["DataAccessLayer/DataAccessLayer.csproj", "DataAccessLayer/"]
+COPY ["DAL.SQLite.Migrations/DAL.SQLite.Migrations.csproj", "DAL.SQLite.Migrations/"]
+COPY ["DALMSSql.Migrations/DAL.MSSql.Migrations.csproj", "DALMSSql.Migrations/"]
+COPY ["BusinessLayer/BusinessLayer.csproj", "BusinessLayer/"]
+COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
+RUN dotnet restore "MVC/MVC.csproj"
+COPY . .
+
+WORKDIR "/src/MVC"
+RUN dotnet build "MVC.csproj" -c Release -o /app/build
+
+
+FROM build AS publish
+RUN dotnet publish "MVC.csproj" -c Release -o /app/publish
+
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+ENTRYPOINT ["dotnet", "MVC.dll"]
