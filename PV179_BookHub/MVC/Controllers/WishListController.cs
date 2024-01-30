@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using MVC.Models.Base;
 using BusinessLayer.DTOs.WishList.View;
 using BusinessLayer.DTOs.WishList.Filter;
+using DataAccessLayer.Models.Preferences;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MVC.Controllers;
 
@@ -98,7 +100,7 @@ public class WishListController : Controller
         return View(result);
     }
 
-    public async Task<IActionResult> Edit(int id)
+    public async Task<IActionResult> Edit(long id)
     {
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
@@ -114,7 +116,7 @@ public class WishListController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, UpdateWishListViewModel updateWishListViewModel)
+    public async Task<IActionResult> Edit(long id, UpdateWishListViewModel updateWishListViewModel)
     {
         var user = await _userManager.GetUserAsync(User);
         var wishList = await _wishListFacade.FetchWishListAsync(id);
@@ -127,7 +129,7 @@ public class WishListController : Controller
         return RedirectToAction(nameof(Details), new { id, updated = true });
     }
 
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(long id)
     {
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
@@ -144,7 +146,7 @@ public class WishListController : Controller
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
+    public async Task<IActionResult> DeleteConfirmed(long id)
     {
         var user = await _userManager.GetUserAsync(User);
         var wishlist = await _wishListFacade.FetchWishListAsync(id);
@@ -155,5 +157,59 @@ public class WishListController : Controller
 
         await _wishListFacade.DeleteWishListAsync(id);
         return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> CreateItem(long bookId, string bookTitle, string bookISBN)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        ViewBag.WishLists = new SelectList((await _wishListFacade.FetchAllByUserIdAsync(user.Id)).ToList(), "Id", "Description");
+        var result = new CreateWishListItemViewModel()
+        {
+            BookId = bookId,
+            BookTitle = bookTitle,
+            BookISBN = bookISBN
+        };
+        return View(result);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateItem(CreateWishListItemViewModel model)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var wishList = await _wishListFacade.FetchWishListAsync(model.WishListId);
+        if (user == null || wishList.UserId != user.Id)
+        {
+            return Unauthorized();
+        }
+
+        var newItem = await _wishListFacade.CreateWishListItemAsync(_mapper.Map<CreateWishListItemDto>(model));
+
+        return RedirectToAction(nameof(ItemDetails), new { id = newItem.Id, updated = true });
+    }
+
+    public async Task<IActionResult> ItemDetails(long id, bool updated)
+    {
+        var item = await _wishListFacade.FetchSingleItemFromWishListAsync(id);
+        var wishList = await _wishListFacade.FetchWishListAsync(item.WishListId);
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null || wishList.UserId != user.Id)
+        {
+            return Unauthorized();
+        }
+
+        if (updated)
+        {
+            ViewBag.Message = "WishList Item Saved Successfully";
+        }
+
+        var result = _mapper.Map<DetailsWishListItemModel>(item);
+
+        return View(result);
     }
 }

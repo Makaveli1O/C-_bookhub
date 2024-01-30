@@ -109,5 +109,10 @@
         @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" })
         <span>|</span>
     }
+    @if (User.IsInRole(UserRoles.User))
+    {
+        @Html.ActionLink("Add to WishList", "CreateItem", "WishList", new { bookId = Model.Id, bookTitle = Model.Title, bookISBN = Model.ISBN }, new { @class = "link-info" })
+        <span>|</span>
+    }
     @Html.ActionLink("Back to List", "Index", new { }, new { @class = "link-primary" })
 </div>

@@ -1,0 +1,56 @@
+﻿@using MVC.Models.WishList;
+@using DataAccessLayer.Models.Enums;
+@model DetailsWishListItemModel;
+
+<h1>WishList Item Details</h1>
+<hr />
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WishListId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WishListId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PreferencePriority)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PreferencePriority)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.ISBN)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.ISBN)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole(UserRoles.User))
+    {
+        @Html.ActionLink("Edit", "EditItem", new { Model.Id }, new { @class = "link-warning" })
+        <span>|</span>
+    }
+    @Html.ActionLink("Back to WishList", "Details", new { id = Model.WishListId }, new { @class = "link-primary" })
+</div>
