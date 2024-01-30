@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
 using BusinessLayer.Services;
@@ -41,6 +42,20 @@ public class InventoryItemFacade : BaseFacade, IInventoryItemFacade
     {
         return _mapper.Map<List<DetailedInventoryItemViewDto>>(await _inventoryItemService.FetchAllAsync());
     }
+
+    public async Task<IEnumerable<DetailedBookViewDto>> GetUniqueInventoryItems()
+    {
+        var inventoryItems = await _inventoryItemService.FetchAllAsync();
+
+        var uniqueBookIds = new HashSet<long>();
+
+        var uniqueBooks = inventoryItems
+            .Where(item => uniqueBookIds.Add(item.BookId))
+            .Select(item => _mapper.Map<DetailedBookViewDto>(item.Book));
+
+        return uniqueBooks;
+    }
+
 
     public async Task<DetailedInventoryItemViewDto> GetInventoryItem(long id)
     {

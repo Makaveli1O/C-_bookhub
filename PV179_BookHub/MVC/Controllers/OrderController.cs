@@ -8,6 +8,8 @@ using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.Facades.Book;
 using BusinessLayer.DTOs.Order.Create;
 using AutoMapper;
+using BusinessLayer.DTOs.Order.View;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers;
 
@@ -49,7 +51,7 @@ public class OrderController : Controller
     }
 
     [HttpGet("User/{id:long}")]
-    //[Authorize]
+    [AllowAnonymous]
     public async Task<IActionResult> SingleUserOrders(long id)
     {
         var orders = await _orderFacade.FetchOrdersByUserIdAsync(id);
@@ -149,9 +151,9 @@ public class OrderController : Controller
             return BadRequest(ModelState);
         }
 
-        var user = await _userManager.GetUserAsync(User);
+        var order = await _orderFacade.FindOrderByIdAsync(orderId);
 
-        if (user == null)
+        if (!await IsAuthorized(order))
         {
             Unauthorized();
         }
@@ -189,20 +191,18 @@ public class OrderController : Controller
     [Route("Delete/{orderId:long}")]
     public async Task<IActionResult> Delete(long orderId)
     {
-        var user = await _userManager.GetUserAsync(User);
-
         var order = await _orderFacade.FindOrderByIdAsync(orderId);
 
-        if (user == null || order.UserId != user.Id)
+        if (!await IsAuthorized(order))
         {
-            return Unauthorized();
+            Unauthorized();
         }
+
         await _orderFacade.DeleteOrderByIdAsync(orderId);
 
 		return Ok();
     }
 
-	//[Authorize]
     [Route("{id:long}/Cancel")]
     public async Task<IActionResult> Cancel(long id)
     {
@@ -213,8 +213,7 @@ public class OrderController : Controller
             BadRequest();
         }
 
-        var user = await _userManager.GetUserAsync(User);
-        if(order.UserId != user.Id)
+        if (!await IsAuthorized(order))
         {
             Unauthorized();
         }
@@ -237,8 +236,7 @@ public class OrderController : Controller
             BadRequest();
         }
 
-        var user = await _userManager.GetUserAsync(User);
-        if (order.UserId != user.Id)
+        if (!await IsAuthorized(order))
         {
             Unauthorized();
         }
@@ -260,8 +258,7 @@ public class OrderController : Controller
             BadRequest();
         }
 
-        var user = await _userManager.GetUserAsync(User);
-        if (order.UserId != user.Id)
+        if (!await IsAuthorized(order))
         {
             Unauthorized();
         }
@@ -273,4 +270,16 @@ public class OrderController : Controller
         return View(viewModel);
     }
 
+    private async Task<bool> IsAuthorized(DetailedOrderViewDto order)
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null || order == null)
+            return false;
+
+        if (user.Role == DataAccessLayer.Models.Enums.UserRole.Admin)
+            return true;
+
+        return order.UserId == user.Id;
+    }
 }

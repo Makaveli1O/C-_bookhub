@@ -24,10 +24,19 @@
                 <dd class="col-sm-9">@Model.Role</dd>
             </dl>
             <div class="col-md-2">
-                <<div class="row" style="margin-bottom:10px;"><a asp-action="FetchMyWishList" class="btn btn-info">User Wishlists</a></div>
+                <div class="row" style="margin-bottom:10px;"><a asp-action="FetchMyWishList" class="btn btn-info">User Wishlists</a></div>
                 <div class="row" style="margin-bottom:10px;"><a asp-controller="BookReview" asp-route-id="@Model.Id" asp-action="User" class="btn btn-success">User Book Reviews</a></div>
+                <div class="row" style="margin-bottom:10px;"><a asp-controller="BookReview" asp-action="User" asp-route-id="@Model.Id" class="btn btn-success">View Book Reviews</a></div>
                 <div class="row" style="margin-bottom:10px;"><a asp-controller="Order" asp-route-id="@Model.Id" asp-action="user" class="btn btn-warning">User Orders</a></div>
-                <div class="row"><a asp-controller="Order" asp-action="Create" class="btn btn-dark">Create order</a></div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h3>User Actions:</h3>
+                    <div class="btn-group">
+                        <a asp-controller="BookReview" asp-action="Create" asp-route-reviewerId="@Model.Id" class="btn btn-primary">Create Book Review</a>
+                        <a asp-controller="Order" asp-action="Create" class="btn btn-dark">Create order</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -74,10 +83,9 @@
                     </div>
                 </div>
             </div>
+            <div style="min-height:200px"class="row mt-3">
+            </div>
         }
-        <div class="mt-3">
-            <a asp-action="Users" class="btn btn-primary">Back to Users</a>
-        </div>
 
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
