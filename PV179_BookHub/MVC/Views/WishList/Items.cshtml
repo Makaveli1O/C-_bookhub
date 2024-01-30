@@ -1,0 +1,54 @@
+﻿@using BusinessLayer.DTOs.WishList.View;
+@using DataAccessLayer.Models.Enums;
+@model IEnumerable<GeneralWishListItemViewDto>;
+
+<h1>WishList Items</h1>
+
+<table class="table">
+    <tr>
+        <th>
+            Preference Priority
+        </th>
+        <th>
+            Book Title
+        </th>
+        <th>
+            Book ISBN
+        </th>
+        <th></th>
+    </tr>
+
+
+    @if (Model != null && Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PreferencePriority)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Book.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Book.ISBN)
+                </td>
+                <td class="text-end">
+                    @if (User.IsInRole(UserRoles.User))
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "link-primary" })
+                        <span>|</span>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" })
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-danger" })
+                    }
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <td colspan="6" class="text-center"><b>No Items Available.</b></td>
+
+    }
+</table>

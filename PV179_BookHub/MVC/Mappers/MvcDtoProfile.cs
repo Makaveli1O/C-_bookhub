@@ -44,6 +44,7 @@ namespace MVC.Mappers
             CreateMap<DetailedPublisherViewDto, PublisherDetailViewModel>();
 
             CreateMap<CreateWishListViewModel, CreateWishListDto>();
+            CreateMap<GeneralWishListViewDto, DetailsWishListModel>();
         }
     }
 }

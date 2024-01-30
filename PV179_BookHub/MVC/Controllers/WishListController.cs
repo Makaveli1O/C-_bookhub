@@ -81,28 +81,40 @@ public class WishListController : Controller
 
         var newWishList = _wishListFacade.CreateWishListAsync(wishListDto);
         
-        return RedirectToAction(nameof(Detail), new { newWishList.Id, updated = true });
+        return RedirectToAction(nameof(Details), new { newWishList.Id, updated = true });
     }
 
-
-
-    [HttpGet("{id:long}/Detail")]
-    public async Task<JsonResult> Detail(long id)
+    public async Task<IActionResult> Details(long id, bool updated)
     {
-        var wishListItems = await _wishListFacade.FetchAllItemsFromWishListAsync(id);
-        var wishList = await _wishListFacade.FetchWishListAsync(id);
-
-        var model = new WishListDetailViewModel
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
         {
-            Id = wishList.Id,
-            UserId = wishList.UserId,
-            CreatedAt = wishList.CreatedAt,
-            Description = wishList.Description,
-            Items = wishListItems
-        };
+            return Unauthorized();
+        }
 
-        return Json(model, _jsonSerializerOptions);
+        var wishlist = await _wishListFacade.FetchWishListAsync(id);
+        if (wishlist.UserId != user.Id)
+        {
+            return Unauthorized();
+        }
+
+        var items = await _wishListFacade.FetchAllItemsFromWishListAsync(id);
+
+        if (updated)
+        {
+            ViewBag.Message = "WishList Saved Successfully";
+        }
+
+        var result = _mapper.Map<DetailsWishListModel>(wishlist);
+        result.Items = items;
+        result.OwnerName = user.Name;
+
+        return View(result);
     }
+
+
+
+
 
     [HttpGet("User/{userId:long}")]
     public async Task<JsonResult> SingleUserWishList(long userId)
@@ -169,7 +181,7 @@ public class WishListController : Controller
             await _wishListFacade.CreateWishListItemAsync(createWishListItemDto);
         }
 
-        return RedirectToAction(nameof(Detail), new { id });
+        return RedirectToAction(nameof(Details), new { id });
     }
 
     private async Task<bool> IsUserWishListOwner(long wishListId)
