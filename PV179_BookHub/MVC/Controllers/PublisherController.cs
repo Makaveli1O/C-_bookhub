@@ -46,7 +46,7 @@ public class PublisherController : Controller
         {
             ViewBag.Message = "Publisher Saved Successfully";
         }
-        return View(publisher);
+        return View(_mapper.Map<PublisherDetailViewModel>(publisher));
     }
 
     public ActionResult Create()

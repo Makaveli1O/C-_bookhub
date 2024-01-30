@@ -1,6 +1,6 @@
-﻿@using BusinessLayer.DTOs.Publisher.View;
+﻿@using MVC.Models.Publisher;
 @using DataAccessLayer.Models.Enums
-@model DetailedPublisherViewDto
+@model PublisherDetailViewModel;
 
 <h1>Publisher Details</h1>
 <hr />
@@ -40,6 +40,40 @@
         </dd>
     </dl>
 </div>
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            ISBN
+        </th>
+        <th></th>
+    </tr>
+
+
+    @if (Model != null && Model.Books.Count() > 0)
+    {
+        foreach (var item in Model.Books)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISBN)
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <td colspan="2" class="text-center"><b>No Books Availible.</b></td>
+
+    }
+</table>
+
 <div>
     @if (User.IsInRole(UserRoles.Admin))
     {

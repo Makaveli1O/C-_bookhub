@@ -9,6 +9,7 @@ public class GeneralBookViewDto
 {
     public long Id { get; set; }
     public required string Title { get; set; }
+    public string? ISBN { get; set; }
     public GeneralAuthorViewDto? Author { get; set; }
     public GeneralPublisherViewDto? Publisher { get; set; }
     [JsonConverter(typeof(JsonStringEnumConverter))]

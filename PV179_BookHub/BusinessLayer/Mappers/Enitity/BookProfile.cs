@@ -13,6 +13,7 @@ public class BookProfile : Profile
     {
         CreateMap<CreateBookDto, BookEntity>();
         CreateMap<DetailedBookViewDto, UpdateBookDto>();
+        CreateMap<BookEntity, MinimalBookViewDto>();
 
         CreateMap<BookEntity, GeneralBookViewDto>()
             .ForMember(
