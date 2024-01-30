@@ -44,6 +44,10 @@ namespace MVC.Mappers
             CreateMap<GeneralWishListViewDto, UpdateWishListViewModel>();
             CreateMap<CreateWishListItemViewModel, CreateWishListItemDto>();
             CreateMap<GeneralWishListItemViewDto, DetailsWishListItemModel>();
+            CreateMap<GeneralWishListItemViewDto, UpdateWishListItemViewModel>()
+                .ForMember(x => x.BookId, opt => opt.MapFrom(y => y.Book.Id))
+                .ForMember(x => x.BookTitle, opt => opt.MapFrom(y => y.Book.Title))
+                .ForMember(x => x.BookISBN, opt => opt.MapFrom(y => y.Book.ISBN));
         }
     }
 }

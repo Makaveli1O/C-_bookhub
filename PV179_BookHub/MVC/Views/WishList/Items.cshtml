@@ -38,9 +38,9 @@
                     {
                         @Html.ActionLink("Details", "ItemDetails", new { id = item.Id }, new { @class = "link-primary" })
                         <span>|</span>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" })
+                        @Html.ActionLink("Edit", "EditItem", new { id = item.Id }, new { @class = "link-warning" })
                         <span>|</span>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-danger" })
+                        @Html.ActionLink("Delete", "DeleteItem", new { id = item.Id }, new { @class = "link-danger" })
                     }
                 </td>
             </tr>

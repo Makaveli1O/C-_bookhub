@@ -1,0 +1,54 @@
+﻿@using MVC.Models.WishList;
+@model UpdateWishListItemViewModel;
+
+<h1>Edit WishList Item</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditItem">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="WishListId" class="form-label"></label>
+                <input asp-for="WishListId" class="form-control" readonly="readonly" />
+                <span asp-validation-for="WishListId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="WishListDesc" class="form-label"></label>
+                <input asp-for="WishListDesc" class="form-control" readonly="readonly" />
+                <span asp-validation-for="WishListDesc" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="BookId" class="form-label"></label>
+                <input asp-for="BookId" class="form-control" readonly="readonly" />
+                <span asp-validation-for="BookId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="BookTitle" class="form-label"></label>
+                <input asp-for="BookTitle" class="form-control" readonly="readonly" />
+                <span asp-validation-for="BookTitle" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="BookISBN" class="form-label"></label>
+                <input asp-for="BookISBN" class="form-control" readonly="readonly" />
+                <span asp-validation-for="BookISBN" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PreferencePriority" class="form-label"></label>
+                <input asp-for="PreferencePriority" class="form-control" />
+                <span asp-validation-for="PreferencePriority" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Save" class="btn btn-primary" /> |
+                <a asp-controller="WishList" asp-action="Details" asp-route-id="@Model.WishListId">Back to WishList Details</a>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
