@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Facades.Order;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using MVC.Models.Order;
 using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +16,6 @@ public class OrderController : Controller
 {
     private readonly IOrderFacade _orderFacade;
     private readonly UserManager<User> _userManager;
-    private readonly JsonSerializerOptions _jsonSerializerOptions;
     private readonly IBookStoreFacade _bookStoreFacade;
     private readonly IInventoryItemFacade _inventoryItemFacade;
     private readonly IBookFacade _bookFacade;
@@ -37,34 +35,55 @@ public class OrderController : Controller
         _userManager = userManager;
         _bookFacade = bookFacade;
         _mapper = mapper;
-
-        _jsonSerializerOptions = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-        };
     }
 
     [Route("{id:long}/Detail")]
     [HttpGet]
-    public async Task<JsonResult> Detail(long id)
+    public async Task<IActionResult> Detail(long id)
     {
-        //would be nicer if we had DetailedOrderItem here instead of the General one
         var order = await _orderFacade.FindOrderByIdAsync(id);
 
         var model = _mapper.Map<OrderDetailViewModel>(order);
 
-        return Json(model, _jsonSerializerOptions);
+        return View(model);
     }
 
     [HttpGet("User/{id:long}")]
     //[Authorize]
-    public async Task<JsonResult> SingleUserOrders(long id)
+    public async Task<IActionResult> SingleUserOrders(long id)
     {
-        return Json(await _orderFacade.FetchOrdersByUserIdAsync(id));
+        var orders = await _orderFacade.FetchOrdersByUserIdAsync(id);
+        var orderViewModels = orders.ToList();
+
+        return View(orderViewModels);
     }
 
     [HttpGet("Create")]
-    public async Task<IActionResult> CreateSelf()
+    public async Task<IActionResult> Create()
+    {
+        var availableBooks = await _inventoryItemFacade.GetAllInventoryItems();
+
+        var bookStores = await _bookStoreFacade.GetAllBookStores();
+
+        var viewModel = new OrderCreateViewModel
+        {
+            OrderItems = new List<OrderItemViewModel>(),
+            AvailableBooks = _mapper.Map<IList<OrderAvailableBooksViewModel>>(availableBooks),
+            AvailableBookStores = _mapper.Map<IList<OrderBookStoresViewModel>>(bookStores),
+        };
+        
+        for (int i = 0; i < viewModel.AvailableBooks.Count(); i++)
+        {
+            DetailedBookViewDto detailedBookView = await _bookFacade.FindBookByIdAsync(viewModel.AvailableBooks[i].BookId);
+            viewModel.AvailableBooks[i].Price = detailedBookView.Price;
+            viewModel.AvailableBooks[i].Title = detailedBookView.Title;
+        }
+
+        return View(viewModel);
+    }
+   
+    [HttpPost("Create")]
+    public async Task<IActionResult> Create(OrderCreateViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -78,25 +97,13 @@ public class OrderController : Controller
             return Unauthorized();
         }
 
-        var orderCreateResult = await _orderFacade.CreateOrderAsync(user.Id);
+        var order = await _orderFacade.CreateOrderAsync(user.Id);
 
-        return RedirectToAction(nameof(Edit), new { id = orderCreateResult.Id });
+        AddSelectedItems(model.AddedItems, model.SelectedBookStore, order.Id);
 
-    }
-   
-    [HttpPost("Create/{userId:long}")]
-    public async Task<IActionResult> Create(long userId)
-    {
-        var user = await _userManager.GetUserAsync(User);
+        RemoveSelectedItems(model.RemovedOrderItems);
 
-        if (user == null)
-        {
-            return Unauthorized();
-        }
-
-        var orderCreateResult = await _orderFacade.CreateOrderAsync(userId);
-
-        return RedirectToAction(nameof(Edit), new { id = orderCreateResult.Id });
+        return RedirectToAction(nameof(Detail), new { id = order.Id });
 
     }
 
@@ -214,7 +221,10 @@ public class OrderController : Controller
 
         await _orderFacade.CancelOrderAsync(id);
 
-        return Ok();
+        var viewModel = _mapper.Map<CancelViewModel>(order);
+
+        
+        return View(viewModel);
     }
 
     [Route("{id:long}/Pay")]
@@ -235,7 +245,9 @@ public class OrderController : Controller
 
         await _orderFacade.PayForOrderAsync(id);
 
-        return Ok();
+        var viewModel = _mapper.Map<OrderPaymentViewModel>(order);
+
+        return View(viewModel);
     }
 
     [Route("{id:long}/Refund")]
@@ -256,6 +268,9 @@ public class OrderController : Controller
 
         await _orderFacade.RefundOrderAsync(id);
 
-        return Ok();
+        var viewModel = _mapper.Map<OrderRefundViewModel>(order);
+
+        return View(viewModel);
     }
+
 }

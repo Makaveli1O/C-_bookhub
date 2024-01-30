@@ -10,5 +10,5 @@ public class OrderDetailViewModel
     public DateTime CreatedAt { get; set; }
     public double TotalPrice { get; set; }
     public OrderState State { get; set; }
-    public required IList<GeneralOrderItemViewDto> Items { get; set; }
+    public required IList<DetailedOrderItemViewDto> Items { get; set; }
 }

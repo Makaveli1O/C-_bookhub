@@ -2,5 +2,5 @@
 
 public class DetailedOrderViewDto : GeneralOrderViewDto
 {
-    public IEnumerable<GeneralOrderItemViewDto> Items { get; set; }
+    public IEnumerable<DetailedOrderItemViewDto> Items { get; set; }
 }

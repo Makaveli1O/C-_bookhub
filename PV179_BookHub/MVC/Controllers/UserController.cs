@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessLayer.Facades.Book;
 using BusinessLayer.Facades.User;
 using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
@@ -13,12 +14,14 @@ public class UserController : Controller
 {
     private readonly UserManager<User> _userManager;
     private readonly IUserFacade _userFacade;
+    private readonly IBookRecommendationFacade _bookRecommendationFacade;
     private readonly IMapper _mapper;
 
-    public UserController(UserManager<User> userManager, IUserFacade userFacade, IMapper mapper)
+    public UserController(UserManager<User> userManager, IUserFacade userFacade, IBookRecommendationFacade bookRecommendationFacade, IMapper mapper)
     {
         _userManager = userManager;
         _userFacade = userFacade;
+        _bookRecommendationFacade = bookRecommendationFacade;
         _mapper = mapper;
     }
     
@@ -45,6 +48,7 @@ public class UserController : Controller
     {
         var user = await _userFacade.FetchUserAsync(id);
         UserDetailViewModel userDetail = _mapper.Map<UserDetailViewModel>(user);
+        userDetail.recommendations = await _bookRecommendationFacade.GetBookRecommendationsForUser(id);
 
         return View(userDetail);
     }

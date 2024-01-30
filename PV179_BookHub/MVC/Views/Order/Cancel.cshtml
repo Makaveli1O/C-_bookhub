@@ -1,0 +1,9 @@
+﻿@using MVC.Models.Order;
+@model CancelViewModel;
+
+<h1>Order Cancellation</h1>
+
+<p>Your order with ID @Model.Id has been canceled.</p>
+<p>Order State: @Model.OrderState</p>
+
+<a asp-action="SingleUserOrders" asp-route-id="@Model.UserId">Back to Orders</a>

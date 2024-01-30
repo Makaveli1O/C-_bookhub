@@ -32,6 +32,9 @@ namespace MVC.Mappers
             CreateMap<DetailedOrderItemViewDto, OrderItemViewModel>();
             CreateMap<DetailedInventoryItemViewDto, OrderAvailableBooksViewModel>();
             CreateMap<GeneralBookStoreViewDto, OrderBookStoresViewModel>();
+            CreateMap<DetailedOrderViewDto, OrderRefundViewModel>();
+            CreateMap<DetailedOrderViewDto, OrderPaymentViewModel>();
+            CreateMap<DetailedOrderViewDto, CancelViewModel>();
 
             CreateMap<InventoryItemCreateViewModel, CreateInventoryItemDto>();
             CreateMap<DetailedInventoryItemViewDto, InventoryItemCreateViewModel>();
