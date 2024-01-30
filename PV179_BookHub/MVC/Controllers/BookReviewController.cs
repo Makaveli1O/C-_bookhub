@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Facades.BookReview;
 using DataAccessLayer.Models.Account;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;

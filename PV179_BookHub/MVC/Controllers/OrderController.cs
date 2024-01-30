@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Facades.Order;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using MVC.Models.Order;
 using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +7,6 @@ using BusinessLayer.Facades.BookStore;
 using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.Facades.Book;
 using BusinessLayer.DTOs.Order.Create;
-using DataAccessLayer.Models.Purchasing;
 using AutoMapper;
 
 namespace MVC.Controllers;
@@ -70,8 +68,8 @@ public class OrderController : Controller
         var viewModel = new OrderCreateViewModel
         {
             OrderItems = new List<OrderItemViewModel>(),
-            AvailableBooks = availableBooks.Adapt<IList<OrderAvailableBooksViewModel>>(),
-            AvailableBookStores = bookStores.Adapt<IList<OrderBookStoresViewModel>>(),
+            AvailableBooks = _mapper.Map<IList<OrderAvailableBooksViewModel>>(availableBooks),
+            AvailableBookStores = _mapper.Map<IList<OrderBookStoresViewModel>>(bookStores),
         };
         
         for (int i = 0; i < viewModel.AvailableBooks.Count(); i++)
@@ -223,7 +221,7 @@ public class OrderController : Controller
 
         await _orderFacade.CancelOrderAsync(id);
 
-        var viewModel = order.Adapt<CancelViewModel>();
+        var viewModel = _mapper.Map<CancelViewModel>(order);
 
         
         return View(viewModel);
@@ -247,7 +245,7 @@ public class OrderController : Controller
 
         await _orderFacade.PayForOrderAsync(id);
 
-        var viewModel = order.Adapt<OrderPaymentViewModel>();
+        var viewModel = _mapper.Map<OrderPaymentViewModel>(order);
 
         return View(viewModel);
     }
@@ -270,7 +268,7 @@ public class OrderController : Controller
 
         await _orderFacade.RefundOrderAsync(id);
 
-        var viewModel = order.Adapt<OrderRefundViewModel>();
+        var viewModel = _mapper.Map<OrderRefundViewModel>(order);
 
         return View(viewModel);
     }
