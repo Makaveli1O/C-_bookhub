@@ -1,0 +1,91 @@
+﻿@using BusinessLayer.DTOs.WishList.View;
+@using DataAccessLayer.Models.Enums;
+﻿@using MVC.Models.Base;
+@using MVC.Models.WishList;
+@model GenericFilteredModel<WishListSearchModel, GeneralWishListViewDto>
+
+<h1>WishList(s)</h1>
+
+@if (User.IsInRole(UserRoles.User))
+{
+    <p class="text-end"><a class="link-success" asp-action="Create">Create New</a></p>
+}
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+@{
+    await Html.RenderPartialAsync("WishListSearch", Model.SearchModel ?? new WishListSearchModel());
+}
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            CreatedAt
+        </th>
+        <th>
+            Description
+        </th>
+        <th></th>
+    </tr>
+
+
+    @if (Model != null && Model.Items.Count() > 0)
+    {
+        foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td class="text-end">          
+                    @if (User.IsInRole(UserRoles.User))
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "link-primary" })
+                        <span>|</span>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" })
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-danger" })
+                    }
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <td colspan="6" class="text-center"><b>No WishList were Created.</b></td>
+
+    }
+</table>
+
+@if (Model != null)
+{
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="Index"
+               asp-route-PageNumber="@i"
+               asp-route-CONTAINS_Description="@Model.SearchModel?.CONTAINS_Description"
+               asp-route-GE_CreatedAt="@Model.SearchModel?.GE_CreatedAt"
+               asp-route-LE_CreatedAt="@Model.SearchModel?.LE_CreatedAt"
+               asp-route-SortParameter="@Model.SearchModel?.SortParameter"
+               asp-route-SortAscending="@Model.SearchModel?.SortAscending"
+               class="@(i == Model.PageNumber ? "active" : "")">@($" {i}{(i == Model.TotalPages ? string.Empty : ',')} ")</a>
+        }
+    </div>
+}

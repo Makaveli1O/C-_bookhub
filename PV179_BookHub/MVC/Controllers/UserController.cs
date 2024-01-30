@@ -65,7 +65,7 @@ public class UserController : Controller
     }
 
     [HttpGet("MyWishList")]
-    public async Task<IActionResult> FetchMyWisList()
+    public async Task<IActionResult> FetchMyWishList()
     {
         var user = await _userManager.GetUserAsync(User);
 
@@ -74,7 +74,7 @@ public class UserController : Controller
             return NotFound();
         }
 
-        return RedirectToAction("User", "WishList", new { id = user.Id });
+        return RedirectToAction("Index", "WishList", new { });
     }
 
     [HttpGet("MyOrders")]

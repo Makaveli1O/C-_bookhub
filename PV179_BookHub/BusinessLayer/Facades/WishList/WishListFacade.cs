@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
+using BusinessLayer.DTOs.BaseFilter;
 using BusinessLayer.DTOs.Book.View;
+using BusinessLayer.DTOs.Publisher.Filter;
+using BusinessLayer.DTOs.Publisher.View;
 using BusinessLayer.DTOs.WishList.Create;
+using BusinessLayer.DTOs.WishList.Filter;
 using BusinessLayer.DTOs.WishList.View;
 using BusinessLayer.Services;
-using BusinessLayer.Services.Book;
+using BusinessLayer.Services.Publisher;
 using BusinessLayer.Services.WishList;
-using DataAccessLayer.Models.Publication;
-using Infrastructure.Query;
 using Infrastructure.Query.Filters.EntityFilters;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Infrastructure.Query;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace BusinessLayer.Facades.WishList;
@@ -124,5 +126,14 @@ public class WishListFacade : BaseFacade, IWishListFacade
     public async Task<IEnumerable<GeneralWishListViewDto>> FetchAllByUserIdAsync(long userId)
     {
         return _mapper.Map<IEnumerable<GeneralWishListViewDto>>(await _wishListService.FetchAllByUserIdAsync(userId));
+    }
+
+    public async Task<FilterResultDto<GeneralWishListViewDto>> FetchFilteredWishListsAsync(WishListFilterDto wishListFilterDto)
+    {
+        var queryResult = await _wishListService
+            .FetchFilteredAsync(_mapper.Map<WishListFilter>(wishListFilterDto), 
+                                _mapper.Map<QueryParams>(wishListFilterDto));
+
+        return _mapper.Map<FilterResultDto<GeneralWishListViewDto>>(queryResult);
     }
 }

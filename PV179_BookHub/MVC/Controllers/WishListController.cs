@@ -7,10 +7,15 @@ using MVC.Models.WishList;
 using System.Text.Json;
 using BusinessLayer.Facades.Book;
 using AutoMapper;
+using DataAccessLayer.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
+using MVC.Models.Base;
+using BusinessLayer.DTOs.WishList.View;
+using BusinessLayer.DTOs.WishList.Filter;
 
 namespace MVC.Controllers;
 
-[Route("WishList")]
+[Authorize(Roles = UserRoles.User)]
 public class WishListController : Controller
 {
     private readonly UserManager<User> _userManager;
@@ -35,6 +40,20 @@ public class WishListController : Controller
         {
             WriteIndented = true,
         };
+    }
+
+    public async Task<IActionResult> Index(WishListSearchModel searchModel)
+    {
+        var filterDto = _mapper.Map<WishListFilterDto>(searchModel);
+        var user = await _userManager.GetUserAsync(User);
+        filterDto.UserId = user?.Id ?? 0;
+
+        var result = await _wishListFacade.FetchFilteredWishListsAsync(filterDto);
+
+        var viewModel = _mapper.Map<GenericFilteredModel<WishListSearchModel, GeneralWishListViewDto>>(result);
+        viewModel.SearchModel = searchModel;
+
+        return View(viewModel);
     }
 
     [HttpGet("{id:long}/Detail")]

@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.DTOs.WishList.Create;
+using BusinessLayer.DTOs.WishList.Filter;
 using BusinessLayer.Facades.WishList;
 using Microsoft.AspNetCore.Mvc;
 
@@ -92,5 +93,13 @@ public class WishListController : ControllerBase
     {
         await _wishListFacade.DeleteWishListItemsAsync(wishListId);
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("filter")]
+    public async Task<IActionResult> FetchPublishersByFilters([FromQuery] WishListFilterDto wishListFilterDto)
+    {
+        var wishLists = await _wishListFacade.FetchFilteredWishListsAsync(wishListFilterDto);
+        return Ok(wishLists);
     }
 }
