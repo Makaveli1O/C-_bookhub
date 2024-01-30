@@ -17,6 +17,7 @@ using MVC.Models.Order;
 using MVC.Models.Publisher;
 using MVC.Models.User;
 using MVC.Models.WishList;
+using BusinessLayer.DTOs.Author.View;
 
 namespace MVC.Mappers
 {
