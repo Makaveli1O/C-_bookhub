@@ -278,7 +278,7 @@ This will be (by far) the most painful one, because of the requirements and chan
 # do not forget to also enable the script execution policy this is disable by default
 # check Set-ExecutionPolicy and Get-ExecutionPolicy (hint: unrestricted)
 # read the script before executing, just to be sure we are not creating some backdoor
-.\OC_Deploy.ps1 MVC
+OC_Deploy.ps1 MVC
 # alternative is WEBAPI, should be case insensitive, the script will translate it to upper/lower case
 ```
 
