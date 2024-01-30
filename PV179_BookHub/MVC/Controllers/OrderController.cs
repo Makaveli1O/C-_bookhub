@@ -18,7 +18,6 @@ public class OrderController : Controller
 {
     private readonly IOrderFacade _orderFacade;
     private readonly UserManager<User> _userManager;
-    private readonly JsonSerializerOptions _jsonSerializerOptions;
     private readonly IBookStoreFacade _bookStoreFacade;
     private readonly IInventoryItemFacade _inventoryItemFacade;
     private readonly IBookFacade _bookFacade;
@@ -38,11 +37,6 @@ public class OrderController : Controller
         _userManager = userManager;
         _bookFacade = bookFacade;
         _mapper = mapper;
-
-        _jsonSerializerOptions = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-        };
     }
 
     [Route("{id:long}/Detail")]
