@@ -44,14 +44,13 @@ public class WishListController : Controller
 
     public async Task<IActionResult> Index(WishListSearchModel searchModel)
     {
-        var filterDto = _mapper.Map<WishListFilterDto>(searchModel);
         var user = await _userManager.GetUserAsync(User);
-
         if (user == null)
         {
             return Unauthorized();
         }
 
+        var filterDto = _mapper.Map<WishListFilterDto>(searchModel);
         filterDto.UserId = user.Id;
 
         var result = await _wishListFacade.FetchFilteredWishListsAsync(filterDto);
@@ -61,6 +60,31 @@ public class WishListController : Controller
 
         return View(viewModel);
     }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(CreateWishListViewModel createWishListViewModel)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        var wishListDto = _mapper.Map<CreateWishListDto>(createWishListViewModel);
+        wishListDto.UserId = user.Id;
+
+        var newWishList = _wishListFacade.CreateWishListAsync(wishListDto);
+        
+        return RedirectToAction(nameof(Detail), new { newWishList.Id, updated = true });
+    }
+
+
 
     [HttpGet("{id:long}/Detail")]
     public async Task<JsonResult> Detail(long id)
@@ -84,37 +108,6 @@ public class WishListController : Controller
     public async Task<JsonResult> SingleUserWishList(long userId)
     {
         return Json(await _wishListFacade.FetchAllByUserIdAsync(userId));
-    }
-
-    [HttpGet("Create")]
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-
-    [HttpPost("Create")]
-    public async Task<IActionResult> Create(WishListCreateViewModel model)
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        var user = await _userManager.GetUserAsync(User);
-
-        if (user == null)
-        {
-            return Unauthorized();
-        }
-
-        var wishList = _mapper.Map<CreateWishListDto>(model);
-        wishList.UserId = user.Id;
-
-        var wishListResult = await _wishListFacade.CreateWishListAsync(wishList);
-
-        return RedirectToAction(nameof(Edit), new { id = wishListResult.Id });
-
     }
 
     [HttpGet("{id:long}/Edit")]

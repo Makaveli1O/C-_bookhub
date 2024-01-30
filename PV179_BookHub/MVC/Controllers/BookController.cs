@@ -58,7 +58,6 @@ public class BookController : Controller
 
     public async Task<IActionResult> Create()
     {
-        var publishers = await _publisherFacade.GetAllPublishersAsync();
         ViewBag.Publishers = new SelectList((await _publisherFacade.GetAllPublishersAsync()).ToList(), "Id", "Name");
         ViewBag.Authors = new SelectList((await _authorFacade.GetAllAuthorsAsync()).ToList(), "Id", "Name");
         return View();
