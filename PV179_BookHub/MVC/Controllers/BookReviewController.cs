@@ -10,7 +10,6 @@ using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using MVC.Models.BookReview;
 
 namespace MVC.Controllers;
@@ -125,7 +124,7 @@ public class BookReviewController : Controller
 
         var bookView = await _bookReviewFacade.CreateBookReview(createBookReviewDto);
 
-        return View("Detail" ,bookView.Adapt<GeneralBookReviewViewDto>());
+        return View(nameof(Detail) ,bookView.Adapt<GeneralBookReviewViewDto>());
     }
 
     [HttpGet("Edit/{id:long}")]
@@ -138,18 +137,20 @@ public class BookReviewController : Controller
             return Unauthorized();
         }
 
-        var bookReview = await _bookReviewFacade.FindBookReviewsAsync(id);
+        var bookReview = await _bookReviewFacade.FetchBookReviewAsync(id);
         if (bookReview == null)
         {
             return NotFound();
         }
 
         var model = bookReview.Adapt<BookReviewEditViewModel>();
-        model.UserId = user.Id;
-        return View("Edit", model);
+        model.BookTitle = (await _bookFacade.FindBookByIdAsync(bookReview.BookId)).Title;
+
+        return View("EditReview",model);
     }
 
-    [HttpPost("Edit")]
+    [HttpPost("EditById")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(BookReviewEditViewModel model)
     {
         if (!ModelState.IsValid)
@@ -159,10 +160,26 @@ public class BookReviewController : Controller
 
         var updateDto = model.Adapt<UpdateBookReviewDto>();
 
-        var generalViewDto = await _bookReviewFacade.UpdateBookReview(model.UserId, updateDto);
+        var generalViewDto = await _bookReviewFacade.UpdateBookReview(model.ReviewerId, updateDto);
 
         var modelView = generalViewDto.Adapt<GeneralBookReviewViewDto>();
 
-        return View("Detail", modelView);
+        return View(nameof(Detail), modelView);
+    }
+
+    [HttpGet("Delete/{id:long}")]
+    public async Task<IActionResult> Delete(long id)
+    {
+        await _bookReviewFacade.DeleteBookReviewAsync(id);
+
+        return View();
+    }
+
+    [HttpGet("Detail/{id:long}")]
+    public async Task<IActionResult> Detail(long id)
+    {
+        var bookReview = await _bookReviewFacade.FetchBookReviewAsync(id);
+
+        return View(bookReview);
     }
 }
