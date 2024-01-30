@@ -116,7 +116,6 @@ public class BookReviewController : Controller
     [HttpPost("Create")]
     public async Task<IActionResult> Create(BookReviewCreateViewModel model)
     {
-
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -133,17 +132,10 @@ public class BookReviewController : Controller
     [HttpGet("Edit/{id:long}")]
     public async Task<IActionResult> Edit(long id)
     {
-        var user = await _userManager.GetUserAsync(User);
-
-        if (user == null)
+        var bookReview = await _bookReviewFacade.FetchBookReviewAsync(id);
+        if (!await IsAuthorized(bookReview))
         {
             return Unauthorized();
-        }
-
-        var bookReview = await _bookReviewFacade.FetchBookReviewAsync(id);
-        if (bookReview == null)
-        {
-            return NotFound();
         }
 
         var model = _mapper.Map<BookReviewEditViewModel>(bookReview);
@@ -173,16 +165,37 @@ public class BookReviewController : Controller
     [HttpGet("Delete/{id:long}")]
     public async Task<IActionResult> Delete(long id)
     {
+        var bookReview = await _bookReviewFacade.FetchBookReviewAsync(id);
+
+        if (!await IsAuthorized(bookReview))
+        {
+            return Unauthorized();
+        }
+
         await _bookReviewFacade.DeleteBookReviewAsync(id);
 
         return View();
     }
 
     [HttpGet("Detail/{id:long}")]
+    [AllowAnonymous]
     public async Task<IActionResult> Detail(long id)
     {
         var bookReview = await _bookReviewFacade.FetchBookReviewAsync(id);
 
         return View(bookReview);
+    }
+
+    private async Task<bool> IsAuthorized(GeneralBookReviewViewDto review)
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null || review == null)
+            return false;
+
+        if (user.Role == DataAccessLayer.Models.Enums.UserRole.Admin)
+            return true;
+
+        return review.ReviewerId == user.Id;
     }
 }
