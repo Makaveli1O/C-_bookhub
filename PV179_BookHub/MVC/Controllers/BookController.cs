@@ -12,6 +12,7 @@ using MVC.Models.Book;
 using BusinessLayer.DTOs.Book.Filter;
 using MVC.Models.Base;
 using BusinessLayer.DTOs.Book.View;
+using BusinessLayer.DTOs.Author.View;
 
 namespace MVC.Controllers;
 
@@ -97,7 +98,6 @@ public class BookController : Controller
 
     }
 
-
     public async Task<IActionResult> Edit(int id)
     {
         var book = await _bookFacade.FindBookByIdAsync(id);
@@ -110,8 +110,8 @@ public class BookController : Controller
     public async Task<IActionResult> Edit(int id, UpdateBookDto updateBookDto)
     {
         var updated = await _bookFacade.UpdateBookAsync(id, updateBookDto);
-        return RedirectToAction(nameof(Details), new { id, updated = true });
 
+        return RedirectToAction(nameof(Details), new { id, updated = true });
     }
 
     public async Task<IActionResult> Delete(int id)
@@ -128,4 +128,73 @@ public class BookController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    public async Task<IActionResult> AssignAuthor(long bookId)
+    {
+        var book = await _bookFacade.FindBookByIdAsync(bookId);
+        ViewBag.Authors = new SelectList((await _authorFacade.GetAllAuthorsAsync()).ToList(), "Id", "Name");
+
+        return View(_mapper.Map<AssignAuthorViewModel>(book));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AssignAuthor(long bookId, AssignAuthorViewModel model)
+    {
+        var book = await _bookFacade.AssignAuthorToBookAsync(bookId,
+                            _mapper.Map<AuthorBookAssociationDto>(model),
+                            model.Force);
+
+        return RedirectToAction(nameof(Details), new { id = book.Id, updated = true });
+    }
+
+    private List<GeneralAuthorViewDto> GetAuthorsFromBook(DetailedBookViewDto book)
+    {
+        var authors = new List<GeneralAuthorViewDto>();
+        if (book.PrimaryAuthor != null)
+        {
+            authors.Add(book.PrimaryAuthor);
+        }
+
+        if (book.CoAuthors != null)
+        {
+            authors.AddRange(book.CoAuthors);
+        }
+        return authors;
+    }
+
+    public async Task<IActionResult> UnAssignAuthor(long bookId)
+    {
+        var book = await _bookFacade.FindBookByIdAsync(bookId);
+        ViewBag.Authors = new SelectList(GetAuthorsFromBook(book), "Id", "Name");
+
+        return View(_mapper.Map<UnAssignAuthorViewModel>(book));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UnAssignAuthor(long bookId, UnAssignAuthorViewModel model)
+    {
+        await _bookFacade.UnassignAuthorFromBookAsync(bookId, model.AuthorId);
+
+        return RedirectToAction(nameof(Details), new { id = bookId, updated = true });
+    }
+
+    public async Task<IActionResult> MakeUnmakeAuthorPrimary(long bookId)
+    {
+        var book = await _bookFacade.FindBookByIdAsync(bookId);
+        ViewBag.Authors = new SelectList(GetAuthorsFromBook(book), "Id", "Name");
+
+        return View(_mapper.Map<PrimaryAuthorViewModel>(book));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> MakeUnmakeAuthorPrimary(long bookId, PrimaryAuthorViewModel model)
+    {
+        await _bookFacade.MakeUnmakeAuthorPrimaryAsync(bookId, 
+            _mapper.Map<AuthorBookAssociationDto>(model), 
+            model.Force);
+
+        return RedirectToAction(nameof(Details), new { id = bookId, updated = true });
+    }
 }
