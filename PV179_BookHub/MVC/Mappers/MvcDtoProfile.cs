@@ -21,10 +21,6 @@ namespace MVC.Mappers
     {
         public MvcDtoProfile()
         {
-            CreateMap<WishListCreateViewModel, CreateWishListDto>();
-            CreateMap<GeneralWishListItemViewDto, WishListItemViewModel>();
-            CreateMap<GeneralBookViewDto, WishListAvailableBooksViewModel>();
-
             CreateMap<GeneralUserViewDto, UserDetailViewModel>();
 
             CreateMap<DetailedOrderViewDto, OrderDetailViewModel>();
