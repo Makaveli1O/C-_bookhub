@@ -6,7 +6,7 @@ using BusinessLayer.Facades.BookReview;
 using BusinessLayer.Facades.BookStore;
 using BusinessLayer.Facades.User;
 using DataAccessLayer.Models.Account;
-using Mapster;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,13 +22,15 @@ public class BookReviewController : Controller
     private readonly IUserFacade _userFacade;
     private readonly IInventoryItemFacade _inventoryItemFacade;
     private readonly UserManager<User> _userManager;
+    private readonly IMapper _mapper;
 
     public BookReviewController(
         IBookReviewFacade bookReviewFacade,
         IBookFacade bookFacade,
         IUserFacade userFacade,
         IInventoryItemFacade inventoryItemFacade,
-        UserManager<User> userManager
+        UserManager<User> userManager,
+        IMapper mapper
         )
     {
         _bookReviewFacade = bookReviewFacade;
@@ -36,6 +38,7 @@ public class BookReviewController : Controller
         _userFacade = userFacade;
         _inventoryItemFacade = inventoryItemFacade;
         _userManager = userManager;
+        _mapper = mapper;
     }
 
     [HttpGet("User/{userId:long}")]
@@ -47,7 +50,7 @@ public class BookReviewController : Controller
         List<BookReviewViewModel> model = new List<BookReviewViewModel>();
         foreach (var userReview in userReviews)
         {
-            var modelElement = userReview.Adapt<BookReviewViewModel>();
+            var modelElement = _mapper.Map<BookReviewViewModel>(userReview);
             modelElement.Title = (await _bookFacade.FindBookByIdAsync(userReview.BookId)).Title;
             modelElement.ReviewerName = (await _userFacade.FetchUserAsync(userReview.ReviewerId)).UserName;
             model.Add(modelElement);
@@ -64,7 +67,7 @@ public class BookReviewController : Controller
         List<BookReviewViewModel> model = new List<BookReviewViewModel>();
         foreach (var bookReview in bookReviews)
         {
-            var modelElement = bookReview.Adapt<BookReviewViewModel>();
+            var modelElement = _mapper.Map<BookReviewViewModel>(bookReview);
             modelElement.Title = (await _bookFacade.FindBookByIdAsync(bookReview.BookId)).Title;
             modelElement.ReviewerName = (await _userFacade.FetchUserAsync(bookReview.ReviewerId)).UserName;
             model.Add(modelElement);
@@ -119,12 +122,12 @@ public class BookReviewController : Controller
             return BadRequest(ModelState);
         }
 
-        var createBookReviewDto = model.Adapt<CreateBookReviewDto>();
+        var createBookReviewDto = _mapper.Map<CreateBookReviewDto>(model);
         createBookReviewDto.BookId = model.SelectedBook;
 
         var bookView = await _bookReviewFacade.CreateBookReview(createBookReviewDto);
 
-        return View(nameof(Detail) ,bookView.Adapt<GeneralBookReviewViewDto>());
+        return View(nameof(Detail) ,_mapper.Map<GeneralBookReviewViewDto>(bookView));
     }
 
     [HttpGet("Edit/{id:long}")]
@@ -143,7 +146,7 @@ public class BookReviewController : Controller
             return NotFound();
         }
 
-        var model = bookReview.Adapt<BookReviewEditViewModel>();
+        var model = _mapper.Map<BookReviewEditViewModel>(bookReview);
         model.BookTitle = (await _bookFacade.FindBookByIdAsync(bookReview.BookId)).Title;
 
         return View("EditReview",model);
@@ -158,11 +161,11 @@ public class BookReviewController : Controller
             return BadRequest(ModelState);
         }
 
-        var updateDto = model.Adapt<UpdateBookReviewDto>();
+        var updateDto = _mapper.Map<UpdateBookReviewDto>(model);
 
         var generalViewDto = await _bookReviewFacade.UpdateBookReview(model.ReviewerId, updateDto);
 
-        var modelView = generalViewDto.Adapt<GeneralBookReviewViewDto>();
+        var modelView = _mapper.Map<GeneralBookReviewViewDto>(generalViewDto);
 
         return View(nameof(Detail), modelView);
     }

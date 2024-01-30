@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
-using BusinessLayer.DTOs.Author.View;
 using BusinessLayer.DTOs.Book.View;
+using BusinessLayer.DTOs.BookReview.Create;
+using BusinessLayer.DTOs.BookReview.Update;
+using BusinessLayer.DTOs.BookReview.View;
 using BusinessLayer.DTOs.BookStore.Create;
 using BusinessLayer.DTOs.BookStore.View;
 using BusinessLayer.DTOs.Order.View;
@@ -8,6 +10,7 @@ using BusinessLayer.DTOs.Publisher.View;
 using BusinessLayer.DTOs.User.View;
 using BusinessLayer.DTOs.WishList.Create;
 using BusinessLayer.DTOs.WishList.View;
+using MVC.Models.BookReview;
 using MVC.Models.Author;
 using MVC.Models.InventoryItem;
 using MVC.Models.Order;
@@ -34,6 +37,12 @@ namespace MVC.Mappers
 
             CreateMap<InventoryItemCreateViewModel, CreateInventoryItemDto>();
             CreateMap<DetailedInventoryItemViewDto, InventoryItemCreateViewModel>();
+            
+            CreateMap<GeneralBookReviewViewDto, BookReviewViewModel>();
+            CreateMap<BookReviewCreateViewModel, CreateBookReviewDto>();
+            CreateMap<BookReviewEditViewModel, UpdateBookReviewDto>();
+            CreateMap<DetailedBookReviewViewDto, GeneralBookReviewViewDto>();
+            CreateMap<GeneralBookReviewViewDto, BookReviewEditViewModel>();
 
             CreateMap<DetailedAuthorViewDto, AuthorDetailViewModel>();
 
