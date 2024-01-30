@@ -46,7 +46,13 @@ public class WishListController : Controller
     {
         var filterDto = _mapper.Map<WishListFilterDto>(searchModel);
         var user = await _userManager.GetUserAsync(User);
-        filterDto.UserId = user?.Id ?? 0;
+
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        filterDto.UserId = user.Id;
 
         var result = await _wishListFacade.FetchFilteredWishListsAsync(filterDto);
 
