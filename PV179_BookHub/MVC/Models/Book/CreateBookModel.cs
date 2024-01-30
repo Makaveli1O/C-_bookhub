@@ -1,5 +1,4 @@
-﻿using BusinessLayer.DTOs.Book.Create;
-using DataAccessLayer.Models.Enums;
+﻿using DataAccessLayer.Models.Enums;
 
 namespace MVC.Models.Book;
 

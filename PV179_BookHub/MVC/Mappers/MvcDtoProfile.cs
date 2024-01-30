@@ -21,10 +21,6 @@ namespace MVC.Mappers
     {
         public MvcDtoProfile()
         {
-            CreateMap<WishListCreateViewModel, CreateWishListDto>();
-            CreateMap<GeneralWishListItemViewDto, WishListItemViewModel>();
-            CreateMap<GeneralBookViewDto, WishListAvailableBooksViewModel>();
-
             CreateMap<GeneralUserViewDto, UserDetailViewModel>();
 
             CreateMap<DetailedOrderViewDto, OrderDetailViewModel>();
@@ -42,6 +38,16 @@ namespace MVC.Mappers
             CreateMap<DetailedAuthorViewDto, AuthorDetailViewModel>();
 
             CreateMap<DetailedPublisherViewDto, PublisherDetailViewModel>();
+
+            CreateMap<CreateWishListViewModel, CreateWishListDto>();
+            CreateMap<GeneralWishListViewDto, DetailsWishListModel>();
+            CreateMap<GeneralWishListViewDto, UpdateWishListViewModel>();
+            CreateMap<CreateWishListItemViewModel, CreateWishListItemDto>();
+            CreateMap<GeneralWishListItemViewDto, DetailsWishListItemModel>();
+            CreateMap<GeneralWishListItemViewDto, UpdateWishListItemViewModel>()
+                .ForMember(x => x.BookId, opt => opt.MapFrom(y => y.Book.Id))
+                .ForMember(x => x.BookTitle, opt => opt.MapFrom(y => y.Book.Title))
+                .ForMember(x => x.BookISBN, opt => opt.MapFrom(y => y.Book.ISBN));
         }
     }
 }

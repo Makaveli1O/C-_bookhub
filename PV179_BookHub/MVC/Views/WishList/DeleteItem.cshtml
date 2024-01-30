@@ -1,0 +1,53 @@
+﻿@using MVC.Models.WishList;
+@model DetailsWishListItemModel;
+
+<h1>Delete WishList Item</h1>
+<h3>Are you sure you want to delete this?</h3>
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PreferencePriority)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PreferencePriority)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WishListId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WishListId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.ISBN)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.ISBN)
+        </dd>
+    </dl>
+
+    <form asp-action="DeleteItem">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-controller="WishList" asp-action="Details" asp-route-id="@Model.WishListId">Back to WishList Details</a>
+    </form>
+</div>

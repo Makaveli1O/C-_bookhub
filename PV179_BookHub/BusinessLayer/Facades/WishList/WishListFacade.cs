@@ -1,27 +1,27 @@
 ﻿using AutoMapper;
+using BusinessLayer.DTOs.BaseFilter;
 using BusinessLayer.DTOs.Book.View;
 using BusinessLayer.DTOs.WishList.Create;
+using BusinessLayer.DTOs.WishList.Filter;
 using BusinessLayer.DTOs.WishList.View;
 using BusinessLayer.Services;
-using BusinessLayer.Services.Book;
 using BusinessLayer.Services.WishList;
-using DataAccessLayer.Models.Publication;
-using Infrastructure.Query;
 using Infrastructure.Query.Filters.EntityFilters;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Infrastructure.Query;
 using Microsoft.Extensions.Caching.Memory;
+using BusinessLayer.Services.WishListItem;
 
 namespace BusinessLayer.Facades.WishList;
 
 public class WishListFacade : BaseFacade, IWishListFacade
 {
     private readonly IWishListService _wishListService;
-    private readonly IGenericService<WishListItemEntity, long> _wishListItemService;
+    private readonly IWishListItemService _wishListItemService;
     private readonly IGenericService<BookEntity, long> _bookService;
 
     public WishListFacade(IMapper mapper,
                           IWishListService wishListService,
-                          IGenericService<WishListItemEntity, long> wishListItemService,
+                          IWishListItemService wishListItemService,
                           IGenericService<BookEntity, long> bookService,
                           IMemoryCache memoryCache)
         : base(mapper, memoryCache, "wishlist-")
@@ -43,7 +43,7 @@ public class WishListFacade : BaseFacade, IWishListFacade
     public async Task<GeneralWishListItemViewDto> CreateWishListItemAsync(CreateWishListItemDto createWishListItemDto)
     {
         var wishListItem = _mapper.Map<WishListItemEntity>(createWishListItemDto);
-        var book = _mapper.Map<GeneralBookViewDto>(await _bookService.FindByIdAsync(createWishListItemDto.BookId));
+        var book = _mapper.Map<MinimalBookViewDto>(await _bookService.FindByIdAsync(createWishListItemDto.BookId));
         
         var createdWishListItem = await _wishListItemService.CreateAsync(wishListItem);
         var wishListItemView = _mapper.Map<GeneralWishListItemViewDto>(createdWishListItem);
@@ -66,7 +66,7 @@ public class WishListFacade : BaseFacade, IWishListFacade
     public async Task<GeneralWishListItemViewDto> UpdateWishListItemAsync(long id, uint preferencePriority)
     {
         var wishListItem = await _wishListItemService.FindByIdAsync(id);
-        var book = _mapper.Map<GeneralBookViewDto>(await _bookService.FindByIdAsync(wishListItem.BookId));
+        var book = _mapper.Map<MinimalBookViewDto>(await _bookService.FindByIdAsync(wishListItem.BookId));
 
         wishListItem.PreferencePriority = preferencePriority;
         var updatedWishListItemDto = _mapper.Map<GeneralWishListItemViewDto>(await _wishListItemService.UpdateAsync(wishListItem));
@@ -101,8 +101,8 @@ public class WishListFacade : BaseFacade, IWishListFacade
 
     public async Task<IEnumerable<GeneralWishListItemViewDto>> FetchAllItemsFromWishListAsync(long wishListId)
     {
-        var wishList = await _wishListService.FindByIdAsync(wishListId);
-        return _mapper.Map<List<GeneralWishListItemViewDto>>(wishList?.WishListItems);
+        var items = await _wishListItemService.FetchItemsByWishListIdAsync(wishListId);        
+        return _mapper.Map<List<GeneralWishListItemViewDto>>(items.OrderBy(x => x.PreferencePriority));
     }
   
     public async Task<GeneralWishListItemViewDto> FetchSingleItemFromWishListAsync(long itemId)
@@ -124,5 +124,14 @@ public class WishListFacade : BaseFacade, IWishListFacade
     public async Task<IEnumerable<GeneralWishListViewDto>> FetchAllByUserIdAsync(long userId)
     {
         return _mapper.Map<IEnumerable<GeneralWishListViewDto>>(await _wishListService.FetchAllByUserIdAsync(userId));
+    }
+
+    public async Task<FilterResultDto<GeneralWishListViewDto>> FetchFilteredWishListsAsync(WishListFilterDto wishListFilterDto)
+    {
+        var queryResult = await _wishListService
+            .FetchFilteredAsync(_mapper.Map<WishListFilter>(wishListFilterDto), 
+                                _mapper.Map<QueryParams>(wishListFilterDto));
+
+        return _mapper.Map<FilterResultDto<GeneralWishListViewDto>>(queryResult);
     }
 }

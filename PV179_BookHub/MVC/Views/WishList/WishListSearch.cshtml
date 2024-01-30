@@ -1,0 +1,16 @@
+﻿@using MVC.Models.WishList;
+@model WishListSearchModel;
+
+<form asp-action="Index" asp-controller="WishList" method="get">
+    <input type="text" name="CONTAINS_Description" placeholder="Description" />
+    <input type="datetime" name="GE_CreatedAt" placeholder="Min CreatedAt" />
+    <input type="datetime" name="LE_CreatedAt" placeholder="Max CreatedAt" />
+
+    <select asp-for="SortParameter" asp-items="Html.GetEnumSelectList<WishListSortParameters>()"></select>
+    <label class="control-label" for="">
+        @Html.CheckBoxFor(model => model.SortAscending, false)
+        Sort Ascending
+    </label>
+
+    <button type="submit">Search</button>
+</form>

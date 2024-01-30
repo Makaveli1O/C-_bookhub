@@ -16,7 +16,6 @@ using BusinessLayer.Services.Publisher;
 using BusinessLayer.Services;
 using DataAccessLayer.Models.Account;
 using DataAccessLayer.Models.Logistics;
-using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Purchasing;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +25,7 @@ using BusinessLayer.Services.BookStore;
 using Microsoft.Extensions.Caching.Memory;
 using BusinessLayer.Services.AuthorBookAssociation;
 using BusinessLayer.Services.WishList;
+using BusinessLayer.Services.WishListItem;
 
 namespace BusinessLayer.DependencyInjection;
 
@@ -66,7 +66,7 @@ public static class BLDependencyInjection
         services.AddScoped<IBookFacade, BookFacade>();
 
         services.AddScoped<IWishListService, WishListService>();
-        services.AddScoped<IGenericService<WishListItem, long>, GenericService<WishListItem, long>>();
+        services.AddScoped<IWishListItemService, WishListItemService>();
         services.AddScoped<IWishListFacade, WishListFacade>();
 
         services.AddScoped<IGenericService<User, long>, GenericService<User, long>>();

@@ -24,7 +24,7 @@
                 <dd class="col-sm-9">@Model.Role</dd>
             </dl>
             <div class="col-md-2">
-                <div class="row" style="margin-bottom:10px;"><a asp-controller="WishList" asp-route-id="@Model.Id" asp-action="User" class="btn btn-info">User Wishlists</a></div>
+                <<div class="row" style="margin-bottom:10px;"><a asp-action="FetchMyWishList" class="btn btn-info">User Wishlists</a></div>
                 <div class="row" style="margin-bottom:10px;"><a asp-controller="BookReview" asp-route-id="@Model.Id" asp-action="User" class="btn btn-success">User Book Reviews</a></div>
                 <div class="row" style="margin-bottom:10px;"><a asp-controller="Order" asp-route-id="@Model.Id" asp-action="user" class="btn btn-warning">User Orders</a></div>
                 <div class="row"><a asp-controller="Order" asp-action="Create" class="btn btn-dark">Create order</a></div>

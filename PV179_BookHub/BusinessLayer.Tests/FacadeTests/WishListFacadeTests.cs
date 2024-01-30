@@ -11,6 +11,7 @@ using BusinessLayer.DTOs.WishList.Create;
 using BusinessLayer.Facades.WishList;
 using DataAccessLayer.Models.Publication;
 using BusinessLayer.Services.WishList;
+using BusinessLayer.Services.WishListItem;
 
 namespace BusinessLayer.Tests.FacadeTests;
 
@@ -19,7 +20,7 @@ public class WishListFacadeTests
 {
 	private MockedDependencyInjectionBuilder _serviceProviderBuilder;
 	private readonly IWishListService _wishListServiceMock;
-	private readonly IGenericService<WishListItem, long> _wishListItemServiceMock;
+	private readonly IWishListItemService _wishListItemServiceMock;
 	private readonly IGenericService<Book, long> _bookServiceMock;
 
 	public WishListFacadeTests()
@@ -29,7 +30,7 @@ public class WishListFacadeTests
             .AddBusinessLayer();
 
         _wishListServiceMock = Substitute.For<IWishListService>();
-		_wishListItemServiceMock = Substitute.For<IGenericService<WishListItem, long>>();
+		_wishListItemServiceMock = Substitute.For<IWishListItemService>();
 		_bookServiceMock = Substitute.For<IGenericService<Book, long>>();
 	}
 
