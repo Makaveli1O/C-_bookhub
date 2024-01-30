@@ -76,6 +76,30 @@
                                     <li><a class="nav-link text-dark" asp-area="" asp-controller="Publisher" asp-action="Index">Publishers</a></li>
                                 </ul>
                             </li>
+                            @if (User.IsInRole(UserRoles.User))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Order Panel
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                        <li><a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Create">Create</a></li>
+                                        <li><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyOrders">View</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Book Review Panel
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                        <li><a class="nav-link text-dark" asp-area="" asp-controller="BookReview" asp-action="Create">Create</a></li>
+                                        <li><a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyReviews">View</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="WishList" asp-action="Index">WishList</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
