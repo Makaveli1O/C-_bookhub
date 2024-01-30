@@ -11,6 +11,7 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Rating</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,7 @@
                         }
                         <span class="@ratingColor">@review.Rating</span>
                     </td>
+                    <td><a asp-controller="BookReview" asp-action="Edit" asp-route-id="@review.Id">Edit</a></td>
                 </tr>
             }
         </tbody>
