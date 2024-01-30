@@ -4,7 +4,6 @@ using DataAccessLayer.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models.WishList;
-using System.Text.Json;
 using BusinessLayer.Facades.Book;
 using AutoMapper;
 using DataAccessLayer.Models.Enums;
@@ -19,7 +18,6 @@ namespace MVC.Controllers;
 public class WishListController : Controller
 {
     private readonly UserManager<User> _userManager;
-    private readonly JsonSerializerOptions _jsonSerializerOptions;
     private readonly IWishListFacade _wishListFacade;
     private readonly IBookFacade _bookFacade;
     private readonly IMapper _mapper;
@@ -35,11 +33,6 @@ public class WishListController : Controller
         _wishListFacade = wishListFacade;
         _bookFacade = bookFacade;
         _mapper = mapper;
-
-        _jsonSerializerOptions = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-        };
     }
 
     public async Task<IActionResult> Index(WishListSearchModel searchModel)
@@ -79,12 +72,33 @@ public class WishListController : Controller
         var wishListDto = _mapper.Map<CreateWishListDto>(createWishListViewModel);
         wishListDto.UserId = user.Id;
 
-        var newWishList = _wishListFacade.CreateWishListAsync(wishListDto);
+        var newWishList = await _wishListFacade.CreateWishListAsync(wishListDto);
         
         return RedirectToAction(nameof(Details), new { newWishList.Id, updated = true });
     }
 
     public async Task<IActionResult> Details(long id, bool updated)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var wishlist = await _wishListFacade.FetchWishListAsync(id);
+        if (user == null || wishlist.UserId != user.Id)
+        {
+            return Unauthorized();
+        }
+
+        if (updated)
+        {
+            ViewBag.Message = "WishList Saved Successfully";
+        }
+
+        var result = _mapper.Map<DetailsWishListModel>(wishlist);
+        result.Items = await _wishListFacade.FetchAllItemsFromWishListAsync(id);
+        result.OwnerName = user.Name;
+
+        return View(result);
+    }
+
+    public async Task<IActionResult> Edit(int id)
     {
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
@@ -93,108 +107,53 @@ public class WishListController : Controller
         }
 
         var wishlist = await _wishListFacade.FetchWishListAsync(id);
-        if (wishlist.UserId != user.Id)
-        {
-            return Unauthorized();
-        }
-
-        var items = await _wishListFacade.FetchAllItemsFromWishListAsync(id);
-
-        if (updated)
-        {
-            ViewBag.Message = "WishList Saved Successfully";
-        }
-
-        var result = _mapper.Map<DetailsWishListModel>(wishlist);
-        result.Items = items;
+        var result = _mapper.Map<UpdateWishListViewModel>(wishlist);
         result.OwnerName = user.Name;
-
         return View(result);
     }
 
-
-
-
-
-    [HttpGet("User/{userId:long}")]
-    public async Task<JsonResult> SingleUserWishList(long userId)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, UpdateWishListViewModel updateWishListViewModel)
     {
-        return Json(await _wishListFacade.FetchAllByUserIdAsync(userId));
-    }
-
-    [HttpGet("{id:long}/Edit")]
-    public async Task<IActionResult> Edit(long id)
-    {
+        var user = await _userManager.GetUserAsync(User);
         var wishList = await _wishListFacade.FetchWishListAsync(id);
-
-        var wishListItems = await _wishListFacade.FetchAllItemsFromWishListAsync(id);
-
-        var availableBooks = await _bookFacade.FetchAllBooksAsync();
-
-        var viewModel = new WishListUpdateViewModel
-        {
-            Description = wishList.Description,
-            WishListItems = _mapper.Map<IList<WishListItemViewModel>>(wishListItems),
-            AvailableBooks =_mapper.Map<IList<WishListAvailableBooksViewModel>>(availableBooks)
-        };
-
-        return View(viewModel);
-    }
-
-
-    [HttpPost("{id:long}/Edit")]
-    public async Task<IActionResult> Edit(long id, WishListUpdateViewModel model)
-    {
-        if (!ModelState.IsValid)
-        {
-            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-            {
-                Console.WriteLine($"Model Error: {error.ErrorMessage}");
-            }
-
-            return BadRequest(ModelState);
-        }
-
-        if (!await IsUserWishListOwner(id))
+        if (user == null || wishList.UserId != user.Id)
         {
             return Unauthorized();
         }
 
-        //update description
-        await _wishListFacade.UpdateWishListAsync(id, model.Description);
-
-        //remove books from wishlist
-        foreach(var bookId in model.RemovedBooks)
-        {
-            await _wishListFacade.DeleteWishListItemAsync(bookId);
-        }
-
-        //add books to the wishlist
-        foreach(var bookId in model.AddedBooks)
-        {
-            var createWishListItemDto = new CreateWishListItemDto
-            {
-                WishListId = id,
-                BookId = bookId
-            };
-
-            await _wishListFacade.CreateWishListItemAsync(createWishListItemDto);
-        }
-
-        return RedirectToAction(nameof(Details), new { id });
+        var updated = await _wishListFacade.UpdateWishListAsync(id, updateWishListViewModel.Description);
+        return RedirectToAction(nameof(Details), new { id, updated = true });
     }
 
-    private async Task<bool> IsUserWishListOwner(long wishListId)
+    public async Task<IActionResult> Delete(int id)
     {
         var user = await _userManager.GetUserAsync(User);
-
         if (user == null)
         {
-            return false;
+            return Unauthorized();
         }
 
-        var wishList = await _wishListFacade.FetchWishListAsync(wishListId);
+        var wishlist = await _wishListFacade.FetchWishListAsync(id);
+        var result = _mapper.Map<DetailsWishListModel>(wishlist);
+        result.Items = await _wishListFacade.FetchAllItemsFromWishListAsync(id);
+        result.OwnerName = user.Name;
+        return View(result);
+    }
 
-        return wishList.UserId == user.Id;
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var wishlist = await _wishListFacade.FetchWishListAsync(id);
+        if (user == null || wishlist.UserId != user.Id)
+        {
+            return Unauthorized();
+        }
+
+        await _wishListFacade.DeleteWishListAsync(id);
+        return RedirectToAction(nameof(Index));
     }
 }

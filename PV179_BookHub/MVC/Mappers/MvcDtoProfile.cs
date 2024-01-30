@@ -45,6 +45,7 @@ namespace MVC.Mappers
 
             CreateMap<CreateWishListViewModel, CreateWishListDto>();
             CreateMap<GeneralWishListViewDto, DetailsWishListModel>();
+            CreateMap<GeneralWishListViewDto, UpdateWishListViewModel>();
         }
     }
 }

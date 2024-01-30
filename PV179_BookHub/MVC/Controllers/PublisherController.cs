@@ -79,8 +79,8 @@ public class PublisherController : Controller
 
     public async Task<IActionResult> Delete(int id)
     {
-        var address = await _publisherFacade.FindPublisherByIdAsync(id);
-        return View(address);
+        var publisher = await _publisherFacade.FindPublisherByIdAsync(id);
+        return View(publisher);
     }
 
     [HttpPost, ActionName("Delete")]

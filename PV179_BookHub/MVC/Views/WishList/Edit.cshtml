@@ -1,61 +1,39 @@
 ﻿@using MVC.Models.WishList;
-@model WishListUpdateViewModel;
+@model UpdateWishListViewModel;
 
-@using (Html.BeginForm("Edit", "WishList", FormMethod.Post))
-{
-    <h2>WishList</h2>
+<h1>Edit WishList</h1>
+<hr />
 
-    <div class="row" style="width: 100%">
-        <label asp-for="Description"></label>
-        <input asp-for="Description" value="@Model.Description" />
-        <span asp-validation-for="Description"></span>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="OwnerName" class="form-label"></label>
+                <input asp-for="OwnerName" class="form-control" readonly="readonly" />
+                <span asp-validation-for="OwnerName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CreatedAt" class="form-label"></label>
+                <input asp-for="CreatedAt" class="form-control" readonly="readonly"/>
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="Save" class="btn btn-primary" /> |
+                <a asp-action="Index">Back to List</a>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
+        </form>
     </div>
+</div>
 
-    <div class="row" style="width: 80%">
-        <h4>Wish List content:</h4>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Book Title</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @for (int i = 0; i < Model.WishListItems.Count; i++)
-                    {
-                        <tr>
-                            <td>
-                                @Model.WishListItems[i].Id
-                            </td>
-                            <td>
-                                @Model.WishListItems[i].Book.Title
-                            </td>
-                            <td>
-                                <input type="checkbox" name="RemovedBooks" value="@Model.WishListItems[i].Id" />
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-    </div>
-
-    <div class="row" style="width: 100%; height : 200px">
-        <h4>Add books to the wishlist</h4>
-        <div class="row" style="width: 100%; height: 100%">
-            <fieldset style="height: 100%">
-            @Html.ListBoxFor(
-                model => model.AddedBooks,
-                new MultiSelectList(Model.AvailableBooks, "Id", "Title", Model.AddedBooks),
-                new { @class = "form-control", style= "height: 100%" }
-            )
-            </fieldset>
-        </div>
-    </div>
-
-    <input type="hidden" id="WishListItems" name="WishListItems" />
-    <input type="hidden" id="AvailableBooks" name="AvailableBooks" />
-
-
-    <button type="submit" style="margin-top:50px">Submit</button>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

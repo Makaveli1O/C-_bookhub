@@ -101,8 +101,8 @@ public class WishListFacade : BaseFacade, IWishListFacade
 
     public async Task<IEnumerable<GeneralWishListItemViewDto>> FetchAllItemsFromWishListAsync(long wishListId)
     {
-        var items = await _wishListItemService.FetchItemsByWishListIdAsync(wishListId);
-        return _mapper.Map<List<GeneralWishListItemViewDto>>(items);
+        var items = await _wishListItemService.FetchItemsByWishListIdAsync(wishListId);        
+        return _mapper.Map<List<GeneralWishListItemViewDto>>(items.OrderBy(x => x.PreferencePriority));
     }
   
     public async Task<GeneralWishListItemViewDto> FetchSingleItemFromWishListAsync(long itemId)
