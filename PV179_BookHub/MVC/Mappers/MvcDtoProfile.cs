@@ -18,6 +18,8 @@ using MVC.Models.Publisher;
 using MVC.Models.User;
 using MVC.Models.WishList;
 using BusinessLayer.DTOs.Author.View;
+using MVC.Models.Book;
+using BusinessLayer.DTOs.Book.Create;
 
 namespace MVC.Mappers
 {
@@ -44,6 +46,14 @@ namespace MVC.Mappers
             CreateMap<BookReviewEditViewModel, UpdateBookReviewDto>();
             CreateMap<DetailedBookReviewViewDto, GeneralBookReviewViewDto>();
             CreateMap<GeneralBookReviewViewDto, BookReviewEditViewModel>();
+
+            CreateMap<DetailedBookViewDto, AssignAuthorViewModel>();
+            CreateMap<DetailedBookViewDto, UnAssignAuthorViewModel>();
+            CreateMap<DetailedBookViewDto, PrimaryAuthorViewModel>();
+            CreateMap<AssignAuthorViewModel, AuthorBookAssociationDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(y => y.AuthorId));
+            CreateMap<PrimaryAuthorViewModel, AuthorBookAssociationDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(y => y.AuthorId));
 
             CreateMap<DetailedAuthorViewDto, AuthorDetailViewModel>();
 
