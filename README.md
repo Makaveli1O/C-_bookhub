@@ -263,7 +263,8 @@ docker build --no-cache --file MVCDockerfile -t your_tag . # the last 'dot' char
 2. Run the image in newly created container
 ```shell
 # after the image is created, you can run it
-docker run -e ASPNETCORE_URLS=http://+:5000 -d -p 8080:5000 -v your/local/storage:/app/data --name container_name your_tag
+docker run -e ASPNETCORE_URLS=http://+:5000 -e ASPNETCORE_ENVIRONMENT=Production -d -p 8080:5000 -v your/local/storage:/app/data --name container_name your_tag
+# do not forget to specify environment and corresponding appsettings
 ```
 
 
