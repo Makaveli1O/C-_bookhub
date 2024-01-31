@@ -263,7 +263,8 @@ docker build --no-cache --file MVCDockerfile -t your_tag . # the last 'dot' char
 2. Run the image in newly created container
 ```shell
 # after the image is created, you can run it
-docker run -e ASPNETCORE_URLS=http://+:5000 -d -p 8080:5000 -v your/local/storage:/app/data --name container_name your_tag
+docker run -e ASPNETCORE_URLS=http://+:5000 -e ASPNETCORE_ENVIRONMENT=Production -d -p 8080:5000 -v your/local/storage:/app/data --name container_name your_tag
+# do not forget to specify environment and corresponding appsettings
 ```
 
 
@@ -275,6 +276,8 @@ This will be (by far) the most painful one, because of the requirements and chan
 4. If you managed to do all of these 'easy' steps then good job!  
 5. Now you can just run the powershell script:
 ```shell
+# navigate to deployment folder
+cd OC_Deployment
 # do not forget to also enable the script execution policy this is disable by default
 # check Set-ExecutionPolicy and Get-ExecutionPolicy (hint: unrestricted)
 # read the script before executing, just to be sure we are not creating some backdoor
