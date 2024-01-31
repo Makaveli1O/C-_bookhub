@@ -1,7 +1,7 @@
 ﻿using BusinessLayer.DTOs.Book.Create;
 using BusinessLayer.DTOs.Book.Filter;
+using BusinessLayer.DTOs.Book.Update;
 using BusinessLayer.Facades.Book;
-using DataAccessLayer.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
@@ -29,7 +29,7 @@ public class BookController : ControllerBase
 
     [HttpPut]
     [Route("{id}")]
-    public async Task<IActionResult> UpdateBook(long id, CreateBookDto updateBookDto)
+    public async Task<IActionResult> UpdateBook(long id, UpdateBookDto updateBookDto)
     {
         return Ok(await _bookFacade.UpdateBookAsync(id, updateBookDto));
     }
@@ -56,20 +56,32 @@ public class BookController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("{bookId}/{authorId}")]
-    public async Task<IActionResult> AssignAuthorToBook(long bookId, long authorId)
+    [Route("{id}")]
+    public async Task<IActionResult> AssignAuthorToBook(long id, AuthorBookAssociationDto authorBookAssociation, [FromQuery] bool force = false)
     {
-        return Ok(await _bookFacade.AssignAuthorToBook(bookId, authorId));
+        return Ok(await _bookFacade.AssignAuthorToBookAsync(id, authorBookAssociation, force));
+    }
+
+    [HttpDelete]
+    [Route("{bookId}/{authorId}")]
+    public async Task<IActionResult> UnassignAuthorFromBook(long bookId, long authorId)
+    {
+        await _bookFacade.UnassignAuthorFromBookAsync(bookId, authorId);
+        return NoContent();
+    }
+
+    [HttpPatch]
+    [Route("primary/{id}")]
+    public async Task<IActionResult> MakeUnmakeAuthorPrimary(long id, AuthorBookAssociationDto authorBookAssociation, [FromQuery] bool force = false)
+    {
+        return Ok(await _bookFacade.MakeUnmakeAuthorPrimaryAsync(id, authorBookAssociation, force));
     }
 
     [HttpGet]
     [Route("filter")]
-    public async Task<IActionResult> FetchBooksByFilters(string? title, string? author, string? publisher, string? description,
-        BookGenre? bookGenre, double? LEQPrice, double? GEQPrice, string? sortParam, bool? asc, int pageNumber, int? pageSize)
+    public async Task<IActionResult> FetchBooksByFilters([FromQuery] BookFilterDto bookFilterDto)
     {
-        var filter = new BookFilterDto(title, author, publisher, description, bookGenre, LEQPrice, GEQPrice, sortParam, asc, pageNumber, pageSize);
-
-        var books = await _bookFacade.FetchFilteredBooksAsync(filter);
+        var books = await _bookFacade.FetchFilteredBooksAsync(bookFilterDto);
         return Ok(books);
     }
 }

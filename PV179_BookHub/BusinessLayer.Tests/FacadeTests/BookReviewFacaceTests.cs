@@ -19,7 +19,7 @@ public class BookReviewFacaceTests
 {
     private MockedDependencyInjectionBuilder _serviceProviderBuilder;
     private IBookReviewService _bookReviewServiceMock;
-    private IBookService _bookServiceMock;
+    private IGenericService<Book, long> _bookServiceMock;
     private IGenericService<User, long> _userServiceMock;
 
     public BookReviewFacaceTests()
@@ -29,7 +29,7 @@ public class BookReviewFacaceTests
             .AddBusinessLayer();
 
         _bookReviewServiceMock = Substitute.For<IBookReviewService>();
-        _bookServiceMock = Substitute.For<IBookService>();
+        _bookServiceMock = Substitute.For<IGenericService<Book, long>>();
         _userServiceMock = Substitute.For<IGenericService<User, long>>();
     }
 

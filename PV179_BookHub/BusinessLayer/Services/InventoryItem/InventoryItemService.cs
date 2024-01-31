@@ -1,18 +1,19 @@
 ﻿using BusinessLayer.Exceptions;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Services.InventoryItem;
 
 public class InventoryItemService : GenericService<InventoryItemEntity, long>, IInventoryItemService
 {
-    public InventoryItemService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    public InventoryItemService(IUnitOfWork unitOfWork, IQuery<InventoryItemEntity, long> query) : base(unitOfWork, query)
     {
     }
 
     public async Task ChangeStockAsync(long bookId, long bookStoreId, uint quantity, StockDirection stockDirection, bool save = true)
     {
         var inventoryItem = await Repository
-            .GetSingleAsync(x => 
+            .GetSingleAsync(x =>
             (x.BookId == bookId) && (x.BookStoreId == bookStoreId));
 
         if (inventoryItem == null)
@@ -36,5 +37,10 @@ public class InventoryItemService : GenericService<InventoryItemEntity, long>, I
         inventoryItem.LastRestock = DateTime.UtcNow;
 
         await UpdateAsync(inventoryItem);
+    }
+
+    public async Task<IEnumerable<InventoryItemEntity>> GetInventoryItemsByBookStoreIdAsync(long id)
+    {
+        return await Repository.GetAllAsync(item => item.BookStoreId == id);
     }
 }

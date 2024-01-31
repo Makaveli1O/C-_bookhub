@@ -1,0 +1,72 @@
+﻿@using MVC.Models.Author;
+@using DataAccessLayer.Models.Enums;
+@model AuthorDetailViewModel;
+
+<h1>Author Details</h1>
+<hr />
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Biography)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Biography)
+        </dd>
+    </dl>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            ISBN
+        </th>
+        <th></th>
+    </tr>
+
+
+    @if (Model != null && Model.Books.Count() > 0)
+    {
+        foreach (var item in Model.Books)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISBN)
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <td colspan="6" class="text-center"><b>No Books Availible.</b></td>
+
+    }
+</table>
+
+<div>
+    @if (User.IsInRole(UserRoles.Admin))
+    {
+        @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" })
+        <span>|</span>
+    }
+    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "link-primary" })
+</div>

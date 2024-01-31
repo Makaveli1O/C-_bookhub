@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Services.Author;
 using BusinessLayer.Services;
-using BusinessLayer.Services.Book;
 using TestUtilities.MockedObjects;
 using NSubstitute;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,15 +9,18 @@ using DataAccessLayer.Models.Publication;
 using NSubstitute.ExceptionExtensions;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Facades.Book;
+using BusinessLayer.Services.AuthorBookAssociation;
+using BusinessLayer.DTOs.Book.Update;
 
 namespace BusinessLayer.Tests.FacadeTests;
 
 public class BookFacadeTests
 {
     private MockedDependencyInjectionBuilder _serviceProviderBuilder;
-    private readonly IBookService _bookServiceMock;
+    private readonly IGenericService<Book, long> _bookServiceMock;
     private readonly IAuthorService _authorServiceMock;
     private readonly IGenericService<Publisher, long> _publisherServiceMock;
+    private readonly IAuthorBookAsssociationService _authorBookAsssociationServiceMock;
 
     public BookFacadeTests()
     {
@@ -26,9 +28,10 @@ public class BookFacadeTests
             .AddInfrastructure()
             .AddBusinessLayer();
 
-        _bookServiceMock = Substitute.For<IBookService>();
+        _bookServiceMock = Substitute.For<IGenericService<Book, long>>();
         _authorServiceMock = Substitute.For<IAuthorService>();
         _publisherServiceMock = Substitute.For<IGenericService<Publisher, long>>();
+        _authorBookAsssociationServiceMock = Substitute.For<IAuthorBookAsssociationService>();
     }
 
     private ServiceProvider CreateServiceProvider()
@@ -37,6 +40,7 @@ public class BookFacadeTests
             .AddScoped(_bookServiceMock)
             .AddScoped(_authorServiceMock)
             .AddScoped(_publisherServiceMock)
+            .AddScoped(_authorBookAsssociationServiceMock)
             .Create();
     }
 
@@ -45,25 +49,38 @@ public class BookFacadeTests
     {
         var book = TestDataInitializer.GetTestBooks().ElementAt(0);
         
-        var authorAssociates = TestDataInitializer.GetTestAuthorBookAssociations().First(x => x.BookId == book.Id);
+        var authorBookAssociations = TestDataInitializer.GetTestAuthorBookAssociations().Where(x => x.BookId == book.Id).ToList();
         
-        var authors = TestDataInitializer.GetTestAuthors().Where(x => x.Id == authorAssociates.AuthorId);
+        var authors = TestDataInitializer.GetTestAuthors().Where(x => authorBookAssociations.Any(y => y.AuthorId == x.Id)).ToList();
         var publisher = TestDataInitializer.GetTestPublishers().First(x => x.Id == book.PublisherId);
+
+        var authorBookAssocDtos = new List<AuthorBookAssociationDto>();
+        foreach (var author in authors)
+        {
+            var authorBookAssoc = authorBookAssociations.First(x => x.AuthorId == author.Id);
+            authorBookAssocDtos.Add(new AuthorBookAssociationDto() { Id = author.Id, IsPrimary = authorBookAssoc.IsPrimary });
+        }
 
         var bookDto = new CreateBookDto()
         {
             Title = book.Title,
             ISBN = book.ISBN,
             PublisherId = book.PublisherId,
-            AuthorIds = authors.Select(x => x.Id),
+            AuthorIds = authorBookAssocDtos,
             BookGenre = book.BookGenre,
             Description = book.Description,
-            Price = book.Price,
+            Price = book.Price
         };
+
+        book.Authors = authors;
+        book.Publisher = publisher;
+        book.AuthorBookAssociations = authorBookAssociations;
 
         _bookServiceMock.CreateAsync(Arg.Any<Book>()).Returns(book);
         _authorServiceMock.FetchAllAuthorsByIdsAsync(Arg.Any<IEnumerable<long>>()).Returns(authors);
         _publisherServiceMock.FindByIdAsync(Arg.Any<long>()).Returns(publisher);
+        _authorBookAsssociationServiceMock.CreateMultipleAssociationsAsync(Arg.Any<Book>(), 
+            Arg.Any<IEnumerable<Tuple<long, bool>>>(), Arg.Any<bool>()).Returns(authorBookAssociations);
 
         var serviceProvider = CreateServiceProvider();
 
@@ -79,6 +96,8 @@ public class BookFacadeTests
             await _bookServiceMock.Received(1).CreateAsync((Arg.Any<Book>()));
             await _authorServiceMock.Received(1).FetchAllAuthorsByIdsAsync(Arg.Any<IEnumerable<long>>());
             await _publisherServiceMock.Received(1).FindByIdAsync(Arg.Any<long>());
+            await _authorBookAsssociationServiceMock.Received(1).CreateMultipleAssociationsAsync(
+                Arg.Any<Book>(), Arg.Any<IEnumerable<Tuple<long, bool>>>(), Arg.Any<bool>());
         }
     }
 
@@ -92,7 +111,7 @@ public class BookFacadeTests
             Title = book.Title,
             ISBN = book.ISBN,
             PublisherId = book.PublisherId,
-            AuthorIds = new[]{ (long)1 },
+            AuthorIds = new List<AuthorBookAssociationDto>(),
             BookGenre = book.BookGenre,
             Description = book.Description,
             Price = book.Price,
@@ -128,7 +147,7 @@ public class BookFacadeTests
             Title = book.Title,
             ISBN = book.ISBN,
             PublisherId = book.PublisherId,
-            AuthorIds = new[] { author.Id },
+            AuthorIds = new List<AuthorBookAssociationDto>() { new AuthorBookAssociationDto() { Id = 1, IsPrimary = true} },
             BookGenre = book.BookGenre,
             Description = book.Description,
             Price = book.Price,
@@ -155,12 +174,11 @@ public class BookFacadeTests
         var authorAssociates = TestDataInitializer.GetTestAuthorBookAssociations().First(x => x.BookId == book.Id);
         var author = TestDataInitializer.GetTestAuthors().First(x => x.Id == authorAssociates.AuthorId);
 
-        var bookDto = new CreateBookDto()
+        var bookDto = new UpdateBookDto()
         {
             Title = book.Title,
             ISBN = book.ISBN,
             PublisherId = book.PublisherId,
-            AuthorIds = new[] { author.Id },
             BookGenre = book.BookGenre,
             Description = book.Description,
             Price = 1.5,
@@ -175,7 +193,7 @@ public class BookFacadeTests
         {
             var bookFacade = scope.ServiceProvider.GetRequiredService<IBookFacade>();
 
-            var result = await bookFacade.UpdateBookAsync(book.Id,bookDto);
+            var result = await bookFacade.UpdateBookAsync(book.Id, bookDto);
 
             Assert.NotNull(result);
             Assert.Equal(book.Id, result.Id);
@@ -193,12 +211,11 @@ public class BookFacadeTests
         var authorAssociates = TestDataInitializer.GetTestAuthorBookAssociations().First(x => x.BookId == book.Id);
         var author = TestDataInitializer.GetTestAuthors().First(x => x.Id == authorAssociates.AuthorId);
 
-        var bookDto = new CreateBookDto()
+        var bookDto = new UpdateBookDto()
         {
             Title = book.Title,
             ISBN = book.ISBN,
             PublisherId = book.PublisherId,
-            AuthorIds = new[] { author.Id },
             BookGenre = book.BookGenre,
             Description = book.Description,
             Price = 1.5,

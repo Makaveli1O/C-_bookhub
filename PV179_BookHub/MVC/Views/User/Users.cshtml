@@ -1,0 +1,60 @@
+﻿@using DataAccessLayer.Models.Account;
+@using DataAccessLayer.Models.Enums;
+@model IEnumerable<User>
+
+<h1>Users</h1>
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+<p class="text-end">
+    @Html.ActionLink("New Manager Account", "RegisterManager", "Account", new {}, new { @class = "link-success" })
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Username
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Role
+        </th>
+        <th></th>
+    </tr>
+
+
+    @if (Model != null && Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td class="text-end">
+                    @Html.ActionLink("Reset Password", "ResetPassword", "Account", new { id = item.Id }, new { @class = "link-warning" })
+                    @Html.ActionLink("Delete Account", "DeleteAccount", "Account", new { id = item.Id }, new { @class = "link-danger" })
+                </td>
+            </tr>
+        }
+    }
+</table>

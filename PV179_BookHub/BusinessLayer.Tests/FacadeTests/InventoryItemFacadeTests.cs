@@ -16,15 +16,17 @@ using BusinessLayer.DTOs.BookStore.Create;
 using EntityFrameworkCore.Testing.NSubstitute;
 using BusinessLayer.Services.Book;
 using BusinessLayer.Services.InventoryItem;
+using DataAccessLayer.Models.Publication;
+using BusinessLayer.Services.BookStore;
 
 namespace BusinessLayer.Tests.FacadeTests;
 
 public class InventoryItemFacadeTests
 {
     private MockedDependencyInjectionBuilder _serviceProviderBuilder;
-    private IGenericService<BookStore, long> _bookStoreServiceMock;
+    private IBookStoreService _bookStoreServiceMock;
     private IInventoryItemService _inventoryItemServiceMock;
-    private IBookService _bookServiceMock;
+    private IGenericService<Book, long> _bookServiceMock;
 
     public InventoryItemFacadeTests()
     {
@@ -32,8 +34,8 @@ public class InventoryItemFacadeTests
             .AddInfrastructure()
             .AddBusinessLayer();
 
-        _bookStoreServiceMock = Substitute.For<IGenericService<BookStore, long>>();
-        _bookServiceMock = Substitute.For<IBookService>();
+        _bookStoreServiceMock = Substitute.For<IBookStoreService>();
+        _bookServiceMock = Substitute.For<IGenericService<Book, long>>();
         _inventoryItemServiceMock = Substitute.For<IInventoryItemService>();
     }
 

@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Database file
+PV179BookHub
+PV179BookHub-shm
+PV179BookHub-wal
+

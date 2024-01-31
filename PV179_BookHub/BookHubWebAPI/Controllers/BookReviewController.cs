@@ -2,7 +2,6 @@
 using BusinessLayer.Facades.BookReview;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLayer.DTOs.BookReview.Update;
-using DataAccessLayer.Models.Account;
 
 namespace BookHubWebAPI.Controllers;
 

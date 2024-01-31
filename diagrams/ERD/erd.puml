@@ -9,9 +9,7 @@ skinparam backgroundColor white
 entity "User" {
   *Id : number <<generated>>
   --
-  *UserName : text
-  *PasswordHash : text
-  *Salt : text
+  *Name : text
   *Role: enum
 }
 
@@ -79,6 +77,7 @@ entity "Publisher" {
 entity "AuthorBookAssociation" {
   *Id : number <<generated>>
   --
+  *IsPrimary : boolean
   *AuthorId : number <<FK>>
   *BookId : number <<FK>>
 }

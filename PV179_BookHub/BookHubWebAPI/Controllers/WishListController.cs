@@ -1,10 +1,6 @@
-﻿using AutoMapper;
-using BusinessLayer.DTOs.WishList.Create;
-using BusinessLayer.DTOs.WishList.View;
+﻿using BusinessLayer.DTOs.WishList.Create;
+using BusinessLayer.DTOs.WishList.Filter;
 using BusinessLayer.Facades.WishList;
-using DataAccessLayer.Models;
-using DataAccessLayer.Models.Preferences;
-using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHubWebAPI.Controllers;
@@ -97,5 +93,13 @@ public class WishListController : ControllerBase
     {
         await _wishListFacade.DeleteWishListItemsAsync(wishListId);
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("filter")]
+    public async Task<IActionResult> FetchPublishersByFilters([FromQuery] WishListFilterDto wishListFilterDto)
+    {
+        var wishLists = await _wishListFacade.FetchFilteredWishListsAsync(wishListFilterDto);
+        return Ok(wishLists);
     }
 }

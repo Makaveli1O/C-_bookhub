@@ -1,0 +1,47 @@
+﻿@using MVC.Models.BookReview
+@using DataAccessLayer.Models.Enums
+@model List<BookReviewViewModel>
+
+@if (Model.Any())
+{
+    <h1><span class="text-primary">@Model[0].ReviewerName</span> Reviews</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Rating</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model)
+            {
+                <tr>
+                    <td>@review.Title</td>
+                    <td>@review.Description</td>
+                    <td>
+                        @{
+                            var ratingColor = review.Rating switch
+                            {
+                                Rating.Excellent => "text-success",
+                                Rating.Fair => "text-info",
+                                Rating.Terrible => "text-danger",
+                                Rating.Poor => "text-warning",
+                                Rating.Good => "text-primary",
+                                _ => ""
+                            };
+                        }
+                        <span class="@ratingColor">@review.Rating</span>
+                    </td>
+                    <td><a asp-controller="BookReview" asp-action="Edit" asp-route-id="@review.Id">Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h1>User Reviews</h1>
+    <p>No reviews available for this user.</p>
+}

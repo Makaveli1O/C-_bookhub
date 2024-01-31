@@ -13,12 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{8DE59E34-E629-47B6-ADB8-8D9E77F5D9B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUtilities", "TestUtilities\TestUtilities.csproj", "{A6FA5CFD-E71F-40AF-9121-4ECFB6E821D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestUtilities", "TestUtilities\TestUtilities.csproj", "{A6FA5CFD-E71F-40AF-9121-4ECFB6E821D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer.Tests", "BusinessLayer.Tests\BusinessLayer.Tests.csproj", "{C5D80EAF-1A33-4155-AD50-D9C0ADAC11EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer.Tests", "BusinessLayer.Tests\BusinessLayer.Tests.csproj", "{C5D80EAF-1A33-4155-AD50-D9C0ADAC11EE}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC", "MVC\MVC.csproj", "{82A8605A-A055-4607-BEFE-064963A5043F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL.MSSql.Migrations", "DALMSSql.Migrations\DAL.MSSql.Migrations.csproj", "{80AA5413-D9B2-4543-A761-E9DB9F94D3D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL.MSSql.Migrations", "DALMSSql.Migrations\DAL.MSSql.Migrations.csproj", "{80AA5413-D9B2-4543-A761-E9DB9F94D3D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,107 @@
+﻿@using BusinessLayer.DTOs.Book.View;
+@using DataAccessLayer.Models.Enums;
+﻿@using MVC.Models.Base;
+@using MVC.Models.Book;
+@model GenericFilteredModel<BookSearchModel, GeneralBookViewDto>
+
+<h1>Books</h1>
+
+@if (User.IsInRole(UserRoles.Admin))
+{
+    <p class="text-end"><a class="link-success" asp-action="Create">Create New</a></p>
+}
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+@{
+    await Html.RenderPartialAsync("BookSearch", Model.SearchModel ?? new BookSearchModel());
+}
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Primary Author
+        </th>
+        <th>
+            Publisher
+        </th>
+        <th>
+            Genre
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+    </tr>
+
+
+    @if (Model != null && Model.Items.Count() > 0)
+    {
+        foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookGenre)
+                </td>
+                <td>
+                    @(item.Price + " EUR")
+                </td>
+                <td class="text-end">
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "link-primary" })
+                    @if (User.IsInRole(UserRoles.Admin))
+                    {
+                        <span>|</span>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" })
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-danger" })
+                    }
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <td colspan="6" class="text-center"><b>No Books Availible.</b></td>
+
+    }
+</table>
+
+@if (Model != null)
+{
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="Index"
+               asp-route-PageNumber="@i"
+               asp-route-CONTAINS_Title="@Model.SearchModel?.CONTAINS_Title"
+               asp-route-Author="@Model.SearchModel?.Author"
+               asp-route-Publisher="@Model.SearchModel?.Publisher"
+               asp-route-CONTAINS_Description="@Model.SearchModel?.CONTAINS_Description"
+               asp-route-BookGenre="@Model.SearchModel?.BookGenre"
+               asp-route-GE_Price="@Model.SearchModel?.GE_Price"
+               asp-route-LE_Price="@Model.SearchModel?.LE_Price"
+               asp-route-SortParameter="@Model.SearchModel?.SortParameter"
+               asp-route-SortAscending="@Model.SearchModel?.SortAscending"
+               class="@(i == Model.PageNumber ? "active" : "")">@($" {i}{(i == Model.TotalPages ? string.Empty : ',')} ")</a>
+        }
+    </div>
+}

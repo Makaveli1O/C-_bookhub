@@ -1,0 +1,126 @@
+﻿@using BusinessLayer.DTOs.Book.View;
+@using DataAccessLayer.Models.Enums
+@model DetailedBookViewDto
+
+<h1>Book Details</h1>
+<hr />
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ISBN)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ISBN)
+        </dd>
+        <dt class="col-sm-2">
+            Primary Author
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PrimaryAuthor.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Co-Authors
+        </dt>
+        @if (Model.CoAuthors != null && Model.CoAuthors.Count() > 0)
+        {
+            <dd class="col-sm-10">
+                <div>
+                    @foreach (var item in Model.CoAuthors)
+                    {
+                        <span class="badge bg-secondary">@item.Name</span>
+                    }
+                </div>
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">No co-authors...</dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Publisher)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Publisher.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Book Genre
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookGenre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.Price + " EUR")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reviews)
+        </dt>
+        @if (Model.Reviews != null && Model.Reviews.Count() > 0)
+        {
+            <dd class="col-sm-10">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                @foreach (var item in Model.Reviews)
+                {
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-heading@(item.Id)">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse@(item.Id)" aria-expanded="true" aria-controls="panelsStayOpen-collapse@(item.Id)">
+                                    "<strong>@(item.Reviewer?.Name)</strong>" gave a rating: "<strong>@(item.Rating)</strong>"
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapse@(item.Id)" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading@(item.Id)">
+                            <div class="accordion-body">@item.Description</div>
+                        </div>
+                    </div>
+                }
+                </div>
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">No reviews...</dd>
+        }
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole(UserRoles.Admin))
+    {
+        <div class="btn-group-lg">
+            @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" })
+            <span>|</span>
+            @Html.ActionLink("Assign Author", "AssignAuthor", new { bookId = Model.Id}, new { @class = "link-warning" })
+            <span>|</span>
+            @Html.ActionLink("UnAssign Author", "UnAssignAuthor", new { bookId = Model.Id}, new { @class = "link-warning" })
+            <span>|</span>
+            @Html.ActionLink("Make Author Primary", "MakeUnmakeAuthorPrimary", new { bookId = Model.Id}, new { @class = "link-warning" })
+        </div>
+    }
+    @if (User.IsInRole(UserRoles.User))
+    {
+        <div class="btn-group-lg">
+            @Html.ActionLink("Add to WishList", "CreateItem", "WishList", new { bookId = Model.Id, bookTitle = Model.Title, bookISBN = Model.ISBN }, new { @class = "link-info" })
+        </div>
+    }
+    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "link-primary" })
+</div>

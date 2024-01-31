@@ -1,0 +1,56 @@
+﻿@using BusinessLayer.DTOs.BookStore.View;
+@using DataAccessLayer.Models.Enums
+@model DetailedBookStoreViewDto
+
+<h1>Bookstore Details</h1>
+<hr />
+
+@if (ViewBag.Message != null)
+{
+<p class="alert alert-success" role="alert">
+    @ViewBag.Message
+</p>
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @($"{Model.Address.Street} {Model.Address.StreetNumber}, {Model.Address.City} {Model.Address.PostalCode}, {Model.Address.State}")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Manager)
+        </dt>
+        <dd class="col-sm-10">
+            @($"{Model.Manager.Name}")
+        </dd>
+        <dt class="col-sm-2">
+            Phone Number
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole(UserRoles.Admin))
+    {
+        @Html.ActionLink("Edit", "Edit", new { Model.Id }, new { @class = "link-warning" })
+        <span>|</span>
+    }
+    @Html.ActionLink("Back to List", "Index", new {}, new { @class = "link-primary" })
+</div>

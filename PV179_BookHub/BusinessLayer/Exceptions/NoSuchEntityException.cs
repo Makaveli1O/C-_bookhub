@@ -11,4 +11,9 @@ public class NoSuchEntityException<TKey> : Exception
         : base($"Entities {type.Name} with ids ({ids}) do not exist!")
     {
     }
+
+    public NoSuchEntityException(Type type)
+        : base($"Entity {type.Name} does not exist!")
+    {
+    }
 }

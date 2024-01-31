@@ -4,6 +4,7 @@ using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Publication;
 using DataAccessLayer.Models.Purchasing;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
@@ -16,10 +17,9 @@ public static class DataInitializer
         var publishers = PreparePublisherModels();
         var books = PrepareBookModels();
         var authorBooksAssociations = PrepareAuthorBooksAssociationsModels();
-        
+
         var users = PrepareUserModels();
         var bookReviews = PrepareBookReviews();
-
 
         var addresses = PrepareAddressModels();
         var bookStores = PrepareBookStoreModels();
@@ -40,10 +40,7 @@ public static class DataInitializer
             .HasData(books);
         modelBuilder.Entity<AuthorBookAssociation>()
             .HasData(authorBooksAssociations);
-        
 
-        modelBuilder.Entity<User>()
-            .HasData(users);
         modelBuilder.Entity<BookReview>()
             .HasData(bookReviews);
 
@@ -63,6 +60,58 @@ public static class DataInitializer
             .HasData(orders);
         modelBuilder.Entity<OrderItem>()
             .HasData(orderItems);
+
+        SeedUsersAndRoles(modelBuilder, users);
+    }
+
+    public static void SeedUsersAndRoles(this ModelBuilder builder, IEnumerable<User> defaultUsers)
+    {
+        var roles = new List<IdentityRole<long>>()
+        {
+           new IdentityRole<long>()
+           {
+                Id = 1,
+                Name = UserRole.Admin.ToString(),
+                NormalizedName = UserRole.Admin.ToString().ToUpper()
+           },
+           new IdentityRole<long>()
+           {
+                Id = 2,
+                Name = UserRole.Manager.ToString(),
+                NormalizedName = UserRole.Manager.ToString().ToUpper()
+           },
+           new IdentityRole<long>()
+           {
+                Id = 3,
+                Name = UserRole.User.ToString(),
+                NormalizedName = UserRole.User.ToString().ToUpper()
+           },
+        };
+        builder.Entity<IdentityRole<long>>().HasData(roles);
+
+
+        var passwordHasher = new PasswordHasher<User>();
+        foreach (var user in defaultUsers)
+        {
+            user.Email = user.UserName + "@mail.com";
+            user.NormalizedUserName = user.UserName?.ToUpper();
+            user.NormalizedEmail = user.Email.ToUpper();
+            user.PasswordHash = passwordHasher.HashPassword(user, "password");
+            user.SecurityStamp = Guid.NewGuid().ToString();
+        }
+        builder.Entity<User>().HasData(defaultUsers);
+
+
+        List<IdentityUserRole<long>> userRoles = new List<IdentityUserRole<long>>();
+        foreach (var user in defaultUsers)
+        {
+            userRoles.Add(new IdentityUserRole<long>
+            {
+                UserId = user.Id,
+                RoleId = roles.First(q => q.Name == defaultUsers.First(u => user.Id == u.Id).Role.ToString()).Id
+            });
+        }
+        builder.Entity<IdentityUserRole<long>>().HasData(userRoles);
     }
 
     private static List<Publisher> PreparePublisherModels()
@@ -84,7 +133,6 @@ public static class DataInitializer
                 City = "London",
                 Country = "United Kingdom",
                 YearFounded = 2003
-
             },
             new Publisher()
             {
@@ -256,121 +304,141 @@ public static class DataInitializer
             {
                 Id = 1,
                 AuthorId = 1,
-                BookId = 1
+                BookId = 1,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 2,
                 AuthorId = 2,
-                BookId = 1
+                BookId = 1,
+                IsPrimary = false
             },
             new AuthorBookAssociation()
             {
                 Id = 3,
                 AuthorId = 3,
-                BookId = 2
+                BookId = 2,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 4,
                 AuthorId = 4,
-                BookId = 3
+                BookId = 3,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 5,
                 AuthorId = 4,
-                BookId = 4
+                BookId = 4,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 6,
                 AuthorId = 4,
-                BookId = 5
+                BookId = 5,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 7,
                 AuthorId = 4,
-                BookId = 6
+                BookId = 6,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 8,
                 AuthorId = 4,
-                BookId = 7
+                BookId = 7,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 9,
                 AuthorId = 4,
-                BookId = 8
+                BookId = 8,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 10,
                 AuthorId = 4,
-                BookId = 9
+                BookId = 9,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 11,
                 AuthorId = 5,
-                BookId = 10
+                BookId = 10,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 12,
                 AuthorId = 5,
-                BookId = 11
+                BookId = 11,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 13,
                 AuthorId = 6,
-                BookId = 12
+                BookId = 12,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 14,
                 AuthorId = 7,
-                BookId = 13
+                BookId = 13,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 15,
                 AuthorId = 8,
-                BookId = 14
+                BookId = 14,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 16,
                 AuthorId = 9,
-                BookId = 15
+                BookId = 15,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 17,
                 AuthorId = 10,
-                BookId = 17
+                BookId = 17,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 18,
                 AuthorId = 11,
-                BookId = 18
+                BookId = 18,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 19,
                 AuthorId = 12,
-                BookId = 19
+                BookId = 19,
+                IsPrimary = true
             },
             new AuthorBookAssociation()
             {
                 Id = 20,
                 AuthorId = 13,
-                BookId = 20
+                BookId = 20,
+                IsPrimary = true
             },
         };
     }
@@ -470,7 +538,7 @@ public static class DataInitializer
         new BookReview
         {
             Id = 12,
-            BookId = 12,
+            BookId = 13,
             ReviewerId = 4,
             Description = "I found 'Culinary Delights' to be underwhelming. The recipes were basic, and I was expecting more innovative dishes.",
             Rating = Rating.Poor
@@ -606,137 +674,120 @@ public static class DataInitializer
             {
                 Id = 1,
                 UserName = "Housemaster111",
-                PasswordHash = "954b39223c4cfd375e5b41ef79cdbe5cacaf9176",
-                Salt = "8y4z6E",
-                Role = UserRole.Admin
+                Name = "Danihel Ismael",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 2,
-                UserName = "olivia.johnson@gmail.com",
-                PasswordHash = "b5d66e00c0673d769f25c9919756341d34162cef",
-                Salt = "3M9r1N",
+                UserName = "olivia.johnson",
+                Name = "Prisca Toni",
                 Role = UserRole.Manager
             },
             new User
             {
                 Id = 3,
                 UserName = "liamthereaded",
-                PasswordHash = "fd3a0c6a60faa4f9e487f04e153f17919219bcbc",
-                Salt = "ab7x9D",
-                Role = UserRole.User
+                Name = "Danihel Ismael",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 4,
-                UserName = "emily_j",
-                PasswordHash = "319f1f56edd200d17f693ee08180db1a8367be87",
-                Salt = "aA8f9B",
-                Role = UserRole.User
+                UserName = "emily_in_paris",
+                Name = "Giancarlo Elianna",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 5,
                 UserName = "booklover88",
-                PasswordHash = "3b0e9558746f94f4fc36e307e5d78e86a37c6cca",
-                Salt = "7K6p2h",
-                Role = UserRole.User
+                Name = "Linda Sebastian",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 6,
-                UserName = "maplewoodhighschool@edu.com",
-                PasswordHash = "67df5688eeff6daee952323aac4626a3c80f15c6",
-                Salt = "1F5a3G",
-                Role = UserRole.User
+                UserName = "maplewoodhighschool",
+                Name = "Jan Laura",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 7,
-                UserName = "Ethan Parker",
-                PasswordHash = "34b18f3e9b6795760e5246ce3fe534c53c9ecc6a",
-                Salt = "fffA34",
-                Role = UserRole.User
+                UserName = "PeterParker",
+                Name = "Jarmil Cyril",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 8,
                 UserName = "codingWizard42",
-                PasswordHash = "2c4e2bcbb76a1125e3ed5a075ad850b8317f8dca",
-                Salt = "9W2u1T",
-                Role = UserRole.User
+                Name = "Samuel Leona",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 9,
                 UserName = "bookworm",
-                PasswordHash = "71a3b4d4e831e1a365ef1924ac2d05c8b64f7ad4",
-                Salt = "7D1x4C",
-                Role = UserRole.User
+                Name = "Regina Kveta",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 10,
                 UserName = "22avidReader22",
-                PasswordHash = "3e08d29af755dd663110b04c7c4136a98b4309a6",
-                Salt = "2M3v8N",
-                Role = UserRole.User
+                Name = "Zorka Matej",
+                Role = UserRole.Manager
             },
             new User
             {
                 Id = 11,
                 UserName = "programmingGuru",
-                PasswordHash = "9b6039d84c9e6a08f7e7c810161c4b9aa2e6b1a3",
-                Salt = "5P1t8R",
+                Name = "Addie Pena",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 12,
                 UserName = "mysteryFanatic",
-                PasswordHash = "9ef6ec5ec7f6101e0e37d680d41cb6c1a8b15a39",
-                Salt = "0G8j6L",
+                Name = "Lukas Crosby",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 13,
                 UserName = "techEnthusiast",
-                PasswordHash = "6a0b488fdb654fca6f366126b2a7c3a3ce2b93ff",
-                Salt = "2R1n3T",
+                Name = "Nataniel Reid",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 14,
                 UserName = "foodLover88",
-                PasswordHash = "524bfcf1ff68e8d6f7684819469329c2723e7d91",
-                Salt = "4K6q8p",
+                Name = "Allan Moran",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 15,
-                UserName = "John the Ripper",
-                PasswordHash = "319ffa6d3266e2e2c6306348b91289d1a838b2ea",
-                Salt = "3D6g3B",
+                UserName = "john_the_ipper",
+                Name = "Arnold Rosales",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 16,
-                UserName = "Samuel Johnson",
-                PasswordHash = "6f8625099e98e6e0c810ba0979db55c36961f7a2",
-                Salt = "1E5v3H",
+                UserName = "samuel_ackson",
+                Name = "Pearl Williamson",
                 Role = UserRole.User
             },
             new User
             {
                 Id = 17,
-                UserName = "joe11@yahoo.com",
-                PasswordHash = "53dcbf0fb77f0d16fa8f682d30a0f5c18c5f5db0",
-                Salt = "2P5n4H",
-                Role = UserRole.User
+                UserName = "admin",
+                Name = "Tia Kirby",
+                Role = UserRole.Admin
             },
         };
     }
@@ -761,7 +812,7 @@ public static class DataInitializer
             new Book
             {
                 Id = 2,
-                Title = "Modern CMake for C++: Discover a better approach to building, testing, and packaging your software",
+                Title = "Modern CMake for C++.",
                 ISBN = "978-1801070058",
                 PublisherId = 2,
                 BookGenre = Models.Enums.BookGenre.Programming,
@@ -932,7 +983,7 @@ public static class DataInitializer
             new Book
             {
                 Id = 15,
-                Title = "Elemental: How the Periodic Table Can Now Explain (Nearly) Everything",
+                Title = "Elemental: How the Periodic Table Can Everything",
                 ISBN = "936-7213567800",
                 PublisherId = 8,
                 BookGenre = Models.Enums.BookGenre.Science,
@@ -1005,11 +1056,11 @@ public static class DataInitializer
             }
         };
     }
-    
+
     private static List<WishList> PrepareWishListModels()
     {
         return new List<WishList>()
-        { 
+        {
             new WishList
             {
                 Id = 1,
@@ -1047,7 +1098,7 @@ public static class DataInitializer
     {
         return new List<WishListItem>()
         {
-            new WishListItem 
+            new WishListItem
             {
                 Id = 1,
                 WishListId = 1,
@@ -1180,7 +1231,7 @@ public static class DataInitializer
             {
                 Id = 12,
                 UserId = 8,
-                State = OrderState.Created  
+                State = OrderState.Created
             },
             new Order
             {

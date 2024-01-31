@@ -1,4 +1,6 @@
-﻿using BusinessLayer.DTOs.WishList.Create;
+﻿using BusinessLayer.DTOs.BaseFilter;
+using BusinessLayer.DTOs.WishList.Create;
+using BusinessLayer.DTOs.WishList.Filter;
 using BusinessLayer.DTOs.WishList.View;
 
 namespace BusinessLayer.Facades.WishList;
@@ -15,5 +17,6 @@ public interface IWishListFacade
     Task<IEnumerable<GeneralWishListItemViewDto>> FetchAllItemsFromWishListAsync(long wishListId);
     Task<GeneralWishListItemViewDto> FetchSingleItemFromWishListAsync(long itemId);
     Task<GeneralWishListViewDto> FetchWishListAsync(long id);
-
+    Task<IEnumerable<GeneralWishListViewDto>> FetchAllByUserIdAsync(long userId);
+    Task<FilterResultDto<GeneralWishListViewDto>> FetchFilteredWishListsAsync(WishListFilterDto wishListFilterDto);
 }

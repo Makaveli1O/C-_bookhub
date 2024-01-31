@@ -2,9 +2,11 @@
 using BusinessLayer.DTOs.BookReview.Create;
 using BusinessLayer.DTOs.BookReview.Update;
 using BusinessLayer.DTOs.BookReview.View;
+using BusinessLayer.Exceptions;
 using BusinessLayer.Services;
-using BusinessLayer.Services.Book;
 using BusinessLayer.Services.BookReview;
+using BusinessLayer.Services.Publisher;
+using DataAccessLayer.Models.Account;
 
 
 namespace BusinessLayer.Facades.BookReview;
@@ -12,14 +14,15 @@ namespace BusinessLayer.Facades.BookReview;
 public class BookReviewFacade : BaseFacade, IBookReviewFacade
 {
     private readonly IBookReviewService _bookReviewService;
-    private readonly IBookService _bookService;
+    private readonly IGenericService<BookEntity, long> _bookService;
     private readonly IGenericService<UserEntity, long> _userService;
 
     public BookReviewFacade(
         IMapper mapper,
-        IBookService bookService,
-         IGenericService<UserEntity, long> userService,
-        IBookReviewService bookReviewService) : base(mapper)
+        IGenericService<BookEntity, long> bookService,
+        IGenericService<UserEntity, long> userService,
+        IBookReviewService bookReviewService)
+        : base(mapper, null, null)
     {
         _bookReviewService = bookReviewService;
         _bookService = bookService;
@@ -30,6 +33,19 @@ public class BookReviewFacade : BaseFacade, IBookReviewFacade
     {
         var bookReviews = await _bookReviewService.FindByBookIdAsync(id);
         return _mapper.Map<List<GeneralBookReviewViewDto>>(bookReviews);
+    }
+
+    public async Task DeleteBookReviewAsync(long id)
+    {
+        var bookReview = await _bookReviewService.FindByIdAsync(id);
+
+        await _bookReviewService.DeleteAsync(bookReview);
+    }
+
+    public async Task<GeneralBookReviewViewDto> FetchBookReviewAsync(long id)
+    {
+        var bookReview = await _bookReviewService.FindByIdAsync(id);
+        return _mapper.Map<GeneralBookReviewViewDto>(bookReview);
     }
 
     public async Task<List<GeneralBookReviewViewDto>> FindUserReviewsAsync(long userId)

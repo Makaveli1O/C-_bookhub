@@ -4,15 +4,18 @@
 - **Techstack**
    - **Backend**
       - C# (ASP.NET Core for the API)
-      - Entity Framework Core for data access and migrations
+      - Entity Framework Core for data access layer and migrations
       - SQLite Database
       - MSSql Database
       - Swagger for API documentation
       - XUnit and NSubstitute for testing
-   - **Frontend** _(TODO)_
+   - **Frontend** Microsoft Model-View-Controller (MVC)
    - **Development tools**
       - Package Manager : NuGet
       - Version Control : Git
+   - **Deployment tools**
+      - Docker (DockerHub)
+      - Openshift
 - **Team Leader**
    - Oliver Šintaj
 - **Developers**
@@ -42,8 +45,11 @@
    In Visual Studio, make sure to select the following workloads using the Visual Studio Installer:
      - "ASP .Net and web development."
 
-4. **Docker: (Not yet implemented)**
+4. **Docker (Optional):**
   Install Docker to support containerized development and deployment.
+
+5. **Openshift (Optional)**
+   Used for application deoplyment, registration for the sandbox and also need for download of the openshift tool (oc).
 
 ## Project Tasks
 
@@ -75,9 +81,10 @@
 4. **Documentation & Onboarding**:
    - Create a README that provides basic information about how to run the application, its components, etc.
 
+
 ### Milestone 2
 
-1. **Revisiting the code and implementing notes from reviewers (outside of project)**:
+1. **Revisiting the code and implementing notes from reviewers (outside of project development team)**:
    - Based on the reviews from other colleagues and tutors, revisit some parts of the code to improve it.
    - Create some new entities instead of strings (Author, Publisher).
 
@@ -105,8 +112,54 @@
    - Each layer should also have different database (e.g. SQLite for WebApi and MSSql for MVC)
 
 
-
 ### Milestone 3
+1. **Incorporate comments and suggestion from reviews**:
+   - Same as for Milestone 2, use the reviews, revisit some parts of the code or gitlab repository and improve it  
+
+2. **Create admin-specific endpoints in MVC for data modification**:
+   - Include endpoints for CRUD operations on Books, Authors, Publishers, Orders etc.
+   - Include endpoint to reset user passwords
+
+3. **Ensure MVC directly connects to the Business layer, not using API endpoints**:
+   - Create seperate project for MVC and WebAPI
+
+4. **Develop a Search feature for Books, Publishers, Authors.**:
+   - Implement search functionality
+   - Add pagination for some entities
+
+5. **Implement caching in your application**:
+   - Cache frequently accessed data
+
+6. **Minimize the differences in features between the API and the MVC**:
+   - Ensure both API and MVC offer similar functionalities
+   - Exception: Different authentication methods allowed for API
+
+7. **Optimize code to minimize redundant database calls**:
+   - Check for multiple database calls when using mappers and lazy loading
+
+8. **Allow users to view their Orders with payment status**:
+   - Order state was already introduced in the first milestone, now only correct presentation is needed
+
+9. **Revert to the original database as per customer request**:
+   - Revert back to SQLite after using the MSSQL database
+   - Keep migration in separate projects
+
+10. **Modify Category x Product relationship to many-to-many**:
+   - NOTE: After consulation with the tutor, we decided that this feature/change request will be done on Authors x Books
+   - Set a single primary author for each book
+   - Display primary author on the book detail page (also in the listing)
+
+11. **Implement request logging in MVC using existing API middleware**:
+   - Distinguish and label logs from API and MVC sources
+
+
+### Final Milestone/Submission
+ 1. **Again revisit and correct any mistakes/bugs that may have arisen during the development**:
+   - Incorporate suggestions from reviews
+
+2. **Deploy application**:
+   - Use openshift for application deployment (chosen by the development team)
+
 
 ## Installation
 
@@ -118,11 +171,13 @@
 
 3. Follow the installation instructions to install the .NET Runtime on your machine.
 
+
 ### Step 2: Install an Integrated Development Environment (reccomended IDE is Visual Studio)
 
 1. Download and install Visual Studio from the official website: [Visual Studio](https://visualstudio.microsoft.com/).
 
 2. During installation, make sure to select the appropriate workloads, such as "ASP .Net and web development," using the Visual Studio Installer.
+
 
 ### Step 3: Install Docker
 
@@ -132,6 +187,17 @@
    - [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/)
 
 2. Follow the installation instructions for your specific operating system to install Docker.
+
+3. (Optional) For successfull replication of our deployment, you will also need DockerHub account or some other registry supported by openshift
+
+
+### Step 4: Register for Openshift Sandbox (Optional for Deployment)
+
+1. Register for free sandbox:
+   - [Red Hat Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift)
+
+2. Do not forget to also download openshift or oc:
+   - Use the following [link](https://developers.redhat.com/products/openshift/download)
 
 
 ## Usage
@@ -143,24 +209,31 @@ Follow these steps to use the project effectively:
 ```shell
 git clone https://gitlab.fi.muni.cz/xbaran4/bookhub.git
 ```
-### Update Databse based on migration
-Before running the program itself, use the DAL.SQLite.Migrations project to update the databse.  
-When running with Visual Studio, open PMC (`Tools -> Nuget Package Manager -> Package Manager Console`).
+
+### Many Paths but only you can choose the right one!
+There are basically many paths you can take and create a demo for yourself. Let us briefly summarize them all.
+
+### I. Visual Studio "Deployment"
+After running the `git clone` command, this is the easiest path you can take to create a demo.  
+Start the Visual Studio and firsty update the database. The SQLite database is default, but you can easily change this by introducing a new database in the DAL project, Dependency Injection folder, where a strategy pattern is waiting for your db needs. Do not forget to change also the application.settings.  
+After handling the initial configuration, proceed with following:
+1. Open PMC (`Tools -> Nuget Package Manager -> Package Manager Console`).
+2. Update the database
 ```shell
 # update databse based on existing snapshot(s)
-Update-Database -project  DAL.SQLite.Migrations # use for WEBAPI
+Update-Database -project  DAL.SQLite.Migrations # default
 
 # or make changes to entities and create a new migration
-Add-Migration <migration_name> -project DAL.SQLite.Migrations
-# when using the newly created migration, do not forget to update the database
+Add-Migration <migration_name> -project <project_name>
+# when using the newly created migration, do not forget to update the database again
 
-# to use the Web MVC use the MSSql Database (and project)
-Update-Database -project DALMSSql.Migrations # or consider using new migration
+# or consider using existing MSSQL or even your newly created database
+Update-Database -project DALMSSql.Migrations # you can even apply your own migration!
 ```
-### Set-up configuration (only for MSSql Database)
-Navigate to appsettings.json in the MVC project and set-up your connection string (based on your MSSql Database server).
+3. Database updated? Nice! Now you can just start the application from Visual Studio, we recommend MVC for better demo, or WebAPI for the Swagger and/or OpenAPI fans.
 
-### Run the project
+#### Alternative to the Visual Studio Start Button
+For the hardcode CLI fans.
 ```shell
 # Navigate to the project directory
 cd <project_directory>
@@ -174,15 +247,44 @@ dotnet build <PROJECT> # specify which project you want to run WebApi or MVC
 # Run the application
 dotnet run --project <PROJECT> # again specify project
 ```
-This will start your project. Access the application using a web browser at http://localhost:5000 (or the appropriate address).
 
-#### Run the MVC project
-Before you can use the MVC project, you need to have MSSql database installed and run:
+### II. Local Docker Deployment
+Do not worry, we prepared dockerfiles just for your need (also with the SQLite built-in migrations), so if you are not tampering with configuration this might be even easier than the process with Visual Studio.  
+Just follow these 2 steps:
+1. Build the docker image
 ```shell
-Update-Database -project  DAL.MSSql.Migrations
+# Navigate to the project directory
+cd <project directory>
+
+docker build --no-cache --file MVCDockerfile -t your_tag . # the last 'dot' character is crucial also!
+# no-cache flag is optional
+# you can also use the WEBAPIDockerfile, again we will leave this to you
 ```
-With the same commands as above you can start the MVC project. You can access application using a webrowser at http://localhost:5094.
-You should be able to register and sign in.
+2. Run the image in newly created container
+```shell
+# after the image is created, you can run it
+docker run -e ASPNETCORE_URLS=http://+:5000 -e ASPNETCORE_ENVIRONMENT=Production -d -p 8080:5000 -v your/local/storage:/app/data --name container_name your_tag
+# do not forget to specify environment and corresponding appsettings
+```
+
+
+### III. Last but not least, the heavyweight Openshift (global) deployment
+This will be (by far) the most painful one, because of the requirements and changes that have to be made to the existing files (mainly .yaml).  
+1. The easiest approach is to just run the Powershell script that we included in OC_Deployment folder (sorry no-windows users).  
+2. But there is of course a catch, this deployment works only for specific DockerHub user and also openshift required that the user is logged in.  
+3. If you have any interest in doing these steps, you will have to change the TAG in this script (`$docker_image_name`) and this have to be also modified for the openshift yaml files e.g. pod.yaml and/or pvc.yaml. The files images must me matched based on your tag.
+4. If you managed to do all of these 'easy' steps then good job!  
+5. Now you can just run the powershell script:
+```shell
+# navigate to deployment folder
+cd OC_Deployment
+# do not forget to also enable the script execution policy this is disable by default
+# check Set-ExecutionPolicy and Get-ExecutionPolicy (hint: unrestricted)
+# read the script before executing, just to be sure we are not creating some backdoor
+OC_Deploy.ps1 MVC
+# alternative is WEBAPI, should be case insensitive, the script will translate it to upper/lower case
+```
+
 
 ## Folder Structure
 

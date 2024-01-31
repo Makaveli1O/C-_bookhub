@@ -1,8 +1,16 @@
-﻿@{
+﻿@using DataAccessLayer.Models.Enums
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Check out our <a href="/Books">books</a>!</p>
+    <h1 class="display-4">Welcome to BookHub</h1>
+    @if (User.IsInRole(UserRoles.Admin))
+    {
+        <p>Please use the Admin Panel above to manage the whole BookHub.</p>
+    } else
+    {
+        <p>Check out our <a asp-controller="Book" asp-action="Index">Books</a>!</p>
+    }
+
 </div>

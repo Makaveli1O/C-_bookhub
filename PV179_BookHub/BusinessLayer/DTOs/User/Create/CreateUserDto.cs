@@ -2,8 +2,8 @@
 
 public class CreateUserDto
 {
-    //TODO user is not supposed to send PW hash neither salt
+    public string Name { get; set; }
     public string UserName { get; set; }
-    public string PasswordHash { get; set; }
-    public string Salt { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
 }

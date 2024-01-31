@@ -2,16 +2,15 @@
 using DataAccessLayer.Models.Logistics;
 using DataAccessLayer.Models.Preferences;
 using DataAccessLayer.Models.Purchasing;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataAccessLayer.Models.Account;
 
-public class User : BaseEntity
+public class User : IdentityUser<long>
 {
-    [MaxLength(100)]
-    public string UserName { get; set; }
-    public string PasswordHash { get; set; }
-    public string Salt { get; set; }
+    [MaxLength(30)]
+    public required string Name { get; set; }
     public UserRole Role { get; set; } = UserRole.User;
     public virtual IEnumerable<BookReview>? BookReviews { get; set; }
     public virtual IEnumerable<WishList>? WishLists { get; set; }

@@ -8,9 +8,19 @@ namespace BusinessLayer.Facades.Address;
 public class AddressFacade : BaseFacade, IAddressFacade
 {
     private readonly IGenericService<AddressEntity, long> _addressService;
-    public AddressFacade(IMapper mapper, IGenericService<AddressEntity, long> addressService) : base(mapper)
+    public AddressFacade(IMapper mapper, IGenericService<AddressEntity, long> addressService) : base(mapper, null, null)
     {
         _addressService = addressService;
+    }
+
+    public async Task<IEnumerable<DetailedAddressView>> GetAllAddressesAsync()
+    {
+        return _mapper.Map<IEnumerable<DetailedAddressView>>(await _addressService.FetchAllAsync());
+    }
+
+    public async Task<IEnumerable<GeneralAddressView>> GetAvailableAddressesForBookStoreAsync(long? bookStoreId)
+    {
+        return _mapper.Map<IEnumerable<GeneralAddressView>>((await _addressService.FetchAllAsync()).Where(addr => addr.BookStore == null || addr.BookStore.Id == bookStoreId));
     }
 
     public async Task<DetailedAddressView> CreateAddressAsync(CreateAddressDto createAddressDto)

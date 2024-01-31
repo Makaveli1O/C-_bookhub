@@ -1,0 +1,76 @@
+﻿@using BusinessLayer.DTOs.Author.View;
+@using DataAccessLayer.Models.Enums
+@using MVC.Models.Base;
+@using MVC.Models.Author;
+@model GenericFilteredModel<AuthorSearchModel, GeneralAuthorViewDto>
+
+<h1>Authors</h1>
+
+@if (User.IsInRole(UserRoles.Admin))
+{
+    <p class="text-end"><a class="link-success" asp-action="Create">Create New</a></p>
+}
+
+@if (ViewBag.Message != null)
+{
+    <p class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </p>
+}
+
+@{
+    await Html.RenderPartialAsync("AuthorSearch", Model.SearchModel ?? new AuthorSearchModel());
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th></th>
+    </tr>
+
+
+    @if (Model != null && Model.Items.Count() > 0)
+    {
+        foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="text-end">
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "link-primary" })
+                    @if (User.IsInRole(UserRoles.Admin))
+                    {
+                        <span>|</span>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-warning" })
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-danger" })
+                    }
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <td colspan="2" class="text-center"><b>No Authors Availible.</b></td>
+    }
+</table>
+
+@if (Model != null)
+{
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="Index"
+               asp-route-PageNumber="@i"
+               asp-route-CONTAINS_Name="@Model.SearchModel?.CONTAINS_Name"
+               asp-route-CONTAINS_Biography="@Model.SearchModel?.CONTAINS_Biography"
+               asp-route-SortParameter="@Model.SearchModel?.SortParameter"
+               asp-route-SortAscending="@Model.SearchModel?.SortAscending"
+               class="@(i == Model.PageNumber ? "active" : "")">@($" {i}{(i == Model.TotalPages ? string.Empty : ',')} ")</a>
+        }
+    </div>
+}
