@@ -275,6 +275,8 @@ This will be (by far) the most painful one, because of the requirements and chan
 4. If you managed to do all of these 'easy' steps then good job!  
 5. Now you can just run the powershell script:
 ```shell
+# navigate to deployment folder
+cd OC_Deployment
 # do not forget to also enable the script execution policy this is disable by default
 # check Set-ExecutionPolicy and Get-ExecutionPolicy (hint: unrestricted)
 # read the script before executing, just to be sure we are not creating some backdoor
