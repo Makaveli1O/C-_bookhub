@@ -11,6 +11,8 @@ spec:
       env:
         - name: ASPNETCORE_URLS
           value: http://+:5000
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
       ports:
         - name: web
           containerPort: 5000

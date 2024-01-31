@@ -8,10 +8,12 @@ using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
 var configuration = new ConfigurationBuilder()
     .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true)
     .Build();
 
 builder.Services.RegisterDALDependencies(configuration);
