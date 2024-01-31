@@ -17,32 +17,12 @@
             </div> 
             <div class="mb-3">
                 <label asp-for="ManagerId" class="form-label"></label>
-                @Html.DropDownListFor(m => m.ManagerId,
-                    new SelectList(
-                         from mngr in ((List<GeneralUserViewDto>)ViewBag.Managers)
-                         select new
-                         {
-                             mngr.Id,
-                             mngr.Name
-                         },
-                         "Id",
-                         "UserName"),
-                    new { @class = "form-select" })
+                <select asp-for="ManagerId" asp-items="ViewBag.Managers" class="form-select"></select>
                 <span asp-validation-for="ManagerId" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="AddressId" class="form-label">Address</label>
-                @Html.DropDownListFor(m => m.AddressId,
-                    new SelectList(
-                         from addr in ((List<GeneralAddressView>)ViewBag.Addresses)
-                        select new
-                            {
-                                AddressId = addr.Id,
-                                FullAddress = string.Format("{0}, {1}, {2}", addr.Street, addr.City, addr.State)
-                            },
-                        "AddressId",
-                        "FullAddress"),
-                    new { @class = "form-select" })
+                <select asp-for="AddressId" asp-items="ViewBag.Addresses" class="form-select"></select>
                 <span asp-validation-for="AddressId" class="text-danger"></span>
             </div>
             <div class="mb-3">

@@ -8,6 +8,7 @@ using DataAccessLayer.Models.Enums;
 using BusinessLayer.DTOs.User.View;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MVC.Controllers;
 
@@ -76,8 +77,8 @@ public class BookStoreController : Controller
         var availableManagers = _mapper.Map<IEnumerable<GeneralUserViewDto>>(
             managers.Where(u => u.BookStore == null || u.BookStore.Id == id)); // possible optimization?? delegate to layer bellow??
 
-        ViewBag.Addresses = addresses.ToList();
-        ViewBag.Managers = availableManagers.ToList();
+        ViewBag.Addresses = new SelectList(addresses.ToList(), "Id", "Street");
+        ViewBag.Managers = new SelectList(availableManagers.ToList(), "Id", "UserName");
         return View(_mapper.Map<CreateBookStoreDto>(bookStoreDto));
     }
 
